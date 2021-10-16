@@ -58,10 +58,12 @@ type
     DataSourceNomSource: TDataSource;
     cxLookupComboBoxstockid: TcxLookupComboBox;
     DataSourceStocksNamesDestination: TDataSource;
+    procedure ComboBoxAnneeChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ButtonImprimerClick(Sender: TObject);
     procedure ButtonValiderClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure Edit2Enter(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure EditCodeProduitKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ButtonProduitsClick(Sender: TObject);

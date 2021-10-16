@@ -70,6 +70,7 @@ type
     procedure EditPrixAchatChange(Sender: TObject);
     procedure EditCodeChange(Sender: TObject);
     procedure EditQuantiteLotChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
     procedure ajouterfacture(typeops,source,destination:integer);
     procedure EditQuntKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);

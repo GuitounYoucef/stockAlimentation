@@ -8558,6 +8558,8 @@ object FormFacturation: TFormFacturation
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
         TabOrder = 2
+        ExplicitLeft = 331
+        ExplicitTop = 6
         Width = 167
       end
       object cxLookupComboBoxstockid: TcxLookupComboBox
@@ -8588,6 +8590,8 @@ object FormFacturation: TFormFacturation
         Style.IsFontAssigned = True
         TabOrder = 3
         OnKeyDown = cxLookupComboBoxCodeProdKeyDown
+        ExplicitLeft = 38
+        ExplicitTop = 6
         Width = 164
       end
     end
