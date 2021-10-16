@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2018/12/26 10:07:51.000.156,=C:\Users\fujitsu\Documents\Embarcadero\Studio\Projets\Unit7.pas</Transaction>
+    <Transaction>2018/12/26 10:42:07.000.113,C:\Users\fujitsu\Documents\Embarcadero\Studio\Projets\Unit7.dfm=D:\stoke\Unit7.dfm</Transaction>
+    <Transaction>2018/12/26 10:42:07.000.113,C:\Users\fujitsu\Documents\Embarcadero\Studio\Projets\Unit7.pas=D:\stoke\Unit7.pas</Transaction>
+    <Transaction>2018/12/26 10:42:15.000.122,C:\Users\fujitsu\Documents\Embarcadero\Studio\Projets\Project2.dproj=D:\stoke\stoke.dproj</Transaction>
+    <Transaction>2018/12/30 10:08:51.000.901,=D:\stoke\Unit1.pas</Transaction>
+    <Transaction>2019/01/07 12:27:59.000.217,=D:\stoke\Unit2.pas</Transaction>
+    <Transaction>2019/01/07 12:46:03.000.758,=D:\stoke\Unit3.pas</Transaction>
+    <Transaction>2019/01/07 13:44:27.000.979,=D:\stoke\Unit4.pas</Transaction>
+    <Transaction>2019/01/08 11:50:11.000.757,=D:\stoke\Unit5.pas</Transaction>
+    <Transaction>2019/01/08 14:48:04.000.709,=D:\stoke\Unit6.pas</Transaction>
+    <Transaction>2019/01/09 14:19:17.000.984,=D:\stoke\Unit8.pas</Transaction>
+    <Transaction>2019/01/17 09:29:31.000.747,=D:\stoke\Unit9.pas</Transaction>
+    <Transaction>2019/01/20 15:12:17.000.145,=D:\stoke\Unit10.pas</Transaction>
+    <Transaction>2019/01/22 15:04:22.000.690,=D:\stoke\Unit11.pas</Transaction>
+    <Transaction>2019/01/28 15:09:36.000.457,=D:\stoke\Unit12.pas</Transaction>
+    <Transaction>2019/02/26 10:40:31.000.132,=D:\stoke\Unit13.pas</Transaction>
+    <Transaction>2019/03/05 16:28:48.000.337,=D:\stoke\Unit14.pas</Transaction>
+  </Transactions>
+</BorlandProject>

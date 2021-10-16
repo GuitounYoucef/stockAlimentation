@@ -1,0 +1,16 @@
+﻿[FDConnection1]
+Coordinates=157,1,104,36
+
+[FDQueryTrouverProd]
+Coordinates=10,10,138,432
+
+[Form42.DataSource1]
+Coordinates=157,56,137,36
+
+[FDMemTableListProduit]
+Coordinates=158,10,153,190
+Visible=True
+
+[]
+Coordinates=82,451,178,36
+
