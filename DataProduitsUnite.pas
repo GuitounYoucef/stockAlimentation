@@ -15,6 +15,9 @@ type
     FDTableProduits: TFDTable;
     FDConnection1: TFDConnection;
     FDTableStocksNames: TFDTable;
+    FDQueryFindProduitByCode: TFDQuery;
+    procedure TrouverProduit(codeProd,id:string);
+
   private
     { Déclarations privées }
   public
@@ -29,5 +32,14 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
+procedure TDataProduits.TrouverProduit(codeProd,id:string);
+begin
+    FDQueryFindProduitByCode.Params.ParamValues['c']:=codeProd;
+    FDQueryFindProduitByCode.Params.ParamValues['i']:=id;
+    FDQueryFindProduitByCode.Active:=false;
+    FDQueryFindProduitByCode.Active:=true;
+    if FDQueryFindProduitByCode.RecordCount=0 then
+        FDQueryFindProduitByCode.Insert;
+end;
 
 end.

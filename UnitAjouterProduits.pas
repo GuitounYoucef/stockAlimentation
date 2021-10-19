@@ -9,7 +9,7 @@ uses
   Vcl.ComCtrls, Vcl.Imaging.pngimage, Vcl.Imaging.jpeg, cxGraphics, cxControls,
   cxLookAndFeels, cxLookAndFeelPainters, cxContainer, cxEdit, dxSkinsCore,
   dxSkinsDefaultPainters, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit,
-  cxDBLookupEdit, cxDBLookupComboBox ;
+  cxDBLookupEdit, cxDBLookupComboBox, Vcl.DBCtrls, Vcl.Mask ;
 
 type
   TFormAjouterProduits = class(TForm)
@@ -56,6 +56,16 @@ type
     Label21: TLabel;
     cxLookupComboBoxStockName: TcxLookupComboBox;
     DataSourceStocksNames: TDataSource;
+    DBEditId: TDBEdit;
+    DataSourceFindProduitByCode: TDataSource;
+    DBEditCode: TDBEdit;
+    DBEditQuantiteLot: TDBEdit;
+    DBEditPrixAchat: TDBEdit;
+    DBEditPrixVenteGros: TDBEdit;
+    DBEditPrixVente: TDBEdit;
+    DBCheckBox1: TDBCheckBox;
+    cxDBLookupComboBoxType: TcxDBLookupComboBox;
+    cxDBLookupComboBoxProducteur: TcxDBLookupComboBox;
     procedure Button1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ComboBoxTypeChange(Sender: TObject);
@@ -67,6 +77,8 @@ type
     procedure EditPrixVenteGrosChange(Sender: TObject);
     procedure AjouterStocke();
     function verifierChamp():boolean;
+    procedure TrouverProduitForm(codeProd,id:string);
+
     procedure EditPrixAchatChange(Sender: TObject);
     procedure EditCodeChange(Sender: TObject);
     procedure EditQuantiteLotChange(Sender: TObject);
@@ -403,6 +415,11 @@ begin
 end;
 //______________________________________________________________________________
 
+procedure TFormAjouterProduits.TrouverProduitForm(codeProd,id:string);
+begin
+   DataProduits.TrouverProduit(codeProd,id);
+end;
+
 procedure TFormAjouterProduits.AjouterStocke();    //travail avec FormEtatStock
 begin
     if (strtoint(EditQunt.Text)>0)  then
@@ -468,6 +485,7 @@ begin
               end;
        end
      else b:=true;
+
     if b then
     begin                           // nouvelle factute
       DataFacturation.FDQueryFactureEntrante.Insert;

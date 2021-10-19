@@ -237,6 +237,8 @@ begin
       FormAjouterProduits.GridPanel1.RowCollection.Items[2].Value:=130;
       FormAjouterProduits.Repaint;
 
+      FormAjouterProduits.TrouverProduitForm(codeProd,id);
+
       DataFacturation.FDQueryCodeProduit.Params.ParamValues['c']:=codeProd;
       DataFacturation.FDQueryCodeProduit.Params.ParamValues['i']:=id;
       DataFacturation.FDQueryCodeProduit.Active:=false;

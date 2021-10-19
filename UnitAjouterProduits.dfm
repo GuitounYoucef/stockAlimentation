@@ -311,9 +311,9 @@ object FormAjouterProduits: TFormAjouterProduits
         StyleElements = [seBorder]
       end
       object ComboBoxType: TComboBox
-        Left = 443
+        Left = 584
         Top = 135
-        Width = 273
+        Width = 132
         Height = 44
         BiDiMode = bdRightToLeft
         Font.Charset = ANSI_CHARSET
@@ -328,9 +328,9 @@ object FormAjouterProduits: TFormAjouterProduits
         OnChange = ComboBoxTypeChange
       end
       object ComboBoxProducteur: TComboBox
-        Left = 443
+        Left = 584
         Top = 185
-        Width = 273
+        Width = 126
         Height = 44
         BiDiMode = bdRightToLeft
         Font.Charset = ANSI_CHARSET
@@ -345,10 +345,10 @@ object FormAjouterProduits: TFormAjouterProduits
         OnChange = ComboBoxProducteurChange
       end
       object EditProduit: TEdit
-        Left = 443
+        Left = 584
         Top = 31
-        Width = 273
-        Height = 44
+        Width = 132
+        Height = 47
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -19
@@ -361,9 +361,9 @@ object FormAjouterProduits: TFormAjouterProduits
         OnKeyDown = EditProduitKeyDown
       end
       object EditCode: TEdit
-        Left = 443
+        Left = 584
         Top = 84
-        Width = 273
+        Width = 132
         Height = 44
         BiDiMode = bdRightToLeft
         Font.Charset = ANSI_CHARSET
@@ -381,9 +381,9 @@ object FormAjouterProduits: TFormAjouterProduits
         OnKeyDown = EditCodeKeyDown
       end
       object EditPrixVenteGros: TEdit
-        Left = 64
+        Left = 160
         Top = 135
-        Width = 163
+        Width = 67
         Height = 44
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -397,9 +397,9 @@ object FormAjouterProduits: TFormAjouterProduits
         OnKeyPress = EditPrixVenteGrosKeyPress
       end
       object EditPrixAchat: TEdit
-        Left = 64
+        Left = 160
         Top = 84
-        Width = 163
+        Width = 67
         Height = 44
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -414,9 +414,9 @@ object FormAjouterProduits: TFormAjouterProduits
         OnKeyUp = EditPrixAchatKeyUp
       end
       object EditQuantiteLot: TEdit
-        Left = 64
+        Left = 160
         Top = 31
-        Width = 163
+        Width = 67
         Height = 44
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -431,9 +431,9 @@ object FormAjouterProduits: TFormAjouterProduits
         OnKeyPress = EditQuantiteLotKeyPress
       end
       object EditPrixVente: TEdit
-        Left = 64
+        Left = 160
         Top = 185
-        Width = 163
+        Width = 67
         Height = 44
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -445,6 +445,134 @@ object FormAjouterProduits: TFormAjouterProduits
         StyleElements = [seBorder]
         OnChange = EditPrixVenteChange
         OnKeyPress = EditPrixVenteKeyPress
+      end
+      object DBEditId: TDBEdit
+        Left = 446
+        Top = 31
+        Width = 132
+        Height = 44
+        DataField = 'id'
+        DataSource = DataSourceFindProduitByCode
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Cairo'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 8
+        StyleElements = [seBorder]
+      end
+      object DBEditCode: TDBEdit
+        Left = 446
+        Top = 84
+        Width = 132
+        Height = 44
+        DataField = 'Code'
+        DataSource = DataSourceFindProduitByCode
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Cairo'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 9
+        StyleElements = [seBorder]
+      end
+      object DBEditQuantiteLot: TDBEdit
+        Left = 64
+        Top = 31
+        Width = 90
+        Height = 44
+        DataField = 'QuantiteLot'
+        DataSource = DataSourceFindProduitByCode
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Cairo'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 10
+        StyleElements = [seBorder]
+      end
+      object DBEditPrixAchat: TDBEdit
+        Left = 64
+        Top = 84
+        Width = 90
+        Height = 44
+        DataField = 'PrixAchat'
+        DataSource = DataSourceFindProduitByCode
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Cairo'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 11
+        StyleElements = [seBorder]
+      end
+      object DBEditPrixVenteGros: TDBEdit
+        Left = 64
+        Top = 135
+        Width = 90
+        Height = 44
+        DataField = 'PrixVenteGros'
+        DataSource = DataSourceFindProduitByCode
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Cairo'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 12
+        StyleElements = [seBorder]
+      end
+      object DBEditPrixVente: TDBEdit
+        Left = 64
+        Top = 185
+        Width = 90
+        Height = 44
+        DataField = 'PrixVente'
+        DataSource = DataSourceFindProduitByCode
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Cairo'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 13
+        StyleElements = [seBorder]
+      end
+      object cxDBLookupComboBoxType: TcxDBLookupComboBox
+        Left = 446
+        Top = 135
+        DataBinding.DataField = 'Type'
+        DataBinding.DataSource = DataSourceFindProduitByCode
+        ParentFont = False
+        Properties.ListColumns = <>
+        Style.Font.Charset = ANSI_CHARSET
+        Style.Font.Color = clWindowText
+        Style.Font.Height = -19
+        Style.Font.Name = 'Cairo'
+        Style.Font.Style = [fsBold]
+        Style.IsFontAssigned = True
+        TabOrder = 14
+        Width = 132
+      end
+      object cxDBLookupComboBoxProducteur: TcxDBLookupComboBox
+        Left = 446
+        Top = 185
+        DataBinding.DataField = 'Producteur'
+        DataBinding.DataSource = DataSourceFindProduitByCode
+        ParentFont = False
+        Properties.ListColumns = <>
+        Style.Font.Charset = ANSI_CHARSET
+        Style.Font.Color = clWindowText
+        Style.Font.Height = -19
+        Style.Font.Name = 'Cairo'
+        Style.Font.Style = [fsBold]
+        Style.IsFontAssigned = True
+        TabOrder = 15
+        Width = 132
       end
     end
     object Panel2: TPanel
@@ -561,9 +689,9 @@ object FormAjouterProduits: TFormAjouterProduits
         StyleElements = [seBorder]
       end
       object DateTimePicker2: TDateTimePicker
-        Left = 64
+        Left = 96
         Top = 23
-        Width = 163
+        Width = 131
         Height = 44
         BiDiMode = bdLeftToRight
         Date = 43871.000000000000000000
@@ -579,9 +707,9 @@ object FormAjouterProduits: TFormAjouterProduits
         TabOrder = 0
       end
       object DateTimePicker1: TDateTimePicker
-        Left = 553
+        Left = 584
         Top = 23
-        Width = 163
+        Width = 132
         Height = 44
         BiDiMode = bdLeftToRight
         Date = 43871.000000000000000000
@@ -685,6 +813,16 @@ object FormAjouterProduits: TFormAjouterProduits
         TabOrder = 1
         StyleElements = [seBorder]
       end
+      object DBCheckBox1: TDBCheckBox
+        Left = 536
+        Top = 16
+        Width = 145
+        Height = 25
+        Caption = ' '#1587#1604#1593#1577' '#1605#1610#1586#1575#1606
+        DataField = 'balance'
+        DataSource = DataSourceFindProduitByCode
+        TabOrder = 2
+      end
     end
     object GridPanel7: TGridPanel
       Left = 1
@@ -735,8 +873,8 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label10: TLabel
         Left = 636
         Top = 10
-        Width = 202
-        Height = 69
+        Width = 210
+        Height = 78
         Align = alClient
         Alignment = taCenter
         Caption = #1587#1604#1593#1577' '#1580#1583#1610#1583#1577
@@ -747,6 +885,8 @@ object FormAjouterProduits: TFormAjouterProduits
         Font.Style = [fsBold]
         ParentFont = False
         Layout = tlCenter
+        ExplicitWidth = 202
+        ExplicitHeight = 69
       end
       object Image3: TImage
         Left = 536
@@ -6628,7 +6768,12 @@ object FormAjouterProduits: TFormAjouterProduits
   end
   object DataSourceStocksNames: TDataSource
     DataSet = DataProduits.FDTableStocksNames
-    Left = 465
-    Top = 373
+    Left = 457
+    Top = 357
+  end
+  object DataSourceFindProduitByCode: TDataSource
+    DataSet = DataProduits.FDQueryFindProduitByCode
+    Left = 249
+    Top = 333
   end
 end

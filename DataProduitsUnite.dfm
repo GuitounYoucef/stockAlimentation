@@ -32,4 +32,28 @@ object DataProduits: TDataProduits
     Left = 272
     Top = 40
   end
+  object FDQueryFindProduitByCode: TFDQuery
+    Active = True
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select produits.*'
+      'from produits'
+      'where ((Code=:c) or (id=:i))'
+      '')
+    Left = 440
+    Top = 40
+    ParamData = <
+      item
+        Name = 'C'
+        DataType = ftWideString
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'I'
+        DataType = ftWideString
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
 end
