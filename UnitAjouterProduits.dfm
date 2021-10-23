@@ -310,146 +310,10 @@ object FormAjouterProduits: TFormAjouterProduits
         Layout = tlCenter
         StyleElements = [seBorder]
       end
-      object ComboBoxType: TComboBox
-        Left = 584
-        Top = 135
-        Width = 132
-        Height = 44
-        BiDiMode = bdRightToLeft
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -19
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        ParentBiDiMode = False
-        ParentFont = False
-        TabOrder = 6
-        StyleElements = [seBorder]
-        OnChange = ComboBoxTypeChange
-      end
-      object ComboBoxProducteur: TComboBox
-        Left = 584
-        Top = 185
-        Width = 126
-        Height = 44
-        BiDiMode = bdRightToLeft
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -19
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        ParentBiDiMode = False
-        ParentFont = False
-        TabOrder = 7
-        StyleElements = [seBorder]
-        OnChange = ComboBoxProducteurChange
-      end
-      object EditProduit: TEdit
-        Left = 584
-        Top = 31
-        Width = 132
-        Height = 47
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -19
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 0
-        StyleElements = [seBorder]
-        OnChange = EditProduitChange
-        OnKeyDown = EditProduitKeyDown
-      end
-      object EditCode: TEdit
-        Left = 584
-        Top = 84
-        Width = 132
-        Height = 44
-        BiDiMode = bdRightToLeft
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -19
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        MaxLength = 13
-        ParentBiDiMode = False
-        ParentFont = False
-        TabOrder = 1
-        TextHint = 'Press Space to Generate'
-        StyleElements = [seBorder]
-        OnChange = EditCodeChange
-        OnKeyDown = EditCodeKeyDown
-      end
-      object EditPrixVenteGros: TEdit
-        Left = 160
-        Top = 135
-        Width = 67
-        Height = 44
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -19
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 4
-        StyleElements = [seBorder]
-        OnChange = EditPrixVenteGrosChange
-        OnKeyPress = EditPrixVenteGrosKeyPress
-      end
-      object EditPrixAchat: TEdit
-        Left = 160
-        Top = 84
-        Width = 67
-        Height = 44
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -19
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 3
-        StyleElements = [seBorder]
-        OnChange = EditPrixAchatChange
-        OnKeyPress = EditPrixAchatKeyPress
-        OnKeyUp = EditPrixAchatKeyUp
-      end
-      object EditQuantiteLot: TEdit
-        Left = 160
-        Top = 31
-        Width = 67
-        Height = 44
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -19
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 2
-        Text = '1'
-        StyleElements = [seBorder]
-        OnChange = EditQuantiteLotChange
-        OnKeyPress = EditQuantiteLotKeyPress
-      end
-      object EditPrixVente: TEdit
-        Left = 160
-        Top = 185
-        Width = 67
-        Height = 44
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -19
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 5
-        StyleElements = [seBorder]
-        OnChange = EditPrixVenteChange
-        OnKeyPress = EditPrixVenteKeyPress
-      end
       object DBEditId: TDBEdit
         Left = 446
         Top = 31
-        Width = 132
+        Width = 264
         Height = 44
         DataField = 'id'
         DataSource = DataSourceFindProduitByCode
@@ -459,14 +323,15 @@ object FormAjouterProduits: TFormAjouterProduits
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 8
+        TabOrder = 0
         StyleElements = [seBorder]
       end
       object DBEditCode: TDBEdit
-        Left = 446
-        Top = 84
-        Width = 132
+        Left = 443
+        Top = 85
+        Width = 267
         Height = 44
+        Hint = 'Press Space to Generate'
         DataField = 'Code'
         DataSource = DataSourceFindProduitByCode
         Font.Charset = ANSI_CHARSET
@@ -475,13 +340,14 @@ object FormAjouterProduits: TFormAjouterProduits
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 9
+        TabOrder = 1
         StyleElements = [seBorder]
+        OnKeyDown = DBEditCodeKeyDown
       end
       object DBEditQuantiteLot: TDBEdit
         Left = 64
         Top = 31
-        Width = 90
+        Width = 163
         Height = 44
         DataField = 'QuantiteLot'
         DataSource = DataSourceFindProduitByCode
@@ -491,13 +357,13 @@ object FormAjouterProduits: TFormAjouterProduits
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 10
+        TabOrder = 2
         StyleElements = [seBorder]
       end
       object DBEditPrixAchat: TDBEdit
         Left = 64
         Top = 84
-        Width = 90
+        Width = 163
         Height = 44
         DataField = 'PrixAchat'
         DataSource = DataSourceFindProduitByCode
@@ -507,13 +373,15 @@ object FormAjouterProduits: TFormAjouterProduits
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 11
+        TabOrder = 3
         StyleElements = [seBorder]
+        OnChange = DBEditPrixAchatChange
+        OnKeyPress = DBEditPrixAchatKeyPress
       end
       object DBEditPrixVenteGros: TDBEdit
         Left = 64
         Top = 135
-        Width = 90
+        Width = 163
         Height = 44
         DataField = 'PrixVenteGros'
         DataSource = DataSourceFindProduitByCode
@@ -523,13 +391,15 @@ object FormAjouterProduits: TFormAjouterProduits
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 12
+        TabOrder = 4
         StyleElements = [seBorder]
+        OnChange = DBEditPrixVenteGrosChange
+        OnKeyPress = DBEditPrixVenteGrosKeyPress
       end
       object DBEditPrixVente: TDBEdit
         Left = 64
         Top = 185
-        Width = 90
+        Width = 163
         Height = 44
         DataField = 'PrixVente'
         DataSource = DataSourceFindProduitByCode
@@ -539,8 +409,10 @@ object FormAjouterProduits: TFormAjouterProduits
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 13
+        TabOrder = 5
         StyleElements = [seBorder]
+        OnChange = DBEditPrixVenteChange
+        OnKeyPress = DBEditPrixVenteKeyPress
       end
       object cxDBLookupComboBoxType: TcxDBLookupComboBox
         Left = 446
@@ -555,8 +427,8 @@ object FormAjouterProduits: TFormAjouterProduits
         Style.Font.Name = 'Cairo'
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
-        TabOrder = 14
-        Width = 132
+        TabOrder = 6
+        Width = 264
       end
       object cxDBLookupComboBoxProducteur: TcxDBLookupComboBox
         Left = 446
@@ -571,8 +443,8 @@ object FormAjouterProduits: TFormAjouterProduits
         Style.Font.Name = 'Cairo'
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
-        TabOrder = 15
-        Width = 132
+        TabOrder = 7
+        Width = 264
       end
     end
     object Panel2: TPanel
@@ -780,7 +652,7 @@ object FormAjouterProduits: TFormAjouterProduits
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      object Button1: TButton
+      object ButtonAjouter: TButton
         Left = 64
         Top = 19
         Width = 163
@@ -796,14 +668,16 @@ object FormAjouterProduits: TFormAjouterProduits
         Images = ImageList1
         ParentFont = False
         TabOrder = 0
-        OnClick = Button1Click
+        OnClick = ButtonAjouterClick
       end
-      object CheckBox1: TCheckBox
+      object DBCheckBox1: TDBCheckBox
         Left = 705
-        Top = 6
-        Width = 163
-        Height = 48
+        Top = 16
+        Width = 116
+        Height = 25
         Caption = ' '#1587#1604#1593#1577' '#1605#1610#1586#1575#1606
+        DataField = 'balance'
+        DataSource = DataSourceFindProduitByCode
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -19
@@ -811,17 +685,6 @@ object FormAjouterProduits: TFormAjouterProduits
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 1
-        StyleElements = [seBorder]
-      end
-      object DBCheckBox1: TDBCheckBox
-        Left = 536
-        Top = 16
-        Width = 145
-        Height = 25
-        Caption = ' '#1587#1604#1593#1577' '#1605#1610#1586#1575#1606
-        DataField = 'balance'
-        DataSource = DataSourceFindProduitByCode
-        TabOrder = 2
       end
     end
     object GridPanel7: TGridPanel

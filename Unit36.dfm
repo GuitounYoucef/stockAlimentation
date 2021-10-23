@@ -276,7 +276,7 @@ object DataModule1: TDataModule1
     SQL.Strings = (
       'select distinct sortie.annee,sortie.num'
       'from sortie')
-    Left = 152
+    Left = 184
     Top = 208
   end
   object FDQueryType: TFDQuery

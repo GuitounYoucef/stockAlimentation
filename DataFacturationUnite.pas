@@ -3,7 +3,7 @@ unit DataFacturationUnite;
 interface
 
 uses
-  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  System.SysUtils, System.Variants, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.UI.Intf,
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Phys.MSSQL,
@@ -55,6 +55,7 @@ type
    function TrouverFournsNum(NomFourn:string):integer;
    function TrouverStockNum(NomStocke:string):integer;
    procedure SupprimerFacture();
+   procedure NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;quantite:real;StockDest:integer;DateProd,Dateconsm:TDateTime);
 
    var facture:Facture;
 
@@ -68,6 +69,8 @@ var
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
+
+uses UnitFacturation, Unit36;
 
 {$R *.dfm}
 function TDataFacturation.TrouverFournsNum(NomFourn:string):integer;
@@ -120,6 +123,54 @@ begin
     else facture.TypePaiement:=2;
 end;
 //------------------------------------------------------------------------------
+procedure TDataFacturation.NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;
+  quantite: real; StockDest: integer; DateProd, Dateconsm: TDateTime);
+begin
+      DataFacturation.FDQueryFactureEntrante.Insert;
+      DataFacturation.FDQueryFactureEntrante.FieldValues['id']:=FDQueryFindProduitByCode.FieldValues['id'];
+      DataFacturation.FDQueryFactureEntrante.FieldValues['Annee']:=formFacturation.Annee;
+      DataFacturation.FDQueryFactureEntrante.FieldValues['num']:=formFacturation.Num;
+      DataFacturation.FDQueryFactureEntrante.FieldValues['type']:=FDQueryFindProduitByCode.FieldValues['type'];
+      DataFacturation.FDQueryFactureEntrante.FieldValues['producteur']:=FDQueryFindProduitByCode.FieldValues['id'];
+
+      DataFacturation.FDQueryFactureEntrante.FieldValues['QuantiteLot']:=FDQueryFindProduitByCode.FieldValues['QuantiteLot'];
+      DataFacturation.FDQueryFactureEntrante.FieldValues['PrixAchat']:=FDQueryFindProduitByCode.FieldValues['PrixAchat'];
+      DataFacturation.FDQueryFactureEntrante.FieldValues['PrixVente']:=FDQueryFindProduitByCode.FieldValues['PrixVente'];
+      DataFacturation.FDQueryFactureEntrante.FieldValues['PrixVenteGros']:=FDQueryFindProduitByCode.FieldValues['PrixVenteGros'];
+      DataFacturation.FDQueryFactureEntrante.FieldValues['code']:=FDQueryFindProduitByCode.FieldValues['code'];
+      DataFacturation.FDQueryFactureEntrante.FieldValues['balance']:=false;
+
+      DataFacturation.FDQueryFactureEntrante.FieldValues['Quantite']:=quantite;
+      DataFacturation.FDQueryFactureEntrante.FieldValues['NumStock']:=StockDest;
+      DataFacturation.FDQueryFactureEntrante.FieldValues['DateProd']:=DateProd;
+      DataFacturation.FDQueryFactureEntrante.FieldValues['DateConsm']:=Dateconsm;
+      DataFacturation.FDQueryFactureEntrante.FieldValues['DateEntree']:=date;
+
+      DataFacturation.FDQueryFactureEntrante.FieldValues['NumUser']:=DataModule1.FDQuery115.FieldValues['NumUser'];
+
+      DataFacturation.FDQueryFactureEntrante.Next;
+      DataFacturation.FDQueryFactureEntrante.First;
+      formFacturation.som:=0;
+      while not DataFacturation.FDQueryFactureEntrante.Eof do
+      begin
+         formFacturation.som:=formFacturation.som+DataFacturation.FDQueryFactureEntrante.FieldValues['PrixAchat']*DataFacturation.FDQueryFactureEntrante.FieldValues['Quantite'];
+         DataFacturation.FDQueryFactureEntrante.Next;
+         formFacturation.dxGaugeControl1DigitalScale1.Value:=inttostr(formFacturation.som);
+      end;
+      if (FDQueryFindProduitByCode.FieldValues['Lien']<>null) then
+             begin
+               formFacturation.Image2.Picture.LoadFromFile(DataFacturation.FDQueryCodeProduit.FieldValues['Lien']);
+               formFacturation.Image2.Hide;
+               formFacturation.Image2.Show;
+             end
+             else
+               begin
+                formFacturation.Image2.Picture:=nil;
+                formFacturation.Image2.Hide;
+                formFacturation.Image2.Show
+               end;
+end;
+
 procedure TDataFacturation.NouvelleFacture();
 begin
  FDTableFacture.insert;

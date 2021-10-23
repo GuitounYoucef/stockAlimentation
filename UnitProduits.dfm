@@ -119,6 +119,7 @@ object FormProduits: TFormProduits
         Top = 4
         Width = 200
         Height = 19
+        DataSource = DataSourceTableProduits
         Anchors = []
         TabOrder = 0
         Visible = False
@@ -130,7 +131,7 @@ object FormProduits: TFormProduits
         Height = 466
         Align = alClient
         BiDiMode = bdRightToLeft
-        DataSource = DataModule1.DataSource61
+        DataSource = DataSourceTableProduits
         ParentBiDiMode = False
         TabOrder = 1
         TitleFont.Charset = ANSI_CHARSET
@@ -299,22 +300,22 @@ object FormProduits: TFormProduits
       ControlCollection = <
         item
           Column = 4
-          Control = Button7
+          Control = ButtonSuuprimerProd
           Row = 1
         end
         item
           Column = 2
-          Control = Button5
+          Control = ButtonImprInventaire
           Row = 1
         end
         item
           Column = 5
-          Control = Button1
+          Control = ButtonNouveauProd
           Row = 1
         end
         item
           Column = 3
-          Control = Button3
+          Control = ButtonImprCodeBar
           Row = 1
         end>
       RowCollection = <
@@ -328,7 +329,7 @@ object FormProduits: TFormProduits
           Value = 9.971757037554189000
         end>
       TabOrder = 1
-      object Button7: TButton
+      object ButtonSuuprimerProd: TButton
         Left = 1045
         Top = 10
         Width = 100
@@ -347,9 +348,9 @@ object FormProduits: TFormProduits
         Images = ImageList3
         ParentFont = False
         TabOrder = 0
-        OnClick = Button7Click
+        OnClick = ButtonSuuprimerProdClick
       end
-      object Button5: TButton
+      object ButtonImprInventaire: TButton
         Left = 825
         Top = 10
         Width = 100
@@ -368,9 +369,9 @@ object FormProduits: TFormProduits
         Images = ImageList1
         ParentFont = False
         TabOrder = 1
-        OnClick = Button5Click
+        OnClick = ButtonImprInventaireClick
       end
-      object Button1: TButton
+      object ButtonNouveauProd: TButton
         Left = 1155
         Top = 10
         Width = 100
@@ -390,9 +391,9 @@ object FormProduits: TFormProduits
         ParentFont = False
         TabOrder = 2
         StyleElements = [seFont, seClient]
-        OnClick = Button1Click
+        OnClick = ButtonNouveauProdClick
       end
-      object Button3: TButton
+      object ButtonImprCodeBar: TButton
         Left = 935
         Top = 10
         Width = 100
@@ -411,7 +412,7 @@ object FormProduits: TFormProduits
         Images = ImageList1
         ParentFont = False
         TabOrder = 3
-        OnClick = Button3Click
+        OnClick = ButtonImprCodeBarClick
       end
     end
     object GridPanel6: TGridPanel
@@ -439,7 +440,7 @@ object FormProduits: TFormProduits
         end
         item
           Column = 1
-          Control = Button4
+          Control = ButtonPhotoProd
           Row = 3
         end>
       RowCollection = <
@@ -2411,7 +2412,7 @@ object FormProduits: TFormProduits
         ExplicitLeft = 40
         ExplicitTop = 61
       end
-      object Button4: TButton
+      object ButtonPhotoProd: TButton
         Left = 22
         Top = 467
         Width = 280
@@ -2430,7 +2431,7 @@ object FormProduits: TFormProduits
         Images = ImageList1
         ParentFont = False
         TabOrder = 0
-        OnClick = Button4Click
+        OnClick = ButtonPhotoProdClick
       end
     end
     object GridPanel7: TGridPanel
@@ -7629,8 +7630,8 @@ object FormProduits: TFormProduits
       'begin'
       ''
       'end.')
-    Left = 601
-    Top = 505
+    Left = 545
+    Top = 537
     Datasets = <
       item
         DataSet = frxDBDataset1
@@ -8136,5 +8137,10 @@ object FormProduits: TFormProduits
         RTLReading = True
       end
     end
+  end
+  object DataSourceTableProduits: TDataSource
+    DataSet = DataProduits.FDTableProduits
+    Left = 479
+    Top = 449
   end
 end

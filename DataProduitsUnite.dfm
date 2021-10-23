@@ -4,7 +4,7 @@ object DataProduits: TDataProduits
   Width = 1017
   object FDTableProduits: TFDTable
     Active = True
-    IndexFieldNames = 'Producteur;Type;Code;id'
+    IndexFieldNames = 'id;Code'
     Connection = FDConnection1
     UpdateOptions.UpdateTableName = 'Produits'
     TableName = 'Produits'
@@ -34,6 +34,8 @@ object DataProduits: TDataProduits
   end
   object FDQueryFindProduitByCode: TFDQuery
     Active = True
+    AfterEdit = FDQueryFindProduitByCodeAfterEdit
+    AfterPost = FDQueryFindProduitByCodeAfterPost
     Connection = FDConnection1
     SQL.Strings = (
       'select produits.*'
@@ -54,6 +56,31 @@ object DataProduits: TDataProduits
         DataType = ftWideString
         ParamType = ptInput
         Value = Null
+      end>
+  end
+  object FDQueryProdDejaUtilise: TFDQuery
+    Active = True
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select id,code'
+      'from Entree'
+      'where ((id=:x) and (code=:y))'
+      'union'
+      'select id,code'
+      'from stock'
+      'where ((id=:x) and (code=:y))')
+    Left = 608
+    Top = 40
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftWideString
+        ParamType = ptInput
+      end
+      item
+        Name = 'Y'
+        DataType = ftWideString
+        ParamType = ptInput
       end>
   end
 end

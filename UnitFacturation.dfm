@@ -8419,8 +8419,7 @@ object FormFacturation: TFormFacturation
         StyleElements = [seBorder]
         OnChange = ComboBoxTypeSourceChange
         Items.Strings = (
-          #1605#1605#1608#1606
-          #1605#1582#1586#1606)
+          #1605#1605#1608#1606)
       end
       object Label6: TLabel
         Left = 751

@@ -326,10 +326,10 @@ FormAjouterProduits.DateTimePicker1.Date:=date;
    FormAjouterProduits.tp:=DataModule1.FDQueryCodeProduit.FieldValues['type'];
    FormAjouterProduits.prod:=DataModule1.FDQueryCodeProduit.FieldValues['producteur'];
    FormAjouterProduits.id:=DataModule1.FDQueryCodeProduit.FieldValues['id'];
-   FormAjouterProduits.editPrixAchat.Text:=floattostr(DataModule1.FDQueryCodeProduit.FieldValues['PrixAchat']);
-   FormAjouterProduits.editPrixVenteGros.Text:=floattostr(DataModule1.FDQueryCodeProduit.FieldValues['PrixVenteGros']);
-   FormAjouterProduits.editPrixVente.Text:=floattostr(DataModule1.FDQueryCodeProduit.FieldValues['PrixVente']);
-   FormAjouterProduits.EditQuantiteLot.Text:=floattostr(DataModule1.FDQueryCodeProduit.FieldValues['QuantiteLot']);
+//   FormAjouterProduits.editPrixAchat.Text:=floattostr(DataModule1.FDQueryCodeProduit.FieldValues['PrixAchat']);
+//   FormAjouterProduits.editPrixVenteGros.Text:=floattostr(DataModule1.FDQueryCodeProduit.FieldValues['PrixVenteGros']);
+//   FormAjouterProduits.editPrixVente.Text:=floattostr(DataModule1.FDQueryCodeProduit.FieldValues['PrixVente']);
+//   FormAjouterProduits.EditQuantiteLot.Text:=floattostr(DataModule1.FDQueryCodeProduit.FieldValues['QuantiteLot']);
 
        if (DataModule1.FDQueryCodeProduit.FieldValues['Lien']<>null) and(length(DataModule1.FDQueryCodeProduit.FieldValues['Lien'])>0) then
        begin
@@ -344,9 +344,9 @@ FormAjouterProduits.DateTimePicker1.Date:=date;
           Image2.Show
          end;
     FormAjouterProduits.show;
-    FormAjouterProduits.EditProduit.Text:=FormAjouterProduits.id;
-    FormAjouterProduits.ComboBoxProducteur.text:=FormAjouterProduits.prod;
-    FormAjouterProduits.ComboBoxType.Text:=FormAjouterProduits.tp;
+//    FormAjouterProduits.EditProduit.Text:=FormAjouterProduits.id;
+//    FormAjouterProduits.ComboBoxProducteur.text:=FormAjouterProduits.prod;
+//    FormAjouterProduits.ComboBoxType.Text:=FormAjouterProduits.tp;
     balance:=false;
     exist:=true;
     FormAjouterProduits.Panel1.Enabled:=false;
@@ -360,10 +360,10 @@ FormAjouterProduits.DateTimePicker1.Date:=date;
       Image2.Show;
       exist:=false;
       FormAjouterProduits.Panel1.Enabled:=true;
-      FormAjouterProduits.effacer;
+//      FormAjouterProduits.effacer;
      end;
 FormAjouterProduits.f:=5;
-FormAjouterProduits.EditCode.Text:=Edit2.Text;
+//FormAjouterProduits.EditCode.Text:=Edit2.Text;
 Edit2.Clear;
 
 end;

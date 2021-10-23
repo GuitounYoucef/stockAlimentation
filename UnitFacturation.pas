@@ -65,15 +65,11 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure EditCodeProduitKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ButtonProduitsClick(Sender: TObject);
-
     procedure ComboBoxTypeSourceChange(Sender: TObject);
-
     procedure ajouterProduit(codeProd,id:string);
     procedure cxLookupComboBoxCodeProdKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure cxLookupComboBoxNomSourcePropertiesChange(Sender: TObject);
-    //procedure cxLookupComboBoxNomSourcePropertiesChange(Sender: TObject);
-
 
   private
     { Déclarations privées }
@@ -82,10 +78,8 @@ type
   valide:boolean;
   Annee,codebar:string;
   som:longint;
-  num,source,destination,typeops,numstockage:integer;
-
-
-    { Déclarations publiques }
+  num,source,destination,typeops,numstoke:integer;
+  { Déclarations publiques }
   end;
 
 var
@@ -93,22 +87,12 @@ var
   b,exist,balance:boolean;
   tp,id,prod:string;
 
-
-
-
 implementation
 
 {$R *.dfm}
 
 uses UnitPaiementCredit, UnitRechercheNomProduit, UnitAjouterProduits,
   DataFacturationUnite;
-
-
-
-
-
-
-
 
 procedure TFormFacturation.ButtonValiderClick(Sender: TObject);
 begin
@@ -152,15 +136,7 @@ cxLookupComboBoxstockid.ClearSelection;
           cxLookupComboBoxNomSource.Properties.KeyFieldNames:='id';
       end;
 end;
-//______________________________________________________________________________
-procedure TFormFacturation.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
-begin
-     if key=VK_RETURN then
-     begin
-       ajouterProduit('******',cxLookupComboBoxCodeProd.Text);
-     end;
-end;
+
 //------------------------------------------------------------------------------
 procedure TFormFacturation.cxLookupComboBoxNomSourcePropertiesChange(
   Sender: TObject);
@@ -228,6 +204,15 @@ end;
 //------------------------------------------------------------------------------
 //---------------------------  Procedure requettes -----------------------------
 //------------------------------------------------------------------------------
+//______________________________________________________________________________
+procedure TFormFacturation.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     if key=VK_RETURN then
+     begin
+       ajouterProduit('******',cxLookupComboBoxCodeProd.Text);
+     end;
+end;
 
 procedure TFormFacturation.ajouterProduit(codeProd,id:string);
 begin
@@ -238,59 +223,9 @@ begin
       FormAjouterProduits.Repaint;
 
       FormAjouterProduits.TrouverProduitForm(codeProd,id);
-
-      DataFacturation.FDQueryCodeProduit.Params.ParamValues['c']:=codeProd;
-      DataFacturation.FDQueryCodeProduit.Params.ParamValues['i']:=id;
-      DataFacturation.FDQueryCodeProduit.Active:=false;
-      DataFacturation.FDQueryCodeProduit.Active:=true;
-      FormAjouterProduits.DateTimePicker1.Date:=date;
-
-        if DataFacturation.FDQueryCodeProduit.RecordCount=1 then   // Produit déja saisi
-        begin
-         FormAjouterProduits.tp:=DataFacturation.FDQueryCodeProduit.FieldValues['type'];
-         FormAjouterProduits.prod:=DataFacturation.FDQueryCodeProduit.FieldValues['producteur'];
-         FormAjouterProduits.id:=DataFacturation.FDQueryCodeProduit.FieldValues['id'];
-         FormAjouterProduits.editPrixAchat.Text:=floattostr(DataFacturation.FDQueryCodeProduit.FieldValues['PrixAchat']);
-         FormAjouterProduits.editPrixVente.Text:=floattostr(DataFacturation.FDQueryCodeProduit.FieldValues['PrixVente']);
-         FormAjouterProduits.editPrixVenteGros.Text:=floattostr(DataFacturation.FDQueryCodeProduit.FieldValues['PrixVenteGros']);
-         FormAjouterProduits.EditQuantiteLot.Text:=floattostr(DataFacturation.FDQueryCodeProduit.FieldValues['QuantiteLot']);
-         FormAjouterProduits.cxLookupComboBoxStockName.Text:=cxLookupComboBoxstockid.Text;
-             if (DataFacturation.FDQueryCodeProduit.FieldValues['Lien']<>null) and(length(DataFacturation.FDQueryCodeProduit.FieldValues['Lien'])>0) then
-             begin
-               Image2.Picture.LoadFromFile(DataFacturation.FDQueryCodeProduit.FieldValues['Lien']);
-               Image2.Hide;
-               Image2.Show;
-             end
-             else
-               begin
-                Image2.Picture:=nil;
-                Image2.Hide;
-                Image2.Show
-               end;
-          FormAjouterProduits.show;
-          FormAjouterProduits.EditProduit.Text:=FormAjouterProduits.id;
-          FormAjouterProduits.ComboBoxProducteur.text:=FormAjouterProduits.prod;
-          FormAjouterProduits.ComboBoxType.Text:=FormAjouterProduits.tp;
-          balance:=false;
-          exist:=true;
-          FormAjouterProduits.Panel1.Enabled:=false;
-          end
-        else   // Nouveau Produit
-          if length(editCodeProduit.Text)>0 then
-           begin
-            Image2.Picture:=nil;
-            Image2.Hide;
-            Image2.Show;
-            exist:=false;
-            FormAjouterProduits.Panel1.Enabled:=true;
-            FormAjouterProduits.effacer;
-            FormAjouterProduits.show;
-           end;
-
+      FormAjouterProduits.Show;
       FormAjouterProduits.f:=8;
-      FormAjouterProduits.EditCode.Text:=DataFacturation.FDQueryCodeProduit.FieldValues['Code'];
       FormAjouterProduits.cxLookupComboBoxStockName.Text:=cxLookupComboBoxstockid.Text;
-
       EditCodeProduit.Clear;
       end
       else

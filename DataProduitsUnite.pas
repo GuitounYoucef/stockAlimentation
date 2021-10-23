@@ -16,12 +16,21 @@ type
     FDConnection1: TFDConnection;
     FDTableStocksNames: TFDTable;
     FDQueryFindProduitByCode: TFDQuery;
+    FDQueryProdDejaUtilise: TFDQuery;
     procedure TrouverProduit(codeProd,id:string);
+    procedure FDQueryFindProduitByCodeAfterEdit(DataSet: TDataSet);
+    procedure NouveauProduit();
+    function TableProduitEstVite():boolean;
+    procedure chargerImage(lien:string);
+    function ProdDejaUtilise():boolean;
+    procedure FDQueryFindProduitByCodeAfterPost(DataSet: TDataSet);
 
   private
     { Déclarations privées }
   public
     { Déclarations publiques }
+
+
   end;
 
 var
@@ -31,7 +40,51 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
+uses UnitProduits, DataFacturationUnite;
+
 {$R *.dfm}
+procedure TDataProduits.chargerImage(lien: string);
+begin
+    FDTableProduits.Edit;
+    FDTableProduits.FieldValues['lien']:=lien;
+    FDTableProduits.Post;
+end;
+
+procedure TDataProduits.FDQueryFindProduitByCodeAfterEdit(DataSet: TDataSet);
+begin
+  FDQueryFindProduitByCode.Post;
+
+end;
+
+procedure TDataProduits.FDQueryFindProduitByCodeAfterPost(DataSet: TDataSet);
+begin
+  FDTableProduits.Close;
+  FDTableProduits.Open();
+end;
+
+procedure TDataProduits.NouveauProduit;
+begin
+FDQueryFindProduitByCode.Insert;
+end;
+
+function TDataProduits.ProdDejaUtilise: boolean;
+begin
+    FDQueryProdDejaUtilise.Params.ParamValues['x']:=FDTableProduits.FieldValues['id'];
+    FDQueryProdDejaUtilise.Params.ParamValues['y']:=FDTableProduits.FieldValues['code'];
+    FDQueryProdDejaUtilise.Close;
+    FDQueryProdDejaUtilise.Open;
+    if FDQueryProdDejaUtilise.RecordCount=0 then
+     result:=false
+    else result:=true;
+end;
+
+function TDataProduits.TableProduitEstVite: boolean;
+begin
+    if FDTableProduits.RecordCount=0 then
+    result:=true
+    else result:=false;
+end;
+
 procedure TDataProduits.TrouverProduit(codeProd,id:string);
 begin
     FDQueryFindProduitByCode.Params.ParamValues['c']:=codeProd;
