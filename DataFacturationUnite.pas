@@ -126,40 +126,40 @@ end;
 procedure TDataFacturation.NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;
   quantite: real; StockDest: integer; DateProd, Dateconsm: TDateTime);
 begin
-      DataFacturation.FDQueryFactureEntrante.Insert;
-      DataFacturation.FDQueryFactureEntrante.FieldValues['id']:=FDQueryFindProduitByCode.FieldValues['id'];
-      DataFacturation.FDQueryFactureEntrante.FieldValues['Annee']:=formFacturation.Annee;
-      DataFacturation.FDQueryFactureEntrante.FieldValues['num']:=formFacturation.Num;
-      DataFacturation.FDQueryFactureEntrante.FieldValues['type']:=FDQueryFindProduitByCode.FieldValues['type'];
-      DataFacturation.FDQueryFactureEntrante.FieldValues['producteur']:=FDQueryFindProduitByCode.FieldValues['id'];
+      FDQueryFactureEntrante.Insert;
+      FDQueryFactureEntrante.FieldValues['id']:=FDQueryFindProduitByCode.FieldValues['id'];
+      FDQueryFactureEntrante.FieldValues['Annee']:=formFacturation.Annee;
+      FDQueryFactureEntrante.FieldValues['num']:=formFacturation.Num;
+      FDQueryFactureEntrante.FieldValues['type']:=FDQueryFindProduitByCode.FieldValues['type'];
+      FDQueryFactureEntrante.FieldValues['producteur']:=FDQueryFindProduitByCode.FieldValues['id'];
 
-      DataFacturation.FDQueryFactureEntrante.FieldValues['QuantiteLot']:=FDQueryFindProduitByCode.FieldValues['QuantiteLot'];
-      DataFacturation.FDQueryFactureEntrante.FieldValues['PrixAchat']:=FDQueryFindProduitByCode.FieldValues['PrixAchat'];
-      DataFacturation.FDQueryFactureEntrante.FieldValues['PrixVente']:=FDQueryFindProduitByCode.FieldValues['PrixVente'];
-      DataFacturation.FDQueryFactureEntrante.FieldValues['PrixVenteGros']:=FDQueryFindProduitByCode.FieldValues['PrixVenteGros'];
-      DataFacturation.FDQueryFactureEntrante.FieldValues['code']:=FDQueryFindProduitByCode.FieldValues['code'];
-      DataFacturation.FDQueryFactureEntrante.FieldValues['balance']:=false;
+      FDQueryFactureEntrante.FieldValues['QuantiteLot']:=FDQueryFindProduitByCode.FieldValues['QuantiteLot'];
+      FDQueryFactureEntrante.FieldValues['PrixAchat']:=FDQueryFindProduitByCode.FieldValues['PrixAchat'];
+      FDQueryFactureEntrante.FieldValues['PrixVente']:=FDQueryFindProduitByCode.FieldValues['PrixVente'];
+      FDQueryFactureEntrante.FieldValues['PrixVenteGros']:=FDQueryFindProduitByCode.FieldValues['PrixVenteGros'];
+      FDQueryFactureEntrante.FieldValues['code']:=FDQueryFindProduitByCode.FieldValues['code'];
+      FDQueryFactureEntrante.FieldValues['balance']:=false;
 
-      DataFacturation.FDQueryFactureEntrante.FieldValues['Quantite']:=quantite;
-      DataFacturation.FDQueryFactureEntrante.FieldValues['NumStock']:=StockDest;
-      DataFacturation.FDQueryFactureEntrante.FieldValues['DateProd']:=DateProd;
-      DataFacturation.FDQueryFactureEntrante.FieldValues['DateConsm']:=Dateconsm;
-      DataFacturation.FDQueryFactureEntrante.FieldValues['DateEntree']:=date;
+      FDQueryFactureEntrante.FieldValues['Quantite']:=quantite;
+      FDQueryFactureEntrante.FieldValues['NumStock']:=StockDest;
+      FDQueryFactureEntrante.FieldValues['DateProd']:=DateProd;
+      FDQueryFactureEntrante.FieldValues['DateConsm']:=Dateconsm;
+      FDQueryFactureEntrante.FieldValues['DateEntree']:=date;
 
-      DataFacturation.FDQueryFactureEntrante.FieldValues['NumUser']:=DataModule1.FDQuery115.FieldValues['NumUser'];
+      FDQueryFactureEntrante.FieldValues['NumUser']:=DataModule1.FDQuery115.FieldValues['NumUser'];
 
-      DataFacturation.FDQueryFactureEntrante.Next;
-      DataFacturation.FDQueryFactureEntrante.First;
+      FDQueryFactureEntrante.Next;
+      FDQueryFactureEntrante.First;
       formFacturation.som:=0;
-      while not DataFacturation.FDQueryFactureEntrante.Eof do
+      while not FDQueryFactureEntrante.Eof do
       begin
-         formFacturation.som:=formFacturation.som+DataFacturation.FDQueryFactureEntrante.FieldValues['PrixAchat']*DataFacturation.FDQueryFactureEntrante.FieldValues['Quantite'];
-         DataFacturation.FDQueryFactureEntrante.Next;
+         formFacturation.som:=formFacturation.som+FDQueryFactureEntrante.FieldValues['PrixAchat']*FDQueryFactureEntrante.FieldValues['Quantite'];
+         FDQueryFactureEntrante.Next;
          formFacturation.dxGaugeControl1DigitalScale1.Value:=inttostr(formFacturation.som);
       end;
       if (FDQueryFindProduitByCode.FieldValues['Lien']<>null) then
              begin
-               formFacturation.Image2.Picture.LoadFromFile(DataFacturation.FDQueryCodeProduit.FieldValues['Lien']);
+               formFacturation.Image2.Picture.LoadFromFile(FDQueryFindProduitByCode.FieldValues['Lien']);
                formFacturation.Image2.Hide;
                formFacturation.Image2.Show;
              end

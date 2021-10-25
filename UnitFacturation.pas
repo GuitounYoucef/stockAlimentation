@@ -70,6 +70,8 @@ type
     procedure cxLookupComboBoxCodeProdKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure cxLookupComboBoxNomSourcePropertiesChange(Sender: TObject);
+    procedure cxLookupComboBoxstockidFocusChanged(Sender: TObject);
+
 
   private
     { Déclarations privées }
@@ -154,6 +156,13 @@ begin
    DataSourceStocksNamesDestination.DataSet:=DataFacturation.FDQueryStocksNamesDestination;
 end;
 end;
+
+
+procedure TFormFacturation.cxLookupComboBoxstockidFocusChanged(Sender: TObject);
+begin
+  destination:=DataFacturation.TrouverStockNum(cxLookupComboBoxstockid.Text);
+end;
+
 //------------------------------------------------------------------------------
 procedure TFormFacturation.EditCodeProduitKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);

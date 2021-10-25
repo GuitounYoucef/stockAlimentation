@@ -232,12 +232,12 @@ object FormEtatStock: TFormEtatStock
         end
         item
           Column = 4
-          Control = Button2
+          Control = ButtonImprListeStoke
           Row = 1
         end
         item
           Column = 6
-          Control = ButtonCodeBar
+          Control = ButtonConsultation
           Row = 1
         end>
       RowCollection = <
@@ -264,7 +264,7 @@ object FormEtatStock: TFormEtatStock
         TabOrder = 0
         Visible = False
       end
-      object Button2: TButton
+      object ButtonImprListeStoke: TButton
         Left = 947
         Top = 19
         Width = 166
@@ -283,9 +283,9 @@ object FormEtatStock: TFormEtatStock
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 1
-        OnClick = Button2Click
+        OnClick = ButtonImprListeStokeClick
       end
-      object ButtonCodeBar: TButton
+      object ButtonConsultation: TButton
         Left = 1125
         Top = 19
         Width = 164
@@ -303,7 +303,7 @@ object FormEtatStock: TFormEtatStock
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 2
-        OnClick = ButtonCodeBarClick
+        OnClick = ButtonConsultationClick
       end
     end
     object GridPanel4: TGridPanel
@@ -332,17 +332,17 @@ object FormEtatStock: TFormEtatStock
         item
           Column = 1
           ColumnSpan = 3
-          Control = Edit2
+          Control = EditCodeBar
           Row = 1
         end
         item
           Column = 1
-          Control = Button8
+          Control = ButtonBalance
           Row = 3
         end
         item
           Column = 3
-          Control = Button9
+          Control = ButtonListeProd
           Row = 3
         end>
       RowCollection = <
@@ -362,7 +362,7 @@ object FormEtatStock: TFormEtatStock
           Value = 8.621710185468507000
         end>
       TabOrder = 2
-      object Edit2: TEdit
+      object EditCodeBar: TEdit
         Left = 20
         Top = 9
         Width = 284
@@ -382,12 +382,12 @@ object FormEtatStock: TFormEtatStock
         TabOrder = 0
         TextHint = 'Code Bar'
         StyleElements = [seBorder]
-        OnClick = Edit2Click
-        OnEnter = Edit2Enter
-        OnKeyDown = Edit2KeyDown
+        OnClick = EditCodeBarClick
+        OnEnter = EditCodeBarEnter
+        OnKeyDown = EditCodeBarKeyDown
         ExplicitHeight = 34
       end
-      object Button8: TButton
+      object ButtonBalance: TButton
         Left = 20
         Top = 53
         Width = 138
@@ -407,7 +407,7 @@ object FormEtatStock: TFormEtatStock
         ParentFont = False
         TabOrder = 1
       end
-      object Button9: TButton
+      object ButtonListeProd: TButton
         Left = 164
         Top = 53
         Width = 140
@@ -426,7 +426,7 @@ object FormEtatStock: TFormEtatStock
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 2
-        OnClick = Button9Click
+        OnClick = ButtonListeProdClick
       end
     end
     object GridPanel5: TGridPanel

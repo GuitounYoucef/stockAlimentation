@@ -59,25 +59,14 @@ type
     cxDBLookupComboBoxProducteur: TcxDBLookupComboBox;
     procedure ButtonAjouterClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-
-
     procedure NouveauProduit();
-
-  //  procedure EditPrixVenteChange(Sender: TObject);
-
     procedure AjouterStocke();
     function verifierChamp():boolean;
     procedure TrouverProduitForm(codeProd,id:string);
     procedure NouveauProduitForm();
-
-
-
-
     procedure ajouterfacture(typeops,source,destination:integer);
     procedure EditQuntKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-
-
     procedure DBEditCodeKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure DBEditPrixVenteChange(Sender: TObject);
@@ -87,30 +76,19 @@ type
     procedure DBEditPrixAchatKeyPress(Sender: TObject; var Key: Char);
     procedure DBEditPrixVenteGrosKeyPress(Sender: TObject; var Key: Char);
     procedure DBEditPrixVenteKeyPress(Sender: TObject; var Key: Char);
-
-
-
   private
-
     { Déclarations privées }
-
   public
   var f:integer;
       tp,id,prod:string;
       Pachat,Pvente,PventeG,cbar,idP,QtL:boolean;
     { Déclarations publiques }
-
   end;
-
-
 var
   FormAjouterProduits: TFormAjouterProduits;
-
 implementation
-
 {$R *.dfm}
-
-uses UnitEtatStock, UnitProduits, UnitFacturation, Unit25,unit36,
+uses UnitEtatStock, UnitProduits, UnitFacturation, Unit25,
   DataProduitsUnite, DataStocksUnite, DataFacturationUnite;
 //______________________________________________________________________________
 function genererCodeBar():string;
@@ -266,6 +244,7 @@ begin
 //    DataProduits.FDTableProduits.open;
     MessageDlg('تمت إضافة السلعة بنجاح', mtInformation, [mbOK], 0);
 end;
+//______________________________________________________________________________
 procedure TFormAjouterProduits.NouveauProduitForm;
 begin
    DataProduits.NouveauProduit();
@@ -306,7 +285,7 @@ begin
     DataStocks.FDQuerystockAllbyId.Close;
     DataStocks.FDQuerystockAllbyId.Open;
     close;
-    FormEtatStock.edit2.Clear;
+    FormEtatStock.EditCodeBar.Clear;
     end;
 end;
 //______________________________________________________________________________
@@ -318,6 +297,7 @@ begin
     with formFacturation do
     begin
     DataFacturation.NouvelleEntree(DataProduits.FDQueryFindProduitByCode,strtoint(EditQunt.Text),destination,DateTimePicker1.Date,DateTimePicker2.Date);
+    DataStocks.NouvelleEntree(DataProduits.FDQueryFindProduitByCode,strtoint(EditQunt.Text),destination,DateTimePicker1.Date,DateTimePicker2.Date);
     FormAjouterProduits.close;
     EditCodeProduit.Clear;
     end;

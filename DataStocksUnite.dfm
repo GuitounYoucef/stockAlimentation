@@ -42,7 +42,7 @@ object DataStocks: TDataStocks
       'group by stockid.id,stock.id,code,producteur;'
       '')
     Left = 520
-    Top = 48
+    Top = 40
     ParamData = <
       item
         Name = 'X'

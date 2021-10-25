@@ -8563,6 +8563,7 @@ object FormFacturation: TFormFacturation
         Left = 44
         Top = 10
         Align = alClient
+        OnFocusChanged = cxLookupComboBoxstockidFocusChanged
         BiDiMode = bdRightToLeft
         ParentBiDiMode = False
         ParentFont = False
@@ -8586,7 +8587,6 @@ object FormFacturation: TFormFacturation
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
         TabOrder = 3
-        OnKeyDown = cxLookupComboBoxCodeProdKeyDown
         Width = 164
       end
     end

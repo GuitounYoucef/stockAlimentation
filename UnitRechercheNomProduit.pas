@@ -44,10 +44,10 @@ begin
 if (DataModule1.FD28QueryProduitid.RecordCount>0) then
 case f of
  5:begin
-     FormEtatStock.Edit2.Text:=DataModule1.FD28QueryProduitid.FieldValues['code'];
+     FormEtatStock.EditCodeBar.Text:=DataModule1.FD28QueryProduitid.FieldValues['code'];
      k:=VK_RETURN;
      s:=[ssShift];
-     FormEtatStock.Edit2KeyDown(FormRechercheNomProduit,k,s);
+     FormEtatStock.EditCodeBarKeyDown(FormRechercheNomProduit,k,s);
      close;
    end;
  8:begin
