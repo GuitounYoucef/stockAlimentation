@@ -14,4 +14,12 @@ object DataParametrage: TDataParametrage
     Left = 56
     Top = 40
   end
+  object FDTableImprimante: TFDTable
+    Active = True
+    Connection = FDConnection1
+    UpdateOptions.UpdateTableName = 'Imprimantes'
+    TableName = 'Imprimantes'
+    Left = 208
+    Top = 40
+  end
 end

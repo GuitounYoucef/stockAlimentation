@@ -14,7 +14,6 @@ object FormEtatStock: TFormEtatStock
   FormStyle = fsStayOnTop
   OldCreateOrder = False
   Position = poDesktopCenter
-  OnActivate = FormActivate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -134,9 +133,8 @@ object FormEtatStock: TFormEtatStock
         LookAndFeel.ScrollbarMode = sbmDefault
         LookAndFeel.SkinName = 'DarkSide'
         object cxGrid1DBTableView1: TcxGridDBTableView
-          OnDblClick = cxGrid1DBTableView1DblClick
           Navigator.Buttons.CustomButtons = <>
-          DataController.DataSource = DataSource1
+          DataController.DataSource = DataSourceEtatStoke
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <>
           DataController.Summary.SummaryGroups = <>
@@ -201,28 +199,28 @@ object FormEtatStock: TFormEtatStock
       Align = alClient
       ColumnCollection = <
         item
-          Value = 5.444031713206238000
+          Value = 5.242582927141019000
         end
         item
-          Value = 54.462352539572680000
+          Value = 52.447049289457810000
         end
         item
-          Value = 8.996940802702726000
+          Value = 11.902988991363120000
         end
         item
-          Value = 0.919988138281520300
+          Value = 0.885945262814495500
         end
         item
-          Value = 12.264668919476040000
+          Value = 11.944632858072790000
         end
         item
-          Value = 0.920088366217314600
+          Value = 0.886041781955584000
         end
         item
-          Value = 12.080104368237080000
+          Value = 11.960688962872580000
         end
         item
-          Value = 4.911825152306394000
+          Value = 4.730069926322599000
         end>
       ControlCollection = <
         item
@@ -251,6 +249,8 @@ object FormEtatStock: TFormEtatStock
           Value = 24.615130811339770000
         end>
       TabOrder = 1
+      ExplicitLeft = 38
+      ExplicitTop = 644
       DesignSize = (
         1360
         80)
@@ -259,15 +259,15 @@ object FormEtatStock: TFormEtatStock
         Top = 1
         Width = 200
         Height = 18
-        DataSource = DataSource1
+        DataSource = DataSourceEtatStoke
         Anchors = []
         TabOrder = 0
         Visible = False
       end
       object ButtonImprListeStoke: TButton
-        Left = 947
+        Left = 957
         Top = 19
-        Width = 166
+        Width = 162
         Height = 39
         Align = alClient
         BiDiMode = bdRightToLeft
@@ -284,11 +284,13 @@ object FormEtatStock: TFormEtatStock
         ParentFont = False
         TabOrder = 1
         OnClick = ButtonImprListeStokeClick
+        ExplicitLeft = 947
+        ExplicitWidth = 166
       end
       object ButtonConsultation: TButton
-        Left = 1125
+        Left = 1131
         Top = 19
-        Width = 164
+        Width = 162
         Height = 39
         Align = alClient
         BiDiMode = bdRightToLeft
@@ -304,6 +306,8 @@ object FormEtatStock: TFormEtatStock
         ParentFont = False
         TabOrder = 2
         OnClick = ButtonConsultationClick
+        ExplicitLeft = 1125
+        ExplicitWidth = 164
       end
     end
     object GridPanel4: TGridPanel
@@ -427,6 +431,7 @@ object FormEtatStock: TFormEtatStock
         ParentFont = False
         TabOrder = 2
         OnClick = ButtonListeProdClick
+        ExplicitTop = 51
       end
     end
     object GridPanel5: TGridPanel
@@ -486,7 +491,7 @@ object FormEtatStock: TFormEtatStock
         item
           Column = 7
           ColumnSpan = 4
-          Control = ComboBox1
+          Control = ComboBoxStokesListe
           Row = 1
         end
         item
@@ -532,7 +537,7 @@ object FormEtatStock: TFormEtatStock
         OnChange = SearchBox1Change
         OnEnter = SearchBox1Enter
       end
-      object ComboBox1: TComboBox
+      object ComboBoxStokesListe: TComboBox
         Left = 528
         Top = 33
         Width = 312
@@ -546,7 +551,7 @@ object FormEtatStock: TFormEtatStock
         ParentFont = False
         TabOrder = 1
         Text = #1603#1604' '#1575#1604#1605#1582#1575#1586#1606
-        OnSelect = ComboBox1Select
+        OnSelect = ComboBoxStokesListeSelect
         Items.Strings = (
           #1603#1604' '#1575#1604#1605#1582#1575#1586#1606)
       end
@@ -10240,9 +10245,9 @@ object FormEtatStock: TFormEtatStock
       end
     end
   end
-  object DataSource1: TDataSource
-    DataSet = DataModule1.FDQuerystockAll5
-    Left = 1195
+  object DataSourceEtatStoke: TDataSource
+    DataSet = DataStocks.FDQueryEtatStokeId
+    Left = 619
     Top = 424
   end
   object ImageList1: TImageList

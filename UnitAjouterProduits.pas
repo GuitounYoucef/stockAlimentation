@@ -206,6 +206,8 @@ end;
 //______________________________________________________________________________
 procedure TFormAjouterProduits.FormShow(Sender: TObject);
 begin
+    DateTimePicker1.Date:=date;
+    DateTimePicker2.Date:=date+3650;
     LoadKeyboardLayout('00000401', KLF_ACTIVATE);
     EditQunt.Clear;
     EditQunt.SetFocus;
@@ -218,9 +220,9 @@ end;
 procedure TFormAjouterProduits.ButtonAjouterClick(Sender: TObject);
 begin
     case f of
-      5:if (verifierChamp())then
-          AjouterStocke()
-        else MessageDlg('* عليك ملأ الحقول الإجبارية', mtInformation, [mbOK], 0);
+      5://if (verifierChamp())then
+          AjouterStocke();
+        //else MessageDlg('* عليك ملأ الحقول الإجبارية', mtInformation, [mbOK], 0);
        6: NouveauProduitForm();
 
       8:ajouterfacture(formFacturation.typeops,formFacturation.source,formFacturation.destination);
@@ -259,31 +261,36 @@ procedure TFormAjouterProduits.AjouterStocke();    //travail avec FormEtatStock
 begin
     if (strtoint(EditQunt.Text)>0)  then
     begin
-      DataStocks.FDTableStock.Insert;
-//      DataStocks.FDTableStock.FieldValues['id']:=EditProduit.Text;
-//      DataStocks.FDTableStock.FieldValues['code']:=editcode.Text;
-//      DataStocks.FDTableStock.FieldValues['type']:=ComboBoxType.Text;
-//      DataStocks.FDTableStock.FieldValues['producteur']:=ComboBoxProducteur.Text;
-//      DataStocks.FDTableStock.FieldValues['DateProd']:=DateTimePicker1.Date;
-//      DataStocks.FDTableStock.FieldValues['DateConsm']:=DateTimePicker2.Date;
-//      DataStocks.FDTableStock.FieldValues['Quantite']:=strtoint(EditQunt.Text);
-//      DataStocks.FDTableStock.FieldValues['PrixAchat']:=strtofloat(editPrixAchat.Text);
-//      DataStocks.FDTableStock.FieldValues['PrixVente']:=strtofloat(editPrixVente.Text);
-//      DataStocks.FDTableStock.FieldValues['PrixVenteGros']:=strtofloat(editPrixVenteGros.Text);
-//      DataStocks.FDTableStock.FieldValues['QuantiteLot']:=strtofloat(EditQuantiteLot.Text);
-      DataStocks.FDTableStock.FieldValues['DateEntree']:=date;
-      DataStocks.FDTableStock.FieldValues['expire']:=false;
-      DataStocks.FDTableStock.FieldValues['alert']:=false;
+//      DataStocks.FDTableStock.Insert;
+////      DataStocks.FDTableStock.FieldValues['id']:=EditProduit.Text;
+////      DataStocks.FDTableStock.FieldValues['code']:=editcode.Text;
+////      DataStocks.FDTableStock.FieldValues['type']:=ComboBoxType.Text;
+////      DataStocks.FDTableStock.FieldValues['producteur']:=ComboBoxProducteur.Text;
+////      DataStocks.FDTableStock.FieldValues['DateProd']:=DateTimePicker1.Date;
+////      DataStocks.FDTableStock.FieldValues['DateConsm']:=DateTimePicker2.Date;
+////      DataStocks.FDTableStock.FieldValues['Quantite']:=strtoint(EditQunt.Text);
+////      DataStocks.FDTableStock.FieldValues['PrixAchat']:=strtofloat(editPrixAchat.Text);
+////      DataStocks.FDTableStock.FieldValues['PrixVente']:=strtofloat(editPrixVente.Text);
+////      DataStocks.FDTableStock.FieldValues['PrixVenteGros']:=strtofloat(editPrixVenteGros.Text);
+////      DataStocks.FDTableStock.FieldValues['QuantiteLot']:=strtofloat(EditQuantiteLot.Text);
+//      DataStocks.FDTableStock.FieldValues['DateEntree']:=date;
+//      DataStocks.FDTableStock.FieldValues['expire']:=false;
+//      DataStocks.FDTableStock.FieldValues['alert']:=false;
+//      DataStocks.FDQuerySelectStockId.Params.ParamValues['x']:=cxLookupComboBoxStockName.Text;
+//      DataStocks.FDQuerySelectStockId.Active:=false;
+//      DataStocks.FDQuerySelectStockId.Active:=true;
+//      DataStocks.FDTableStock.FieldValues['NumStock']:=DataStocks.FDQuerySelectStockId.FieldValues['numstock'];
+//      DataStocks.FDTableStock.FieldValues['balance']:=FormEtatStock.balance;
+//      DataStocks.FDTableStock.Next;
+//    if not FormEtatStock.exist then
+//       NouveauProduit();
+//    DataStocks.FDQueryEtatStokeId.Close;
+//    DataStocks.FDQueryEtatStokeId.Open;
       DataStocks.FDQuerySelectStockId.Params.ParamValues['x']:=cxLookupComboBoxStockName.Text;
       DataStocks.FDQuerySelectStockId.Active:=false;
       DataStocks.FDQuerySelectStockId.Active:=true;
-      DataStocks.FDTableStock.FieldValues['NumStock']:=DataStocks.FDQuerySelectStockId.FieldValues['numstock'];
-      DataStocks.FDTableStock.FieldValues['balance']:=FormEtatStock.balance;
-      DataStocks.FDTableStock.Next;
-    if not FormEtatStock.exist then
-       NouveauProduit();
-    DataStocks.FDQuerystockAllbyId.Close;
-    DataStocks.FDQuerystockAllbyId.Open;
+
+    DataStocks.NouvelleEntree(DataProduits.FDQueryFindProduitByCode,strtoint(EditQunt.Text),DataStocks.FDQuerySelectStockId.FieldValues['numstock'],DateTimePicker1.Date,DateTimePicker2.Date);
     close;
     FormEtatStock.EditCodeBar.Clear;
     end;

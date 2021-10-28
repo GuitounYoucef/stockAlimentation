@@ -14,9 +14,14 @@ type
   TDataStocks = class(TDataModule)
     FDTableStock: TFDTable;
     FDQuerySelectStockId: TFDQuery;
-    FDQuerystockAllbyId: TFDQuery;
+    FDQueryEtatStokeId: TFDQuery;
     FDConnection1: TFDConnection;
+    FDQuerySomStoke: TFDQuery;
+    FDTableStockid: TFDTable;
     procedure NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;quantite:real;StockDest:integer;DateProd,Dateconsm:TDateTime);
+    procedure selectStoke(StokeName:string);
+    procedure selectAllStokes();
+    procedure rechercheProd(ProdName:string);
   private
     { Déclarations privées }
   public
@@ -74,6 +79,53 @@ begin
                 FormEtatStock.Image2.Hide;
                 FormEtatStock.Image2.Show
                end;
+     selectAllStokes();
+end;
+
+procedure TDataStocks.rechercheProd(ProdName: string);
+begin
+    DataStocks.FDQueryEtatStokeId.Params.ParamValues['i']:='%'+ProdName+'%';
+    DataStocks.FDQueryEtatStokeId.Active:=false;
+    DataStocks.FDQueryEtatStokeId.Active:=true;
+
+    DataStocks.FDQuerySomStoke.Params.ParamValues['i']:='%'+ProdName+'%';
+    DataStocks.FDQuerySomStoke.Close;
+    DataStocks.FDQuerySomStoke.Open();
+end;
+
+procedure TDataStocks.selectAllStokes;
+begin
+    DataStocks.FDQueryEtatStokeId.Params.ParamValues['x']:=0;
+    DataStocks.FDQueryEtatStokeId.Params.ParamValues['y']:=100;
+    FDQueryEtatStokeId.Params.ParamValues['i']:='%%';
+    FDQueryEtatStokeId.Close;
+    FDQueryEtatStokeId.Open();
+
+    DataStocks.FDQuerySomStoke.Params.ParamValues['x']:=0;
+    DataStocks.FDQuerySomStoke.Params.ParamValues['y']:=100;
+    FDQuerySomStoke.Params.ParamValues['i']:='%%';
+    FDQuerySomStoke.Close;
+    FDQuerySomStoke.Open();
+end;
+
+procedure TDataStocks.selectStoke(StokeName:string);
+begin
+    FDQuerySelectStockId.Params.ParamValues['x']:=StokeName;
+    FDQuerySelectStockId.Close;
+    FDQuerySelectStockId.Open();
+    if FDQuerySelectStockId.RecordCount=1 then
+    begin
+      FDQueryEtatStokeId.Params.ParamValues['x']:=FDQuerySelectStockId.FieldValues['numstock']-1;
+      FDQueryEtatStokeId.Params.ParamValues['y']:=FDQuerySelectStockId.FieldValues['numstock']+1;
+      FDQuerySomStoke.Params.ParamValues['x']:=FDQuerySelectStockId.FieldValues['numstock']-1;
+      FDQuerySomStoke.Params.ParamValues['y']:=FDQuerySelectStockId.FieldValues['numstock']+1;
+    end;
+    FDQueryEtatStokeId.Params.ParamValues['i']:='%%';
+    FDQueryEtatStokeId.Active:=false;
+    FDQueryEtatStokeId.Active:=true;
+    FDQuerySomStoke.Params.ParamValues['i']:='%%';
+    FDQuerySomStoke.Close;
+    FDQuerySomStoke.Open();
 end;
 
 end.

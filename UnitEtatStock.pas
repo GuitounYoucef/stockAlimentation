@@ -21,7 +21,7 @@ uses
 
 type
   TFormEtatStock = class(TForm)
-    DataSource1: TDataSource;
+    DataSourceEtatStoke: TDataSource;
     ImageList1: TImageList;
     GridPanel1: TGridPanel;
     GridPanel2: TGridPanel;
@@ -44,7 +44,7 @@ type
     SearchBox1: TSearchBox;
     ButtonBalance: TButton;
     ButtonListeProd: TButton;
-    ComboBox1: TComboBox;
+    ComboBoxStokesListe: TComboBox;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -65,22 +65,18 @@ type
     cxGrid1DBTableView1Column5: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure ButtonImprListeStokeClick(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
-    procedure Edit1Enter(Sender: TObject);
+
     procedure EditCodeBarKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure SearchBox1Change(Sender: TObject);
     procedure SearchBox1Enter(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
     procedure ButtonListeProdClick(Sender: TObject);
     procedure EditCodeBarEnter(Sender: TObject);
     procedure EditCodeBarClick(Sender: TObject);
-    procedure ADOQuery1AfterScroll(DataSet: TDataSet);
     procedure ButtonConsultationClick(Sender: TObject);
-    procedure FormActivate(Sender: TObject);
-    procedure DBGrid1DblClick(Sender: TObject);
-    procedure ComboBox1Select(Sender: TObject);
-    procedure cxGrid1DBTableView1DblClick(Sender: TObject);
+    procedure ComboBoxStokesListeSelect(Sender: TObject);
+
     procedure ajouterProduit(codeProd,id:string);
+
   private
     { Déclarations privées }
   public
@@ -96,62 +92,18 @@ var
   lien:string;
   searchResult : TSearchRec;
 
-
-
 implementation
 
 {$R *.dfm}
 
-uses  UnitRechercheStock, UnitRechercheNomProduit, UnitAjouterProduits, UnitStockDetail, unit36;
-//______________________________________________________________________________
-procedure TFormEtatStock.ADOQuery1AfterScroll(DataSet: TDataSet);
-begin
-    DataModule1.FDQueryCodeProduit.Params.ParamValues['x']:=DataModule1.FDQuerystockAll5.FieldValues['code'];
-    DataModule1.FDQueryCodeProduit.Close;
-    DataModule1.FDQueryCodeProduit.Open;
-    if DataModule1.FDQueryCodeProduit.RecordCount>0 then
-    if DataModule1.FDQueryCodeProduit.FieldValues['Lien']<>null then
-    if FindFirst(DataModule1.FDQueryCodeProduit.FieldValues['Lien'],faAnyFile,searchResult)=0 then
-    Image2.Picture.LoadFromFile(DataModule1.FDQueryCodeProduit.FieldValues['Lien']);
-end;
-//______________________________________________________________________________
+uses  UnitRechercheStock, UnitRechercheNomProduit, UnitAjouterProduits, UnitStockDetail, DataStocksUnite,DataParametrageUnite;
 
 
-procedure TFormEtatStock.BitBtn2Click(Sender: TObject);
-begin
-    DBNavigator1.BtnClick(nbpost);
-end;
 //______________________________________________________________________________
 procedure TFormEtatStock.ButtonImprListeStokeClick(Sender: TObject);
 begin
-    if DataModule1.FDQuerystockAll5.RecordCount>0 then
+    if DataStocks.FDQueryEtatStokeId.RecordCount>0 then
     frxReportNormal.ShowReport(true);
-end;
-//______________________________________________________________________________
-procedure TFormEtatStock.Button3Click(Sender: TObject);
-begin
-    if DataSource1.DataSet=DataModule1.FDQuerystockAll5 then
-    begin
-      if DataModule1.FDQuerystockAll5.RecordCount>0 then
-      if DataModule1.FDQuerystockAll5.FieldValues['s']>0 then
-      if MessageDlg('هل تريد فعلا حذف هذه السلعة من المخزن',mtConfirmation,mbYesNo,0)=mrYes then
-        begin
-          DataModule1.FDQuerystockAll5.Edit;
-          DataModule1.FDQuerystockAll5.FieldValues['s']:=0;
-          DataModule1.FDQuerystockAll5.Post;
-        end
-    end
-    else
-    begin
-      if DataModule1.FDQueryStock5.RecordCount>0 then
-      if DataModule1.FDQueryStock5.FieldValues['Quantite']>0 then
-        if MessageDlg('هل تريد فعلا حذف هذه السلعة من المخزن',mtConfirmation,mbYesNo,0)=mrYes then
-        begin
-          DataModule1.FDQueryStock5.Edit;
-          DataModule1.FDQueryStock5.FieldValues['Quantite']:=0;
-          DataModule1.FDQueryStock5.Post;
-        end;
-    end;
 end;
 //______________________________________________________________________________
 procedure TFormEtatStock.ButtonListeProdClick(Sender: TObject);
@@ -162,20 +114,20 @@ end;
 //______________________________________________________________________________
 procedure updateafficheurs();
 begin
-    if DataModule1.FD5Querysom.RecordCount>0 then
+    if DataStocks.FDQuerySomStoke.RecordCount>0 then
      begin
-      if DataModule1.FD5Querysom.FieldValues['a']>0 then
-      FormEtatStock.dxGaugeControl1DigitalScale1.value:=floattostr(DataModule1.FD5Querysom.FieldValues['a'])
+      if DataStocks.FDQuerySomStoke.FieldValues['a']>0 then    // a:achats
+      FormEtatStock.dxGaugeControl1DigitalScale1.value:=floattostr(DataStocks.FDQuerySomStoke.FieldValues['a'])
       else
-      FormEtatStock.dxGaugeControl1DigitalScale1.Value:='0';
+      FormEtatStock.dxGaugeControl1DigitalScale1.Value:='0';   // v:ventes
 
-      if DataModule1.FD5Querysom.FieldValues['v']>0 then
-      FormEtatStock.dxGaugeDigitalScale1.Value:=floattostr(DataModule1.FD5Querysom.FieldValues['v'])
+      if DataStocks.FDQuerySomStoke.FieldValues['v']>0 then
+      FormEtatStock.dxGaugeDigitalScale1.Value:=floattostr(DataStocks.FDQuerySomStoke.FieldValues['v'])
       else
       FormEtatStock.dxGaugeDigitalScale1.Value:='0';
 
-      if DataModule1.FD5Querysom.FieldValues['b']>0 then
-      FormEtatStock.dxGaugeDigitalScale2.Value:=floattostr(DataModule1.FD5Querysom.FieldValues['b'])
+      if DataStocks.FDQuerySomStoke.FieldValues['b']>0 then    // b:bénifices
+      FormEtatStock.dxGaugeDigitalScale2.Value:=floattostr(DataStocks.FDQuerySomStoke.FieldValues['b'])
       else
       FormEtatStock.dxGaugeDigitalScale2.Value:='0';
      end
@@ -183,92 +135,18 @@ end;
 //______________________________________________________________________________
 procedure TFormEtatStock.ButtonConsultationClick(Sender: TObject);
 begin
-    FormStockDetail.DataSource1.DataSet:=DataModule1.FDTableStock33;
+    FormStockDetail.DataSource1.DataSet:=DataStocks.FDTableStock;
     FormStockDetail.show;
 end;
 //______________________________________________________________________________
-procedure TFormEtatStock.ComboBox1Select(Sender: TObject);
+procedure TFormEtatStock.ComboBoxStokesListeSelect(Sender: TObject);
 begin
-    SearchBox1.Clear;
-    DataModule1.FD8QuerySelectStockId.Params.ParamValues['x']:=ComboBox1.Text;
-    DataModule1.FD8QuerySelectStockId.Close;
-    DataModule1.FD8QuerySelectStockId.Open();
-    if DataModule1.FD8QuerySelectStockId.RecordCount=1 then
-    begin
-      if combobox1.Text='الكل' then
-      begin
-        DataModule1.FDQuerystockAll5.Params.ParamValues['x']:=0;
-        DataModule1.FDQuerystockAll5.Params.ParamValues['y']:=100;
-        DataModule1.FD5Querysom.Params.ParamValues['x']:=0;
-        DataModule1.FD5Querysom.Params.ParamValues['y']:=100;
-      end
-      else
-      begin
-        DataModule1.FDQuerystockAll5.Params.ParamValues['x']:=DataModule1.FD8QuerySelectStockId.FieldValues['numstock']-1;
-        DataModule1.FDQuerystockAll5.Params.ParamValues['y']:=DataModule1.FD8QuerySelectStockId.FieldValues['numstock']+1;
-        DataModule1.FD5Querysom.Params.ParamValues['x']:=DataModule1.FD8QuerySelectStockId.FieldValues['numstock']-1;
-        DataModule1.FD5Querysom.Params.ParamValues['y']:=DataModule1.FD8QuerySelectStockId.FieldValues['numstock']+1;
-      end;
-      DataModule1.FDQuerystockAll5.Params.ParamValues['i']:='%%';
-      DataModule1.FD5Querysom.Params.ParamValues['i']:='%%';
-      DataModule1.FDQuerystockAll5.Active:=false;
-      DataModule1.FDQuerystockAll5.Active:=true;
-      DataModule1.FD5Querysom.Close;
-      DataModule1.FD5Querysom.Open();
-      updateafficheurs();
-    end;
-end;
-//______________________________________________________________________________
-procedure TFormEtatStock.cxGrid1DBTableView1DblClick(Sender: TObject);
-begin
-    if DataSource1.DataSet=DataModule1.FDQuerystockAll5 then
-    begin
-     // DataModule1.FDQueryProduitstock33.Params.ParamValues['x']:=DataModule1.FDQuerystockAll5.FieldValues['id'];
-      DataModule1.FDQueryProduitstock33.Params.ParamValues['y']:=DataModule1.FDQuerystockAll5.FieldValues['code'];
-    end;
-    {else
-    begin
-      DataModule1.FDQueryProduitstock33.Params.ParamValues['x']:=DataModule1.FDQueryRechercheStock.FieldValues['id'];
-      DataModule1.FDQueryProduitstock33.Params.ParamValues['y']:=DataModule1.FDQueryRechercheStock.FieldValues['code'];
-    end; }
-    DataModule1.FDQueryProduitstock33.Close;
-    DataModule1.FDQueryProduitstock33.Open;
-    if DataModule1.FDQueryProduitstock33.RecordCount>0 then
-    begin
-    FormStockDetail.DataSource1.DataSet:=DataModule1.FDQueryProduitstock33;
-    FormStockDetail.show;
-    end;
-end;
-//______________________________________________________________________________
-procedure TFormEtatStock.DBGrid1DblClick(Sender: TObject);
-begin
-    if DataSource1.DataSet=DataModule1.FDQuerystockAll5 then
-      begin
-       // DataModule1.FDQueryProduitstock33.Params.ParamValues['x']:=DataModule1.FDQuerystockAll5.FieldValues['id'];
-        DataModule1.FDQueryProduitstock33.Params.ParamValues['y']:=DataModule1.FDQuerystockAll5.FieldValues['code'];
-      end;
-    {else
-    begin
-      DataModule1.FDQueryProduitstock33.Params.ParamValues['x']:=DataModule1.FDQueryRechercheStock.FieldValues['id'];
-      DataModule1.FDQueryProduitstock33.Params.ParamValues['y']:=DataModule1.FDQueryRechercheStock.FieldValues['code'];
-    end; }
-    DataModule1.FDQueryProduitstock33.Close;
-    DataModule1.FDQueryProduitstock33.Open;
-    if DataModule1.FDQueryProduitstock33.RecordCount>0 then
-      begin
-      FormStockDetail.DataSource1.DataSet:=DataModule1.FDQueryProduitstock33;
-      FormStockDetail.show;
-      end;
-end;
-//______________________________________________________________________________
-procedure TFormEtatStock.Edit1Enter(Sender: TObject);
-begin
-    {
-    if Button4.Caption='Fr' then
-    LoadKeyboardLayout('00000401', KLF_ACTIVATE)
-    else
-    LoadKeyboardLayout('0000040c', KLF_ACTIVATE);
-      }
+  SearchBox1.Clear;
+   if ComboBoxStokesListe.ItemIndex=ComboBoxStokesListe.Items.Count-1 then
+      DataStocks.selectAllStokes()
+  else
+      DataStocks.selectStoke(ComboBoxStokesListe.Text);
+  updateafficheurs();
 end;
 //______________________________________________________________________________
 procedure TFormEtatStock.EditCodeBarClick(Sender: TObject);
@@ -286,50 +164,38 @@ procedure TFormEtatStock.EditCodeBarKeyDown(Sender: TObject; var Key: Word;
 begin
      if key=VK_RETURN then
      begin
-       ajouterProduit('******',EditCodeBar.Text);
+       ajouterProduit(EditCodeBar.Text,'******');
      end;
 
 end;
 
 procedure TFormEtatStock.ajouterProduit(codeProd, id: string);
 begin
-      FormAjouterProduits.Height:=598;
-      FormAjouterProduits.GridPanel1.RowCollection.Items[2].Value:=130;
-      FormAjouterProduits.Repaint;
-      FormAjouterProduits.f:=5;
+    FormAjouterProduits.Height:=598;
+    FormAjouterProduits.GridPanel1.RowCollection.Items[2].Value:=130;
+    FormAjouterProduits.Repaint;
+    FormAjouterProduits.f:=5;
 
-      FormAjouterProduits.TrouverProduitForm(codeProd,id);
-      FormAjouterProduits.Show;
+    FormAjouterProduits.TrouverProduitForm(codeProd,id);
+    FormAjouterProduits.Show;
 
-      EditCodeBar.Clear;
-end;
-//______________________________________________________________________________
-procedure TFormEtatStock.FormActivate(Sender: TObject);
-begin
-    ADOQuery1AfterScroll(datasource1.DataSet);
+    EditCodeBar.Clear;
 end;
 //______________________________________________________________________________
 procedure TFormEtatStock.FormShow(Sender: TObject);
 var i:integer;
 begin
-    DataModule1.FDQuerystockAll5.Params.ParamValues['x']:=0;
-    DataModule1.FDQuerystockAll5.Params.ParamValues['y']:=100;
-    DataModule1.FDQuerystockAll5.Params.ParamValues['i']:='%%';
-    DataModule1.FD5Querysom.Params.ParamValues['x']:=0;
-    DataModule1.FD5Querysom.Params.ParamValues['y']:=100;
-    DataModule1.FD5Querysom.Params.ParamValues['i']:='%%';
-    DataModule1.FDQuerystockAll5.Active:=false;
-    DataModule1.FDQuerystockAll5.Active:=true;
+    DataStocks.selectAllStokes();
     EditCodeBar.SetFocus;
-    frxReportNormal.PrintOptions.Printer:=DataModule1.FDTableImprimante.FieldValues['Normale'];
-    DataModule1.FDTableStockid25.First;
-    ComboBox1.Clear;
-    while not DataModule1.FDTableStockid25.Eof do
+    frxReportNormal.PrintOptions.Printer:=DataParametrage.FDTableImprimante.FieldValues['Normale'];
+    DataStocks.FDTableStockid.First;
+    ComboBoxStokesListe.Clear;
+    while not DataStocks.FDTableStockid.Eof do
         begin
-          ComboBox1.Items.Add(DataModule1.FDTableStockid25.FieldValues['id']);
-          DataModule1.FDTableStockid25.Next;
+          ComboBoxStokesListe.Items.Add(DataStocks.FDTableStockid.FieldValues['id']);
+          DataStocks.FDTableStockid.Next;
         end;
-    ComboBox1.Items.Add('الكل');
+    ComboBoxStokesListe.Items.Add('الكل');
     updateafficheurs();
 end;
 //______________________________________________________________________________
@@ -337,12 +203,7 @@ procedure TFormEtatStock.SearchBox1Change(Sender: TObject);
 begin
     if length(SearchBox1.Text)>0 then
       begin
-        DataModule1.FD5Querysom.Params.ParamValues['i']:='%'+SearchBox1.Text+'%';
-        DataModule1.FDQuerystockAll5.Params.ParamValues['i']:='%'+SearchBox1.Text+'%';
-        DataModule1.FDQuerystockAll5.Active:=false;
-        DataModule1.FDQuerystockAll5.Active:=true;
-        DataModule1.FD5Querysom.Close;
-        DataModule1.FD5Querysom.Open();
+        DataStocks.rechercheProd(SearchBox1.Text);
         updateafficheurs();
       end
 end;
