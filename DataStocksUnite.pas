@@ -22,6 +22,7 @@ type
     procedure selectStoke(StokeName:string);
     procedure selectAllStokes();
     procedure rechercheProd(ProdName:string);
+    procedure EntreeFacture(FDQueryListeProd: TFDQuery;numDest:integer);
   private
     { Déclarations privées }
   public
@@ -40,6 +41,33 @@ uses UnitFacturation, Unit36, UnitEtatStock;
 {$R *.dfm}
 
 { TDataStocks }
+
+procedure TDataStocks.EntreeFacture(FDQueryListeProd: TFDQuery;numDest:integer);
+begin
+    FDQueryListeProd.First;
+    while not FDQueryListeProd.Eof do
+        begin
+          FDTableStock.Insert;
+          FDTableStock.FieldValues['id']:=FDQueryListeProd.FieldValues['id'];
+          FDTableStock.FieldValues['type']:=FDQueryListeProd.FieldValues['type'];
+          FDTableStock.FieldValues['producteur']:=FDQueryListeProd.FieldValues['producteur'];
+          FDTableStock.FieldValues['Quantite']:=FDQueryListeProd.FieldValues['Quantite'];
+          FDTableStock.FieldValues['PrixAchat']:=FDQueryListeProd.FieldValues['PrixAchat'];
+          FDTableStock.FieldValues['PrixVente']:=FDQueryListeProd.FieldValues['PrixVente'];
+          FDTableStock.FieldValues['QuantiteLot']:=FDQueryListeProd.FieldValues['QuantiteLot'];
+          FDTableStock.FieldValues['PrixVenteGros']:=FDQueryListeProd.FieldValues['PrixVenteGros'];
+          FDTableStock.FieldValues['DateProd']:=FDQueryListeProd.FieldValues['DateProd'];
+          FDTableStock.FieldValues['DateConsm']:=FDQueryListeProd.FieldValues['DateConsm'];
+          FDTableStock.FieldValues['code']:=FDQueryListeProd.FieldValues['code'];
+          FDTableStock.FieldValues['balance']:=FDQueryListeProd.FieldValues['balance'];
+          FDTableStock.FieldValues['dateentree']:=date;
+          FDTableStock.FieldValues['expire']:=false;
+          FDTableStock.FieldValues['alert']:=false;
+          FDTableStock.FieldValues['NumStock']:=numDest;
+          FDTableStock.Next;
+          FDQueryListeProd.Next;
+        end;
+end;
 
 procedure TDataStocks.NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;
   quantite: real; StockDest: integer; DateProd, Dateconsm: TDateTime);

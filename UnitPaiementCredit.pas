@@ -42,7 +42,7 @@ implementation
 {$R *.dfm}
 
 uses UnitFacturation, UnitListeFactures, UnitDelivrence,unit36,DataFacturationUnite,
-  UnitDelivrenceData;
+  UnitDelivrenceData, DataStocksUnite;
 
 procedure TFormPaiementCredit.PaimentFactureShow(som:longint);
 begin
@@ -65,24 +65,24 @@ begin
         end;
 
 
-        34: begin
-            if strtofloat(editrest.Text)>=0 then
-            begin
-              with FormListeFactures do
-                begin
-                DataModule1.FD34QueryFacPaie.Edit;
-                DataModule1.FD34QueryFacPaie.FieldValues['total']:=strtofloat(editsom.Text);
-                DataModule1.FD34QueryFacPaie.FieldValues['reste']:=strtofloat(editrest.Text);
-                if strtofloat(editsom.Text)=strtofloat(editrest.Text) then
-                   DataModule1.FD34QueryFacPaie.FieldValues['TypePaiement']:=3;
-                DataModule1.FD34QueryFacPaie.Post;
-                DataModule1.FD34QueryFacPaie.Active:=false;
-                DataModule1.FD34QueryFacPaie.Active:=true;
-                FormPaiementCredit.close;
-                dataModule1.FD34QueryFacPaieAfterScroll(DataModule1.FD34QueryFacPaie);
-                end;
-            end;
-        end;
+          34: begin
+              if strtofloat(editrest.Text)>=0 then
+              begin
+                with FormListeFactures do
+                  begin
+                  DataModule1.FD34QueryFacPaie.Edit;
+                  DataModule1.FD34QueryFacPaie.FieldValues['total']:=strtofloat(editsom.Text);
+                  DataModule1.FD34QueryFacPaie.FieldValues['reste']:=strtofloat(editrest.Text);
+                  if strtofloat(editsom.Text)=strtofloat(editrest.Text) then
+                     DataModule1.FD34QueryFacPaie.FieldValues['TypePaiement']:=3;
+                  DataModule1.FD34QueryFacPaie.Post;
+                  DataModule1.FD34QueryFacPaie.Active:=false;
+                  DataModule1.FD34QueryFacPaie.Active:=true;
+                  FormPaiementCredit.close;
+                  dataModule1.FD34QueryFacPaieAfterScroll(DataModule1.FD34QueryFacPaie);
+                  end;
+              end;
+          end;
 
         8: begin            // Paiment de la facture
             if strtofloat(editrest.Text)>=0 then
@@ -93,31 +93,9 @@ begin
 
                     with formFacturation do
                     begin
-                    DataModule1.FDQueryFacture8.First;
-                      while not DataModule1.FDQueryFacture8.Eof do
-                          begin
-                            DataModule1.FDQueryStock8.Insert;
-                            DataModule1.FDQueryStock8.FieldValues['id']:=DataModule1.FDQueryFacture8.FieldValues['id'];
-                            DataModule1.FDQueryStock8.FieldValues['type']:=DataModule1.FDQueryFacture8.FieldValues['type'];
-                            DataModule1.FDQueryStock8.FieldValues['producteur']:=DataModule1.FDQueryFacture8.FieldValues['producteur'];
-                            DataModule1.FDQueryStock8.FieldValues['Quantite']:=DataModule1.FDQueryFacture8.FieldValues['Quantite'];
-                            DataModule1.FDQueryStock8.FieldValues['PrixAchat']:=DataModule1.FDQueryFacture8.FieldValues['PrixAchat'];
-                            DataModule1.FDQueryStock8.FieldValues['PrixVente']:=DataModule1.FDQueryFacture8.FieldValues['PrixVente'];
-                            DataModule1.FDQueryStock8.FieldValues['QuantiteLot']:=DataModule1.FDQueryFacture8.FieldValues['QuantiteLot'];
-                            DataModule1.FDQueryStock8.FieldValues['PrixVenteGros']:=DataModule1.FDQueryFacture8.FieldValues['PrixVenteGros'];
-                            DataModule1.FDQueryStock8.FieldValues['DateProd']:=DataModule1.FDQueryFacture8.FieldValues['DateProd'];
-                            DataModule1.FDQueryStock8.FieldValues['DateConsm']:=DataModule1.FDQueryFacture8.FieldValues['DateConsm'];
-                            DataModule1.FDQueryStock8.FieldValues['numstock']:=DataModule1.FDQueryFacture8.FieldValues['numstock'];
-                            DataModule1.FDQueryStock8.FieldValues['code']:=DataModule1.FDQueryFacture8.FieldValues['code'];
-                            DataModule1.FDQueryStock8.FieldValues['balance']:=DataModule1.FDQueryFacture8.FieldValues['balance'];
-                            DataModule1.FDQueryStock8.FieldValues['dateentree']:=date;
-                            DataModule1.FDQueryStock8.FieldValues['expire']:=false;
-                            DataModule1.FDQueryStock8.FieldValues['alert']:=false;
-                            DataModule1.FDQueryStock8.Next;
-                          DataModule1.FDQueryFacture8.Next;
-                          end;
-                    close;
-                    valide:=true;
+                        DataStocks.EntreeFacture(DataFacturation.FDQueryFactureEntrante,destination);
+                        close;
+                        valide:=true;
                     end;
                    close;
                   end;

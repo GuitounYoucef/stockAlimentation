@@ -28,6 +28,7 @@ object DataStocks: TDataStocks
       end>
   end
   object FDQueryEtatStokeId: TFDQuery
+    Active = True
     Connection = FDConnection1
     SQL.Strings = (
       
@@ -77,6 +78,7 @@ object DataStocks: TDataStocks
     Top = 40
   end
   object FDQuerySomStoke: TFDQuery
+    Active = True
     Connection = FDConnection1
     SQL.Strings = (
       

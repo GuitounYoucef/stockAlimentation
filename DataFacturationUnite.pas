@@ -55,7 +55,7 @@ type
    function TrouverFournsNum(NomFourn:string):integer;
    function TrouverStockNum(NomStocke:string):integer;
    procedure SupprimerFacture();
-   procedure NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;quantite:real;StockDest:integer;DateProd,Dateconsm:TDateTime);
+   procedure NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;quantite:real;DateProd,Dateconsm:TDateTime);
 
    var facture:Facture;
 
@@ -124,7 +124,7 @@ begin
 end;
 //------------------------------------------------------------------------------
 procedure TDataFacturation.NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;
-  quantite: real; StockDest: integer; DateProd, Dateconsm: TDateTime);
+  quantite: real; DateProd, Dateconsm: TDateTime);
 begin
       FDQueryFactureEntrante.Insert;
       FDQueryFactureEntrante.FieldValues['id']:=FDQueryFindProduitByCode.FieldValues['id'];
@@ -141,7 +141,6 @@ begin
       FDQueryFactureEntrante.FieldValues['balance']:=false;
 
       FDQueryFactureEntrante.FieldValues['Quantite']:=quantite;
-      FDQueryFactureEntrante.FieldValues['NumStock']:=StockDest;
       FDQueryFactureEntrante.FieldValues['DateProd']:=DateProd;
       FDQueryFactureEntrante.FieldValues['DateConsm']:=Dateconsm;
       FDQueryFactureEntrante.FieldValues['DateEntree']:=date;

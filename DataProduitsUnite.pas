@@ -17,7 +17,7 @@ type
     FDTableStocksNames: TFDTable;
     FDQueryFindProduitByCode: TFDQuery;
     FDQueryProdDejaUtilise: TFDQuery;
-    procedure TrouverProduit(codeProd,id:string);
+    function TrouverProduit(codeProd,id:string):boolean;
     procedure FDQueryFindProduitByCodeAfterEdit(DataSet: TDataSet);
     procedure NouveauProduit();
     function TableProduitEstVite():boolean;
@@ -53,7 +53,6 @@ end;
 procedure TDataProduits.FDQueryFindProduitByCodeAfterEdit(DataSet: TDataSet);
 begin
   FDQueryFindProduitByCode.Post;
-
 end;
 
 procedure TDataProduits.FDQueryFindProduitByCodeAfterPost(DataSet: TDataSet);
@@ -85,14 +84,23 @@ begin
     else result:=false;
 end;
 
-procedure TDataProduits.TrouverProduit(codeProd,id:string);
+function TDataProduits.TrouverProduit(codeProd,id:string):boolean;
 begin
     FDQueryFindProduitByCode.Params.ParamValues['c']:=codeProd;
     FDQueryFindProduitByCode.Params.ParamValues['i']:=id;
     FDQueryFindProduitByCode.Active:=false;
     FDQueryFindProduitByCode.Active:=true;
     if FDQueryFindProduitByCode.RecordCount=0 then
+    begin
         FDQueryFindProduitByCode.Insert;
+        if pos('*',id)=0 then
+        FDQueryFindProduitByCode.FieldValues['id']:=id;
+        if pos('*',codeProd)=0 then
+        FDQueryFindProduitByCode.FieldValues['Code']:=codeProd;
+        result:=false;
+    end
+    else result:=true;
+
 end;
 
 end.

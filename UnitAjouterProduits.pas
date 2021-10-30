@@ -57,14 +57,15 @@ type
     DBCheckBox1: TDBCheckBox;
     cxDBLookupComboBoxType: TcxDBLookupComboBox;
     cxDBLookupComboBoxProducteur: TcxDBLookupComboBox;
+    DBNavigatorFindProduitByCode: TDBNavigator;
     procedure ButtonAjouterClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure NouveauProduit();
+
     procedure AjouterStocke();
     function verifierChamp():boolean;
     procedure TrouverProduitForm(codeProd,id:string);
     procedure NouveauProduitForm();
-    procedure ajouterfacture(typeops,source,destination:integer);
+    procedure ajouterfacture();
     procedure EditQuntKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure DBEditCodeKeyDown(Sender: TObject; var Key: Word;
@@ -78,6 +79,7 @@ type
     procedure DBEditPrixVenteKeyPress(Sender: TObject; var Key: Char);
   private
     { Déclarations privées }
+    var ProdExiste:boolean;
   public
   var f:integer;
       tp,id,prod:string;
@@ -219,33 +221,18 @@ end;
 //______________________________________________________________________________
 procedure TFormAjouterProduits.ButtonAjouterClick(Sender: TObject);
 begin
+if not ProdExiste then
+  DBNavigatorFindProduitByCode.BtnClick(nbPost);
     case f of
       5://if (verifierChamp())then
           AjouterStocke();
         //else MessageDlg('* عليك ملأ الحقول الإجبارية', mtInformation, [mbOK], 0);
        6: NouveauProduitForm();
 
-      8:ajouterfacture(formFacturation.typeops,formFacturation.source,formFacturation.destination);
+      8:ajouterfacture();
     end;
 end;
-//______________________________________________________________________________
-procedure TFormAjouterProduits.NouveauProduit();
-begin
-//    DataProduits.FDTableProduits.Insert;
-//    DataProduits.FDTableProduits.FieldValues['id']:=EditProduit.Text;
-//    DataProduits.FDTableProduits.FieldValues['type']:=ComboBoxType.Text;
-//    DataProduits.FDTableProduits.FieldValues['code']:=EditCode.Text;
-//    DataProduits.FDTableProduits.FieldValues['balance']:=CheckBox1.Checked;
-//    DataProduits.FDTableProduits.FieldValues['Producteur']:=ComboBoxProducteur.Text;
-//    DataProduits.FDTableProduits.FieldValues['QuantiteLot']:=strtoint(EditQuantiteLot.Text);
-//    DataProduits.FDTableProduits.FieldValues['PrixAchat']:=strtofloat(EditPrixAchat.Text);
-//    DataProduits.FDTableProduits.FieldValues['PrixVente']:=strtofloat(EditPrixVente.Text);
-//    DataProduits.FDTableProduits.FieldValues['PrixVenteGros']:=strtofloat(EditPrixVenteGros.Text);
-//    DataProduits.FDTableProduits.Next;
-//    DataProduits.FDTableProduits.Close;
-//    DataProduits.FDTableProduits.open;
-    MessageDlg('تمت إضافة السلعة بنجاح', mtInformation, [mbOK], 0);
-end;
+
 //______________________________________________________________________________
 procedure TFormAjouterProduits.NouveauProduitForm;
 begin
@@ -254,38 +241,14 @@ end;
 //______________________________________________________________________________
 procedure TFormAjouterProduits.TrouverProduitForm(codeProd,id:string);
 begin
-   DataProduits.TrouverProduit(codeProd,id);
+   ProdExiste:=DataProduits.TrouverProduit(codeProd,id);
 end;
 
 procedure TFormAjouterProduits.AjouterStocke();    //travail avec FormEtatStock
 begin
     if (strtoint(EditQunt.Text)>0)  then
     begin
-//      DataStocks.FDTableStock.Insert;
-////      DataStocks.FDTableStock.FieldValues['id']:=EditProduit.Text;
-////      DataStocks.FDTableStock.FieldValues['code']:=editcode.Text;
-////      DataStocks.FDTableStock.FieldValues['type']:=ComboBoxType.Text;
-////      DataStocks.FDTableStock.FieldValues['producteur']:=ComboBoxProducteur.Text;
-////      DataStocks.FDTableStock.FieldValues['DateProd']:=DateTimePicker1.Date;
-////      DataStocks.FDTableStock.FieldValues['DateConsm']:=DateTimePicker2.Date;
-////      DataStocks.FDTableStock.FieldValues['Quantite']:=strtoint(EditQunt.Text);
-////      DataStocks.FDTableStock.FieldValues['PrixAchat']:=strtofloat(editPrixAchat.Text);
-////      DataStocks.FDTableStock.FieldValues['PrixVente']:=strtofloat(editPrixVente.Text);
-////      DataStocks.FDTableStock.FieldValues['PrixVenteGros']:=strtofloat(editPrixVenteGros.Text);
-////      DataStocks.FDTableStock.FieldValues['QuantiteLot']:=strtofloat(EditQuantiteLot.Text);
-//      DataStocks.FDTableStock.FieldValues['DateEntree']:=date;
-//      DataStocks.FDTableStock.FieldValues['expire']:=false;
-//      DataStocks.FDTableStock.FieldValues['alert']:=false;
-//      DataStocks.FDQuerySelectStockId.Params.ParamValues['x']:=cxLookupComboBoxStockName.Text;
-//      DataStocks.FDQuerySelectStockId.Active:=false;
-//      DataStocks.FDQuerySelectStockId.Active:=true;
-//      DataStocks.FDTableStock.FieldValues['NumStock']:=DataStocks.FDQuerySelectStockId.FieldValues['numstock'];
-//      DataStocks.FDTableStock.FieldValues['balance']:=FormEtatStock.balance;
-//      DataStocks.FDTableStock.Next;
-//    if not FormEtatStock.exist then
-//       NouveauProduit();
-//    DataStocks.FDQueryEtatStokeId.Close;
-//    DataStocks.FDQueryEtatStokeId.Open;
+
       DataStocks.FDQuerySelectStockId.Params.ParamValues['x']:=cxLookupComboBoxStockName.Text;
       DataStocks.FDQuerySelectStockId.Active:=false;
       DataStocks.FDQuerySelectStockId.Active:=true;
@@ -296,18 +259,17 @@ begin
     end;
 end;
 //______________________________________________________________________________
-procedure TFormAjouterProduits.ajouterfacture(typeops,source,destination:integer);   // FormFacturation
+procedure TFormAjouterProduits.ajouterfacture();   // FormFacturation
 var b:boolean;
     x:integer;
 begin
     b:=false;
     with formFacturation do
-    begin
-    DataFacturation.NouvelleEntree(DataProduits.FDQueryFindProduitByCode,strtoint(EditQunt.Text),destination,DateTimePicker1.Date,DateTimePicker2.Date);
-    DataStocks.NouvelleEntree(DataProduits.FDQueryFindProduitByCode,strtoint(EditQunt.Text),destination,DateTimePicker1.Date,DateTimePicker2.Date);
-    FormAjouterProduits.close;
-    EditCodeProduit.Clear;
-    end;
+      begin
+        DataFacturation.NouvelleEntree(DataProduits.FDQueryFindProduitByCode,strtoint(EditQunt.Text),DateTimePicker1.Date,DateTimePicker2.Date);
+        FormAjouterProduits.close;
+        EditCodeProduit.Clear;
+      end;
 end;
 //______________________________________________________________________________
 function TFormAjouterProduits.verifierChamp():boolean;

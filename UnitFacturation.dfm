@@ -8579,6 +8579,7 @@ object FormFacturation: TFormFacturation
             FieldName = 'NumStock'
           end>
         Properties.ListSource = DataSourceStocksNamesDestination
+        Properties.OnChange = cxLookupComboBoxstockidPropertiesChange
         ShowHint = True
         Style.Font.Charset = ANSI_CHARSET
         Style.Font.Color = clWindowText

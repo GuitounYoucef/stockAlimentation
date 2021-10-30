@@ -71,6 +71,7 @@ type
       Shift: TShiftState);
     procedure cxLookupComboBoxNomSourcePropertiesChange(Sender: TObject);
     procedure cxLookupComboBoxstockidFocusChanged(Sender: TObject);
+    procedure cxLookupComboBoxstockidPropertiesChange(Sender: TObject);
 
 
   private
@@ -163,13 +164,13 @@ begin
   destination:=DataFacturation.TrouverStockNum(cxLookupComboBoxstockid.Text);
 end;
 
-//------------------------------------------------------------------------------
-procedure TFormFacturation.EditCodeProduitKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+
+procedure TFormFacturation.cxLookupComboBoxstockidPropertiesChange(
+  Sender: TObject);
 begin
-   if key=VK_RETURN then
-     ajouterProduit(EditCodeProduit.Text,'*****');
+
 end;
+
 //------------------------------------------------------------------------------
 procedure TFormFacturation.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -223,27 +224,36 @@ begin
      end;
 end;
 
+procedure TFormFacturation.EditCodeProduitKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+   if key=VK_RETURN then
+     ajouterProduit(EditCodeProduit.Text,'*****');
+end;
+//------------------------------------------------------------------------------
 procedure TFormFacturation.ajouterProduit(codeProd,id:string);
 begin
-  if (length(cxLookupComboBoxNomSource.Text)>0) and (length(cxLookupComboBoxstockid.Text)>0) then
+  if ((length(cxLookupComboBoxNomSource.Text)>0) or (length(EditCodeProduit.Text)>0))
+     and (length(cxLookupComboBoxstockid.Text)>0)
+  then
       begin
-      FormAjouterProduits.Height:=598;
-      FormAjouterProduits.GridPanel1.RowCollection.Items[2].Value:=130;
-      FormAjouterProduits.Repaint;
+        FormAjouterProduits.Height:=598;
+        FormAjouterProduits.GridPanel1.RowCollection.Items[2].Value:=130;
+        FormAjouterProduits.Repaint;
 
-      FormAjouterProduits.TrouverProduitForm(codeProd,id);
-      FormAjouterProduits.Show;
-      FormAjouterProduits.f:=8;
-      FormAjouterProduits.cxLookupComboBoxStockName.Text:=cxLookupComboBoxstockid.Text;
-      EditCodeProduit.Clear;
+        FormAjouterProduits.Show;
+        FormAjouterProduits.f:=8;
+        FormAjouterProduits.TrouverProduitForm(codeProd,id);
+        FormAjouterProduits.cxLookupComboBoxStockName.Text:=cxLookupComboBoxstockid.Text;
+        EditCodeProduit.Clear;
       end
       else
       begin
-      if (length(cxLookupComboBoxNomSource.Text)=0) and (length(cxLookupComboBoxstockid.Text)>0) then
-        MessageDlg('عليك إختيار إسم المصدر قبل ملأ الفاتورة', mtInformation, [mbOK], 0)
-      else if (length(cxLookupComboBoxstockid.Text)=0) then
-        MessageDlg('عليك إختيار إسم المخزن قبل ملأ الفاتورة', mtInformation, [mbOK], 0);
-        EditCodeProduit.Clear;
+        if (length(cxLookupComboBoxNomSource.Text)=0) and (length(cxLookupComboBoxstockid.Text)>0) then
+          MessageDlg('عليك إختيار إسم المصدر قبل ملأ الفاتورة', mtInformation, [mbOK], 0)
+        else if (length(cxLookupComboBoxstockid.Text)=0) then
+          MessageDlg('عليك إختيار إسم المخزن قبل ملأ الفاتورة', mtInformation, [mbOK], 0);
+          EditCodeProduit.Clear;
       end;
 end;
 

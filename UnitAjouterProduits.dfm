@@ -2,8 +2,8 @@ object FormAjouterProduits: TFormAjouterProduits
   Left = 0
   Top = 0
   Caption = 'FormAjouterProduits'
-  ClientHeight = 560
-  ClientWidth = 881
+  ClientHeight = 558
+  ClientWidth = 890
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,8 +19,8 @@ object FormAjouterProduits: TFormAjouterProduits
   object GridPanel1: TGridPanel
     Left = 0
     Top = 0
-    Width = 881
-    Height = 560
+    Width = 890
+    Height = 558
     Align = alClient
     ColumnCollection = <
       item
@@ -68,12 +68,11 @@ object FormAjouterProduits: TFormAjouterProduits
     object Panel1: TPanel
       Left = 1
       Top = 101
-      Width = 879
+      Width = 888
       Height = 250
       Align = alClient
       Alignment = taRightJustify
       BiDiMode = bdRightToLeft
-      Enabled = False
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -24
@@ -450,7 +449,7 @@ object FormAjouterProduits: TFormAjouterProduits
     object Panel2: TPanel
       Left = 1
       Top = 351
-      Width = 879
+      Width = 888
       Height = 130
       Align = alClient
       BiDiMode = bdRightToLeft
@@ -642,7 +641,7 @@ object FormAjouterProduits: TFormAjouterProduits
     object Panel3: TPanel
       Left = 1
       Top = 481
-      Width = 879
+      Width = 888
       Height = 80
       Align = alClient
       Font.Charset = ANSI_CHARSET
@@ -686,11 +685,20 @@ object FormAjouterProduits: TFormAjouterProduits
         ParentFont = False
         TabOrder = 1
       end
+      object DBNavigatorFindProduitByCode: TDBNavigator
+        Left = 368
+        Top = 24
+        Width = 240
+        Height = 25
+        DataSource = DataSourceFindProduitByCode
+        TabOrder = 2
+        Visible = False
+      end
     end
     object GridPanel7: TGridPanel
       Left = 1
       Top = 1
-      Width = 879
+      Width = 888
       Height = 100
       Align = alClient
       ColumnCollection = <
@@ -734,7 +742,7 @@ object FormAjouterProduits: TFormAjouterProduits
         end>
       TabOrder = 2
       object Label10: TLabel
-        Left = 636
+        Left = 645
         Top = 10
         Width = 210
         Height = 78
@@ -752,7 +760,7 @@ object FormAjouterProduits: TFormAjouterProduits
         ExplicitHeight = 69
       end
       object Image3: TImage
-        Left = 536
+        Left = 545
         Top = 10
         Width = 100
         Height = 78
