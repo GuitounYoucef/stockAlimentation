@@ -274,21 +274,27 @@ end;
 //______________________________________________________________________________
 function TFormAjouterProduits.verifierChamp():boolean;
 begin
-    if (Pachat) and (Pvente) and (PventeG) and (cbar) and (idP) and (QtL) then
-    begin
-    case f of
-    5,8:begin
-    if ((length(EditQunt.Text)>0)and (length(cxLookupComboBoxStockName.Text)>0)) then
-         Result:=true
-       else Result:=false;
-      end;
-
-    6:Result:=true
-
-    end;
-
-    end
-    else
-    Result:=false;
+  if ((length(EditQunt.Text)>0)) then
+     begin
+        if ((length(cxLookupComboBoxStockName.Text)>0)) then
+           begin
+              if (strtofloat(DBEditQuantiteLot.Text)>0) then
+                 begin
+                    if (strtofloat(DBEditPrixAchat.Text)>strtofloat(DBEditPrixVenteGros.Text)) then
+                       begin
+                          if (strtofloat(DBEditPrixVente.Text)>strtofloat(DBEditPrixVenteGros.Text)) then
+                             begin
+                               Result:=true;
+                             end
+                             else showmessage('سعر البيع بالتجزئة يجب أن يكون أكبر  أو يساوي سعلر البيع بالجملة');
+                       end
+                       else showmessage('سعر البيع بالجملة يجب أن يكون أكبر من سعر الشراء');
+                 end
+                 else showmessage('كمية الوحدة الكبرى يجب أن تكون أكبر أو تساوي 1');
+           end
+           else showmessage('عليك إختيار إسم المخزن');
+     end
+     else showmessage('الكمية الكلية يجب أن تكون أكبر من 0');
+Result:=false;
 end;
 end.
