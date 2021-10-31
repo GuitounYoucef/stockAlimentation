@@ -221,16 +221,16 @@ end;
 //______________________________________________________________________________
 procedure TFormAjouterProduits.ButtonAjouterClick(Sender: TObject);
 begin
-if not ProdExiste then
-  DBNavigatorFindProduitByCode.BtnClick(nbPost);
-    case f of
-      5://if (verifierChamp())then
-          AjouterStocke();
-        //else MessageDlg('* عليك ملأ الحقول الإجبارية', mtInformation, [mbOK], 0);
-       6: NouveauProduitForm();
-
-      8:ajouterfacture();
-    end;
+if verifierChamp() then
+  begin
+    if not ProdExiste then
+    DBNavigatorFindProduitByCode.BtnClick(nbPost);
+      case f of
+        5:AjouterStocke();
+        6: NouveauProduitForm();
+        8:ajouterfacture();
+      end;
+  end;
 end;
 
 //______________________________________________________________________________
@@ -274,15 +274,16 @@ end;
 //______________________________________________________________________________
 function TFormAjouterProduits.verifierChamp():boolean;
 begin
-  if ((length(EditQunt.Text)>0)) then
+Result:=false;
+  if ((strtofloat(EditQunt.Text)>0)) then
      begin
         if ((length(cxLookupComboBoxStockName.Text)>0)) then
            begin
               if (strtofloat(DBEditQuantiteLot.Text)>0) then
                  begin
-                    if (strtofloat(DBEditPrixAchat.Text)>strtofloat(DBEditPrixVenteGros.Text)) then
+                    if (strtofloat(DBEditPrixAchat.Text)<=strtofloat(DBEditPrixVenteGros.Text)) then
                        begin
-                          if (strtofloat(DBEditPrixVente.Text)>strtofloat(DBEditPrixVenteGros.Text)) then
+                          if (strtofloat(DBEditPrixVente.Text)>=strtofloat(DBEditPrixVenteGros.Text)) then
                              begin
                                Result:=true;
                              end
@@ -295,6 +296,6 @@ begin
            else showmessage('عليك إختيار إسم المخزن');
      end
      else showmessage('الكمية الكلية يجب أن تكون أكبر من 0');
-Result:=false;
+
 end;
 end.

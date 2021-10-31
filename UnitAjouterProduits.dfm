@@ -609,6 +609,7 @@ object FormAjouterProduits: TFormAjouterProduits
         NumbersOnly = True
         ParentFont = False
         TabOrder = 2
+        Text = '0'
         TextHint = ' '#1575#1604#1603#1605#1610#1577' '#1575#1604#1603#1604#1610#1577
         StyleElements = [seBorder]
         OnKeyDown = EditQuntKeyDown
