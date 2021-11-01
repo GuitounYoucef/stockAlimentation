@@ -225,4 +225,25 @@ object DataFacturation: TDataFacturation
         Value = '23'
       end>
   end
+  object FDQueryFacture: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select facture.*'
+      'from facture'
+      'where(( Annee=:x) and (Num=:y))')
+    Left = 688
+    Top = 254
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftWideString
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'Y'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
 end

@@ -34,10 +34,11 @@ type
     FDQueryNumFacture: TFDQuery;
     FDQuerySelectFournsseurByName: TFDQuery;
     FDTableImprimante: TFDTable;
-    FDTableFacture: TFDTable;
+    FDQueryFacture: TFDQuery;
     FDQueryStocksNamesDestination: TFDQuery;
     FDTableStockid: TFDTable;
     FDQueryFindStockNum: TFDQuery;
+    FDQueryFacture: TFDQuery;
 
 
   private
@@ -46,6 +47,7 @@ type
   public
     { Déclarations publiques }
     function NouvelleFacture(Var Annee:string;var num:integer):string;
+    function RechercheFacture(Var Annee:string;var num:integer):string;
     procedure EnregistrerFacture();
     procedure ValiderInforFavture(    Num:integer;
                                       Annee:string;
@@ -58,6 +60,7 @@ type
    procedure SupprimerFacture();
    procedure NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;quantite:real;DateProd,Dateconsm:TDateTime);
    procedure SupprimerEntree();
+
 
    var facture:Facture;
 
@@ -199,27 +202,50 @@ begin
     FDQueryFactureEntrante.Active:=false;
     FDQueryFactureEntrante.Active:=true;
 
+    FDQueryFacture.Params.ParamValues['x']:=Annee;
+    FDQueryFacture.Params.ParamValues['y']:=num;
+    FDQueryFacture.Active:=false;
+    FDQueryFacture.Active:=true;
+
+    result:=Annee+'/'+inttostr(num);
+end;
+
+function TDataFacturation.RechercheFacture(var Annee: string;var num: integer): string;
+begin
+    FDQueryFactureEntrante.Params.ParamValues['x']:=Annee;
+    FDQueryFactureEntrante.Params.ParamValues['y']:=num;
+    FDQueryFactureEntrante.Active:=false;
+    FDQueryFactureEntrante.Active:=true;
+
+    FDQueryFacture.Params.ParamValues['x']:=Annee;
+    FDQueryFacture.Params.ParamValues['y']:=num;
+    FDQueryFacture.Active:=false;
+    FDQueryFacture.Active:=true;
+
     result:=Annee+'/'+inttostr(num);
 end;
 
 procedure TDataFacturation.EnregistrerFacture();
 begin
-   FDTableFacture.insert;
-   FDTableFacture.FieldValues['total']:=facture.total;
-   FDTableFacture.FieldValues['reste']:=facture.reste;
-   FDTableFacture.FieldValues['TypePaiement']:=facture.TypePaiement;
+  if FDQueryFacture.recordcount=0 then
+  FDQueryFacture.insert
+  else FDQueryFacture.edit;
+   FDQueryFacture.FieldValues['total']:=facture.total;
+   FDQueryFacture.FieldValues['reste']:=facture.reste;
+   FDQueryFacture.FieldValues['TypePaiement']:=facture.TypePaiement;
 
-   FDTableFacture.FieldValues['annee']:=facture.Annee;
-   FDTableFacture.FieldValues['num']:=facture.num;
-   FDTableFacture.FieldValues['Nomsource']:=facture.NomSource;
-   FDTableFacture.FieldValues['NomDestination']:=facture.NomDestination;
+   FDQueryFacture.FieldValues['annee']:=facture.Annee;
+   FDQueryFacture.FieldValues['num']:=facture.num;
+   FDQueryFacture.FieldValues['Nomsource']:=facture.NomSource;
+   FDQueryFacture.FieldValues['NomDestination']:=facture.NomDestination;
 
-   FDTableFacture.FieldValues['NumSource']:=facture.NumSource;
-   FDTableFacture.FieldValues['source']:=facture.source;
+   FDQueryFacture.FieldValues['NumSource']:=facture.NumSource;
+   FDQueryFacture.FieldValues['source']:=facture.source;
 
-   FDTableFacture.FieldValues['NumDestination']:=facture.NumDestination;
-   FDTableFacture.FieldValues['dat']:=date;
-   FDTableFacture.Next;
+   FDQueryFacture.FieldValues['NumDestination']:=facture.NumDestination;
+   FDQueryFacture.FieldValues['dat']:=date;
+   FDQueryFacture.post;
+
 
 end;
 //------------------------------------------------------------------------------

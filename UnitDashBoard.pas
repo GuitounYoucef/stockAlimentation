@@ -549,7 +549,7 @@ end;
 procedure TFormDashBoard.dxTileControl1Item3Click(Sender: TdxTileControlItem);
 begin
 if Privilege(2) then
-formFacturation.show;
+formFacturation.NouvelleFactureForm();
 end;
 
 procedure TFormDashBoard.dxTileControl1Item4Click(Sender: TdxTileControlItem);

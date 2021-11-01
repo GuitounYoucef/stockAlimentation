@@ -31,7 +31,7 @@ object FormFacturation: TFormFacturation
         Value = 23.937271628451990000
       end
       item
-        Value = 76.062728371548010000
+        Value = 76.062728371548000000
       end>
     ControlCollection = <
       item
@@ -2424,7 +2424,7 @@ object FormFacturation: TFormFacturation
         end>
       RowCollection = <
         item
-          Value = 9.924856540400424000
+          Value = 9.924856540400423000
         end
         item
           Value = 80.103386422045390000
@@ -8169,7 +8169,7 @@ object FormFacturation: TFormFacturation
           Value = 1.370772964638859000
         end
         item
-          Value = 8.278362594216209000
+          Value = 8.278362594216208000
         end
         item
           Value = 3.719899778053390000
@@ -8209,8 +8209,6 @@ object FormFacturation: TFormFacturation
           Value = 14.473842047896810000
         end>
       TabOrder = 4
-      ExplicitLeft = -42
-      ExplicitTop = 687
       object ButtonValider: TButton
         Left = 321
         Top = 9
@@ -8230,8 +8228,6 @@ object FormFacturation: TFormFacturation
         ParentFont = False
         TabOrder = 0
         OnClick = ButtonValiderClick
-        ExplicitLeft = 1173
-        ExplicitWidth = 130
       end
       object ButtonImprimer: TButton
         Left = 60
@@ -8252,8 +8248,6 @@ object FormFacturation: TFormFacturation
         ParentFont = False
         TabOrder = 1
         OnClick = ButtonImprimerClick
-        ExplicitLeft = 1006
-        ExplicitWidth = 140
       end
       object cxButtonSupprimerEntree: TcxButton
         Left = 1191
@@ -8273,10 +8267,6 @@ object FormFacturation: TFormFacturation
         Font.Style = [fsBold]
         ParentFont = False
         OnClick = cxButtonSupprimerEntreeClick
-        ExplicitLeft = -5
-        ExplicitTop = 6
-        ExplicitWidth = 59
-        ExplicitHeight = 8
       end
     end
     object GridPanel9: TGridPanel
@@ -8685,7 +8675,7 @@ object FormFacturation: TFormFacturation
         Align = alClient
         Transparent = True
         object dxGaugeControl1DigitalScale1: TdxGaugeDigitalScale
-          OptionsLayout.HeightFactor = 0.820895552635192800
+          OptionsLayout.HeightFactor = 0.820895552635192900
           OptionsLayout.Stretch = True
           OptionsView.DigitCount = 12
           OptionsView.DisplayMode = sdmSevenSegment
@@ -10462,7 +10452,7 @@ object FormFacturation: TFormFacturation
     Left = 414
     Top = 321
     Bitmap = {
-      494C010101000800040020002000FFFFFFFF2100FFFFFFFFFFFFFFFF424D3600
+      494C010101000800040020002000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000002000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -10994,7 +10984,8 @@ object FormFacturation: TFormFacturation
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
-      00000000000000000000000000000000}
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000}
     DesignInfo = 21037470
     ImageInfo = <
       item

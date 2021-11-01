@@ -79,6 +79,7 @@ type
     procedure cxLookupComboBoxCodeProdPropertiesChange(Sender: TObject);
     procedure EditCodeProduitChange(Sender: TObject);
     procedure selectRechercheObj();
+    procedure NouvelleFactureForm();
 
 
   private
@@ -193,7 +194,8 @@ begin
 MessageDlg(Key + ' has been pressed', mtInformation, [mbOK], 0)
 end;
 
-procedure TFormFacturation.FormShow(Sender: TObject);
+
+procedure TFormFacturation.NouvelleFactureForm;
 begin
     EditNum.Text:=DataFacturation.NouvelleFacture(Annee,Num);
     dxGaugeControl1DigitalScale1.Value:='0';
@@ -205,7 +207,9 @@ begin
     cxLookupComboBoxstockid.ClearSelection;
     cxLookupComboBoxCodeProd.ClearSelection;
     EditCodeProduit.Clear;
+    show;
 end;
+
 //------------------------------------------------------------------------------
 procedure TFormFacturation.selectRechercheObj;
 begin
