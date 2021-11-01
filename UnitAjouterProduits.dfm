@@ -1,9 +1,10 @@
 object FormAjouterProduits: TFormAjouterProduits
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'FormAjouterProduits'
-  ClientHeight = 558
-  ClientWidth = 890
+  ClientHeight = 568
+  ClientWidth = 900
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,8 +20,8 @@ object FormAjouterProduits: TFormAjouterProduits
   object GridPanel1: TGridPanel
     Left = 0
     Top = 0
-    Width = 890
-    Height = 558
+    Width = 900
+    Height = 568
     Align = alClient
     ColumnCollection = <
       item
@@ -65,10 +66,12 @@ object FormAjouterProduits: TFormAjouterProduits
         Value = 80.000000000000000000
       end>
     TabOrder = 0
+    ExplicitWidth = 890
+    ExplicitHeight = 558
     object Panel1: TPanel
       Left = 1
       Top = 101
-      Width = 888
+      Width = 898
       Height = 250
       Align = alClient
       Alignment = taRightJustify
@@ -81,6 +84,7 @@ object FormAjouterProduits: TFormAjouterProduits
       ParentBiDiMode = False
       ParentFont = False
       TabOrder = 0
+      ExplicitWidth = 888
       object Label2: TLabel
         Left = 228
         Top = 34
@@ -449,7 +453,7 @@ object FormAjouterProduits: TFormAjouterProduits
     object Panel2: TPanel
       Left = 1
       Top = 351
-      Width = 888
+      Width = 898
       Height = 130
       Align = alClient
       BiDiMode = bdRightToLeft
@@ -461,6 +465,7 @@ object FormAjouterProduits: TFormAjouterProduits
       ParentBiDiMode = False
       ParentFont = False
       TabOrder = 3
+      ExplicitWidth = 888
       object Label11: TLabel
         Left = 716
         Top = 25
@@ -642,7 +647,7 @@ object FormAjouterProduits: TFormAjouterProduits
     object Panel3: TPanel
       Left = 1
       Top = 481
-      Width = 888
+      Width = 898
       Height = 80
       Align = alClient
       Font.Charset = ANSI_CHARSET
@@ -652,6 +657,7 @@ object FormAjouterProduits: TFormAjouterProduits
       Font.Style = []
       ParentFont = False
       TabOrder = 1
+      ExplicitWidth = 888
       object ButtonAjouter: TButton
         Left = 64
         Top = 19
@@ -699,7 +705,7 @@ object FormAjouterProduits: TFormAjouterProduits
     object GridPanel7: TGridPanel
       Left = 1
       Top = 1
-      Width = 888
+      Width = 898
       Height = 100
       Align = alClient
       ColumnCollection = <
@@ -733,7 +739,7 @@ object FormAjouterProduits: TFormAjouterProduits
         end>
       RowCollection = <
         item
-          Value = 9.924856540400423000
+          Value = 9.924856540400424000
         end
         item
           Value = 80.103386422045390000
@@ -742,8 +748,9 @@ object FormAjouterProduits: TFormAjouterProduits
           Value = 9.971757037554189000
         end>
       TabOrder = 2
+      ExplicitWidth = 888
       object Label10: TLabel
-        Left = 645
+        Left = 654
         Top = 10
         Width = 210
         Height = 78
@@ -757,11 +764,12 @@ object FormAjouterProduits: TFormAjouterProduits
         Font.Style = [fsBold]
         ParentFont = False
         Layout = tlCenter
+        ExplicitLeft = 645
         ExplicitWidth = 202
         ExplicitHeight = 69
       end
       object Image3: TImage
-        Left = 545
+        Left = 554
         Top = 10
         Width = 100
         Height = 78
@@ -6640,7 +6648,7 @@ object FormAjouterProduits: TFormAjouterProduits
   end
   object DataSourceStocksNames: TDataSource
     DataSet = DataProduits.FDTableStocksNames
-    Left = 457
+    Left = 497
     Top = 357
   end
   object DataSourceFindProduitByCode: TDataSource

@@ -11,7 +11,7 @@ uses
   cxLookAndFeelPainters, cxContainer, cxEdit, dxSkinsCore,
   dxSkinsDefaultPainters, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit,
   cxDBLookupEdit, cxDBLookupComboBox, cxClasses, dxGaugeCustomScale,
-  dxGaugeDigitalScale, dxGaugeControl;
+  dxGaugeDigitalScale, dxGaugeControl, Vcl.Menus, cxImageList, cxButtons;
 
 type
   TFormFacturation = class(TForm)
@@ -58,6 +58,9 @@ type
     DataSourceNomSource: TDataSource;
     cxLookupComboBoxstockid: TcxLookupComboBox;
     DataSourceStocksNamesDestination: TDataSource;
+    cxButtonSupprimerEntree: TcxButton;
+    cxImageList1: TcxImageList;
+    DataSourceListProduits: TDataSource;
     procedure FormShow(Sender: TObject);
     procedure ButtonImprimerClick(Sender: TObject);
     procedure ButtonValiderClick(Sender: TObject);
@@ -72,6 +75,10 @@ type
     procedure cxLookupComboBoxNomSourcePropertiesChange(Sender: TObject);
     procedure cxLookupComboBoxstockidFocusChanged(Sender: TObject);
     procedure cxLookupComboBoxstockidPropertiesChange(Sender: TObject);
+    procedure cxButtonSupprimerEntreeClick(Sender: TObject);
+    procedure cxLookupComboBoxCodeProdPropertiesChange(Sender: TObject);
+    procedure EditCodeProduitChange(Sender: TObject);
+    procedure selectRechercheObj();
 
 
   private
@@ -88,13 +95,13 @@ type
 var
   FormFacturation: TFormFacturation;
   b,exist,balance:boolean;
-  tp,id,prod:string;
+  tp,id,prod,rechercheObj:string;
 
 implementation
 
 {$R *.dfm}
 
-uses UnitPaiementCredit, UnitRechercheNomProduit, UnitAjouterProduits,
+uses UnitPaiementCredit, UnitRechercheNomProduit, UnitAjouterProduits, DataProduitsUnite,
   DataFacturationUnite;
 
 procedure TFormFacturation.ButtonValiderClick(Sender: TObject);
@@ -187,27 +194,36 @@ MessageDlg(Key + ' has been pressed', mtInformation, [mbOK], 0)
 end;
 
 procedure TFormFacturation.FormShow(Sender: TObject);
-var myYear, myMonth, myDay : Word;
 begin
-    formFacturation.valide:=false;
-    DecodeDate(Date, myYear, myMonth, myDay);
-    Annee:=IntToStr(myYear);
-
-    DataFacturation.FDQueryNumFacture.Params.ParamValues['x']:=Annee;
-    DataFacturation.FDQueryNumFacture.Active:=false;
-    DataFacturation.FDQueryNumFacture.Active:=true;
-    num:=DataFacturation.FDQueryNumFacture.RecordCount+1;
-    EditNum.Text:=Annee+'/'+inttostr(num);
-
-    DataFacturation.FDQueryFactureEntrante.Params.ParamValues['x']:=Annee;
-    DataFacturation.FDQueryFactureEntrante.Params.ParamValues['y']:=num;
-    DataFacturation.FDQueryFactureEntrante.Active:=false;
-    DataFacturation.FDQueryFactureEntrante.Active:=true;
-    //---------------------------------------------------------------------------
-    dxGaugeControl1DigitalScale1.Value.Empty;
+    EditNum.Text:=DataFacturation.NouvelleFacture(Annee,Num);
+    dxGaugeControl1DigitalScale1.Value:='0';
     valide:=false;
-
     frxReportFacture.PrintOptions.Printer:=DataFacturation.FDTableImprimante.FieldValues['Normale'];
+
+    ComboBoxTypeSource.ItemIndex:=-1;
+    cxLookupComboBoxNomSource.ClearSelection;
+    cxLookupComboBoxstockid.ClearSelection;
+    cxLookupComboBoxCodeProd.ClearSelection;
+    EditCodeProduit.Clear;
+end;
+//------------------------------------------------------------------------------
+procedure TFormFacturation.selectRechercheObj;
+begin
+if rechercheObj='cxLookupComboBox' then
+   cxLookupComboBoxCodeProd.SetFocus
+else
+   EditCodeProduit.SetFocus;
+end;
+
+procedure TFormFacturation.cxLookupComboBoxCodeProdPropertiesChange(
+  Sender: TObject);
+begin
+rechercheObj:='cxLookupComboBox';
+end;
+
+procedure TFormFacturation.EditCodeProduitChange(Sender: TObject);
+begin
+rechercheObj:='EditCodeProduit';
 end;
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
@@ -215,20 +231,31 @@ end;
 //---------------------------  Procedure requettes -----------------------------
 //------------------------------------------------------------------------------
 //______________________________________________________________________________
+procedure TFormFacturation.cxButtonSupprimerEntreeClick(Sender: TObject);
+begin
+    DataFacturation.SupprimerEntree();
+end;
+
 procedure TFormFacturation.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
-     if key=VK_RETURN then
+  if key=VK_RETURN then
      begin
        ajouterProduit('******',cxLookupComboBoxCodeProd.Text);
+       cxLookupComboBoxCodeProd.ClearSelection;
      end;
 end;
+
+
 
 procedure TFormFacturation.EditCodeProduitKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
    if key=VK_RETURN then
+   begin
      ajouterProduit(EditCodeProduit.Text,'*****');
+     EditCodeProduit.Clear;
+   end;
 end;
 //------------------------------------------------------------------------------
 procedure TFormFacturation.ajouterProduit(codeProd,id:string);
@@ -237,15 +264,10 @@ begin
      and (length(cxLookupComboBoxstockid.Text)>0)
   then
       begin
-        FormAjouterProduits.Height:=598;
-        FormAjouterProduits.GridPanel1.RowCollection.Items[2].Value:=130;
-        FormAjouterProduits.Repaint;
-
-        FormAjouterProduits.Show;
-        FormAjouterProduits.f:=8;
+        FormAjouterProduits.AfficherForm(8);
         FormAjouterProduits.TrouverProduitForm(codeProd,id);
         FormAjouterProduits.cxLookupComboBoxStockName.Text:=cxLookupComboBoxstockid.Text;
-        EditCodeProduit.Clear;
+
       end
       else
       begin

@@ -137,9 +137,9 @@ object DataFacturation: TDataFacturation
     Active = True
     Connection = FDConnection1
     SQL.Strings = (
-      'select distinct Entree.Num'
-      'from Entree'
-      'where Entree.Annee=:x')
+      'select distinct Facture.Num'
+      'from Facture'
+      'where Facture.Annee=:x')
     Left = 1120
     Top = 22
     ParamData = <
@@ -147,6 +147,7 @@ object DataFacturation: TDataFacturation
         Name = 'X'
         DataType = ftString
         ParamType = ptInput
+        Value = Null
       end>
   end
   object FDQuerySelectFournsseurByName: TFDQuery

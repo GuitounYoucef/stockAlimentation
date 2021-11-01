@@ -62,7 +62,8 @@ type
     procedure FormShow(Sender: TObject);
 
     procedure AjouterStocke();
-    function verifierChamp():boolean;
+    function verifierChampProd():boolean;
+    function verifierChampQtStock():boolean;
     procedure TrouverProduitForm(codeProd,id:string);
     procedure NouveauProduitForm();
     procedure ajouterfacture();
@@ -77,9 +78,11 @@ type
     procedure DBEditPrixAchatKeyPress(Sender: TObject; var Key: Char);
     procedure DBEditPrixVenteGrosKeyPress(Sender: TObject; var Key: Char);
     procedure DBEditPrixVenteKeyPress(Sender: TObject; var Key: Char);
+    procedure AfficherForm(fenetreSource:integer);
   private
     { Déclarations privées }
     var ProdExiste:boolean;
+
   public
   var f:integer;
       tp,id,prod:string;
@@ -135,16 +138,16 @@ begin
   if (length((Sender as TDBEdit).Text)=0) then
    (Sender as TDBEdit).Text:='0';
     if length(DBEditPrixAchat.Text)>0 then
-    if (strtofloat(DBEditPrixAchat.Text)>=strtofloat(DBEditPrixVente.Text)) or (strtofloat(DBEditPrixVenteGros.Text)>strtofloat(DBEditPrixVente.Text)) then
-    begin
-    DBEditPrixVente.Color:=RGB(255,69,0);        //red
-    Pvente:=false;
-    end
-    else
-    begin
-    DBEditPrixVente.Color:=rgb(50,205,50);      //green
-    Pvente:=true;
-    end;
+      if (strtofloat(DBEditPrixAchat.Text)>=strtofloat(DBEditPrixVente.Text)) or (strtofloat(DBEditPrixVenteGros.Text)>strtofloat(DBEditPrixVente.Text)) then
+      begin
+        DBEditPrixVente.Color:=RGB(255,69,0);        //red
+        Pvente:=false;
+      end
+      else
+      begin
+        DBEditPrixVente.Color:=rgb(50,205,50);      //green
+        Pvente:=true;
+      end;
 end;
 //______________________________________________________________________________
 procedure TFormAjouterProduits.DBEditPrixVenteGrosChange(Sender: TObject);
@@ -152,16 +155,16 @@ begin
   if (length((Sender as TDBEdit).Text)=0) then
    (Sender as TDBEdit).Text:='0';
     if (length(DBEditPrixAchat.Text)>0) and (length(DBEditPrixVente.Text)>0) then
-    if (strtofloat(DBEditPrixVenteGros.Text)<=strtofloat(DBEditPrixAchat.Text)) then
-    begin
-    DBEditPrixVenteGros.Color:=RGB(255,69,0);      //red
-    PventeG:=false;
-    end
-    else
-    begin
-    DBEditPrixVenteGros.Color:=rgb(50,205,50);
-    PventeG:=true;
-    end;
+      if (strtofloat(DBEditPrixVenteGros.Text)<=strtofloat(DBEditPrixAchat.Text)) then
+      begin
+        DBEditPrixVenteGros.Color:=RGB(255,69,0);      //red
+        PventeG:=false;
+      end
+      else
+      begin
+        DBEditPrixVenteGros.Color:=rgb(50,205,50);
+        PventeG:=true;
+      end;
 end;
 //______________________________________________________________________________
 procedure TFormAjouterProduits.DBEditPrixVenteGrosKeyPress(Sender: TObject;
@@ -221,18 +224,49 @@ end;
 //______________________________________________________________________________
 procedure TFormAjouterProduits.ButtonAjouterClick(Sender: TObject);
 begin
-if verifierChamp() then
+if verifierChampProd() then
   begin
     if not ProdExiste then
-    DBNavigatorFindProduitByCode.BtnClick(nbPost);
+    begin
+       DBNavigatorFindProduitByCode.BtnClick(nbPost);
+       ProdExiste:=true;
+    end;
       case f of
-        5:AjouterStocke();
+        5: if verifierChampQtStock() then
+              AjouterStocke();
         6: NouveauProduitForm();
-        8:ajouterfacture();
+        8: if verifierChampQtStock() then
+           begin
+              ajouterfacture();
+              FormFacturation.selectRechercheObj();
+           end;
       end;
   end;
 end;
+procedure TFormAjouterProduits.AfficherForm(fenetreSource:integer);
+begin
+      case fenetreSource of
+        5: begin
+                Height:=598;
+                GridPanel1.RowCollection.Items[2].Value:=130;
+                cxLookupComboBoxStockName.Enabled:=true;
+             end;
+        8: begin
+                Height:=598;
+                GridPanel1.RowCollection.Items[2].Value:=130;
+                cxLookupComboBoxStockName.Enabled:=false;
+             end;
+        6: begin
+                Height:=468;
+                GridPanel1.RowCollection.Items[2].Value:=0;
+                cxLookupComboBoxStockName.Enabled:=true;
+             end;
 
+      end;
+        FormAjouterProduits.Repaint;
+        FormAjouterProduits.Show;
+        FormAjouterProduits.f:=fenetreSource;
+end;
 //______________________________________________________________________________
 procedure TFormAjouterProduits.NouveauProduitForm;
 begin
@@ -248,17 +282,17 @@ procedure TFormAjouterProduits.AjouterStocke();    //travail avec FormEtatStock
 begin
     if (strtoint(EditQunt.Text)>0)  then
     begin
-
       DataStocks.FDQuerySelectStockId.Params.ParamValues['x']:=cxLookupComboBoxStockName.Text;
       DataStocks.FDQuerySelectStockId.Active:=false;
       DataStocks.FDQuerySelectStockId.Active:=true;
-
-    DataStocks.NouvelleEntree(DataProduits.FDQueryFindProduitByCode,strtoint(EditQunt.Text),DataStocks.FDQuerySelectStockId.FieldValues['numstock'],DateTimePicker1.Date,DateTimePicker2.Date);
-    close;
-    FormEtatStock.EditCodeBar.Clear;
+      DataStocks.NouvelleEntree(DataProduits.FDQueryFindProduitByCode,strtoint(EditQunt.Text),DataStocks.FDQuerySelectStockId.FieldValues['numstock'],DateTimePicker1.Date,DateTimePicker2.Date);
+      close;
+      FormEtatStock.EditCodeBar.Clear;
     end;
 end;
 //______________________________________________________________________________
+
+
 procedure TFormAjouterProduits.ajouterfacture();   // FormFacturation
 var b:boolean;
     x:integer;
@@ -268,34 +302,45 @@ begin
       begin
         DataFacturation.NouvelleEntree(DataProduits.FDQueryFindProduitByCode,strtoint(EditQunt.Text),DateTimePicker1.Date,DateTimePicker2.Date);
         FormAjouterProduits.close;
-        EditCodeProduit.Clear;
       end;
 end;
 //______________________________________________________________________________
-function TFormAjouterProduits.verifierChamp():boolean;
+function TFormAjouterProduits.verifierChampProd():boolean;
 begin
 Result:=false;
+  if (strtofloat(DBEditQuantiteLot.Text)>0) then
+     begin
+        if (strtofloat(DBEditPrixAchat.Text)>0) then
+        begin
+            if (strtofloat(DBEditPrixAchat.Text)<=strtofloat(DBEditPrixVenteGros.Text)) then
+               begin
+                  if (strtofloat(DBEditPrixVente.Text)>=strtofloat(DBEditPrixVenteGros.Text)) then
+                     begin
+                       Result:=true;
+                     end
+                     else showmessage('سعر البيع بالتجزئة يجب أن يكون أكبر  أو يساوي سعلر البيع بالجملة');
+               end
+               else showmessage('سعر البيع بالجملة يجب أن يكون أكبر من سعر الشراء');
+        end
+        else showmessage('سعر البيع يجب أن يكون أكبر من 0');
+     end
+     else showmessage('كمية الوحدة الكبرى يجب أن تكون أكبر أو تساوي 1');
+
+end;
+
+
+function TFormAjouterProduits.verifierChampQtStock: boolean;
+begin
+ Result:=false;
   if ((strtofloat(EditQunt.Text)>0)) then
      begin
         if ((length(cxLookupComboBoxStockName.Text)>0)) then
            begin
-              if (strtofloat(DBEditQuantiteLot.Text)>0) then
-                 begin
-                    if (strtofloat(DBEditPrixAchat.Text)<=strtofloat(DBEditPrixVenteGros.Text)) then
-                       begin
-                          if (strtofloat(DBEditPrixVente.Text)>=strtofloat(DBEditPrixVenteGros.Text)) then
-                             begin
-                               Result:=true;
-                             end
-                             else showmessage('سعر البيع بالتجزئة يجب أن يكون أكبر  أو يساوي سعلر البيع بالجملة');
-                       end
-                       else showmessage('سعر البيع بالجملة يجب أن يكون أكبر من سعر الشراء');
-                 end
-                 else showmessage('كمية الوحدة الكبرى يجب أن تكون أكبر أو تساوي 1');
+              Result:=true;
            end
            else showmessage('عليك إختيار إسم المخزن');
      end
      else showmessage('الكمية الكلية يجب أن تكون أكبر من 0');
-
 end;
+
 end.

@@ -88,7 +88,7 @@ begin
             if strtofloat(editrest.Text)>=0 then
                   begin
                     DataFacturation.ValiderMontant(strtofloat(editsom.Text),strtofloat(editrest.Text));
-                    DataFacturation.NouvelleFacture();
+                    DataFacturation.EnregistrerFacture();
                     formFacturation.valide:=true;
 
                     with formFacturation do

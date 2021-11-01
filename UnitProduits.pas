@@ -60,16 +60,8 @@ uses  UnitAjouterProduits,DataProduitsUnite;
 
 procedure TFormProduits.ButtonNouveauProdClick(Sender: TObject);
 begin
-    begin
-      FormAjouterProduits.Panel1.Enabled:=true;
-      FormAjouterProduits.cxLookupComboBoxStockName.Enabled:=true;
-      FormAjouterProduits.Height:=468;
-      FormAjouterProduits.GridPanel1.RowCollection.Items[2].Value:=0;
-    end;
     FormAjouterProduits.NouveauProduitForm();
-    FormAjouterProduits.show;
-
-    FormAjouterProduits.f:=6;
+    FormAjouterProduits.AfficherForm(6);
 end;
 
 procedure TFormProduits.ButtonImprCodeBarClick(Sender: TObject);

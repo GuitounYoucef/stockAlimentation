@@ -37,12 +37,14 @@ object DataProduits: TDataProduits
     AfterEdit = FDQueryFindProduitByCodeAfterEdit
     AfterPost = FDQueryFindProduitByCodeAfterPost
     Connection = FDConnection1
+    UpdateOptions.AssignedValues = [uvCheckReadOnly]
+    UpdateOptions.CheckReadOnly = False
     SQL.Strings = (
       'select produits.*'
       'from produits'
       'where ((Code=:c) or (id=:i))'
       '')
-    Left = 440
+    Left = 424
     Top = 40
     ParamData = <
       item

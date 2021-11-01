@@ -197,12 +197,12 @@ procedure TFormListeFactures.ComboBox1Change(Sender: TObject);
 begin
 if ComboBox1.Text=ComboBox1.Items[0] then
 begin
-DataModule1.FD34QueryFacPaie.Params.ParamValues['x']:=2;
+DataModule1.FD34QueryFacPaie.Params.ParamValues['x']:=1;
 Button3.Enabled:=true;
 end
 else
 begin
-DataModule1.FD34QueryFacPaie.Params.ParamValues['x']:=1;
+DataModule1.FD34QueryFacPaie.Params.ParamValues['x']:=2;
 Button3.Enabled:=false;
 end;
 DataModule1.FD34QueryFacPaie.Close;

@@ -62,6 +62,7 @@ if DataModule1.FDQuery115.RecordCount=1 then
 begin
 //if DataModule1.FDQueryProtec15.RecordCount<5000 then
 begin
+hide;
 FormDashBoard.Show
 end//else close;
 end

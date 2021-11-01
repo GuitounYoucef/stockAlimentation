@@ -166,19 +166,12 @@ begin
      begin
        ajouterProduit(EditCodeBar.Text,'******');
      end;
-
 end;
 
 procedure TFormEtatStock.ajouterProduit(codeProd, id: string);
 begin
-    FormAjouterProduits.Height:=598;
-    FormAjouterProduits.GridPanel1.RowCollection.Items[2].Value:=130;
-    FormAjouterProduits.Repaint;
-    FormAjouterProduits.f:=5;
-
     FormAjouterProduits.TrouverProduitForm(codeProd,id);
-    FormAjouterProduits.Show;
-
+    FormAjouterProduits.AfficherForm(5);
     EditCodeBar.Clear;
 end;
 //______________________________________________________________________________

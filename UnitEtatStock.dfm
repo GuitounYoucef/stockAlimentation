@@ -249,8 +249,6 @@ object FormEtatStock: TFormEtatStock
           Value = 24.615130811339770000
         end>
       TabOrder = 1
-      ExplicitLeft = 38
-      ExplicitTop = 644
       DesignSize = (
         1360
         80)
@@ -284,8 +282,6 @@ object FormEtatStock: TFormEtatStock
         ParentFont = False
         TabOrder = 1
         OnClick = ButtonImprListeStokeClick
-        ExplicitLeft = 947
-        ExplicitWidth = 166
       end
       object ButtonConsultation: TButton
         Left = 1131
@@ -306,8 +302,6 @@ object FormEtatStock: TFormEtatStock
         ParentFont = False
         TabOrder = 2
         OnClick = ButtonConsultationClick
-        ExplicitLeft = 1125
-        ExplicitWidth = 164
       end
     end
     object GridPanel4: TGridPanel
@@ -431,7 +425,6 @@ object FormEtatStock: TFormEtatStock
         ParentFont = False
         TabOrder = 2
         OnClick = ButtonListeProdClick
-        ExplicitTop = 51
       end
     end
     object GridPanel5: TGridPanel

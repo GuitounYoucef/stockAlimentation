@@ -94,9 +94,10 @@ begin
     begin
         FDQueryFindProduitByCode.Insert;
         if pos('*',id)=0 then
-        FDQueryFindProduitByCode.FieldValues['id']:=id;
+           FDQueryFindProduitByCode.FieldValues['id']:=id;
         if pos('*',codeProd)=0 then
-        FDQueryFindProduitByCode.FieldValues['Code']:=codeProd;
+           FDQueryFindProduitByCode.FieldValues['Code']:=codeProd;
+        FDQueryFindProduitByCode.FieldValues['QuantiteLot']:=1;
         result:=false;
     end
     else result:=true;
