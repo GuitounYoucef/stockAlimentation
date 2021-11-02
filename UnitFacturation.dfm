@@ -17,7 +17,6 @@ object FormFacturation: TFormFacturation
   Position = poDesktopCenter
   OnClose = FormClose
   OnKeyPress = FormKeyPress
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object GridPanel1: TGridPanel

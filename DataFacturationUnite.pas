@@ -38,7 +38,8 @@ type
     FDQueryStocksNamesDestination: TFDQuery;
     FDTableStockid: TFDTable;
     FDQueryFindStockNum: TFDQuery;
-    FDQueryFacture: TFDQuery;
+    FDQueryFacturePayee: TFDQuery;
+
 
 
   private
@@ -60,6 +61,7 @@ type
    procedure SupprimerFacture();
    procedure NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;quantite:real;DateProd,Dateconsm:TDateTime);
    procedure SupprimerEntree();
+   function FacturePayeeEstVide(Var Annee:string;var num:integer):boolean;
 
 
    var facture:Facture;
@@ -132,6 +134,18 @@ procedure TDataFacturation.SupprimerEntree;
 begin
 if FDQueryFactureEntrante.RecordCount>0 then
      FDQueryFactureEntrante.Delete;
+
+end;
+
+function TDataFacturation.FacturePayeeEstVide(Var Annee:string;var num:integer): boolean;
+begin
+if FDQueryFacturePayee.RecordCount=0 then
+begin
+Annee:=FDQueryFacturePayee.FieldValues['Annee'];
+num:=FDQueryFacturePayee.FieldValues['num'];
+result:=true;
+end
+else result:=false;
 
 end;
 

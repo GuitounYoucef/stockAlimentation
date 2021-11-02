@@ -61,7 +61,6 @@ type
     cxButtonSupprimerEntree: TcxButton;
     cxImageList1: TcxImageList;
     DataSourceListProduits: TDataSource;
-    procedure FormShow(Sender: TObject);
     procedure ButtonImprimerClick(Sender: TObject);
     procedure ButtonValiderClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
@@ -80,6 +79,8 @@ type
     procedure EditCodeProduitChange(Sender: TObject);
     procedure selectRechercheObj();
     procedure NouvelleFactureForm();
+    procedure RechercheFactureForm(a:string;n:integer);
+    procedure intializationAffichage(aff:boolean);
 
 
   private
@@ -195,11 +196,10 @@ MessageDlg(Key + ' has been pressed', mtInformation, [mbOK], 0)
 end;
 
 
-procedure TFormFacturation.NouvelleFactureForm;
+procedure TFormFacturation.intializationAffichage(aff: boolean);
 begin
-    EditNum.Text:=DataFacturation.NouvelleFacture(Annee,Num);
     dxGaugeControl1DigitalScale1.Value:='0';
-    valide:=false;
+    valide:=not aff;
     frxReportFacture.PrintOptions.Printer:=DataFacturation.FDTableImprimante.FieldValues['Normale'];
 
     ComboBoxTypeSource.ItemIndex:=-1;
@@ -207,7 +207,25 @@ begin
     cxLookupComboBoxstockid.ClearSelection;
     cxLookupComboBoxCodeProd.ClearSelection;
     EditCodeProduit.Clear;
+    ComboBoxTypeSource.Enabled:=aff;
+    cxLookupComboBoxNomSource.Enabled:=aff;
+    cxLookupComboBoxstockid.Enabled:=aff;
     show;
+end;
+
+procedure TFormFacturation.NouvelleFactureForm;
+begin
+
+    EditNum.Text:=DataFacturation.NouvelleFacture(Annee,Num);
+    intializationAffichage(true);
+end;
+
+procedure TFormFacturation.RechercheFactureForm(a:string;n:integer);
+begin
+    Annee:=a;
+    Num:=n;
+    EditNum.Text:=DataFacturation.RechercheFacture(Annee,Num);
+    intializationAffichage(false);
 end;
 
 //------------------------------------------------------------------------------

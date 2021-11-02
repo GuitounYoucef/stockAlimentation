@@ -9,7 +9,7 @@ uses
   Vcl.DBGrids, Data.Win.ADODB, System.ImageList, Vcl.ImgList, frxClass, frxDBSet,
   cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, dxSkinsCore,
   dxSkinsDefaultPainters, cxClasses, dxGaugeCustomScale, dxGaugeDigitalScale,
-  dxGaugeControl;
+  dxGaugeControl, Vcl.Menus, cxImageList, cxButtons;
 
 type
   TFormListeFactures = class(TForm)
@@ -46,12 +46,15 @@ type
     dxGaugeControl1: TdxGaugeControl;
     dxGaugeControl1DigitalScale1: TdxGaugeDigitalScale;
     Label4: TLabel;
+    cxButton1: TcxButton;
+    cxImageList1: TcxImageList;
     procedure ComboBox1Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure ButtonCodeBarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure cxButton1Click(Sender: TObject);
   private
     { Déclarations privées }
   public
@@ -61,13 +64,11 @@ type
 var
 FormListeFactures: TFormListeFactures;
 x:integer;
+
 implementation
 {$R *.dfm}
-uses UnitVenteComptoir, UnitPaiementCredit,unit36;
-//___________________________________________________________________________________
-
-
-
+uses UnitVenteComptoir, UnitPaiementCredit,DataFacturationUnite,unit36,
+  UnitFacturation;
 //____________________________________________________________________________________
 function rechstock():boolean;
 begin
@@ -109,7 +110,7 @@ DataModule1.FD34Querydetail.Post;
 //  Retourne au stock
 DataModule1.FD34QueryStockRetourne.Params.ParamValues['x']:=DataModule1.FD34Querydetail.FieldValues['id'];
 DataModule1.FD34QueryStockRetourne.Params.ParamValues['y']:=DataModule1.FD34Querydetail.FieldValues['code'];
-DataModule1.FD34QueryStockRetourne.Params.ParamValues['z']:=DataModule1.FD34QueryFacPaie.FieldValues['numSource'];
+DataModule1.FD34QueryStockRetourne.Params.ParamValues['z']:=DataFacturation.FDQueryFacturePayee.FieldValues['numSource'];
 DataModule1.FD34QueryStockRetourne.Params.ParamValues['q']:=DataModule1.FD34Querydetail.FieldValues['quantite'];
 DataModule1.FD34QueryStockRetourne.Active:=false;
 DataModule1.FD34QueryStockRetourne.Active:=true;
@@ -142,19 +143,19 @@ end;
 //____________________________________________________________________________________
 procedure TFormListeFactures.Button2Click(Sender: TObject);
 begin
-if DataModule1.FD34QueryFacPaie.RecordCount>0 then
+if DataFacturation.FDQueryFacturePayee.RecordCount>0 then
    frxReport1.ShowReport(true);
 
 end;
 
 procedure TFormListeFactures.Button3Click(Sender: TObject);
 begin
-if DataModule1.FD34QueryFacPaie.RecordCount>0 then
+if DataFacturation.FDQueryFacturePayee.RecordCount>0 then
 begin
 FormPaiementCredit.show;
 FormPaiementCredit.fenetre:=34;
-FormPaiementCredit.EditSom.Text:=DataModule1.FD34QueryFacPaie.FieldValues['total'];
-FormPaiementCredit.editrest.text:=DataModule1.FD34QueryFacPaie.FieldValues['reste'];
+FormPaiementCredit.EditSom.Text:=DataFacturation.FDQueryFacturePayee.FieldValues['total'];
+FormPaiementCredit.editrest.text:=DataFacturation.FDQueryFacturePayee.FieldValues['reste'];
 FormPaiementCredit.EditPaie.Text:=inttostr(strtoint(FormPaiementCredit.EditSom.Text)-
 strtoint(FormPaiementCredit.Editrest.Text));
 end;
@@ -163,7 +164,7 @@ end;
 procedure TFormListeFactures.ButtonCodeBarClick(Sender: TObject);
 var b:boolean;
 begin
-if DataModule1.FD34QueryFacPaie.RecordCount>0 then
+if DataFacturation.FDQueryFacturePayee.RecordCount>0 then
 begin
 b:=false;
 if MessageDlg('هل تريد فعلا حذف هذه السلعة من المخزن',mtConfirmation,mbYesNo,0)=mrYes then
@@ -197,18 +198,38 @@ procedure TFormListeFactures.ComboBox1Change(Sender: TObject);
 begin
     if ComboBox1.Text=ComboBox1.Items[0] then
     begin
-      DataModule1.FD34QueryFacPaie.Params.ParamValues['x']:=1;
+      DataFacturation.FDQueryFacturePayee.Params.ParamValues['x']:=1;
       Button3.Enabled:=true;
     end
     else
     begin
-      DataModule1.FD34QueryFacPaie.Params.ParamValues['x']:=2;
+      DataFacturation.FDQueryFacturePayee.Params.ParamValues['x']:=2;
       Button3.Enabled:=false;
     end;
-    DataModule1.FD34QueryFacPaie.Close;
-    DataModule1.FD34QueryFacPaie.Open;
-    dataModule1.FD34QueryFacPaieAfterScroll(DataModule1.FD34QueryFacPaie);
+    DataFacturation.FDQueryFacturePayee.Close;
+    DataFacturation.FDQueryFacturePayee.Open;
+    if DataFacturation.FDQueryFacturePayee.RecordCount>0 then
+    begin
+      DataModule1.FD34Querydetail.Params.ParamValues['x']:=DataFacturation.FDQueryFacturePayee.FieldValues['annee'];
+      DataModule1.FD34Querydetail.Params.ParamValues['y']:=DataFacturation.FDQueryFacturePayee.FieldValues['num'];
+      DataModule1.FD34Querydetail.Close;
+      DataModule1.FD34Querydetail.Open;
+    end
+    else
+    begin
+      DataModule1.FD34Querydetail.Params.ParamValues['x']:=0;
+      DataModule1.FD34Querydetail.Params.ParamValues['y']:=0;
+      DataModule1.FD34Querydetail.Close;
+      DataModule1.FD34Querydetail.Open;
+    end
 end;
+procedure TFormListeFactures.cxButton1Click(Sender: TObject);
+Var Annee:string; num:integer;
+begin
+if not DataFacturation.FacturePayeeEstVide(Annee,Num) then
+   FormFacturation.RechercheFactureForm(Annee,Num);
+end;
+
 //____________________________________________________________________________________
 procedure TFormListeFactures.FormShow(Sender: TObject);
 begin

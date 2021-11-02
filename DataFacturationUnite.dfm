@@ -246,4 +246,20 @@ object DataFacturation: TDataFacturation
         ParamType = ptInput
       end>
   end
+  object FDQueryFacturePayee: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select facture.*'
+      'from facture'
+      'where TypePaiement=:x')
+    Left = 392
+    Top = 326
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
 end
