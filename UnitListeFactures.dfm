@@ -123,7 +123,7 @@ object FormListeFactures: TFormListeFactures
         TabStop = False
         Align = alClient
         BiDiMode = bdRightToLeft
-        DataSource = DataSource1
+        DataSource = DataSourceFacturePayee
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -15
@@ -142,24 +142,20 @@ object FormListeFactures: TFormListeFactures
         StyleElements = [seBorder]
         Columns = <
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'Annee'
-            Title.Alignment = taCenter
             Title.Caption = #1575#1604#1587#1606#1577
             Title.Font.Charset = ANSI_CHARSET
             Title.Font.Color = clWindowText
             Title.Font.Height = -16
             Title.Font.Name = 'Cairo'
             Title.Font.Style = [fsBold]
-            Width = 70
+            Width = 75
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'Num'
-            Title.Alignment = taCenter
             Title.Caption = #1575#1604#1585#1602#1605
             Title.Font.Charset = ANSI_CHARSET
             Title.Font.Color = clWindowText
@@ -170,63 +166,26 @@ object FormListeFactures: TFormListeFactures
           end
           item
             Expanded = False
-            FieldName = 'NomSource'
-            Title.Caption = #1573#1587#1605' '#1575#1604#1605#1589#1583#1585
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -16
-            Title.Font.Name = 'Cairo'
-            Title.Font.Style = [fsBold]
-            Width = 184
-            Visible = True
-          end
-          item
-            Expanded = False
             FieldName = 'NomDestination'
-            Title.Caption = #1573#1587#1605' '#1575#1604#1608#1580#1607#1577
+            Title.Caption = #1573#1587#1605' '#1575#1604#1605#1605#1608#1606
             Title.Font.Charset = ANSI_CHARSET
             Title.Font.Color = clWindowText
             Title.Font.Height = -16
             Title.Font.Name = 'Cairo'
             Title.Font.Style = [fsBold]
-            Width = 152
+            Width = 249
             Visible = True
           end
           item
-            Expanded = False
-            FieldName = 'total'
-            Title.Caption = #1575#1604#1605#1576#1604#1594' '#1575#1604#1603#1604#1610
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -16
-            Title.Font.Name = 'Cairo'
-            Title.Font.Style = [fsBold]
-            Width = 125
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'reste'
-            Title.Caption = #1575#1604#1605#1576#1604#1594' '#1575#1604#1605#1578#1576#1602#1610
-            Title.Font.Charset = ANSI_CHARSET
-            Title.Font.Color = clWindowText
-            Title.Font.Height = -16
-            Title.Font.Name = 'Cairo'
-            Title.Font.Style = [fsBold]
-            Width = 131
-            Visible = True
-          end
-          item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'dat'
-            Title.Caption = #1578#1575#1585#1610#1582' '#1575#1604#1601#1575#1578#1608#1585#1577
+            Title.Caption = #1575#1604#1578#1575#1585#1610#1582
             Title.Font.Charset = ANSI_CHARSET
             Title.Font.Color = clWindowText
             Title.Font.Height = -16
             Title.Font.Name = 'Cairo'
             Title.Font.Style = [fsBold]
-            Width = 150
+            Width = 158
             Visible = True
           end>
       end
@@ -273,12 +232,12 @@ object FormListeFactures: TFormListeFactures
         end
         item
           Column = 6
-          Control = Button3
+          Control = ButtonPaiment
           Row = 1
         end
         item
           Column = 4
-          Control = ButtonCodeBar
+          Control = ButtonAnnulerFacture
           Row = 1
         end
         item
@@ -288,7 +247,7 @@ object FormListeFactures: TFormListeFactures
         end
         item
           Column = 1
-          Control = cxButton1
+          Control = cxButtonCosulter
           Row = 1
         end>
       RowCollection = <
@@ -314,7 +273,7 @@ object FormListeFactures: TFormListeFactures
         TabOrder = 0
         Visible = False
       end
-      object Button3: TButton
+      object ButtonPaiment: TButton
         Left = 765
         Top = 19
         Width = 160
@@ -334,9 +293,9 @@ object FormListeFactures: TFormListeFactures
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 1
-        OnClick = Button3Click
+        OnClick = ButtonPaimentClick
       end
-      object ButtonCodeBar: TButton
+      object ButtonAnnulerFacture: TButton
         Left = 599
         Top = 19
         Width = 160
@@ -355,7 +314,7 @@ object FormListeFactures: TFormListeFactures
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 2
-        OnClick = ButtonCodeBarClick
+        OnClick = ButtonAnnulerFactureClick
       end
       object Button2: TButton
         Left = 433
@@ -378,7 +337,7 @@ object FormListeFactures: TFormListeFactures
         TabOrder = 3
         OnClick = Button2Click
       end
-      object cxButton1: TcxButton
+      object cxButtonCosulter: TcxButton
         Left = 45
         Top = 19
         Width = 388
@@ -394,11 +353,7 @@ object FormListeFactures: TFormListeFactures
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
-        OnClick = cxButton1Click
-        ExplicitLeft = 56
-        ExplicitTop = 16
-        ExplicitWidth = 75
-        ExplicitHeight = 25
+        OnClick = cxButtonCosulterClick
       end
     end
     object GridPanel5: TGridPanel
@@ -6324,7 +6279,7 @@ object FormListeFactures: TFormListeFactures
         TabStop = False
         Align = alClient
         BiDiMode = bdRightToLeft
-        DataSource = DataSource2
+        DataSource = DataSourceFactureEntrante
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -15
@@ -6507,7 +6462,7 @@ object FormListeFactures: TFormListeFactures
         end
         item
           Column = 2
-          Control = Button1
+          Control = ButtonAnnulerProd
           Row = 1
         end>
       RowCollection = <
@@ -6533,7 +6488,7 @@ object FormListeFactures: TFormListeFactures
         TabOrder = 0
         Visible = False
       end
-      object Button1: TButton
+      object ButtonAnnulerProd: TButton
         Left = 178
         Top = 19
         Width = 160
@@ -6552,19 +6507,19 @@ object FormListeFactures: TFormListeFactures
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 1
-        OnClick = Button1Click
+        OnClick = ButtonAnnulerProdClick
       end
     end
   end
-  object DataSource1: TDataSource
+  object DataSourceFacturePayee: TDataSource
     DataSet = DataFacturation.FDQueryFacturePayee
-    Left = 473
-    Top = 265
+    Left = 1233
+    Top = 257
   end
-  object DataSource2: TDataSource
-    DataSet = DataModule1.FD34Querydetail
-    Left = 65
-    Top = 265
+  object DataSourceFactureEntrante: TDataSource
+    DataSet = DataFacturation.FDQueryFactureEntrante
+    Left = 281
+    Top = 249
   end
   object ImageList2: TImageList
     ColorDepth = cd32Bit

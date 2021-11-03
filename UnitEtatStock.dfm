@@ -58,9 +58,13 @@ object FormEtatStock: TFormEtatStock
         Row = 2
       end
       item
-        Column = 0
-        ColumnSpan = 2
+        Column = 1
         Control = GridPanel7
+        Row = 0
+      end
+      item
+        Column = 0
+        Control = GridPanel8
         Row = 0
       end>
     RowCollection = <
@@ -2751,9 +2755,9 @@ object FormEtatStock: TFormEtatStock
       end
     end
     object GridPanel7: TGridPanel
-      Left = 1
+      Left = 326
       Top = 1
-      Width = 1360
+      Width = 1035
       Height = 100
       Align = alClient
       ColumnCollection = <
@@ -2796,8 +2800,11 @@ object FormEtatStock: TFormEtatStock
           Value = 9.971757037554189000
         end>
       TabOrder = 5
+      ExplicitLeft = 0
+      ExplicitTop = 4
+      ExplicitWidth = 1360
       object Image3: TImage
-        Left = 929
+        Left = 623
         Top = 10
         Width = 120
         Height = 78
@@ -6222,7 +6229,7 @@ object FormEtatStock: TFormEtatStock
         ExplicitWidth = 122
       end
       object Panel1: TPanel
-        Left = 1049
+        Left = 743
         Top = 10
         Width = 250
         Height = 78
@@ -6239,6 +6246,7 @@ object FormEtatStock: TFormEtatStock
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 0
+        ExplicitLeft = 1049
         object Image1: TImage
           Left = 1032
           Top = 5
@@ -10237,6 +10245,93 @@ object FormEtatStock: TFormEtatStock
         end
       end
     end
+    object GridPanel8: TGridPanel
+      Left = 1
+      Top = 1
+      Width = 325
+      Height = 100
+      Align = alClient
+      BiDiMode = bdRightToLeft
+      ColumnCollection = <
+        item
+          Value = 8.512344095729242000
+        end
+        item
+          Value = 76.870150660052810000
+        end
+        item
+          Value = 6.178106380653868000
+        end
+        item
+          SizeStyle = ssAbsolute
+          Value = 100.000000000000000000
+        end
+        item
+          Value = 8.439398863564058000
+        end>
+      ControlCollection = <
+        item
+          Column = 1
+          ColumnSpan = 3
+          Control = cxLookupComboBoxCodeProd
+          Row = 1
+        end>
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -24
+      Font.Name = 'Times New Roman'
+      Font.Style = []
+      ParentBiDiMode = False
+      ParentFont = False
+      RowCollection = <
+        item
+          Value = 49.977607345673410000
+        end
+        item
+          SizeStyle = ssAbsolute
+          Value = 38.000000000000000000
+        end
+        item
+          Value = 50.022392654326590000
+        end>
+      TabOrder = 6
+      ExplicitLeft = 9
+      ExplicitTop = 9
+      object cxLookupComboBoxCodeProd: TcxLookupComboBox
+        Left = 19
+        Top = 30
+        Align = alClient
+        BiDiMode = bdLeftToRight
+        ParentBiDiMode = False
+        ParentFont = False
+        ParentShowHint = False
+        Properties.DropDownAutoSize = True
+        Properties.DropDownSizeable = True
+        Properties.KeyFieldNames = 'id'
+        Properties.ListColumns = <
+          item
+            Width = 330
+            FieldName = 'id'
+          end
+          item
+            Width = 300
+            FieldName = 'code'
+          end>
+        Properties.ListSource = DataSourceListProduits
+        ShowHint = True
+        Style.Font.Charset = ANSI_CHARSET
+        Style.Font.Color = clWindowText
+        Style.Font.Height = -17
+        Style.Font.Name = 'Times New Roman'
+        Style.Font.Style = []
+        Style.IsFontAssigned = True
+        TabOrder = 0
+        OnKeyDown = cxLookupComboBoxCodeProdKeyDown
+        ExplicitTop = 10
+        ExplicitHeight = 21
+        Width = 284
+      end
+    end
   end
   object DataSourceEtatStoke: TDataSource
     DataSet = DataStocks.FDQueryEtatStokeId
@@ -10248,8 +10343,8 @@ object FormEtatStock: TFormEtatStock
     DrawingStyle = dsFocus
     Height = 30
     Width = 30
-    Left = 82
-    Top = 55
+    Left = 434
+    Top = 79
     Bitmap = {
       494C01010800380004001E001E00FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000780000005A0000000100200000000000C0A8
@@ -12013,5 +12108,10 @@ object FormEtatStock: TFormEtatStock
     BCDToCurrency = False
     Left = 1073
     Top = 425
+  end
+  object DataSourceListProduits: TDataSource
+    DataSet = DataProduits.FDTableProduits
+    Left = 451
+    Top = 352
   end
 end

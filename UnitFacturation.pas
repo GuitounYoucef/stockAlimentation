@@ -79,7 +79,7 @@ type
     procedure EditCodeProduitChange(Sender: TObject);
     procedure selectRechercheObj();
     procedure NouvelleFactureForm();
-    procedure RechercheFactureForm(a:string;n:integer);
+    procedure RechercheFactureForm(a,d:string;n:integer);
     procedure intializationAffichage(aff:boolean);
 
 
@@ -88,7 +88,7 @@ type
   public
   var
   valide:boolean;
-  Annee,codebar:string;
+  Annee,codebar,NomDestination:string;
   som:longint;
   num,source,destination,typeops,numstoke:integer;
   { Déclarations publiques }
@@ -171,6 +171,7 @@ end;
 procedure TFormFacturation.cxLookupComboBoxstockidFocusChanged(Sender: TObject);
 begin
   destination:=DataFacturation.TrouverStockNum(cxLookupComboBoxstockid.Text);
+  NomDestination:=cxLookupComboBoxstockid.Text;
 end;
 
 
@@ -220,10 +221,12 @@ begin
     intializationAffichage(true);
 end;
 
-procedure TFormFacturation.RechercheFactureForm(a:string;n:integer);
+procedure TFormFacturation.RechercheFactureForm(a,d:string;n:integer);
 begin
     Annee:=a;
     Num:=n;
+    NomDestination:=d;
+    destination:=DataFacturation.TrouverStockNum(d);
     EditNum.Text:=DataFacturation.RechercheFacture(Annee,Num);
     intializationAffichage(false);
 end;
@@ -282,18 +285,18 @@ end;
 //------------------------------------------------------------------------------
 procedure TFormFacturation.ajouterProduit(codeProd,id:string);
 begin
-  if ((length(cxLookupComboBoxNomSource.Text)>0) or (length(EditCodeProduit.Text)>0))
-     and (length(cxLookupComboBoxstockid.Text)>0)
+  if (((length(cxLookupComboBoxNomSource.Text)>0) or (length(EditCodeProduit.Text)>0))
+     and (length(cxLookupComboBoxstockid.Text)>0)) or(cxLookupComboBoxstockid.Enabled=false)
   then
       begin
         FormAjouterProduits.AfficherForm(8);
         FormAjouterProduits.TrouverProduitForm(codeProd,id);
-        FormAjouterProduits.cxLookupComboBoxStockName.Text:=cxLookupComboBoxstockid.Text;
+        FormAjouterProduits.cxLookupComboBoxStockName.Text:=NomDestination;
 
       end
       else
       begin
-        if (length(cxLookupComboBoxNomSource.Text)=0) and (length(cxLookupComboBoxstockid.Text)>0) then
+        if (length(cxLookupComboBoxNomSource.Text)=0) and (length(NomDestination)>0) then
           MessageDlg('عليك إختيار إسم المصدر قبل ملأ الفاتورة', mtInformation, [mbOK], 0)
         else if (length(cxLookupComboBoxstockid.Text)=0) then
           MessageDlg('عليك إختيار إسم المخزن قبل ملأ الفاتورة', mtInformation, [mbOK], 0);

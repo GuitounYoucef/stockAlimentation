@@ -17,7 +17,9 @@ uses
   cxClasses, dxGaugeCustomScale, dxGaugeDigitalScale, dxGaugeControl, cxStyles,
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
   dxDateRanges, cxDBData, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, cxGridLevel, cxGridCustomView, cxGrid;
+  cxGridDBTableView, cxGridLevel, cxGridCustomView, cxGrid, cxContainer,
+  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit,
+  cxDBLookupComboBox;
 
 type
   TFormEtatStock = class(TForm)
@@ -63,6 +65,9 @@ type
     cxGrid1DBTableView1Column3: TcxGridDBColumn;
     cxGrid1DBTableView1Column4: TcxGridDBColumn;
     cxGrid1DBTableView1Column5: TcxGridDBColumn;
+    GridPanel8: TGridPanel;
+    cxLookupComboBoxCodeProd: TcxLookupComboBox;
+    DataSourceListProduits: TDataSource;
     procedure FormShow(Sender: TObject);
     procedure ButtonImprListeStokeClick(Sender: TObject);
 
@@ -76,6 +81,8 @@ type
     procedure ComboBoxStokesListeSelect(Sender: TObject);
 
     procedure ajouterProduit(codeProd,id:string);
+    procedure cxLookupComboBoxCodeProdKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
 
   private
     { Déclarations privées }
@@ -148,6 +155,16 @@ begin
       DataStocks.selectStoke(ComboBoxStokesListe.Text);
   updateafficheurs();
 end;
+procedure TFormEtatStock.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+     if key=VK_RETURN then
+     begin
+       ajouterProduit('******',cxLookupComboBoxCodeProd.Text);
+       cxLookupComboBoxCodeProd.ClearSelection;
+     end;
+end;
+
 //______________________________________________________________________________
 procedure TFormEtatStock.EditCodeBarClick(Sender: TObject);
 begin
@@ -165,6 +182,7 @@ begin
      if key=VK_RETURN then
      begin
        ajouterProduit(EditCodeBar.Text,'******');
+       EditCodeBar.Clear;
      end;
 end;
 
@@ -172,7 +190,7 @@ procedure TFormEtatStock.ajouterProduit(codeProd, id: string);
 begin
     FormAjouterProduits.TrouverProduitForm(codeProd,id);
     FormAjouterProduits.AfficherForm(5);
-    EditCodeBar.Clear;
+
 end;
 //______________________________________________________________________________
 procedure TFormEtatStock.FormShow(Sender: TObject);

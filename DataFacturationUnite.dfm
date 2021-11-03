@@ -247,6 +247,8 @@ object DataFacturation: TDataFacturation
       end>
   end
   object FDQueryFacturePayee: TFDQuery
+    Active = True
+    AfterScroll = FDQueryFacturePayeeAfterScroll
     Connection = FDConnection1
     SQL.Strings = (
       'select facture.*'
@@ -261,5 +263,14 @@ object DataFacturation: TDataFacturation
         ParamType = ptInput
         Value = Null
       end>
+  end
+  object FDTableFacturesAnnulees: TFDTable
+    Active = True
+    IndexFieldNames = 'Num;Annee'
+    Connection = FDConnection1
+    UpdateOptions.UpdateTableName = 'RetourneFacture'
+    TableName = 'RetourneFacture'
+    Left = 392
+    Top = 416
   end
 end

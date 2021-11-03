@@ -18,6 +18,7 @@ type
     FDConnection1: TFDConnection;
     FDQuerySomStoke: TFDQuery;
     FDTableStockid: TFDTable;
+    FDQueryRechercheProdStock: TFDQuery;
     procedure NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;quantite:real;StockDest:integer;DateProd,Dateconsm:TDateTime);
     procedure selectStoke(StokeName:string);
     procedure selectAllStokes();

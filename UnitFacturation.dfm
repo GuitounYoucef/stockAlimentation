@@ -8666,6 +8666,8 @@ object FormFacturation: TFormFacturation
           Value = 50.022392654326590000
         end>
       TabOrder = 6
+      ExplicitLeft = 13
+      ExplicitTop = 5
       object dxGaugeControl1: TdxGaugeControl
         Left = 19
         Top = 30
@@ -8733,6 +8735,8 @@ object FormFacturation: TFormFacturation
           Value = 50.022392654326590000
         end>
       TabOrder = 7
+      ExplicitLeft = -5
+      ExplicitTop = 102
       object cxLookupComboBoxCodeProd: TcxLookupComboBox
         Left = 19
         Top = 10

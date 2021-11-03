@@ -39,6 +39,8 @@ type
     FDTableStockid: TFDTable;
     FDQueryFindStockNum: TFDQuery;
     FDQueryFacturePayee: TFDQuery;
+    FDTableFacturesAnnulees: TFDTable;
+    procedure FDQueryFacturePayeeAfterScroll(DataSet: TDataSet);
 
 
 
@@ -61,7 +63,7 @@ type
    procedure SupprimerFacture();
    procedure NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;quantite:real;DateProd,Dateconsm:TDateTime);
    procedure SupprimerEntree();
-   function FacturePayeeEstVide(Var Annee:string;var num:integer):boolean;
+   function FacturePayeeEstVide(Var Annee,NomDestination:string;var num:integer):boolean;
 
 
    var facture:Facture;
@@ -120,34 +122,38 @@ facture.NomDestination:=NomDestination;
       end;
       facture.NumDestination:=TrouverStockNum(NomDestination);
 end;
-//------------------------------------------------------------------------------
-procedure TDataFacturation.ValiderMontant(som,rest:real);
-begin
-    facture.total:=som;
-    facture.reste:=rest;
-    if som=rest then
-      facture.TypePaiement:=1
-    else facture.TypePaiement:=2;
-end;
+
 //------------------------------------------------------------------------------
 procedure TDataFacturation.SupprimerEntree;
 begin
-if FDQueryFactureEntrante.RecordCount>0 then
-     FDQueryFactureEntrante.Delete;
-
+    if FDQueryFactureEntrante.RecordCount>0 then
+         FDQueryFactureEntrante.Delete;
 end;
 
-function TDataFacturation.FacturePayeeEstVide(Var Annee:string;var num:integer): boolean;
+function TDataFacturation.FacturePayeeEstVide(Var Annee,NomDestination:string;var num:integer): boolean;
 begin
-if FDQueryFacturePayee.RecordCount=0 then
-begin
-Annee:=FDQueryFacturePayee.FieldValues['Annee'];
-num:=FDQueryFacturePayee.FieldValues['num'];
-result:=true;
-end
-else result:=false;
-
+    if FDQueryFacturePayee.RecordCount=0 then
+    begin
+       result:=true;
+    end
+    else begin
+            Annee:=FDQueryFacturePayee.FieldValues['Annee'];
+            num:=FDQueryFacturePayee.FieldValues['num'];
+            NomDestination:= FDQueryFacturePayee.FieldValues['NomDestination'];
+            result:=false;
+         end;
 end;
+
+procedure TDataFacturation.FDQueryFacturePayeeAfterScroll(DataSet: TDataSet);
+Var Annee:string;
+    num:integer;
+begin
+  Annee:=FDQueryFacturePayee.FieldValues['annee'];
+  Num:=FDQueryFacturePayee.FieldValues['num'];
+  RechercheFacture(Annee,Num);
+end;
+
+
 
 procedure TDataFacturation.NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;
   quantite: real; DateProd, Dateconsm: TDateTime);
@@ -238,12 +244,21 @@ begin
 
     result:=Annee+'/'+inttostr(num);
 end;
+ //------------------------------------------------------------------------------
+procedure TDataFacturation.ValiderMontant(som,rest:real);
+begin
+    facture.total:=som;
+    facture.reste:=rest;
+    if som=rest then
+      facture.TypePaiement:=1      // payee
+    else facture.TypePaiement:=2;   // crédit
+end;
 
 procedure TDataFacturation.EnregistrerFacture();
 begin
   if FDQueryFacture.recordcount=0 then
-  FDQueryFacture.insert
-  else FDQueryFacture.edit;
+  begin
+    FDQueryFacture.insert;
    FDQueryFacture.FieldValues['total']:=facture.total;
    FDQueryFacture.FieldValues['reste']:=facture.reste;
    FDQueryFacture.FieldValues['TypePaiement']:=facture.TypePaiement;
@@ -258,6 +273,14 @@ begin
 
    FDQueryFacture.FieldValues['NumDestination']:=facture.NumDestination;
    FDQueryFacture.FieldValues['dat']:=date;
+  end
+  else
+   begin
+     FDQueryFacture.edit;
+     FDQueryFacture.FieldValues['total']:=facture.total;
+     FDQueryFacture.FieldValues['reste']:=facture.reste;
+     FDQueryFacture.FieldValues['TypePaiement']:=facture.TypePaiement;
+   end;
    FDQueryFacture.post;
 
 

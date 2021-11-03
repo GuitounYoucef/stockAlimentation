@@ -117,4 +117,36 @@ object DataStocks: TDataStocks
     Left = 840
     Top = 40
   end
+  object FDQueryRechercheProdStock: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select stock.*'
+      'from stock'
+      
+        'where ((id=:x) and (code=:y) and (numstock=:z) and (expire=0) an' +
+        'd (Alert=0) and (quantite>=:q))')
+    Left = 392
+    Top = 132
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftWideString
+        ParamType = ptInput
+      end
+      item
+        Name = 'Y'
+        DataType = ftWideString
+        ParamType = ptInput
+      end
+      item
+        Name = 'Z'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'Q'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
 end
