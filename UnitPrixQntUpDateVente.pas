@@ -37,7 +37,7 @@ implementation
 
 {$R *.dfm}
 
-uses UnitVenteComptoir,unit36, UnitVenteData;
+uses UnitVenteComptoir,unit36, DataVenteUnit;
 
 procedure TFormPrixQntUpDateVente.BitBtn1Click(Sender: TObject);
 var som,q,r,x:real;

@@ -1,4 +1,4 @@
-unit UnitVenteData;
+unit DataVenteUnit;
 
 interface
 
@@ -104,7 +104,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses Unit42, Unit36,UnitDelivrenceData;
+uses  Unit36,UnitDelivrenceData;
 
 {$R *.dfm}
 
@@ -255,132 +255,130 @@ end;
 procedure TDataModuleVente.NouvelleOpr(typvente,fenetre:integer);
 var myYear, myMonth, myDay : Word;
 begin
-
-DecodeDate(Date, myYear, myMonth, myDay);
-FDQueryNumVente.Params.ParamValues['x']:=inttostr(myYear);
-FDQueryNumVente.Params.ParamValues['y']:=typvente;
-FDQueryNumVente.Active:=false;
-FDQueryNumVente.Active:=true;
-// Nombre d'oreratipn de vente
-operation.Annee:=inttostr(myYear);
-operation.Num:=DataModuleVente.FDQueryNumVente.RecordCount+1;
-operation.typevente:=typvente;
-operation.TypePaim:=1;
-operation.Client:='*';
-operation.NumStock:=DataModuleVente.FDTableParametrage.FieldValues['stocknum'];
-operation.numUser:=DataModule1.FDQuery115.FieldValues['Numuser'];
-//----------
-FDQueryListOprsSortie.Params.ParamValues['a']:=inttostr(myYear);
-FDQueryListOprsSortie.Params.ParamValues['t']:=typvente;
-FDQueryListOprsSortie.Active:=false;
-FDQueryListOprsSortie.Active:=true;
-FDQueryListOprsSortie.Last;
-case fenetre of
-1:begin
-    if operation.Num=1 then
-      ValiderOpr(operation);
-  end;
-2: ValiderOpr(operation);
-end;
+    DecodeDate(Date, myYear, myMonth, myDay);
+    FDQueryNumVente.Params.ParamValues['x']:=inttostr(myYear);
+    FDQueryNumVente.Params.ParamValues['y']:=typvente;
+    FDQueryNumVente.Active:=false;
+    FDQueryNumVente.Active:=true;
+    // Nombre d'oreratipn de vente
+    operation.Annee:=inttostr(myYear);
+    operation.Num:=DataModuleVente.FDQueryNumVente.RecordCount+1;
+    operation.typevente:=typvente;
+    operation.TypePaim:=1;
+    operation.Client:='*';
+    operation.NumStock:=DataModuleVente.FDTableParametrage.FieldValues['stocknum'];
+    operation.numUser:=DataModule1.FDQuery115.FieldValues['Numuser'];
+    //----------
+    FDQueryListOprsSortie.Params.ParamValues['a']:=inttostr(myYear);
+    FDQueryListOprsSortie.Params.ParamValues['t']:=typvente;
+    FDQueryListOprsSortie.Active:=false;
+    FDQueryListOprsSortie.Active:=true;
+    FDQueryListOprsSortie.Last;
+    case fenetre of
+        1:begin
+            if operation.Num=1 then
+              ValiderOpr(operation);
+          end;
+        2: ValiderOpr(operation);
+    end;
 end;
 //----------------------------------------------------
 function TDataModuleVente.Parcourir(dist:integer):longint;
 var p:produits;
 begin
-if FDQueryListOprsSortie.RecordCount>0 then
-begin
-// charger la liste des produits
-FDQueryListeProdBD.Params.ParamValues['x']:=FDQueryListOprsSortie.FieldValues['NumOpr'];
-FDQueryListeProdBD.Close;
-FDQueryListeProdBD.Open();
-FDQueryListeProdBD.First;
-operation.Num:=FDQueryListOprsSortie.FieldValues['Num'];
-result:=FDQueryListOprsSortie.FieldValues['Num'];
-end else result:=0;
+    if FDQueryListOprsSortie.RecordCount>0 then
+    begin
+    // charger la liste des produits
+    FDQueryListeProdBD.Params.ParamValues['x']:=FDQueryListOprsSortie.FieldValues['NumOpr'];
+    FDQueryListeProdBD.Close;
+    FDQueryListeProdBD.Open();
+    FDQueryListeProdBD.First;
+    operation.Num:=FDQueryListOprsSortie.FieldValues['Num'];
+    result:=FDQueryListOprsSortie.FieldValues['Num'];
+    end else result:=0;
 end;
 //------------------------------------------------
 procedure TDataModuleVente.ValiderOpr(Opr:Operation);
 begin
-NouvelleSorite(Opr);
-AfficherListProd();
+    NouvelleSorite(Opr);
+    AfficherListProd();
 end;
 
 procedure TDataModuleVente.ModifierTypePaiment(TP:integer);
 begin
-if FDQueryListOprsSortie.RecordCount>0 then
-begin
-DataModuleVente.operation.TypePaim:=TP;
-FDQueryListOprsSortie.Edit;
-FDQueryListOprsSortie.FieldValues['TypePaim']:=TP;
-FDQueryListOprsSortie.Post;
-end;
+    if FDQueryListOprsSortie.RecordCount>0 then
+    begin
+    DataModuleVente.operation.TypePaim:=TP;
+    FDQueryListOprsSortie.Edit;
+    FDQueryListOprsSortie.FieldValues['TypePaim']:=TP;
+    FDQueryListOprsSortie.Post;
+    end;
 end;
 
 procedure TDataModuleVente.ModifierNomClient(Client:string);
 begin
-if FDQueryListOprsSortie.RecordCount>0 then
-begin
-operation.Client:=Client;
-FDQueryListOprsSortie.Edit;
-FDQueryListOprsSortie.FieldValues['Client']:=Client;
-FDQueryListOprsSortie.Post;
-FDQueryFindClientByName.Params.ParamValues['x']:=Client;
-FDQueryFindClientByName.Close;
-FDQueryFindClientByName.Open();
-if FDQueryFindClientByName.RecordCount>0 then
-  operation.NumClient:=FDQueryFindClientByName.FieldValues['NumClient']
-else operation.NumClient:=0;
-end;
+    if FDQueryListOprsSortie.RecordCount>0 then
+    begin
+        operation.Client:=Client;
+        FDQueryListOprsSortie.Edit;
+        FDQueryListOprsSortie.FieldValues['Client']:=Client;
+        FDQueryListOprsSortie.Post;
+        FDQueryFindClientByName.Params.ParamValues['x']:=Client;
+        FDQueryFindClientByName.Close;
+        FDQueryFindClientByName.Open();
+        if FDQueryFindClientByName.RecordCount>0 then
+          operation.NumClient:=FDQueryFindClientByName.FieldValues['NumClient']
+        else operation.NumClient:=0;
+    end;
 end;
 
 function TDataModuleVente.GetPrixVenteList():real;
 begin
-if FDQueryListeProdBD.RecordCount>0 then
-result:=FDQueryListeProdBD.FieldValues['PrixVente']
-else result:=-1;
+    if FDQueryListeProdBD.RecordCount>0 then
+       result:=FDQueryListeProdBD.FieldValues['PrixVente']
+    else result:=-1;
 end;
 
 function TDataModuleVente.GetPrixAchatList():real;
 begin
-if FDQueryListeProdBD.RecordCount>0 then
-result:=FDQueryListeProdBD.FieldValues['PrixAchat']
-else result:=-1;
+    if FDQueryListeProdBD.RecordCount>0 then
+       result:=FDQueryListeProdBD.FieldValues['PrixAchat']
+    else result:=-1;
 end;
 
 procedure TDataModuleVente.PutPrixVenteList(prix:real);
 begin
-if FDQueryListeProdBD.RecordCount>0 then
-begin
-FDQueryListeProdBD.Edit;
-FDQueryListeProdBD.FieldValues['PrixVente']:=prix;
-FDQueryListeProdBD.Post;
-end;
-
+    if FDQueryListeProdBD.RecordCount>0 then
+    begin
+        FDQueryListeProdBD.Edit;
+        FDQueryListeProdBD.FieldValues['PrixVente']:=prix;
+        FDQueryListeProdBD.Post;
+    end;
 end;
 
 function TDataModuleVente.GetQuantiteList():real;
 begin
-if FDQueryListeProdBD.RecordCount>0 then
-result:=FDQueryListeProdBD.FieldValues['Quantite']
-else result:=-1;
+    if FDQueryListeProdBD.RecordCount>0 then
+       result:=FDQueryListeProdBD.FieldValues['Quantite']
+    else result:=-1;
 end;
 
 procedure TDataModuleVente.PutQuantiteList(Quantite:real);
 begin
-if FDQueryListeProdBD.RecordCount>0 then
-begin
-FDQueryListeProdBD.Edit;
-FDQueryListeProdBD.FieldValues['Quantite']:=Quantite;
-FDQueryListeProdBD.Post;
-end;
+    if FDQueryListeProdBD.RecordCount>0 then
+    begin
+      FDQueryListeProdBD.Edit;
+      FDQueryListeProdBD.FieldValues['Quantite']:=Quantite;
+      FDQueryListeProdBD.Post;
+    end;
 
 end;
 
 function TDataModuleVente.GetCodeProduitList():string;
 begin
-if FDQueryListeProdBD.RecordCount>0 then
-result:=FDQueryListeProdBD.FieldValues['CodeProduit']
-else result:='*';
+    if FDQueryListeProdBD.RecordCount>0 then
+       result:=FDQueryListeProdBD.FieldValues['CodeProduit']
+    else result:='*';
 end;
 
 end.

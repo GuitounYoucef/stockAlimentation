@@ -199,7 +199,7 @@
             <Form>FormSauvegarde</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UnitVenteData.pas">
+        <DCCReference Include="DataVenteUnit.pas">
             <Form>DataModuleVente</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>

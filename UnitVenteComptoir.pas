@@ -15,9 +15,10 @@ uses
   dxDateRanges, cxDBData, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxGridLevel, cxClasses, cxGridCustomView, cxGrid,
   dxGaugeCustomScale, dxGaugeDigitalScale, dxGaugeControl, Vcl.Menus, cxButtons,
-  dxGDIPlusClasses, cxImageList, cxContainer, cxImage, UnitVenteData, dxBarCode,
+  dxGDIPlusClasses, cxImageList, cxContainer, cxImage, DataVenteUnit, dxBarCode,
   dxLayoutContainer, cxGridViewLayoutContainer, cxGridLayoutView,
-  cxGridDBLayoutView, cxGridCustomLayoutView, cxTextEdit;
+  cxGridDBLayoutView, cxGridCustomLayoutView, cxTextEdit, cxMaskEdit,
+  cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox;
 
 type
   TFormVenteComptoir = class(TForm)
@@ -43,7 +44,7 @@ type
     Image1: TImage;
     Image4: TImage;
     Image5: TImage;
-    DataSource1: TDataSource;
+    DataSourceListeProdBD: TDataSource;
     frxReport1: TfrxReport;
     frxDBDataset2: TfrxDBDataset;
     frxReport2: TfrxReport;
@@ -52,8 +53,6 @@ type
     ButtonNouvOpr: TButton;
     ButtonListeVente: TButton;
     ButtonListProds: TButton;
-    dxGaugeControl1: TdxGaugeControl;
-    dxGaugeControl1DigitalScale1: TdxGaugeDigitalScale;
     ButtonImpBonRecp: TButton;
     ButtonImpTicket: TButton;
     ToggleSwitchPaiment: TToggleSwitch;
@@ -77,6 +76,11 @@ type
     cxGrid1DBTableView1producteur: TcxGridDBColumn;
     cxGrid1DBTableView1Quantite: TcxGridDBColumn;
     cxGrid1DBTableView1som: TcxGridDBColumn;
+    dxGaugeControl1: TdxGaugeControl;
+    dxGaugeControl1DigitalScale1: TdxGaugeDigitalScale;
+    GridPanel5: TGridPanel;
+    cxLookupComboBoxCodeProd: TcxLookupComboBox;
+    DataSourceListProduits: TDataSource;
     procedure FormShow(Sender: TObject);
     procedure ButtonSupprimerClick(Sender: TObject);
     procedure ButtonNouvOprClick(Sender: TObject);
@@ -93,7 +97,9 @@ type
     procedure cxGrid1DBTableView1CellDblClick(Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
-    procedure VenteProduit(codeProduit:string;quantite:integer);
+    procedure VenteProduit(codeProduit,id:string;quantite:integer);
+    procedure cxLookupComboBoxCodeProdKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Déclarations privées }
   public
@@ -130,10 +136,6 @@ begin
 if length(ComboBoxNomPrenom.Text)>1 then
 DataModuleVente.ModifierNomClient(ComboBoxNomPrenom.Text);
 end;
-
-
-
-
 
 procedure TFormVenteComptoir.UpdateGrid();
 var i:integer;
@@ -220,14 +222,13 @@ begin
   LoadKeyboardLayout('0000040c', KLF_ACTIVATE);
 end;
 
-
-procedure TFormVenteComptoir.VenteProduit(codeProduit:string;quantite:integer);
+procedure TFormVenteComptoir.VenteProduit(codeProduit,id:string;quantite:integer);
 var p: Produits;
 begin
-  p := DataModuleVente.TrouverPrduit(DataModuleVente.operation.NumStock,DataModuleVente.operation.typevente, '', codeProduit,quantite);
+  p := DataModuleVente.TrouverPrduit(DataModuleVente.operation.NumStock,DataModuleVente.operation.typevente,id, codeProduit,quantite);
   if ((Length(DataModuleVente.operation.Client) > 1) and (DataModuleVente.operation.typevente = 2)) or
     (DataModuleVente.operation.typevente = 1) then
-  begin
+    begin
     if p.quantite > 0 then
     begin
       DataModuleVente.AjouterProdList(p);
@@ -251,7 +252,7 @@ procedure TFormVenteComptoir.Edit1KeyDown(Sender: TObject; var Key: Word;
 
 begin
   case Key of
-    VK_RETURN:VenteProduit(Edit1.Text,1);
+    VK_RETURN:VenteProduit(Edit1.Text,'*****',1);
     VK_F5:ButtonImpTicketClick(FormVenteComptoir);
     VK_F6:ButtonImpBonRecpClick(FormVenteComptoir);
     VK_F1:ButtonNouvOprClick(FormVenteComptoir);
@@ -260,6 +261,15 @@ begin
     VK_F4:ButtonListeVenteClick(FormVenteComptoir);
   end;
 end;
+
+procedure TFormVenteComptoir.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  case Key of
+    VK_RETURN:VenteProduit('*****',cxLookupComboBoxCodeProd.Text,1);
+  end;
+end;
+
 
 procedure TFormVenteComptoir.FormShow(Sender: TObject);
 var
@@ -279,8 +289,8 @@ begin
   // ComboBoxProduit.Clear;
   ComboBoxNomPrenom.Clear;
   // ------------------
-  DataModule1.FDQueryClient1.Params.ParamValues['x'] :=
-    DataModuleVente.operation.typevente;
+
+  DataModule1.FDQueryClient1.Params.ParamValues['x'] :=DataModuleVente.operation.typevente;
   DataModule1.FDQueryClient1.Active := false;
   DataModule1.FDQueryClient1.Active := true;
   while not DataModule1.FDQueryClient1.Eof do
@@ -289,6 +299,7 @@ begin
       ['Client']);
     DataModule1.FDQueryClient1.Next;
   end;
+
   // if Image2.Picture.Graphic = NIL then
   case DataModuleVente.operation.typevente of
     1:
@@ -331,6 +342,7 @@ begin
     FormPrixQntUpDateVente.EditPrix.Text :=floattostr(DataModuleVente.GetPrixAchatList());
   end;
 end;
+
 
 initialization ;
 

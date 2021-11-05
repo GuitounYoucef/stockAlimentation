@@ -8603,7 +8603,6 @@ object FormFacturation: TFormFacturation
             FieldName = 'NumStock'
           end>
         Properties.ListSource = DataSourceStocksNamesDestination
-        Properties.OnChange = cxLookupComboBoxstockidPropertiesChange
         ShowHint = True
         Style.Font.Charset = ANSI_CHARSET
         Style.Font.Color = clWindowText
@@ -8666,8 +8665,6 @@ object FormFacturation: TFormFacturation
           Value = 50.022392654326590000
         end>
       TabOrder = 6
-      ExplicitLeft = 13
-      ExplicitTop = 5
       object dxGaugeControl1: TdxGaugeControl
         Left = 19
         Top = 30
@@ -8735,8 +8732,6 @@ object FormFacturation: TFormFacturation
           Value = 50.022392654326590000
         end>
       TabOrder = 7
-      ExplicitLeft = -5
-      ExplicitTop = 102
       object cxLookupComboBoxCodeProd: TcxLookupComboBox
         Left = 19
         Top = 10
@@ -8768,6 +8763,8 @@ object FormFacturation: TFormFacturation
         Style.IsFontAssigned = True
         TabOrder = 0
         OnKeyDown = cxLookupComboBoxCodeProdKeyDown
+        ExplicitLeft = 20
+        ExplicitTop = 6
         Width = 284
       end
     end
@@ -11017,7 +11014,7 @@ object FormFacturation: TFormFacturation
   end
   object DataSourceListProduits: TDataSource
     DataSet = DataProduits.FDTableProduits
-    Left = 467
-    Top = 400
+    Left = 227
+    Top = 112
   end
 end

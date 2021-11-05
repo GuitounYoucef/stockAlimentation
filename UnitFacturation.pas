@@ -73,7 +73,6 @@ type
       Shift: TShiftState);
     procedure cxLookupComboBoxNomSourcePropertiesChange(Sender: TObject);
     procedure cxLookupComboBoxstockidFocusChanged(Sender: TObject);
-    procedure cxLookupComboBoxstockidPropertiesChange(Sender: TObject);
     procedure cxButtonSupprimerEntreeClick(Sender: TObject);
     procedure cxLookupComboBoxCodeProdPropertiesChange(Sender: TObject);
     procedure EditCodeProduitChange(Sender: TObject);
@@ -87,7 +86,7 @@ type
     { Déclarations privées }
   public
   var
-  valide:boolean;
+  valide,update:boolean;
   Annee,codebar,NomDestination:string;
   som:longint;
   num,source,destination,typeops,numstoke:integer;
@@ -175,12 +174,6 @@ begin
 end;
 
 
-procedure TFormFacturation.cxLookupComboBoxstockidPropertiesChange(
-  Sender: TObject);
-begin
-
-end;
-
 //------------------------------------------------------------------------------
 procedure TFormFacturation.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -234,31 +227,36 @@ end;
 //------------------------------------------------------------------------------
 procedure TFormFacturation.selectRechercheObj;
 begin
-if rechercheObj='cxLookupComboBox' then
-   cxLookupComboBoxCodeProd.SetFocus
-else
-   EditCodeProduit.SetFocus;
+    if rechercheObj='cxLookupComboBox' then
+       cxLookupComboBoxCodeProd.SetFocus
+    else
+       EditCodeProduit.SetFocus;
 end;
 
 procedure TFormFacturation.cxLookupComboBoxCodeProdPropertiesChange(
   Sender: TObject);
 begin
-rechercheObj:='cxLookupComboBox';
+    rechercheObj:='cxLookupComboBox';
 end;
 
 procedure TFormFacturation.EditCodeProduitChange(Sender: TObject);
 begin
-rechercheObj:='EditCodeProduit';
+    rechercheObj:='EditCodeProduit';
 end;
+
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 //---------------------------  Procedure requettes -----------------------------
 //------------------------------------------------------------------------------
 //______________________________________________________________________________
+
 procedure TFormFacturation.cxButtonSupprimerEntreeClick(Sender: TObject);
 begin
-    DataFacturation.SupprimerEntree();
+    if not DataFacturation.EntreesFactureEstvide() then
+        if not DataFacturation.SupprimerEntree() then
+           showmessage('لا يمكنك حذف هذه السلعة فقد تم بيع جزء منها')
+        else update:=true;
 end;
 
 procedure TFormFacturation.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;
@@ -271,8 +269,6 @@ begin
      end;
 end;
 
-
-
 procedure TFormFacturation.EditCodeProduitKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -282,6 +278,7 @@ begin
      EditCodeProduit.Clear;
    end;
 end;
+
 //------------------------------------------------------------------------------
 procedure TFormFacturation.ajouterProduit(codeProd,id:string);
 begin
@@ -292,7 +289,6 @@ begin
         FormAjouterProduits.AfficherForm(8);
         FormAjouterProduits.TrouverProduitForm(codeProd,id);
         FormAjouterProduits.cxLookupComboBoxStockName.Text:=NomDestination;
-
       end
       else
       begin

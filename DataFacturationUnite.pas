@@ -62,11 +62,14 @@ type
    function TrouverStockNum(NomStocke:string):integer;
    procedure SupprimerFacture();
    procedure NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;quantite:real;DateProd,Dateconsm:TDateTime);
-   procedure SupprimerEntree();
+   function SupprimerEntree():boolean;
    function FacturePayeeEstVide(Var Annee,NomDestination:string;var num:integer):boolean;
+   function EntreesFactureEstvide():boolean;
+   function calculerSomFacture():longint;
 
 
    var facture:Facture;
+       som:longint;
 
 
   end;
@@ -79,7 +82,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses UnitFacturation, Unit36;
+uses UnitFacturation, Unit36, DataStocksUnite;
 
 {$R *.dfm}
 function TDataFacturation.TrouverFournsNum(NomFourn:string):integer;
@@ -124,10 +127,13 @@ facture.NomDestination:=NomDestination;
 end;
 
 //------------------------------------------------------------------------------
-procedure TDataFacturation.SupprimerEntree;
+
+
+function TDataFacturation.EntreesFactureEstvide(): boolean;
 begin
-    if FDQueryFactureEntrante.RecordCount>0 then
-         FDQueryFactureEntrante.Delete;
+   if FDQueryFactureEntrante.RecordCount=0 then
+      result:=true
+   else result:=false;
 end;
 
 function TDataFacturation.FacturePayeeEstVide(Var Annee,NomDestination:string;var num:integer): boolean;
@@ -180,14 +186,7 @@ begin
       FDQueryFactureEntrante.FieldValues['NumUser']:=DataModule1.FDQuery115.FieldValues['NumUser'];
 
       FDQueryFactureEntrante.Next;
-      FDQueryFactureEntrante.First;
-      formFacturation.som:=0;
-      while not FDQueryFactureEntrante.Eof do
-      begin
-         formFacturation.som:=formFacturation.som+FDQueryFactureEntrante.FieldValues['PrixAchat']*FDQueryFactureEntrante.FieldValues['Quantite'];
-         FDQueryFactureEntrante.Next;
-         formFacturation.dxGaugeControl1DigitalScale1.Value:=inttostr(formFacturation.som);
-      end;
+      formFacturation.dxGaugeControl1DigitalScale1.Value:=inttostr(calculerSomFacture());
       if (FDQueryFindProduitByCode.FieldValues['Lien']<>null) then
              begin
                formFacturation.Image2.Picture.LoadFromFile(FDQueryFindProduitByCode.FieldValues['Lien']);
@@ -202,7 +201,19 @@ begin
                end;
 end;
 
+function TDataFacturation.calculerSomFacture: longint;
 
+begin
+    FDQueryFactureEntrante.First;
+    som:=0;
+    while not FDQueryFactureEntrante.Eof do
+    begin
+       som:=formFacturation.som+FDQueryFactureEntrante.FieldValues['PrixAchat']*FDQueryFactureEntrante.FieldValues['Quantite'];
+       FDQueryFactureEntrante.Next;
+       formFacturation.dxGaugeControl1DigitalScale1.Value:=inttostr(formFacturation.som);
+    end;
+    result:=som;
+end;
 
 //------------------------------------------------------------------------------
 function TDataFacturation.NouvelleFacture(Var Annee:string;var num:integer):string;
@@ -254,6 +265,8 @@ begin
     else facture.TypePaiement:=2;   // crédit
 end;
 
+
+
 procedure TDataFacturation.EnregistrerFacture();
 begin
   if FDQueryFacture.recordcount=0 then
@@ -283,10 +296,45 @@ begin
    end;
    FDQueryFacture.post;
 
+   FDQueryFactureEntrante.First;
+   while not FDQueryFactureEntrante.Eof do
+   begin
+      if FDQueryFactureEntrante.FieldValues['Valide']<>true then
+           begin
+              FDQueryFactureEntrante.Edit;
+              FDQueryFactureEntrante.FieldValues['Valide']:=true;
+              FDQueryFactureEntrante.Post;
+           end;
+      FDQueryFactureEntrante.Next;
+   end;
+
 
 end;
 //------------------------------------------------------------------------------
+function TDataFacturation.SupprimerEntree():boolean;
+var b :boolean;
+begin
+    if FDQueryFactureEntrante.RecordCount>0 then
+       if FDQueryFactureEntrante.FieldValues['Valide']=true then
+          begin
+            b:=DataStocks.DeleteProdByNameCodeSockid(FDQueryFactureEntrante.FieldValues['id'],
+                                                     FDQueryFactureEntrante.FieldValues['Code'],
+                                                     FDQueryFacture.FieldValues['NumDestination'],
+                                                     FDQueryFactureEntrante.FieldValues['Quantite']);
+            if b then
+                begin
+                     FDQueryFactureEntrante.Delete;
+                     result:=true
+                end
+                else result:=false;
+          end
+          else
+          begin
+             FDQueryFactureEntrante.Delete;
+             result:=true;
+          end;
 
+end;
 
 procedure TDataFacturation.SupprimerFacture();
 begin

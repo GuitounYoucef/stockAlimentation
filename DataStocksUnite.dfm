@@ -117,7 +117,7 @@ object DataStocks: TDataStocks
     Left = 840
     Top = 40
   end
-  object FDQueryRechercheProdStock: TFDQuery
+  object FDQueryRechProdByIdCodeStock: TFDQuery
     Connection = FDConnection1
     SQL.Strings = (
       'select stock.*'

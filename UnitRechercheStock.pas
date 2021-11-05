@@ -42,7 +42,7 @@ var key:word;
 begin
 if length(EditQunt.Text)>0 then
 begin
-FormVenteComptoir.VenteProduit(DataModule1.FD27QueryRechIDProduitstock.FieldValues['Code'],strtoint(EditQunt.Text));
+FormVenteComptoir.VenteProduit(DataModule1.FD27QueryRechIDProduitstock.FieldValues['Code'],'*****',strtoint(EditQunt.Text));
 EditQunt.Clear;
 close;
 end

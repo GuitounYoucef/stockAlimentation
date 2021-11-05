@@ -214,7 +214,7 @@ procedure TFormEtatStock.SearchBox1Change(Sender: TObject);
 begin
     if length(SearchBox1.Text)>0 then
       begin
-        DataStocks.rechercheProd(SearchBox1.Text);
+        DataStocks.rechercheProdByName(SearchBox1.Text);
         updateafficheurs();
       end
 end;

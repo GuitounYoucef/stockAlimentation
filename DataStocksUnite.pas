@@ -18,11 +18,13 @@ type
     FDConnection1: TFDConnection;
     FDQuerySomStoke: TFDQuery;
     FDTableStockid: TFDTable;
-    FDQueryRechercheProdStock: TFDQuery;
+    FDQueryRechProdByIdCodeStock: TFDQuery;
     procedure NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;quantite:real;StockDest:integer;DateProd,Dateconsm:TDateTime);
     procedure selectStoke(StokeName:string);
     procedure selectAllStokes();
-    procedure rechercheProd(ProdName:string);
+    procedure rechercheProdByName(ProdName:string);
+    function rechercheProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
+    function DeleteProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
     procedure EntreeFacture(FDQueryListeProd: TFDQuery;numDest:integer);
   private
     { Déclarations privées }
@@ -42,6 +44,8 @@ uses UnitFacturation, Unit36, UnitEtatStock;
 {$R *.dfm}
 
 { TDataStocks }
+
+
 
 procedure TDataStocks.EntreeFacture(FDQueryListeProd: TFDQuery;numDest:integer);
 begin
@@ -111,7 +115,7 @@ begin
      selectAllStokes();
 end;
 
-procedure TDataStocks.rechercheProd(ProdName: string);
+procedure TDataStocks.rechercheProdByName(ProdName: string);
 begin
     DataStocks.FDQueryEtatStokeId.Params.ParamValues['i']:='%'+ProdName+'%';
     DataStocks.FDQueryEtatStokeId.Active:=false;
@@ -120,6 +124,38 @@ begin
     DataStocks.FDQuerySomStoke.Params.ParamValues['i']:='%'+ProdName+'%';
     DataStocks.FDQuerySomStoke.Close;
     DataStocks.FDQuerySomStoke.Open();
+end;
+
+
+
+function TDataStocks.rechercheProdByNameCodeSockid(ProdName, CodeProd: string;
+  stockId: integer; Quantite: real): boolean;
+begin
+     FDQueryRechProdByIdCodeStock.Params.ParamValues['x']:=ProdName;
+     FDQueryRechProdByIdCodeStock.Params.ParamValues['y']:=CodeProd;
+     FDQueryRechProdByIdCodeStock.Params.ParamValues['z']:=stockId;
+     FDQueryRechProdByIdCodeStock.Params.ParamValues['q']:=Quantite;
+     FDQueryRechProdByIdCodeStock.Close;
+     FDQueryRechProdByIdCodeStock.Open();
+     if FDQueryRechProdByIdCodeStock.RecordCount>0 then
+     result:=true
+     else result:=false;
+end;
+
+function TDataStocks.DeleteProdByNameCodeSockid(ProdName, CodeProd: string;
+  stockId: integer; Quantite: real): boolean;
+  var qnt:real;
+begin
+   if rechercheProdByNameCodeSockid(ProdName, CodeProd,stockId,Quantite) then
+       begin
+          qnt:=FDQueryRechProdByIdCodeStock.FieldValues['Quantite'];
+          qnt:=qnt-Quantite;
+          FDQueryRechProdByIdCodeStock.Edit;
+          FDQueryRechProdByIdCodeStock.FieldValues['Quantite']:=qnt;
+          FDQueryRechProdByIdCodeStock.Post;
+          result:=true;
+       end
+   else result:=false;
 end;
 
 procedure TDataStocks.selectAllStokes;

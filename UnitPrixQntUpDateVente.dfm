@@ -76,7 +76,6 @@ object FormPrixQntUpDateVente: TFormPrixQntUpDateVente
       Width = 172
       Height = 38
       DataField = 'id'
-      DataSource = FormVenteComptoir.DataSource1
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16

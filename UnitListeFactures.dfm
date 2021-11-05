@@ -140,6 +140,7 @@ object FormListeFactures: TFormListeFactures
         TitleFont.Name = 'Tahoma'
         TitleFont.Style = []
         StyleElements = [seBorder]
+        OnCellClick = DBGrid1CellClick
         Columns = <
           item
             Expanded = False
@@ -198,31 +199,31 @@ object FormListeFactures: TFormListeFactures
       Align = alClient
       ColumnCollection = <
         item
-          Value = 9.077906324505591000
+          Value = 36.195914145421000000
         end
         item
-          Value = 78.749034875109590000
-        end
-        item
-          SizeStyle = ssAbsolute
-          Value = 160.000000000000000000
-        end
-        item
-          Value = 1.330243270956342000
+          Value = 52.671551619093690000
         end
         item
           SizeStyle = ssAbsolute
           Value = 160.000000000000000000
         end
         item
-          Value = 1.330388194060895000
+          Value = 0.889737597714673100
         end
         item
           SizeStyle = ssAbsolute
           Value = 160.000000000000000000
         end
         item
-          Value = 9.512427335367580000
+          Value = 3.880378251154269000
+        end
+        item
+          SizeStyle = ssAbsolute
+          Value = 160.000000000000000000
+        end
+        item
+          Value = 6.362418386616375000
         end>
       ControlCollection = <
         item
@@ -231,23 +232,18 @@ object FormListeFactures: TFormListeFactures
           Row = 0
         end
         item
-          Column = 6
-          Control = ButtonPaiment
+          Column = 0
+          Control = cxButtonCosulter
           Row = 1
         end
         item
           Column = 4
-          Control = ButtonAnnulerFacture
+          Control = cxButtonImprimer
           Row = 1
         end
         item
-          Column = 2
-          Control = Button2
-          Row = 1
-        end
-        item
-          Column = 1
-          Control = cxButtonCosulter
+          Column = 6
+          Control = cxButtonPaiment
           Row = 1
         end>
       RowCollection = <
@@ -261,6 +257,8 @@ object FormListeFactures: TFormListeFactures
           Value = 24.615130811339770000
         end>
       TabOrder = 1
+      ExplicitLeft = 365
+      ExplicitTop = 571
       DesignSize = (
         975
         80)
@@ -273,87 +271,69 @@ object FormListeFactures: TFormListeFactures
         TabOrder = 0
         Visible = False
       end
-      object ButtonPaiment: TButton
-        Left = 765
-        Top = 19
-        Width = 160
-        Height = 39
-        Align = alClient
-        BiDiMode = bdRightToLeft
-        Caption = #1583#1601#1593' '#1576#1602#1610#1577' '#1575#1604#1605#1576#1604#1594
-        Enabled = False
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        ImageIndex = 7
-        ImageMargins.Left = 5
-        Images = ImageList2
-        ParentBiDiMode = False
-        ParentFont = False
-        TabOrder = 1
-        OnClick = ButtonPaimentClick
-      end
-      object ButtonAnnulerFacture: TButton
-        Left = 599
-        Top = 19
-        Width = 160
-        Height = 39
-        Align = alClient
-        BiDiMode = bdRightToLeft
-        Caption = #1573#1604#1594#1575#1569' '#1575#1604#1601#1575#1578#1608#1585#1577
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        ImageIndex = 2
-        ImageMargins.Left = 5
-        Images = ImageList2
-        ParentBiDiMode = False
-        ParentFont = False
-        TabOrder = 2
-        OnClick = ButtonAnnulerFactureClick
-      end
-      object Button2: TButton
-        Left = 433
-        Top = 19
-        Width = 160
-        Height = 39
-        Align = alClient
-        BiDiMode = bdRightToLeft
-        Caption = #1591#1576#1600#1575#1593#1600#1600#1577
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        ImageIndex = 6
-        ImageMargins.Left = 20
-        Images = ImageList2
-        ParentBiDiMode = False
-        ParentFont = False
-        TabOrder = 3
-        OnClick = Button2Click
-      end
       object cxButtonCosulter: TcxButton
-        Left = 45
+        Left = 1
         Top = 19
-        Width = 388
+        Width = 178
         Height = 39
         Align = alClient
         Caption = #1605#1593#1600#1600#1600#1575#1610#1600#1600#1600#1606#1577
         OptionsImage.ImageIndex = 0
         OptionsImage.Images = cxImageList1
-        TabOrder = 4
+        TabOrder = 1
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
         OnClick = cxButtonCosulterClick
+        ExplicitLeft = 45
+        ExplicitWidth = 388
+      end
+      object cxButtonImprimer: TcxButton
+        Left = 602
+        Top = 19
+        Width = 160
+        Height = 39
+        Align = alClient
+        Caption = #1591#1576#1600#1575#1593#1600#1600#1577
+        OptionsImage.ImageIndex = 2
+        OptionsImage.Images = cxImageList1
+        TabOrder = 2
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Cairo'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = cxButtonImprimerClick
+        ExplicitLeft = 45
+        ExplicitTop = 1
+        ExplicitWidth = 388
+        ExplicitHeight = 18
+      end
+      object cxButtonPaiment: TcxButton
+        Left = 781
+        Top = 19
+        Width = 160
+        Height = 39
+        Align = alClient
+        Caption = #1583#1601#1593' '#1576#1602#1610#1577' '#1575#1604#1605#1576#1604#1594
+        OptionsImage.ImageIndex = 1
+        OptionsImage.Images = cxImageList1
+        TabOrder = 3
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Cairo'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = cxButtonPaimentClick
+        ExplicitLeft = 45
+        ExplicitTop = 1
+        ExplicitWidth = 388
+        ExplicitHeight = 18
       end
     end
     object GridPanel5: TGridPanel
@@ -6459,11 +6439,6 @@ object FormListeFactures: TFormListeFactures
           Column = 0
           Control = DBNavigator2
           Row = 0
-        end
-        item
-          Column = 2
-          Control = ButtonAnnulerProd
-          Row = 1
         end>
       RowCollection = <
         item
@@ -6487,27 +6462,6 @@ object FormListeFactures: TFormListeFactures
         Anchors = []
         TabOrder = 0
         Visible = False
-      end
-      object ButtonAnnulerProd: TButton
-        Left = 178
-        Top = 19
-        Width = 160
-        Height = 39
-        Align = alClient
-        BiDiMode = bdRightToLeft
-        Caption = #1573#1585#1580#1575#1593' '#1575#1604#1587#1604#1593#1577
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        ImageIndex = 1
-        ImageMargins.Left = 5
-        Images = ImageList2
-        ParentBiDiMode = False
-        ParentFont = False
-        TabOrder = 1
-        OnClick = ButtonAnnulerProdClick
       end
     end
   end
@@ -8706,6 +8660,103 @@ object FormListeFactures: TFormListeFactures
           CEBCD96491362008D944046592DAE451A561B2D753F9C831D90A608A88D81C12
           0838194C77BAE190BC8DE8510F1683D68FF18F07E1DA2717A788520000000049
           454E44AE426082}
+      end
+      item
+        ImageClass = 'TdxSmartImage'
+        Image.Data = {
+          3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554
+          462D38223F3E0D0A3C7376672076657273696F6E3D22312E31222069643D224C
+          617965725F312220786D6C6E733D22687474703A2F2F7777772E77332E6F7267
+          2F323030302F7376672220786D6C6E733A786C696E6B3D22687474703A2F2F77
+          77772E77332E6F72672F313939392F786C696E6B2220783D223070782220793D
+          22307078222076696577426F783D2230203020333220333222207374796C653D
+          22656E61626C652D6261636B67726F756E643A6E657720302030203332203332
+          3B2220786D6C3A73706163653D227072657365727665223E262331333B262331
+          303B3C7374796C6520747970653D22746578742F6373732220786D6C3A737061
+          63653D227072657365727665223E2E426C75657B66696C6C3A23313137374437
+          3B7D262331333B262331303B2623393B2E477265656E7B66696C6C3A23303339
+          4332333B7D262331333B262331303B2623393B2E59656C6C6F777B66696C6C3A
+          234646423131353B7D262331333B262331303B2623393B2E426C61636B7B6669
+          6C6C3A233732373237323B7D262331333B262331303B2623393B2E5768697465
+          7B66696C6C3A234646464646463B7D262331333B262331303B2623393B2E5265
+          647B66696C6C3A234431314331433B7D262331333B262331303B2623393B2E73
+          74307B6F7061636974793A302E37353B7D3C2F7374796C653E0D0A3C67206964
+          3D224D6F6E6579223E0D0A09093C7061746820636C6173733D2259656C6C6F77
+          2220643D224D31362C3234632D342E342C302D382D312E332D382D3376326330
+          2C312E372C332E362C332C382C3373382D312E332C382D33762D324332342C32
+          322E372C32302E342C32342C31362C32347A222F3E0D0A09093C706174682063
+          6C6173733D2259656C6C6F772220643D224D31362C3238632D342E342C302D38
+          2D312E332D382D33763263302C312E372C332E362C332C382C3373382D312E33
+          2C382D33762D324332342C32362E372C32302E342C32382C31362C32387A222F
+          3E0D0A09093C7061746820636C6173733D2259656C6C6F772220643D224D3136
+          2C3230632D342E342C302D382D312E332D382D33763263302C312E372C332E36
+          2C332C382C3373382D312E332C382D33762D324332342C31382E372C32302E34
+          2C32302C31362C32307A222F3E0D0A09093C7061746820636C6173733D225965
+          6C6C6F772220643D224D31362C3136632D342E342C302D382D312E332D382D33
+          763263302C312E372C332E362C332C382C3373382D312E332C382D33762D3243
+          32342C31342E372C32302E342C31362C31362C31367A222F3E0D0A09093C7061
+          746820636C6173733D2259656C6C6F772220643D224D31362C3132632D342E34
+          2C302D382D312E332D382D33763263302C312E372C332E362C332C382C337338
+          2D312E332C382D3356394332342C31302E372C32302E342C31322C31362C3132
+          7A222F3E0D0A09093C7061746820636C6173733D2259656C6C6F772220643D22
+          4D31362C32632D342E342C302D382C312E332D382C33763263302C312E372C33
+          2E362C332C382C3373382D312E332C382D3356354332342C332E332C32302E34
+          2C322C31362C327A222F3E0D0A093C2F673E0D0A3C2F7376673E0D0A}
+      end
+      item
+        ImageClass = 'TdxPNGImage'
+        Image.Data = {
+          89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+          F40000000C744558745469746C65005072696E743BC83632EA0000060E494441
+          54785EA5575D885655177EF63967DEF9719A19474B25132C8B4253340AEBD31C
+          6FA22ECAFA2C2F0A2A90BAC8E0B32E02454292309A1B2914FAA5FAAE0215ED2A
+          A48B52502B27C902514C4AC2149CE6CF99F7ECFF662DF739FBBC338C32B45F16
+          FBBCFBACB39F673D6B9DF5EE5778EF511D42089E0024FFFFEAE43789487A00A0
+          F4F23EDCF6FC2987033C2F476F7235D61CDEF8F4038F00D0E435112FC3D423F1
+          1E3DCF3EBE14FF667CB2EFC4C301C7C4D51B136005AC7130E3A6ADE77062EC31
+          C24ABCE142A08832CB048C62DC946E4C83009BD0C6C23AC0398702CA5614F425
+          8B08EA4B221E894B417B503000307D02DAC27B22C1092E01194408A002CA9785
+          22E42380D479286510A39F660A9431701EB01CB60F51062270013F824E54C50A
+          571048A64C8110626A05A481731ED64559F9D3081C5411D55A60BF3401A45255
+          05C4F8F0D753403428A00D835BEB0248008D05588245E048D0A6099434054E1A
+          1E7561F65502822D4AD504A04549CDE0C63A5E74938B0E40883EBEFFC5353F27
+          39059811FA800260825972CA0AE0B7777DB960DEFC85BD499A3E74B2EFE8BC2C
+          4D906B4D05185210A078765172462B6A44444504F8592935FEB775D739E53C96
+          2C79E09256F90FA7FA8E6CF974F7F6F3442A23F077DEDFBF78E1ED771CBE7FE9
+          6D9D7366B5E3E8B1EFB072CDA3F8B5EF34AC454841D1E97CB80E33A222824994
+          3A700AB4D6B877E51A7CFFED213CFFE47D73FFBA32F24447477B4FEB8C8EC776
+          BFFB7A1FE7A6AB7BCE5BF72DB9B573F6CC36B4B664503287CCC748BE52010672
+          00A7A290BF943E10E49548D4596E64BC5F2EEB68AE659879532BFEB37C61C7E5
+          CBFD6F02788609382FD6D69A520C8DD4D1DED60C994B68A970FEF471BCF4CA31
+          DE3144DC303C1AAA718ACE082C5BB108B22E916529864773348DCF495A5B0DA0
+          C629D0D677E4B96686843238308081FE2B58D9B3B652A395DD85C06436C14F54
+          FDC063A0BF1F4383039C26671C7265A08D6BA3E0B908294FCA58A469C28D4778
+          87F3674E23A3DB2241ADB9B944C9B20C69C68F4594CA30C6C01A53DE564A722A
+          ACD19C3A6D1D943665836205B46646686AF2ECB46CF19D3871F22CB2A65A0CB4
+          6CBFF1BBE0B28B5D398AC5BE10A1414955C78A65F7502DB129E3A075242094B6
+          30E3A633CB15FFC273EB70E2A79DA88F198E5888099D34961BE2989416EEA25A
+          4B24C260E30BEBB9204B2C6523015A90E39666AC04E6CC9D8B8FF7ECC07B7BBE
+          C0A95FCEA2FFEF01C0314678DD62C40DFDB1580BBD607677D778E47763F3AB2F
+          A2B3AB93D24CF23396368659730AE80B31CBB2849C98694BDB0C6CDBB2096992
+          909AD31C9188751435171EAF694D249840AC01564019A444403928BE09D46514
+          55548B7D8A122C1510D552684C9854960B90300B0584739E19266982BAD2CC10
+          55A0384F7F343E4B386CCEFB58032453AE2D92D420CF0DA4B131E2881CC98809
+          D106867E821F8212A8DCCF35EF0FEF7CAC0147795296F35D57865F93DD1F1CC4
+          D9737FDE30F2C9E9996C772D9A8F4D2FAF2347C2E1343BEFA2028E9B033722D4
+          254B84EEEE0E2C5FBA18BB766CC087C7FBD1DE928640A85780BB9A711E170715
+          45C692F26F86A319181ED1E8FDEF02BCBAE5337475B66234B462C221730EA502
+          CCC6180B651202E782DCF0D42AEC3DF02388A8B216D288B2B01CCF1E57256D14
+          081138EF4514F9C3EBAD2D2D58BFEE418C49CD7EFC96595B1C747D0250973443
+          63B9E64621B56532172E0FD2CC9129EDB8854AE383919FC7685E9C9A598140C6
+          C3B385C0ACC3854B833C33B8F1A8E70ACE99E1E23C90FFF1DB2FAF8DD5EBBD02
+          C92C78C038032973B4B6B5C107023273C50184A264F9A58E6B0CD8609ED51B1A
+          18C6A71F1D44ADB90D2211EC6BAD19B872F1CC3600578940FDD0FEDEFD00BE06
+          500BC7325A6FDDBC7DEFCF14A1A4E8875579D47200A474C8397CC20F469F4010
+          81C8CDB7CCC281CF37AF0230128E62FC387D27CBC2E25522523917A6005AB4E1
+          1CE38D35F318189573A1AD9C4C7DE517C9230E1FD202E0F780618940304B4604
+          7C5C2C0693704AE547B6EEDCB7BAE10F072AC064AE7218291DCB53228C564703
+          F868C068E078BD7FC744AE2958FC399C304FBD560AA601E4D3FD77EC2BF95211
+          609209DC78B818F9E4F10F4824A6D94EC853CD0000000049454E44AE426082}
       end>
   end
 end

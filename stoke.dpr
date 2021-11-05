@@ -30,7 +30,7 @@ uses
   UnitParametrage in 'UnitParametrage.pas' {FormParametrage},
   UnitLirePrix in 'UnitLirePrix.pas' {FormLirePrix},
   UnitSauvegarde in 'UnitSauvegarde.pas' {FormSauvegarde},
-  UnitVenteData in 'UnitVenteData.pas' {DataModuleVente: TDataModule},
+  DataVenteUnit in 'DataVenteUnit.pas' {DataModuleVente: TDataModule},
   UnitDelivrenceData in 'UnitDelivrenceData.pas' {DataModuleDelivrence: TDataModule},
   DataFacturationUnite in 'DataFacturationUnite.pas' {DataFacturation: TDataModule},
   DataProduitsUnite in 'DataProduitsUnite.pas' {DataProduits: TDataModule},

@@ -206,7 +206,7 @@ implementation
 {$R *.dfm}
 
 uses UnitVenteComptoir, UnitDelivrence, UnitEtatStock, UnitProduits, UnitClients, UnitFournisseurs, UnitNotifications, UnitFacturation, UnitListeFactures, UnitTypeProd,
-  UnitTempsNotification, Unit25,UnitGestionUtilisateurs ,unit36, UnitConnexion, UnitBenifices, UnitAccueil, UnitParametrage, UnitLirePrix, UnitSauvegarde,UnitVenteData;
+  UnitTempsNotification, Unit25,UnitGestionUtilisateurs ,unit36, UnitConnexion, UnitBenifices, UnitAccueil, UnitParametrage, UnitLirePrix, UnitSauvegarde,DataVenteUnit;
 
 function GetMotherBoardSerial:String;
 var
@@ -574,17 +574,16 @@ end;
 procedure TFormDashBoard.vente(ch:string;typvente:integer);
 var myYear, myMonth, myDay : Word;
 begin
-with FormVenteComptoir do
-if Privilege(3) then
-begin
-DecodeDate(Date, myYear, myMonth, myDay);
-FormVenteComptoir.Panel1.Caption:=ch;
-FormVenteComptoir.Caption:=ch;
-DataModuleVente.NouvelleOpr(typvente,1);
-ComboBoxNomPrenom.Clear;
-//ComboBoxNomPrenom.Style:=csDropDownList;
-FormVenteComptoir.show;
-end;
+    with FormVenteComptoir do
+    if Privilege(3) then
+    begin
+        DecodeDate(Date, myYear, myMonth, myDay);
+        FormVenteComptoir.Panel1.Caption:=ch;
+        FormVenteComptoir.Caption:=ch;
+        DataModuleVente.NouvelleOpr(typvente,1);
+        ComboBoxNomPrenom.Clear;
+        FormVenteComptoir.show;
+    end;
 end;
 
 procedure TFormDashBoard.dxTileControl1Item7Click(Sender: TdxTileControlItem);

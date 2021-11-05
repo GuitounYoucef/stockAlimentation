@@ -1,7 +1,7 @@
 object DataFacturation: TDataFacturation
   OldCreateOrder = False
-  Height = 518
-  Width = 1248
+  Height = 801
+  Width = 1367
   object FDQueryCodeProduit: TFDQuery
     Active = True
     Connection = FDConnection1

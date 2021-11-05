@@ -538,7 +538,7 @@ object FormEtatStock: TFormEtatStock
         Left = 528
         Top = 33
         Width = 312
-        Height = 44
+        Height = 37
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -10328,7 +10328,6 @@ object FormEtatStock: TFormEtatStock
         TabOrder = 0
         OnKeyDown = cxLookupComboBoxCodeProdKeyDown
         ExplicitTop = 10
-        ExplicitHeight = 21
         Width = 284
       end
     end
