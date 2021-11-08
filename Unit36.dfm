@@ -832,8 +832,8 @@ object DataModule1: TDataModule1
     Connection = FDConnection1
     SQL.Strings = (
       
-        'select Sortie.date,sum(PrixAchat*Quantite) as p,sum(PrixVente*Qu' +
-        'antite) as s'
+        'select Sortie.date,sum(PrixAchat*Quantite) as achats,sum(PrixVen' +
+        'te*Quantite) as ventes'
       
         'FROM SortieProduits INNER JOIN Sortie ON SortieProduits.NumOpr =' +
         ' Sortie.NumOpr'

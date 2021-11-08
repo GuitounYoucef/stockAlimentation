@@ -233,7 +233,10 @@ if verifierChampProd() then
     end;
       case f of
         5: if verifierChampQtStock() then
+            begin
               AjouterStocke();
+              FormEtatStock.selectRechercheObj();
+            end;
         6: NouveauProduitForm();
         8: if verifierChampQtStock() then
            begin
@@ -243,6 +246,8 @@ if verifierChampProd() then
       end;
   end;
 end;
+
+
 procedure TFormAjouterProduits.AfficherForm(fenetreSource:integer);
 begin
       case fenetreSource of

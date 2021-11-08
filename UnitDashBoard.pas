@@ -258,82 +258,82 @@ begin
 //label3.Caption:=GetMotherBoardSerial;
 if DataModule1.FD37TableActivation.RecordCount=0 then
 begin
-DataModule1.FD37TableActivation.Insert;
-DataModule1.FD37TableActivation.FieldValues['cle']:=GetMotherBoardSerial;
-DataModule1.FD37TableActivation.Next;
-end
-else
-if DataModule1.FD37TableActivation.RecordCount=1 then
-begin
-if (DataModule1.FD37TableActivation.FieldValues['cle']<>GetMotherBoardSerial) then
-close;
-end
-else
-close;
-//DataModule1.FD37TableSortie.Active:=false;
-//DataModule1.FD37TableSortie.Active:=true;
-//if DataModule1.FD37TableSortie.RecordCount>5000 then
-//close;
-//MessageDlg('هذا البرنامج عبارة عن نسخة تجريبية. تسمح بإجراء 5000 عملية بيع كحد أقصى',mtInformation,[mbOK],0);
-DataModule1.FD37TableType.First;
-while not DataModule1.FD37TableType.Eof do
-begin
-  DataModule1.FD37QueryTypeStock.Params.ParamValues['x']:=DataModule1.FD37TableType.FieldValues['type'];
-  DataModule1.FD37QueryTypeStock.Active:=false;
-  DataModule1.FD37QueryTypeStock.Active:=true;
-  while not DataModule1.FD37QueryTypeStock.Eof do
-     begin
-       //form12.Label1.Caption:=floattostr(DataModule1.FD37QueryTypeStock.FieldValues['dateconsm']-date);
-       //form18.Show;
-       if DataModule1.FD37QueryTypeStock.FieldValues['dateconsm']+DataModule1.FD37TableType.FieldValues['dure']>date then
-       begin
-         if DataModule1.FD37QueryTypeStock.FieldValues['dateconsm']<=date then
-          begin
-             DataModule1.FD37QueryTypeStock.Edit;
-             DataModule1.FD37QueryTypeStock.FieldValues['alert']:=false;
-             DataModule1.FD37QueryTypeStock.FieldValues['expire']:=true;
-             DataModule1.FD37QueryTypeStock.Post;
+    DataModule1.FD37TableActivation.Insert;
+    DataModule1.FD37TableActivation.FieldValues['cle']:=GetMotherBoardSerial;
+    DataModule1.FD37TableActivation.Next;
+    end
+    else
+    if DataModule1.FD37TableActivation.RecordCount=1 then
+    begin
+    if (DataModule1.FD37TableActivation.FieldValues['cle']<>GetMotherBoardSerial) then
+    close;
+    end
+    else
+    close;
+    //DataModule1.FD37TableSortie.Active:=false;
+    //DataModule1.FD37TableSortie.Active:=true;
+    //if DataModule1.FD37TableSortie.RecordCount>5000 then
+    //close;
+    //MessageDlg('هذا البرنامج عبارة عن نسخة تجريبية. تسمح بإجراء 5000 عملية بيع كحد أقصى',mtInformation,[mbOK],0);
+    DataModule1.FD37TableType.First;
+    while not DataModule1.FD37TableType.Eof do
+    begin
+      DataModule1.FD37QueryTypeStock.Params.ParamValues['x']:=DataModule1.FD37TableType.FieldValues['type'];
+      DataModule1.FD37QueryTypeStock.Active:=false;
+      DataModule1.FD37QueryTypeStock.Active:=true;
+      while not DataModule1.FD37QueryTypeStock.Eof do
+         begin
+           //form12.Label1.Caption:=floattostr(DataModule1.FD37QueryTypeStock.FieldValues['dateconsm']-date);
+           //form18.Show;
+           if DataModule1.FD37QueryTypeStock.FieldValues['dateconsm']+DataModule1.FD37TableType.FieldValues['dure']>date then
+           begin
+             if DataModule1.FD37QueryTypeStock.FieldValues['dateconsm']<=date then
+              begin
+                 DataModule1.FD37QueryTypeStock.Edit;
+                 DataModule1.FD37QueryTypeStock.FieldValues['alert']:=false;
+                 DataModule1.FD37QueryTypeStock.FieldValues['expire']:=true;
+                 DataModule1.FD37QueryTypeStock.Post;
 
-          end
-          else
-          begin
-             DataModule1.FD37QueryTypeStock.Edit;
-             DataModule1.FD37QueryTypeStock.FieldValues['alert']:=true;
-             DataModule1.FD37QueryTypeStock.FieldValues['expire']:=false;
-             DataModule1.FD37QueryTypeStock.Post;
-          end;
-       end;
-       DataModule1.FD37QueryTypeStock.Next;
-     end;
-DataModule1.FD37TableType.Next;
-case DataModule1.FDQuery115.FieldValues['privilege'] of
-1:begin
-  FormGestionUtilisateurs.PageControl1.Pages[1].TabVisible:=false;
-  FormGestionUtilisateurs.PageControl1.Pages[2].TabVisible:=false;
-  end;
-2:begin
-  FormGestionUtilisateurs.PageControl1.Pages[1].TabVisible:=false;
-  FormGestionUtilisateurs.PageControl1.Pages[2].TabVisible:=false;
-  end;
-end;
-end;
-with FormNotifications do
-begin
-DataModule1.FD18QueryAlert.Close;
-DataModule1.FD18QueryAlert.Open();
-DataModule1.FD18QueryExpire.Close;
-DataModule1.FD18QueryExpire.Open();
-  if DataModule1.FD18QueryAlert.RecordCount>0 then
-  begin
-    f:=1;
-    show;
-  end;
-  if DataModule1.FD18QueryExpire.RecordCount>0 then
-  begin
-    f:=2;
-    show;
-  end;
-end;
+              end
+              else
+              begin
+                 DataModule1.FD37QueryTypeStock.Edit;
+                 DataModule1.FD37QueryTypeStock.FieldValues['alert']:=true;
+                 DataModule1.FD37QueryTypeStock.FieldValues['expire']:=false;
+                 DataModule1.FD37QueryTypeStock.Post;
+              end;
+           end;
+           DataModule1.FD37QueryTypeStock.Next;
+         end;
+    DataModule1.FD37TableType.Next;
+    case DataModule1.FDQuery115.FieldValues['privilege'] of
+    1:begin
+      FormGestionUtilisateurs.PageControl1.Pages[1].TabVisible:=false;
+      FormGestionUtilisateurs.PageControl1.Pages[2].TabVisible:=false;
+      end;
+    2:begin
+      FormGestionUtilisateurs.PageControl1.Pages[1].TabVisible:=false;
+      FormGestionUtilisateurs.PageControl1.Pages[2].TabVisible:=false;
+      end;
+    end;
+    end;
+    with FormNotifications do
+    begin
+    DataModule1.FD18QueryAlert.Close;
+    DataModule1.FD18QueryAlert.Open();
+    DataModule1.FD18QueryExpire.Close;
+    DataModule1.FD18QueryExpire.Open();
+      if DataModule1.FD18QueryAlert.RecordCount>0 then
+      begin
+        f:=1;
+        //show;
+      end;
+      if DataModule1.FD18QueryExpire.RecordCount>0 then
+      begin
+        f:=2;
+        //show;
+      end;
+    end;
 end;
 
 procedure TFormDashBoard.dxBarLargeButton11Click(Sender: TObject);

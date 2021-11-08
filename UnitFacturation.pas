@@ -262,6 +262,7 @@ end;
 procedure TFormFacturation.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
+
   if key=VK_RETURN then
      begin
        ajouterProduit('******',cxLookupComboBoxCodeProd.Text);

@@ -91,6 +91,9 @@ type
    function GetCodeProduitList():string;
    function CalculerCredit():real;
 
+   function estDernierOperation():boolean;
+   function estListeProduit():boolean;
+
 
    //
    var
@@ -112,13 +115,13 @@ function TDataModuleVente.CalculerCredit():real;
 var crd:credit;
     x:real;
 begin
-  crd:=DataModuleDelivrence.RecupererCredit(operation.NumClient);
-  x:=crd.total-crd.payee;
-  FDMemTableCredit.First;
-  FDMemTableCredit.Edit;
-  FDMemTableCredit.FieldValues['Credit']:=x;
-  FDMemTableCredit.Post;
-  result:=x;
+    crd:=DataModuleDelivrence.RecupererCredit(operation.NumClient);
+    x:=crd.total-crd.payee;
+    FDMemTableCredit.First;
+    FDMemTableCredit.Edit;
+    FDMemTableCredit.FieldValues['Credit']:=x;
+    FDMemTableCredit.Post;
+    result:=x;
 end;
 //------------------------------------------------------------------------------
 function TDataModuleVente.TrouverPrduit(numStock,typevente:integer;id,code:string;quantite:real):Produits;
@@ -171,85 +174,101 @@ end;
 //------------------------------------------------
 procedure TDataModuleVente.AjouterProdList(P:Produits);
 begin
-if P.quantite>0 then
-begin
-if not FDQueryListeProdBD.Locate('id',P.id,[]) then
-begin
-  FDQueryListeProdBD.Insert;
-  FDQueryListeProdBD.FieldValues['id']:=p.id;
-  FDQueryListeProdBD.FieldValues['codeProduit']:=p.code;
-  FDQueryListeProdBD.FieldValues['producteur']:=p.producteur;
-  FDQueryListeProdBD.FieldValues['quantite']:=p.quantite;
-  FDQueryListeProdBD.FieldValues['PrixVente']:=p.PrixVente;
-  FDQueryListeProdBD.FieldValues['PrixAchat']:=p.PrixAchat;
-  FDQueryListeProdBD.FieldValues['NumOpr']:=FDQueryListOprsSortie.FieldValues['NumOpr'];
-  ModifierQuantiteStock(Operation.NumStock,p.code,p.quantite);
-  FDQueryListeProdBD.Post;
-end
-else
-begin
-  FDQueryListeProdBD.Edit;
-  FDQueryListeProdBD.FieldValues['quantite']:=FDQueryListeProdBD.FieldValues['quantite']+p.quantite;
-  ModifierQuantiteStock(Operation.NumStock,p.code,p.quantite);
-  FDQueryListeProdBD.Post;
-end;
-end
+    if P.quantite>0 then
+    begin
+    if not FDQueryListeProdBD.Locate('id',P.id,[]) then
+    begin
+      FDQueryListeProdBD.Insert;
+      FDQueryListeProdBD.FieldValues['id']:=p.id;
+      FDQueryListeProdBD.FieldValues['codeProduit']:=p.code;
+      FDQueryListeProdBD.FieldValues['producteur']:=p.producteur;
+      FDQueryListeProdBD.FieldValues['quantite']:=p.quantite;
+      FDQueryListeProdBD.FieldValues['PrixVente']:=p.PrixVente;
+      FDQueryListeProdBD.FieldValues['PrixAchat']:=p.PrixAchat;
+      FDQueryListeProdBD.FieldValues['NumOpr']:=FDQueryListOprsSortie.FieldValues['NumOpr'];
+      ModifierQuantiteStock(Operation.NumStock,p.code,p.quantite);
+      FDQueryListeProdBD.Post;
+    end
+    else
+    begin
+      FDQueryListeProdBD.Edit;
+      FDQueryListeProdBD.FieldValues['quantite']:=FDQueryListeProdBD.FieldValues['quantite']+p.quantite;
+      ModifierQuantiteStock(Operation.NumStock,p.code,p.quantite);
+      FDQueryListeProdBD.Post;
+    end;
+    end
 end;
 //------------------------------------------------
 procedure TDataModuleVente.SupprimerProdList(numList:integer);
 var i:integer;
 begin
-if FDQueryListeProdBD.RecordCount>0 then
-begin
-ModifierQuantiteStock(operation.NumStock,FDQueryListeProdBD.FieldValues['CodeProduit'],-FDQueryListeProdBD.FieldValues['Quantite']);
-FDQueryListeProdBD.Delete;
-end;
+    if FDQueryListeProdBD.RecordCount>0 then
+    begin
+    ModifierQuantiteStock(operation.NumStock,FDQueryListeProdBD.FieldValues['CodeProduit'],-FDQueryListeProdBD.FieldValues['Quantite']);
+    FDQueryListeProdBD.Delete;
+    end;
 end;
  //------------------------------------------------
 function TDataModuleVente.CalculerSomme():real;
 var som:real;
 begin
-som:=0;
-if FDQueryListeProdBD.RecordCount>0 then
+    som:=0;
+    if FDQueryListeProdBD.RecordCount>0 then
+    begin
+        FDQueryListeProdBD.First;
+        while not FDQueryListeProdBD.Eof do
+        begin
+          som:=som+FDQueryListeProdBD.FieldValues['PrixVente']*FDQueryListeProdBD.FieldValues['Quantite'];
+          FDQueryListeProdBD.Next;
+        end;
+    end;
+    result :=som;
+end;
+function TDataModuleVente.estDernierOperation: boolean;
 begin
-FDQueryListeProdBD.First;
-while not FDQueryListeProdBD.Eof do
+if (FDQueryListOprsSortie.RecordCount=FDQueryListOprsSortie.RecNo) then
+   result:=true
+   else
+   result:=false;
+end;
+
+function TDataModuleVente.estListeProduit: boolean;
 begin
-som:=som+FDQueryListeProdBD.FieldValues['PrixVente']*FDQueryListeProdBD.FieldValues['Quantite'];
-FDQueryListeProdBD.Next;
+   if(FDQueryListeProdBD.RecordCount=0) then
+     result:=true
+     else
+     result:=false;
 end;
-end;
-result :=som;
-end;
+
 //------------------------------------------------
 procedure TDataModuleVente.NouvelleSorite(Opr:Operation);
 begin
-  if ((Opr.Num>FDQueryListOprsSortie.RecordCount)or (Opr.Num=1)) then
-  begin
-  FDQueryListOprsSortie.Insert;
-  FDQueryListOprsSortie.FieldValues['Annee']:=Opr.Annee;
-  FDQueryListOprsSortie.FieldValues['Num']:=Opr.Num;
-  FDQueryListOprsSortie.FieldValues['typevente']:=Opr.typevente;
-  FDQueryListOprsSortie.FieldValues['Date']:=Date;
-  FDQueryListOprsSortie.FieldValues['TypePaim']:=Opr.TypePaim;
-  FDQueryListOprsSortie.FieldValues['Client']:=Opr.Client;
-  FDQueryListOprsSortie.FieldValues['NumCredit']:=Opr.NumCredit;
-  FDQueryListOprsSortie.FieldValues['NumStock']:=Opr.NumStock;
-  FDQueryListOprsSortie.FieldValues['numUser']:=Opr.numUser;
-  FDQueryListOprsSortie.Post;
-  end;
+    if ((Opr.Num>FDQueryListOprsSortie.RecordCount)or (Opr.Num=1)) then
+    begin
+    FDQueryListOprsSortie.Insert;
+    FDQueryListOprsSortie.FieldValues['Annee']:=Opr.Annee;
+    FDQueryListOprsSortie.FieldValues['Num']:=Opr.Num;
+    FDQueryListOprsSortie.FieldValues['typevente']:=Opr.typevente;
+    FDQueryListOprsSortie.FieldValues['Date']:=Date;
+    FDQueryListOprsSortie.FieldValues['TypePaim']:=Opr.TypePaim;
+    FDQueryListOprsSortie.FieldValues['Client']:=Opr.Client;
+    FDQueryListOprsSortie.FieldValues['NumCredit']:=Opr.NumCredit;
+    FDQueryListOprsSortie.FieldValues['NumStock']:=Opr.NumStock;
+    FDQueryListOprsSortie.FieldValues['numUser']:=Opr.numUser;
+    FDQueryListOprsSortie.Post;
+    end;
 end;
 //------------------------------------------------
 procedure TDataModuleVente.AfficherListProd();
 begin
-  FDQueryListOprsSortie.Params.ParamValues['a']:=Operation.Annee;
-  FDQueryListOprsSortie.Params.ParamValues['t']:=Operation.typevente;
-  FDQueryListOprsSortie.Active:=false;
-  FDQueryListOprsSortie.Active:=true;
-  FDQueryListOprsSortie.Last;
-  FDQueryListeProdBD.Params.ParamValues['x']:=FDQueryListOprsSortie.FieldValues['NumOpr'];
-  FDQueryListeProdBD.Close;
-  FDQueryListeProdBD.Open();
+    FDQueryListOprsSortie.Params.ParamValues['a']:=Operation.Annee;
+    FDQueryListOprsSortie.Params.ParamValues['t']:=Operation.typevente;
+    FDQueryListOprsSortie.Active:=false;
+    FDQueryListOprsSortie.Active:=true;
+    FDQueryListOprsSortie.Last;
+    FDQueryListeProdBD.Params.ParamValues['x']:=FDQueryListOprsSortie.FieldValues['NumOpr'];
+    FDQueryListeProdBD.Close;
+    FDQueryListeProdBD.Open();
 end;
 //------------------------------------------------
 procedure TDataModuleVente.NouvelleOpr(typvente,fenetre:integer);

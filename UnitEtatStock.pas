@@ -84,6 +84,8 @@ type
     procedure cxLookupComboBoxCodeProdKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
 
+    procedure selectRechercheObj();
+
   private
     { Déclarations privées }
   public
@@ -96,7 +98,7 @@ type
 
 var
   FormEtatStock: TFormEtatStock;
-  lien:string;
+  lien,rechercheObj:string;
   searchResult : TSearchRec;
 
 implementation
@@ -162,10 +164,36 @@ begin
      begin
        ajouterProduit('******',cxLookupComboBoxCodeProd.Text);
        cxLookupComboBoxCodeProd.ClearSelection;
+       rechercheObj:='cxLookupComboBox';
      end;
 end;
 
+
+procedure TFormEtatStock.EditCodeBarKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+     if key=VK_RETURN then
+     begin
+       ajouterProduit(EditCodeBar.Text,'******');
+       EditCodeBar.Clear;
+       rechercheObj:='EditCodeProduit';
+     end;
+end;
 //______________________________________________________________________________
+
+procedure TFormEtatStock.selectRechercheObj;
+begin
+    if rechercheObj='cxLookupComboBox' then
+       cxLookupComboBoxCodeProd.SetFocus
+    else
+       EditCodeBar.SetFocus;
+end;
+
+
+
+//______________________________________________________________________________
+
+
 procedure TFormEtatStock.EditCodeBarClick(Sender: TObject);
 begin
     LoadKeyboardLayout('0000040c', KLF_ACTIVATE);
@@ -176,15 +204,7 @@ begin
     LoadKeyboardLayout('0000040c', KLF_ACTIVATE);
 end;
 //______________________________________________________________________________
-procedure TFormEtatStock.EditCodeBarKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-begin
-     if key=VK_RETURN then
-     begin
-       ajouterProduit(EditCodeBar.Text,'******');
-       EditCodeBar.Clear;
-     end;
-end;
+
 
 procedure TFormEtatStock.ajouterProduit(codeProd, id: string);
 begin

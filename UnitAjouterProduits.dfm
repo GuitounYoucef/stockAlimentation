@@ -66,8 +66,6 @@ object FormAjouterProduits: TFormAjouterProduits
         Value = 80.000000000000000000
       end>
     TabOrder = 0
-    ExplicitWidth = 890
-    ExplicitHeight = 558
     object Panel1: TPanel
       Left = 1
       Top = 101
@@ -84,7 +82,6 @@ object FormAjouterProduits: TFormAjouterProduits
       ParentBiDiMode = False
       ParentFont = False
       TabOrder = 0
-      ExplicitWidth = 888
       object Label2: TLabel
         Left = 228
         Top = 34
@@ -465,7 +462,6 @@ object FormAjouterProduits: TFormAjouterProduits
       ParentBiDiMode = False
       ParentFont = False
       TabOrder = 3
-      ExplicitWidth = 888
       object Label11: TLabel
         Left = 716
         Top = 25
@@ -657,7 +653,6 @@ object FormAjouterProduits: TFormAjouterProduits
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      ExplicitWidth = 888
       object ButtonAjouter: TButton
         Left = 64
         Top = 19
@@ -739,7 +734,7 @@ object FormAjouterProduits: TFormAjouterProduits
         end>
       RowCollection = <
         item
-          Value = 9.924856540400424000
+          Value = 9.924856540400423000
         end
         item
           Value = 80.103386422045390000
@@ -748,7 +743,6 @@ object FormAjouterProduits: TFormAjouterProduits
           Value = 9.971757037554189000
         end>
       TabOrder = 2
-      ExplicitWidth = 888
       object Label10: TLabel
         Left = 654
         Top = 10
@@ -764,7 +758,6 @@ object FormAjouterProduits: TFormAjouterProduits
         Font.Style = [fsBold]
         ParentFont = False
         Layout = tlCenter
-        ExplicitLeft = 645
         ExplicitWidth = 202
         ExplicitHeight = 69
       end

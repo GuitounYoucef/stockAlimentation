@@ -151,22 +151,28 @@ end;
 procedure TFormVenteComptoir.ButtonNouvOprClick(Sender: TObject);
 // nouvelle ops
 begin
-  if DataModuleVente.FDQueryListeProdBD.RecordCount > 0 then
+  if (DataModuleVente.estDernierOperation()) then
   begin
-    if ToggleSwitchPrintigAuto.State = tssOn then
-      case DataModuleVente.operation.typevente of
-        1:ButtonImpTicketClick(FormVenteComptoir);
-        2:ButtonImpBonRecpClick(FormVenteComptoir);
-      end;
-    // DataModuleVente.ValiderOpr(DataModuleVente.operation);
-    DataModuleVente.NouvelleOpr(DataModuleVente.operation.typevente, 2);
-    ToggleSwitchPaiment.State := tssoff;
-    ComboBoxNomPrenom.Text := '';
-    dxGaugeControl1DigitalScale1.Value := FloatTostrF(0, ffFixed, 12, 2);
-    dxGaugeControl2DigitalScale1.Value :=
-      inttostr(DataModuleVente.operation.num);
-
-  end;
+      if (not DataModuleVente.estListeProduit()) then
+      begin
+        if ToggleSwitchPrintigAuto.State = tssOn then
+          case DataModuleVente.operation.typevente of
+            1:ButtonImpTicketClick(FormVenteComptoir);
+            2:ButtonImpBonRecpClick(FormVenteComptoir);
+          end;
+        // DataModuleVente.ValiderOpr(DataModuleVente.operation);
+        DataModuleVente.NouvelleOpr(DataModuleVente.operation.typevente, 2);
+        ToggleSwitchPaiment.State := tssoff;
+        ComboBoxNomPrenom.Text := '';
+        dxGaugeControl1DigitalScale1.Value := FloatTostrF(0, ffFixed, 12, 2);
+        dxGaugeControl2DigitalScale1.Value :=
+          inttostr(DataModuleVente.operation.num);
+      end
+      else
+      showmessage('عليك إدخال البيانات لتأكيد العملية');
+  end
+  else
+  showmessage('تم تأكيد العملية سابقا');
 end;
 
 procedure TFormVenteComptoir.ButtonImpBonRecpClick(Sender: TObject);
@@ -267,6 +273,12 @@ procedure TFormVenteComptoir.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;
 begin
   case Key of
     VK_RETURN:VenteProduit('*****',cxLookupComboBoxCodeProd.Text,1);
+    VK_F5:ButtonImpTicketClick(FormVenteComptoir);
+    VK_F6:ButtonImpBonRecpClick(FormVenteComptoir);
+    VK_F1:ButtonNouvOprClick(FormVenteComptoir);
+    VK_F2:ButtonSupprimerClick(FormVenteComptoir);
+    VK_F3:ButtonListProdsClick(FormVenteComptoir);
+    VK_F4:ButtonListeVenteClick(FormVenteComptoir);
   end;
 end;
 

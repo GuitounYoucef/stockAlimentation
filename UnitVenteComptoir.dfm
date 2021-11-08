@@ -179,7 +179,6 @@ object FormVenteComptoir: TFormVenteComptoir
         SizeStyle = ssAuto
       end>
     TabOrder = 1
-    ExplicitLeft = 8
     object GridPanel2: TGridPanel
       Left = 325
       Top = 81
@@ -219,8 +218,6 @@ object FormVenteComptoir: TFormVenteComptoir
           Value = 2.969591802435864000
         end>
       TabOrder = 1
-      ExplicitLeft = 327
-      ExplicitTop = 114
       object cxGrid1: TcxGrid
         Left = 22
         Top = 17
@@ -350,11 +347,9 @@ object FormVenteComptoir: TFormVenteComptoir
           Value = 11.352369769641970000
         end>
       TabOrder = 2
-      ExplicitTop = 661
-      ExplicitHeight = 80
       object dxGaugeControl2: TdxGaugeControl
         Left = 788
-        Top = 9
+        Top = 14
         Width = 107
         Height = 35
         Align = alClient
@@ -369,9 +364,9 @@ object FormVenteComptoir: TFormVenteComptoir
       end
       object DBNavigator1: TDBNavigator
         Left = 788
-        Top = 49
+        Top = 58
         Width = 107
-        Height = 24
+        Height = 41
         DataSource = DataSourceListOprsSortie
         VisibleButtons = [nbPrior, nbNext]
         Align = alClient
@@ -412,8 +407,6 @@ object FormVenteComptoir: TFormVenteComptoir
           Value = 14.149666542033500000
         end>
       TabOrder = 3
-      ExplicitLeft = 7
-      ExplicitTop = 147
       object Image2: TImage
         Left = 33
         Top = 23
@@ -457,7 +450,6 @@ object FormVenteComptoir: TFormVenteComptoir
           Value = 18.055348194174910000
         end>
       TabOrder = 0
-      ExplicitTop = 111
       object Edit1: TEdit
         Left = 10
         Top = 11
@@ -533,7 +525,6 @@ object FormVenteComptoir: TFormVenteComptoir
           Value = 9.971757037554189000
         end>
       TabOrder = 4
-      ExplicitHeight = 110
       object Image3: TImage
         Left = 644
         Top = 8
@@ -1626,8 +1617,6 @@ object FormVenteComptoir: TFormVenteComptoir
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 0
-        ExplicitTop = 11
-        ExplicitHeight = 86
         object Image1: TImage
           Left = 1032
           Top = 5
@@ -5754,8 +5743,6 @@ object FormVenteComptoir: TFormVenteComptoir
           Value = 31.505815995246510000
         end>
       TabOrder = 5
-      ExplicitLeft = 17
-      ExplicitTop = 285
       object ButtonSupprimer: TButton
         Left = 9
         Top = 160
@@ -5966,8 +5953,6 @@ object FormVenteComptoir: TFormVenteComptoir
       Color = clBtnFace
       LookAndFeel.SkinName = ''
       Transparent = True
-      ExplicitLeft = 7
-      ExplicitTop = 604
       object dxGaugeControl1DigitalScale1: TdxGaugeDigitalScale
         OptionsLayout.CenterPositionFactorX = 0.494009643793106100
         OptionsLayout.CenterPositionFactorY = 0.439799368381500200
@@ -6029,10 +6014,6 @@ object FormVenteComptoir: TFormVenteComptoir
           Value = 50.022392654326590000
         end>
       TabOrder = 7
-      ExplicitLeft = 70
-      ExplicitTop = 20
-      ExplicitWidth = 185
-      ExplicitHeight = 41
       object cxLookupComboBoxCodeProd: TcxLookupComboBox
         Left = 19
         Top = 20
@@ -6063,9 +6044,6 @@ object FormVenteComptoir: TFormVenteComptoir
         Style.IsFontAssigned = True
         TabOrder = 0
         OnKeyDown = cxLookupComboBoxCodeProdKeyDown
-        ExplicitTop = 10
-        ExplicitWidth = 284
-        ExplicitHeight = 21
         Width = 283
       end
     end
@@ -48938,8 +48916,8 @@ object FormVenteComptoir: TFormVenteComptoir
   end
   object DataSourceListOprsSortie: TDataSource
     DataSet = DataModuleVente.FDQueryListOprsSortie
-    Left = 430
-    Top = 376
+    Left = 486
+    Top = 432
   end
   object DataSourceListProduits: TDataSource
     DataSet = DataProduits.FDTableProduits

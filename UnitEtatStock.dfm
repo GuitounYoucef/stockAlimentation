@@ -538,7 +538,7 @@ object FormEtatStock: TFormEtatStock
         Left = 528
         Top = 33
         Width = 312
-        Height = 37
+        Height = 44
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -2800,9 +2800,6 @@ object FormEtatStock: TFormEtatStock
           Value = 9.971757037554189000
         end>
       TabOrder = 5
-      ExplicitLeft = 0
-      ExplicitTop = 4
-      ExplicitWidth = 1360
       object Image3: TImage
         Left = 623
         Top = 10
@@ -6246,7 +6243,6 @@ object FormEtatStock: TFormEtatStock
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 0
-        ExplicitLeft = 1049
         object Image1: TImage
           Left = 1032
           Top = 5
@@ -10295,8 +10291,6 @@ object FormEtatStock: TFormEtatStock
           Value = 50.022392654326590000
         end>
       TabOrder = 6
-      ExplicitLeft = 9
-      ExplicitTop = 9
       object cxLookupComboBoxCodeProd: TcxLookupComboBox
         Left = 19
         Top = 30
@@ -10327,7 +10321,6 @@ object FormEtatStock: TFormEtatStock
         Style.IsFontAssigned = True
         TabOrder = 0
         OnKeyDown = cxLookupComboBoxCodeProdKeyDown
-        ExplicitTop = 10
         Width = 284
       end
     end

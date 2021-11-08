@@ -8763,8 +8763,6 @@ object FormFacturation: TFormFacturation
         Style.IsFontAssigned = True
         TabOrder = 0
         OnKeyDown = cxLookupComboBoxCodeProdKeyDown
-        ExplicitLeft = 20
-        ExplicitTop = 6
         Width = 284
       end
     end

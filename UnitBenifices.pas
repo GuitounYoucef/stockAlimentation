@@ -88,32 +88,32 @@ uses unit36;
 
 procedure TFormBenifices.Button1Click(Sender: TObject);
 var x,y:real;
-begin
-DataModule1.FD30QuerySortieDate.Params.ParamValues['x']:=datetostr(DateTimePicker1.Date);
-DataModule1.FD30QuerySortieDate.Params.ParamValues['y']:=datetostr(DateTimePicker2.Date);
-DataModule1.FD30QuerySortieDate.Active:=false;
-DataModule1.FD30QuerySortieDate.Active:=true;
-if DataModule1.FD30QuerySortieDate.RecordCount>0 then
-begin
-  DataModule1.FD30Querysomsortie.Params.ParamValues['x']:=datetostr(DateTimePicker1.Date);
-  DataModule1.FD30Querysomsortie.Params.ParamValues['y']:=datetostr(DateTimePicker2.Date);
-  DataModule1.FD30Querysomsortie.Active:=false;
-  DataModule1.FD30Querysomsortie.Active:=true;
-  DataModule1.FD30QueryorderProduit.Params.ParamValues['x']:=datetostr(DateTimePicker1.Date);
-  DataModule1.FD30QueryorderProduit.Params.ParamValues['y']:=datetostr(DateTimePicker2.Date);
-  DataModule1.FD30QueryorderProduit.Active:=false;
-  DataModule1.FD30QueryorderProduit.Active:=true;
-  DataModule1.FD30QueryOrderUtilisateur.Params.ParamValues['x']:=datetostr(DateTimePicker1.Date);
-  DataModule1.FD30QueryOrderUtilisateur.Params.ParamValues['y']:=datetostr(DateTimePicker2.Date);
-  DataModule1.FD30QueryOrderUtilisateur.Active:=false;
-  DataModule1.FD30QueryOrderUtilisateur.Active:=true;
-begin
-  x:=DataModule1.FD30Querysomsortie.FieldValues['s']-DataModule1.FD30Querysomsortie.FieldValues['p'];
-  y:=DataModule1.FD30Querysomsortie.FieldValues['s'];
-  dxGaugeControl3DigitalScale1.Value:=FloatTostrF(y,ffFixed,12,2);
-  dxGaugeControl4DigitalScale1.Value:=FloatTostrF(x,ffFixed,12,2);
-end;
-end;
+    begin
+    DataModule1.FD30QuerySortieDate.Params.ParamValues['x']:=datetostr(DateTimePicker1.Date);
+    DataModule1.FD30QuerySortieDate.Params.ParamValues['y']:=datetostr(DateTimePicker2.Date);
+    DataModule1.FD30QuerySortieDate.Active:=false;
+    DataModule1.FD30QuerySortieDate.Active:=true;
+    if DataModule1.FD30QuerySortieDate.RecordCount>0 then
+    begin
+      DataModule1.FD30Querysomsortie.Params.ParamValues['x']:=datetostr(DateTimePicker1.Date);
+      DataModule1.FD30Querysomsortie.Params.ParamValues['y']:=datetostr(DateTimePicker2.Date);
+      DataModule1.FD30Querysomsortie.Active:=false;
+      DataModule1.FD30Querysomsortie.Active:=true;
+      DataModule1.FD30QueryorderProduit.Params.ParamValues['x']:=datetostr(DateTimePicker1.Date);
+      DataModule1.FD30QueryorderProduit.Params.ParamValues['y']:=datetostr(DateTimePicker2.Date);
+      DataModule1.FD30QueryorderProduit.Active:=false;
+      DataModule1.FD30QueryorderProduit.Active:=true;
+      DataModule1.FD30QueryOrderUtilisateur.Params.ParamValues['x']:=datetostr(DateTimePicker1.Date);
+      DataModule1.FD30QueryOrderUtilisateur.Params.ParamValues['y']:=datetostr(DateTimePicker2.Date);
+      DataModule1.FD30QueryOrderUtilisateur.Active:=false;
+      DataModule1.FD30QueryOrderUtilisateur.Active:=true;
+    begin
+      x:=DataModule1.FD30Querysomsortie.FieldValues['ventes']-DataModule1.FD30Querysomsortie.FieldValues['achats'];
+      y:=DataModule1.FD30Querysomsortie.FieldValues['ventes'];
+      dxGaugeControl3DigitalScale1.Value:=FloatTostrF(y,ffFixed,12,2);
+      dxGaugeControl4DigitalScale1.Value:=FloatTostrF(x,ffFixed,12,2);
+    end;
+    end;
 end;
 
 procedure TFormBenifices.dxLayoutControl1Group_Root1TabChanging(Sender: TObject;

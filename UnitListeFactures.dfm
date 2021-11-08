@@ -6251,6 +6251,8 @@ object FormListeFactures: TFormListeFactures
           Value = 5.000324667006810000
         end>
       TabOrder = 4
+      ExplicitLeft = -4
+      ExplicitTop = 176
       object DBGrid2: TDBGrid
         Left = 21
         Top = 20
@@ -6409,9 +6411,8 @@ object FormListeFactures: TFormListeFactures
         ParentBiDiMode = False
         ParentFont = False
         Layout = tlCenter
-        ExplicitLeft = 253
-        ExplicitWidth = 82
-        ExplicitHeight = 23
+        ExplicitLeft = 38
+        ExplicitTop = -5
       end
     end
     object GridPanel8: TGridPanel
