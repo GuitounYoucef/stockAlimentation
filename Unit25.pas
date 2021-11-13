@@ -49,7 +49,6 @@ type
     procedure DBComboBoxNormalChange(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure DBComboBoxStockidChange(Sender: TObject);
   private
     { Déclarations privées }
   public
@@ -61,47 +60,34 @@ var
 
 implementation
 
-uses unit36;
+uses unit36, DataParametrageUnite;
 {$R *.dfm}
 
 procedure TForm25.Button1Click(Sender: TObject);
 begin
 
-DataModule1.FDTableImprimante.Edit;
-DataModule1.FDTableParametrage.Edit;
-DataModule1.FDTableImprimante.Post;
-DataModule1.FDTableParametrage.Post;
+DataParametrage.FDTableImprimante.Edit;
+DataParametrage.FDTableParametrage.Edit;
+DataParametrage.FDTableImprimante.Post;
+DataParametrage.FDTableParametrage.Post;
 close;
 end;
 
 
 procedure TForm25.Button2Click(Sender: TObject);
 begin
-if length(edit1.Text)>0 then
-begin
-  DataModule1.FDTableStockid25.Insert;
-  DataModule1.FDTableStockid25.FieldValues['id']:=edit1.Text;
-  DataModule1.FDTableStockid25.Next;
-  edit1.Clear;
-end;
+//if length(edit1.Text)>0 then
+//begin
+//  DataModule1.FDTableStockid25.Insert;
+//  DataModule1.FDTableStockid25.FieldValues['id']:=edit1.Text;
+//  DataModule1.FDTableStockid25.Next;
+//  edit1.Clear;
+//end;
 end;
 
 procedure TForm25.DBComboBoxNormalChange(Sender: TObject);
 begin
 frxReport1.PrintOptions.Printer:=DBComboBoxNormal.Text;
-end;
-
-procedure TForm25.DBComboBoxStockidChange(Sender: TObject);
-begin
-DataModule1.FDQuerystockid25.Params.ParamValues['x']:=DBComboBoxStockid.Text;
-DataModule1.FDQuerystockid25.Close;
-DataModule1.FDQuerystockid25.Open();
-if DataModule1.FDQuerystockid25.RecordCount>0 then
-begin
-  DataModule1.FDTableParametrage.Edit;
-  DataModule1.FDTableParametrage.FieldValues['stocknum']:= DataModule1.FDQuerystockid25.FieldValues['Numstock'];
-  DataModule1.FDTableParametrage.Post;
-end;
 end;
 
 procedure TForm25.FormCreate(Sender: TObject);
@@ -116,13 +102,13 @@ DBComboBoxCodeBar.Items.Add(printer.printers[i]);
 DBComboBoxTicket.Items.Add(printer.printers[i]);
 end;
 
-DBComboBoxStockid.Items.Clear;
-DataModule1.FDTableStockid25.First;
-while not DataModule1.FDTableStockid25.Eof do
-begin
-  DBComboBoxStockid.Items.Add(DataModule1.FDTableStockid25.FieldValues['id']);
-  DataModule1.FDTableStockid25.Next;
-end;
+//DBComboBoxStockid.Items.Clear;
+//DataModule1.FDTableStockid25.First;
+//while not DataModule1.FDTableStockid25.Eof do
+//begin
+//  DBComboBoxStockid.Items.Add(DataModule1.FDTableStockid25.FieldValues['id']);
+//  DataModule1.FDTableStockid25.Next;
+//end;
 
 end;
 

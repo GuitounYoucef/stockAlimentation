@@ -175,11 +175,6 @@
             <Form>FormListeVente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Unit36.pas">
-            <Form>DataModule1</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="UnitDashBoard.pas">
             <Form>FormDashBoard</Form>
             <FormType>dfm</FormType>

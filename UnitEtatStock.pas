@@ -144,7 +144,7 @@ end;
 //______________________________________________________________________________
 procedure TFormEtatStock.ButtonConsultationClick(Sender: TObject);
 begin
-    FormStockDetail.DataSource1.DataSet:=DataStocks.FDTableStock;
+    FormStockDetail.DataSourceAllStockByDate.DataSet:=DataStocks.FDTableStock;
     FormStockDetail.show;
 end;
 //______________________________________________________________________________

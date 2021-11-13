@@ -24,7 +24,6 @@ uses
   UnitStockDetail in 'UnitStockDetail.pas' {FormStockDetail},
   UnitListeFactures in 'UnitListeFactures.pas' {FormListeFactures},
   UnitListeVente in 'UnitListeVente.pas' {FormListeVente},
-  Unit36 in 'Unit36.pas' {DataModule1: TDataModule},
   UnitDashBoard in 'UnitDashBoard.pas' {FormDashBoard},
   UnitAccueil in 'UnitAccueil.pas' {FormAccueil},
   UnitParametrage in 'UnitParametrage.pas' {FormParametrage},
@@ -43,7 +42,11 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   TStyleManager.TrySetStyle('Carbon');
-  Application.CreateForm(TDataModule1, DataModule1);
+  //Application.CreateForm(TDataModule1, DataModule1);
+  Application.CreateForm(TDataFacturation, DataFacturation);
+  Application.CreateForm(TDataProduits, DataProduits);
+  Application.CreateForm(TDataStocks, DataStocks);
+  Application.CreateForm(TDataParametrage, DataParametrage);
   Application.CreateForm(TFormAccueil, FormAccueil);
   Application.CreateForm(TFormEtatStock, FormEtatStock);
   Application.CreateForm(TFormDashBoard, FormDashBoard);
@@ -72,11 +75,7 @@ begin
   Application.CreateForm(TFormStockDetail, FormStockDetail);
   Application.CreateForm(TFormListeFactures, FormListeFactures);
   Application.CreateForm(TFormListeVente, FormListeVente);
-  Application.CreateForm(TDataFacturation, DataFacturation);
-  Application.CreateForm(TDataProduits, DataProduits);
-  Application.CreateForm(TDataStocks, DataStocks);
-  Application.CreateForm(TDataParametrage, DataParametrage);
-  //23
+
 
   Application.Run;
 end.

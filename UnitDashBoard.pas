@@ -206,7 +206,8 @@ implementation
 {$R *.dfm}
 
 uses UnitVenteComptoir, UnitDelivrence, UnitEtatStock, UnitProduits, UnitClients, UnitFournisseurs, UnitNotifications, UnitFacturation, UnitListeFactures, UnitTypeProd,
-  UnitTempsNotification, Unit25,UnitGestionUtilisateurs ,unit36, UnitConnexion, UnitBenifices, UnitAccueil, UnitParametrage, UnitLirePrix, UnitSauvegarde,DataVenteUnit;
+  UnitTempsNotification, Unit25,UnitGestionUtilisateurs ,unit36, UnitConnexion, UnitBenifices, UnitAccueil, UnitParametrage, UnitLirePrix, UnitSauvegarde,DataVenteUnit,
+  DataStocksUnite, DataParametrageUnite;
 
 function GetMotherBoardSerial:String;
 var
@@ -234,6 +235,7 @@ begin
   if oEnum.Next(1, colItem, iValue) = 0 then
   Result:=VarToStr(colItem.SerialNumber);
 end;
+
 procedure TFormDashBoard.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 FormAccueil.close;
@@ -241,7 +243,7 @@ end;
 
 function Privilege(x:integer):boolean;
 begin
-  if DataModule1.FDQuery115.FieldValues['privilege']<x then
+  if DataParametrage.FDQueryLoginUser.FieldValues['privilege']<x then
      result:=true
   else
   begin
@@ -250,22 +252,26 @@ begin
   end;
 end;
 
-
-
-
 procedure TFormDashBoard.FormShow(Sender: TObject);
 begin
-//label3.Caption:=GetMotherBoardSerial;
-if DataModule1.FD37TableActivation.RecordCount=0 then
+if width<1600 then
 begin
-    DataModule1.FD37TableActivation.Insert;
-    DataModule1.FD37TableActivation.FieldValues['cle']:=GetMotherBoardSerial;
-    DataModule1.FD37TableActivation.Next;
+   dxTileControl1.OptionsView.ItemWidth:=180;
+   dxTileControl1.OptionsView.ItemHeight:=163;
+end;
+
+
+//label3.Caption:=GetMotherBoardSerial;
+if DataParametrage.FDTableActivation.RecordCount=0 then
+begin
+    DataParametrage.FDTableActivation.Insert;
+    DataParametrage.FDTableActivation.FieldValues['cle']:=GetMotherBoardSerial;
+    DataParametrage.FDTableActivation.Next;
     end
     else
-    if DataModule1.FD37TableActivation.RecordCount=1 then
+    if DataParametrage.FDTableActivation.RecordCount=1 then
     begin
-    if (DataModule1.FD37TableActivation.FieldValues['cle']<>GetMotherBoardSerial) then
+    if (DataParametrage.FDTableActivation.FieldValues['cle']<>GetMotherBoardSerial) then
     close;
     end
     else
@@ -275,38 +281,38 @@ begin
     //if DataModule1.FD37TableSortie.RecordCount>5000 then
     //close;
     //MessageDlg('هذا البرنامج عبارة عن نسخة تجريبية. تسمح بإجراء 5000 عملية بيع كحد أقصى',mtInformation,[mbOK],0);
-    DataModule1.FD37TableType.First;
-    while not DataModule1.FD37TableType.Eof do
+    DataParametrage.FDTableType.First;
+    while not DataParametrage.FDTableType.Eof do
     begin
-      DataModule1.FD37QueryTypeStock.Params.ParamValues['x']:=DataModule1.FD37TableType.FieldValues['type'];
-      DataModule1.FD37QueryTypeStock.Active:=false;
-      DataModule1.FD37QueryTypeStock.Active:=true;
-      while not DataModule1.FD37QueryTypeStock.Eof do
+      DataStocks.FDQueryTypeProdStock.Params.ParamValues['x']:=DataParametrage.FDTableType.FieldValues['type'];
+      DataStocks.FDQueryTypeProdStock.Active:=false;
+      DataStocks.FDQueryTypeProdStock.Active:=true;
+      while not DataStocks.FDQueryTypeProdStock.Eof do
          begin
-           //form12.Label1.Caption:=floattostr(DataModule1.FD37QueryTypeStock.FieldValues['dateconsm']-date);
+           //form12.Label1.Caption:=floattostr(DataStocks.FDQueryTypeProdStock.FieldValues['dateconsm']-date);
            //form18.Show;
-           if DataModule1.FD37QueryTypeStock.FieldValues['dateconsm']+DataModule1.FD37TableType.FieldValues['dure']>date then
+           if DataStocks.FDQueryTypeProdStock.FieldValues['dateconsm']+DataParametrage.FDTableType.FieldValues['dure']>date then
            begin
-             if DataModule1.FD37QueryTypeStock.FieldValues['dateconsm']<=date then
+             if DataStocks.FDQueryTypeProdStock.FieldValues['dateconsm']<=date then
               begin
-                 DataModule1.FD37QueryTypeStock.Edit;
-                 DataModule1.FD37QueryTypeStock.FieldValues['alert']:=false;
-                 DataModule1.FD37QueryTypeStock.FieldValues['expire']:=true;
-                 DataModule1.FD37QueryTypeStock.Post;
+                 DataStocks.FDQueryTypeProdStock.Edit;
+                 DataStocks.FDQueryTypeProdStock.FieldValues['alert']:=false;
+                 DataStocks.FDQueryTypeProdStock.FieldValues['expire']:=true;
+                 DataStocks.FDQueryTypeProdStock.Post;
 
               end
               else
               begin
-                 DataModule1.FD37QueryTypeStock.Edit;
-                 DataModule1.FD37QueryTypeStock.FieldValues['alert']:=true;
-                 DataModule1.FD37QueryTypeStock.FieldValues['expire']:=false;
-                 DataModule1.FD37QueryTypeStock.Post;
+                 DataStocks.FDQueryTypeProdStock.Edit;
+                 DataStocks.FDQueryTypeProdStock.FieldValues['alert']:=true;
+                 DataStocks.FDQueryTypeProdStock.FieldValues['expire']:=false;
+                 DataStocks.FDQueryTypeProdStock.Post;
               end;
            end;
-           DataModule1.FD37QueryTypeStock.Next;
+           DataStocks.FDQueryTypeProdStock.Next;
          end;
-    DataModule1.FD37TableType.Next;
-    case DataModule1.FDQuery115.FieldValues['privilege'] of
+    DataParametrage.FDTableType.Next;
+    case DataParametrage.FDQueryLoginUser.FieldValues['privilege'] of
     1:begin
       FormGestionUtilisateurs.PageControl1.Pages[1].TabVisible:=false;
       FormGestionUtilisateurs.PageControl1.Pages[2].TabVisible:=false;
@@ -319,16 +325,16 @@ begin
     end;
     with FormNotifications do
     begin
-    DataModule1.FD18QueryAlert.Close;
-    DataModule1.FD18QueryAlert.Open();
-    DataModule1.FD18QueryExpire.Close;
-    DataModule1.FD18QueryExpire.Open();
-      if DataModule1.FD18QueryAlert.RecordCount>0 then
+    DataStocks.FDQueryAlert.Close;
+    DataStocks.FDQueryAlert.Open();
+    DataStocks.FDQueryExpire.Close;
+    DataStocks.FDQueryExpire.Open();
+      if DataStocks.FDQueryAlert.RecordCount>0 then
       begin
         f:=1;
         //show;
       end;
-      if DataModule1.FD18QueryExpire.RecordCount>0 then
+      if DataStocks.FDQueryExpire.RecordCount>0 then
       begin
         f:=2;
         //show;

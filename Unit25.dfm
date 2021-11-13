@@ -16325,7 +16325,6 @@ object Form25: TForm25
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 3
-      OnChange = DBComboBoxStockidChange
     end
   end
   object Panel3: TPanel
@@ -17053,7 +17052,7 @@ object Form25: TForm25
     Left = 18
     Top = 255
     Bitmap = {
-      494C010109003800E0001E001E00FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01010900380004001E001E00FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000780000005A0000000100200000000000C0A8
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000002000000040000
@@ -18456,7 +18455,7 @@ object Form25: TForm25
       000000000000}
   end
   object frxReport1: TfrxReport
-    Version = '5.6.1'
+    Version = '6.3.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -18487,7 +18486,10 @@ object Form25: TForm25
       RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
+      Frame.Typ = []
+      MirrorMode = []
       object Memo1: TfrxMemoView
+        AllowVectorExport = True
         Left = 56.692950000000000000
         Top = 56.692950000000000000
         Width = 200.315090000000000000
@@ -18497,6 +18499,7 @@ object Form25: TForm25
         Font.Height = -48
         Font.Name = 'Arial'
         Font.Style = []
+        Frame.Typ = []
         Memo.UTF8W = (
           'halo')
         ParentFont = False
@@ -18504,17 +18507,14 @@ object Form25: TForm25
     end
   end
   object DataSource1: TDataSource
-    DataSet = DataModule1.FDTableImprimante
     Left = 144
     Top = 16
   end
   object DataSource2: TDataSource
-    DataSet = DataModule1.FDTableStockid25
     Left = 56
     Top = 432
   end
   object DataSource3: TDataSource
-    DataSet = DataModule1.FDTableParametrage
     Left = 88
     Top = 648
   end

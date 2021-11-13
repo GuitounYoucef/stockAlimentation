@@ -80,6 +80,9 @@ type
     procedure NouvelleFactureForm();
     procedure RechercheFactureForm(a,d:string;n:integer);
     procedure intializationAffichage(aff:boolean);
+    procedure cxLookupComboBoxCodeProdEnter(Sender: TObject);
+
+    procedure FormShow(Sender: TObject);
 
 
   private
@@ -103,7 +106,7 @@ implementation
 {$R *.dfm}
 
 uses UnitPaiementCredit, UnitRechercheNomProduit, UnitAjouterProduits, DataProduitsUnite,
-  DataFacturationUnite;
+  DataFacturationUnite,DataParametrageUnite;
 
 procedure TFormFacturation.ButtonValiderClick(Sender: TObject);
 begin
@@ -113,7 +116,7 @@ DataFacturation.ValiderInforFavture( num,
                                      cxLookupComboBoxstockid.text,
                                      typeops);
 
-FormPaiementCredit.PaimentFactureShow(som);
+FormPaiementCredit.PaimentFactureShow(DataFacturation.calculerSomFacture());
 end;
 //------------------------------------------------------------------------------
 procedure TFormFacturation.ButtonImprimerClick(Sender: TObject);
@@ -174,6 +177,8 @@ begin
 end;
 
 
+
+
 //------------------------------------------------------------------------------
 procedure TFormFacturation.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -189,6 +194,11 @@ begin
 MessageDlg(Key + ' has been pressed', mtInformation, [mbOK], 0)
 end;
 
+
+procedure TFormFacturation.FormShow(Sender: TObject);
+begin
+DataFacturation.dataRefrech();
+end;
 
 procedure TFormFacturation.intializationAffichage(aff: boolean);
 begin
@@ -231,6 +241,7 @@ begin
        cxLookupComboBoxCodeProd.SetFocus
     else
        EditCodeProduit.SetFocus;
+    LoadKeyboardLayout('0000040c', KLF_ACTIVATE);
 end;
 
 procedure TFormFacturation.cxLookupComboBoxCodeProdPropertiesChange(
@@ -257,6 +268,11 @@ begin
         if not DataFacturation.SupprimerEntree() then
            showmessage('لا يمكنك حذف هذه السلعة فقد تم بيع جزء منها')
         else update:=true;
+end;
+
+procedure TFormFacturation.cxLookupComboBoxCodeProdEnter(Sender: TObject);
+begin
+LoadKeyboardLayout('0000040c', KLF_ACTIVATE);
 end;
 
 procedure TFormFacturation.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;

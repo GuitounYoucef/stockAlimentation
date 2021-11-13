@@ -1,10 +1,11 @@
 object FormBenifices: TFormBenifices
   Left = 0
   Top = 0
+  AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'FormBenifices'
-  ClientHeight = 670
-  ClientWidth = 758
+  ClientHeight = 644
+  ClientWidth = 765
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +19,7 @@ object FormBenifices: TFormBenifices
   PixelsPerInch = 96
   TextHeight = 13
   object GridPanel2: TGridPanel
-    Left = 0
+    Left = 3
     Top = 0
     Width = 759
     Height = 139
@@ -79,7 +80,7 @@ object FormBenifices: TFormBenifices
       end
       item
         Column = 1
-        Control = Button1
+        Control = ButtonRecherche
         Row = 2
       end
       item
@@ -183,7 +184,7 @@ object FormBenifices: TFormBenifices
       ParentFont = False
       TabOrder = 1
     end
-    object Button1: TButton
+    object ButtonRecherche: TButton
       Left = 13
       Top = 93
       Width = 137
@@ -200,7 +201,7 @@ object FormBenifices: TFormBenifices
       Images = ImageList1
       ParentFont = False
       TabOrder = 2
-      OnClick = Button1Click
+      OnClick = ButtonRechercheClick
     end
     object Panel1: TPanel
       Left = 1
@@ -2015,10 +2016,10 @@ object FormBenifices: TFormBenifices
   end
   object dxLayoutControl1: TdxLayoutControl
     AlignWithMargins = True
-    Left = 0
+    Left = 3
     Top = 139
-    Width = 758
-    Height = 534
+    Width = 759
+    Height = 502
     BiDiMode = bdRightToLeft
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
@@ -2032,9 +2033,9 @@ object FormBenifices: TFormBenifices
     Transparent = True
     LayoutLookAndFeel = dxLayoutSkinLookAndFeel1
     object cxGrid1: TcxGrid
-      Left = 45
-      Top = 122
-      Width = 668
+      Left = 62
+      Top = 101
+      Width = 652
       Height = 290
       TabOrder = 0
       LookAndFeel.NativeStyle = False
@@ -2084,9 +2085,9 @@ object FormBenifices: TFormBenifices
       end
     end
     object dxGaugeControl3: TdxGaugeControl
-      Left = 388
-      Top = 424
-      Width = 243
+      Left = 405
+      Top = 403
+      Width = 227
       Height = 49
       BorderStyle = cxcbsNone
       Transparent = True
@@ -2098,8 +2099,8 @@ object FormBenifices: TFormBenifices
       end
     end
     object dxGaugeControl4: TdxGaugeControl
-      Left = 45
-      Top = 424
+      Left = 62
+      Top = 403
       Width = 232
       Height = 51
       BorderStyle = cxcbsNone
@@ -2115,7 +2116,7 @@ object FormBenifices: TFormBenifices
     object cxGrid2: TcxGrid
       Left = 10000
       Top = 10000
-      Width = 668
+      Width = 652
       Height = 356
       TabOrder = 3
       Visible = False
@@ -2154,8 +2155,8 @@ object FormBenifices: TFormBenifices
     object cxGrid3: TcxGrid
       Left = 10000
       Top = 10000
-      Width = 668
-      Height = 367
+      Width = 652
+      Height = 356
       TabOrder = 4
       Visible = False
       object cxGrid3DBTableView1: TcxGridDBTableView
@@ -2310,8 +2311,8 @@ object FormBenifices: TFormBenifices
     DrawingStyle = dsFocus
     Height = 30
     Width = 30
-    Left = 178
-    Top = 7
+    Left = 226
+    Top = 15
     Bitmap = {
       494C01010100380004001E001E00FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000780000001E00000001002000000000004038
@@ -2786,19 +2787,19 @@ object FormBenifices: TFormBenifices
       000000000000}
   end
   object DataSource1: TDataSource
-    DataSet = DataModule1.FD30QuerySortieDate
-    Left = 41
-    Top = 23
+    DataSet = DataModuleDelivrence.FDQuerySortieDate
+    Left = 641
+    Top = 311
   end
   object DataSource2: TDataSource
-    DataSet = DataModule1.FD30QueryorderProduit
-    Left = 129
-    Top = 23
+    DataSet = DataModuleDelivrence.FDQueryBeniforderProduit
+    Left = 369
+    Top = 311
   end
   object DataSource3: TDataSource
-    DataSet = DataModule1.FD30QueryOrderUtilisateur
-    Left = 281
-    Top = 183
+    DataSet = DataModuleDelivrence.FDQueryBenifOrderUtilisateur
+    Left = 105
+    Top = 327
   end
   object dxLayoutLookAndFeelList1: TdxLayoutLookAndFeelList
     Left = 104

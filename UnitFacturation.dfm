@@ -17,6 +17,7 @@ object FormFacturation: TFormFacturation
   Position = poDesktopCenter
   OnClose = FormClose
   OnKeyPress = FormKeyPress
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object GridPanel1: TGridPanel
@@ -8762,6 +8763,7 @@ object FormFacturation: TFormFacturation
         Style.Font.Style = []
         Style.IsFontAssigned = True
         TabOrder = 0
+        OnEnter = cxLookupComboBoxCodeProdEnter
         OnKeyDown = cxLookupComboBoxCodeProdKeyDown
         Width = 284
       end
@@ -9756,7 +9758,7 @@ object FormFacturation: TFormFacturation
       'mobile2=mobile2'
       'Fax1=Fax1'
       'Fax2=Fax2')
-    DataSet = DataModule1.FDTableImprimante
+    DataSet = DataParametrage.FDTableImprimante
     BCDToCurrency = False
     Left = 1097
     Top = 393
@@ -9774,14 +9776,14 @@ object FormFacturation: TFormFacturation
       'NomDestination=NomDestination'
       'source=source'
       'NumSource=NumSource'
-      'NumDestination=NumDestination')
-    DataSet = DataModule1.FDTableFacture8
+      'NumDestination=NumDestination'
+      'TypePaiement=TypePaiement')
+    DataSet = DataFacturation.FDQueryFacture
     BCDToCurrency = False
     Left = 1201
     Top = 393
   end
   object DataSource2: TDataSource
-    DataSet = DataModule1.FDQueryFournisseur8
     Left = 507
     Top = 304
   end

@@ -65,7 +65,8 @@ type
    function SupprimerEntree():boolean;
    function FacturePayeeEstVide(Var Annee,NomDestination:string;var num:integer):boolean;
    function EntreesFactureEstvide():boolean;
-   function calculerSomFacture():longint;
+   function calculerSomFacture():real;
+   procedure dataRefrech();
 
 
    var facture:Facture;
@@ -82,7 +83,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses UnitFacturation, Unit36, DataStocksUnite;
+uses UnitFacturation, Unit36, DataStocksUnite, DataParametrageUnite;
 
 {$R *.dfm}
 function TDataFacturation.TrouverFournsNum(NomFourn:string):integer;
@@ -149,7 +150,7 @@ begin
             result:=false;
          end;
 end;
-
+//------------------------------------------------------------------------------
 procedure TDataFacturation.FDQueryFacturePayeeAfterScroll(DataSet: TDataSet);
 Var Annee:string;
     num:integer;
@@ -158,9 +159,7 @@ begin
   Num:=FDQueryFacturePayee.FieldValues['num'];
   RechercheFacture(Annee,Num);
 end;
-
-
-
+//------------------------------------------------------------------------------
 procedure TDataFacturation.NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;
   quantite: real; DateProd, Dateconsm: TDateTime);
 begin
@@ -183,10 +182,12 @@ begin
       FDQueryFactureEntrante.FieldValues['DateConsm']:=Dateconsm;
       FDQueryFactureEntrante.FieldValues['DateEntree']:=date;
 
-      FDQueryFactureEntrante.FieldValues['NumUser']:=DataModule1.FDQuery115.FieldValues['NumUser'];
+      FDQueryFactureEntrante.FieldValues['NumUser']:=DataParametrage.FDQueryLoginUser.FieldValues['NumUser'];
 
       FDQueryFactureEntrante.Next;
-      formFacturation.dxGaugeControl1DigitalScale1.Value:=inttostr(calculerSomFacture());
+      calculerSomFacture();
+//      formFacturation.dxGaugeControl1DigitalScale1.Value:=inttostr(calculerSomFacture());
+//      formFacturation.som:=calculerSomFacture();
       if (FDQueryFindProduitByCode.FieldValues['Lien']<>null) then
              begin
                formFacturation.Image2.Picture.LoadFromFile(FDQueryFindProduitByCode.FieldValues['Lien']);
@@ -200,18 +201,18 @@ begin
                 formFacturation.Image2.Show
                end;
 end;
-
-function TDataFacturation.calculerSomFacture: longint;
-
+//------------------------------------------------------------------------------
+function TDataFacturation.calculerSomFacture: real;
+var som:real;
 begin
     FDQueryFactureEntrante.First;
     som:=0;
     while not FDQueryFactureEntrante.Eof do
     begin
-       som:=formFacturation.som+FDQueryFactureEntrante.FieldValues['PrixAchat']*FDQueryFactureEntrante.FieldValues['Quantite'];
+       som:=som+FDQueryFactureEntrante.FieldValues['PrixAchat']*FDQueryFactureEntrante.FieldValues['Quantite'];
        FDQueryFactureEntrante.Next;
-       formFacturation.dxGaugeControl1DigitalScale1.Value:=inttostr(formFacturation.som);
-    end;
+     end;
+    formFacturation.dxGaugeControl1DigitalScale1.Value:=floattostr(som);
     result:=som;
 end;
 
@@ -240,7 +241,7 @@ begin
 
     result:=Annee+'/'+inttostr(num);
 end;
-
+//------------------------------------------------------------------------------
 function TDataFacturation.RechercheFacture(var Annee: string;var num: integer): string;
 begin
     FDQueryFactureEntrante.Params.ParamValues['x']:=Annee;
@@ -264,8 +265,12 @@ begin
       facture.TypePaiement:=1      // payee
     else facture.TypePaiement:=2;   // crédit
 end;
-
-
+//------------------------------------------------------------------------------
+procedure TDataFacturation.dataRefrech;
+begin
+   FDTableListFounisseurs.close;
+   FDTableListFounisseurs.open();
+end;
 
 procedure TDataFacturation.EnregistrerFacture();
 begin
@@ -335,7 +340,7 @@ begin
           end;
 
 end;
-
+//------------------------------------------------------------------------------
 procedure TDataFacturation.SupprimerFacture();
 begin
       FDQueryFactureEntrante.Active:=false;

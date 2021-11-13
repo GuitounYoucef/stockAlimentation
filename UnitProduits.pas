@@ -57,19 +57,19 @@ implementation
 uses  UnitAjouterProduits,DataProduitsUnite;
 
 
-
+//------------------------------------------------------------------------------
 procedure TFormProduits.ButtonNouveauProdClick(Sender: TObject);
 begin
     FormAjouterProduits.NouveauProduitForm();
     FormAjouterProduits.AfficherForm(6);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormProduits.ButtonImprCodeBarClick(Sender: TObject);
 begin
     if not DataProduits.TableProduitEstVite() then
       frxReportCodeBar.ShowReport(true);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormProduits.ButtonPhotoProdClick(Sender: TObject);
 begin
     if not DataProduits.TableProduitEstVite() then
@@ -80,13 +80,13 @@ begin
 
       end;
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormProduits.ButtonImprInventaireClick(Sender: TObject);
 begin
     if not DataProduits.TableProduitEstVite() then
         frxReportNormal.ShowReport(true);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormProduits.ButtonSuuprimerProdClick(Sender: TObject);
 begin
     if not DataProduits.TableProduitEstVite() then

@@ -226,6 +226,7 @@ object DataFacturation: TDataFacturation
       end>
   end
   object FDQueryFacture: TFDQuery
+    Active = True
     Connection = FDConnection1
     SQL.Strings = (
       'select facture.*'

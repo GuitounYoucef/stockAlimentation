@@ -8396,7 +8396,6 @@ object FormNotifications: TFormNotifications
       'DateEntree=DateEntree'
       'expire=expire'
       'Alert=Alert')
-    DataSet = DataModule1.FD18QueryAlert
     BCDToCurrency = False
     Left = 56
     Top = 56
@@ -8797,7 +8796,6 @@ object FormNotifications: TFormNotifications
       'DateEntree=DateEntree'
       'expire=expire'
       'Alert=Alert')
-    DataSet = DataModule1.FD18QueryExpire
     BCDToCurrency = False
     Left = 56
     Top = 128

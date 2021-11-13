@@ -45,46 +45,46 @@ var
   FormFournisseurs: TFormFournisseurs;
 
 implementation
-uses unit36;
+uses  DataParametrageUnite;
 
 {$R *.dfm}
-
+//------------------------------------------------------------------------------
 procedure TFormFournisseurs.Button1Click(Sender: TObject);
 begin
-if ((length(EditNomPrenom.Text)>0) and(length(EditAdresse.Text)>0) and(length(Editwilaya.Text)>0)) then
-begin
-DataModule1.FD10QueryLikeFounisseurNom.Insert;
-DataModule1.FD10QueryLikeFounisseurNom.FieldValues['NomPrenom']:=EditNomPrenom.Text;
-DataModule1.FD10QueryLikeFounisseurNom.FieldValues['Adresse']:=EditAdresse.Text;
-DataModule1.FD10QueryLikeFounisseurNom.FieldValues['NumTel']:=EditTel.Text;
-DataModule1.FD10QueryLikeFounisseurNom.FieldValues['wilaya']:=Editwilaya.Text;
-EditTel.Clear;
-EditNomPrenom.Clear;
-EditAdresse.Clear;
-Editwilaya.Clear;
-DataModule1.FD10QueryLikeFounisseurNom.Next;
+    if ((length(EditNomPrenom.Text)>0) and(length(EditAdresse.Text)>0) and(length(Editwilaya.Text)>0)) then
+    begin
+      DataParametrage.FDQueryFounisseurByName.Insert;
+      DataParametrage.FDQueryFounisseurByName.FieldValues['NomPrenom']:=EditNomPrenom.Text;
+      DataParametrage.FDQueryFounisseurByName.FieldValues['Adresse']:=EditAdresse.Text;
+      DataParametrage.FDQueryFounisseurByName.FieldValues['NumTel']:=EditTel.Text;
+      DataParametrage.FDQueryFounisseurByName.FieldValues['wilaya']:=Editwilaya.Text;
+      EditTel.Clear;
+      EditNomPrenom.Clear;
+      EditAdresse.Clear;
+      Editwilaya.Clear;
+      DataParametrage.FDQueryFounisseurByName.Next;
+    end;
 end;
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormFournisseurs.Button2Click(Sender: TObject);
 begin
-if (DataModule1.FD10QueryLikeFounisseurNom.RecordCount>0) and (DataModule1.FD10QueryLikeFounisseurNom.RecordCount=DataModule1.FD10QueryLikeFounisseurNom.RecNo) then
-DBNavigator1.BtnClick(nbdelete);
+    if (DataParametrage.FDQueryFounisseurByName.RecordCount>0) and (DataParametrage.FDQueryFounisseurByName.RecordCount=DataParametrage.FDQueryFounisseurByName.RecNo) then
+    DBNavigator1.BtnClick(nbdelete);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormFournisseurs.FormShow(Sender: TObject);
 begin
-  LoadKeyboardLayout('00000401', KLF_ACTIVATE);
-DataModule1.FD10QueryLikeFounisseurNom.Params.ParamValues['x']:='%';
-DataModule1.FD10QueryLikeFounisseurNom.Active:=false;
-DataModule1.FD10QueryLikeFounisseurNom.Active:=true;
+    LoadKeyboardLayout('00000401', KLF_ACTIVATE);
+    DataParametrage.FDQueryFounisseurByName.Params.ParamValues['x']:='%';
+    DataParametrage.FDQueryFounisseurByName.Active:=false;
+    DataParametrage.FDQueryFounisseurByName.Active:=true;
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormFournisseurs.SearchBox1Change(Sender: TObject);
 begin
-DataModule1.FD10QueryLikeFounisseurNom.Params.ParamValues['x']:='%'+SearchBox1.Text+'%';
-DataModule1.FD10QueryLikeFounisseurNom.Active:=false;
-DataModule1.FD10QueryLikeFounisseurNom.Active:=true;
+    DataParametrage.FDQueryFounisseurByName.Params.ParamValues['x']:='%'+SearchBox1.Text+'%';
+    DataParametrage.FDQueryFounisseurByName.Active:=false;
+    DataParametrage.FDQueryFounisseurByName.Active:=true;
 end;
 
 end.

@@ -39,81 +39,80 @@ var
 
 
 implementation
-uses unit36;
+uses  DataParametrageUnite, Unit36, DataStocksUnite;
 
 {$R *.dfm}
-
+//------------------------------------------------------------------------------
 procedure TFormNotifications.Button1Click(Sender: TObject);
 var myYear, myMonth, myDay : Word;
     num:integer;
     quantite:real;
 begin
-if DataModule1.FD18QueryExpire.RecordCount>0 then
-begin
-DecodeDate(Date, myYear, myMonth, myDay);
-DataModule1.FD18QueryExpireRecordCount.Params.ParamValues['a']:=inttostr(myYear);
-DataModule1.FD18QueryExpireRecordCount.Close;
-DataModule1.FD18QueryExpireRecordCount.Open();
-num:=DataModule1.FD18QueryExpireRecordCount.RecordCount+1;
-quantite:=DataModule1.FD18QueryExpire.FieldValues['quantite'];
-DataModule1.FD18QueryExpire.Edit;
-DataModule1.FD18QueryExpire.FieldValues['quantite']:=0;
-DataModule1.FD18QueryExpire.Post;
-DataModule1.FDTableSortieExpire.Insert;
-DataModule1.FDTableSortieExpire.FieldValues['Annee']:=inttostr(myYear);
-DataModule1.FDTableSortieExpire.FieldValues['Num']:=num;
-DataModule1.FDTableSortieExpire.FieldValues['Quantite']:=quantite;
-DataModule1.FDTableSortieExpire.FieldValues['id']:=DataModule1.FD18QueryExpire.FieldValues['id'];
-DataModule1.FDTableSortieExpire.FieldValues['code']:=DataModule1.FD18QueryExpire.FieldValues['id'];
-DataModule1.FDTableSortieExpire.FieldValues['date']:=Date;
-DataModule1.FDTableSortieExpire.FieldValues['Type']:=DataModule1.FD18QueryExpire.FieldValues['Type'];
-DataModule1.FDTableSortieExpire.FieldValues['Producteur']:=DataModule1.FD18QueryExpire.FieldValues['Producteur'];
-DataModule1.FDTableSortieExpire.FieldValues['PrixAchat']:=DataModule1.FD18QueryExpire.FieldValues['PrixAchat'];
-DataModule1.FDTableSortieExpire.FieldValues['PrixVente']:=DataModule1.FD18QueryExpire.FieldValues['PrixVente'];
-DataModule1.FDTableSortieExpire.FieldValues['Balance']:=DataModule1.FD18QueryExpire.FieldValues['Balance'];
-DataModule1.FDTableSortieExpire.FieldValues['DateProd']:=DataModule1.FD18QueryExpire.FieldValues['DateProd'];
-DataModule1.FDTableSortieExpire.FieldValues['DateConsm']:=DataModule1.FD18QueryExpire.FieldValues['DateConsm'];
-DataModule1.FDTableSortieExpire.FieldValues['Numstock']:=DataModule1.FDTableParametrage.FieldValues['stocknum'];
-DataModule1.FDTableSortieExpire.FieldValues['NumUser']:=DataModule1.FDQuery115.FieldValues['Numuser'];
-DataModule1.FDTableSortieExpire.Post;
-DataModule1.FD18QueryExpire.Close;
-DataModule1.FD18QueryExpire.Open();
-showmessage('    تم إخراج السلعة بنجاح    ');
+    if DataStocks.FDQueryExpire.RecordCount>0 then
+    begin
+      DecodeDate(Date, myYear, myMonth, myDay);
+      DataStocks.FDQueryExpireRecordCount.Params.ParamValues['a']:=inttostr(myYear);
+      DataStocks.FDQueryExpireRecordCount.Close;
+      DataStocks.FDQueryExpireRecordCount.Open();
+      num:=DataStocks.FDQueryExpireRecordCount.RecordCount+1;
+      quantite:=DataStocks.FDQueryExpire.FieldValues['quantite'];
+      DataStocks.FDQueryExpire.Edit;
+      DataStocks.FDQueryExpire.FieldValues['quantite']:=0;
+      DataStocks.FDQueryExpire.Post;
+      DataParametrage.FDTableSortieExpire.Insert;
+      DataParametrage.FDTableSortieExpire.FieldValues['Annee']:=inttostr(myYear);
+      DataParametrage.FDTableSortieExpire.FieldValues['Num']:=num;
+      DataParametrage.FDTableSortieExpire.FieldValues['Quantite']:=quantite;
+      DataParametrage.FDTableSortieExpire.FieldValues['id']:=DataStocks.FDQueryExpire.FieldValues['id'];
+      DataParametrage.FDTableSortieExpire.FieldValues['code']:=DataStocks.FDQueryExpire.FieldValues['id'];
+      DataParametrage.FDTableSortieExpire.FieldValues['date']:=Date;
+      DataParametrage.FDTableSortieExpire.FieldValues['Type']:=DataStocks.FDQueryExpire.FieldValues['Type'];
+      DataParametrage.FDTableSortieExpire.FieldValues['Producteur']:=DataStocks.FDQueryExpire.FieldValues['Producteur'];
+      DataParametrage.FDTableSortieExpire.FieldValues['PrixAchat']:=DataStocks.FDQueryExpire.FieldValues['PrixAchat'];
+      DataParametrage.FDTableSortieExpire.FieldValues['PrixVente']:=DataStocks.FDQueryExpire.FieldValues['PrixVente'];
+      DataParametrage.FDTableSortieExpire.FieldValues['Balance']:=DataStocks.FDQueryExpire.FieldValues['Balance'];
+      DataParametrage.FDTableSortieExpire.FieldValues['DateProd']:=DataStocks.FDQueryExpire.FieldValues['DateProd'];
+      DataParametrage.FDTableSortieExpire.FieldValues['DateConsm']:=DataStocks.FDQueryExpire.FieldValues['DateConsm'];
+      DataParametrage.FDTableSortieExpire.FieldValues['Numstock']:=DataParametrage.FDTableParametrage.FieldValues['stocknum'];
+      DataParametrage.FDTableSortieExpire.FieldValues['NumUser']:=DataParametrage.FDQueryLoginUser.FieldValues['Numuser'];
+      DataParametrage.FDTableSortieExpire.Post;
+      DataStocks.FDQueryExpire.Close;
+      DataStocks.FDQueryExpire.Open();
+      showmessage('    تم إخراج السلعة بنجاح    ');
+    end;
 end;
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormNotifications.Button7Click(Sender: TObject);
 begin
-if f=1 then
-frxReport2.ShowReport(true)
-else
-frxReport1.ShowReport(true)
+    if f=1 then
+    frxReport2.ShowReport(true)
+    else
+    frxReport1.ShowReport(true)
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormNotifications.FormShow(Sender: TObject);
 var  Date1,date2: TDateTime;
 begin
-
-if f=1 then
-begin
-panel1.Caption:='      سلع في طور الإتلاف';
-Button1.Enabled:=false;
-image1.Visible:=true;
-image2.Visible:=false;
-DataModule1.FD18QueryAlert.Close;
-DataModule1.FD18QueryAlert.Open();
-DataSource1.DataSet:=DataModule1.FD18QueryAlert;
-end
-else
-begin
-panel1.Caption:='      سلع متلفة      ';
-Button1.Enabled:=true;
-image2.Visible:=true;
-image1.Visible:=false;
-DataModule1.FD18QueryExpire.Close;
-DataModule1.FD18QueryExpire.Open();
-DataSource1.DataSet:=DataModule1.FD18QueryExpire;
-end
+    if f=1 then
+    begin
+      panel1.Caption:='      سلع في طور الإتلاف';
+      Button1.Enabled:=false;
+      image1.Visible:=true;
+      image2.Visible:=false;
+      DataStocks.FDQueryAlert.Close;
+      DataStocks.FDQueryAlert.Open();
+      DataSource1.DataSet:=DataStocks.FDQueryAlert;
+    end
+    else
+    begin
+      panel1.Caption:='      سلع متلفة      ';
+      Button1.Enabled:=true;
+      image2.Visible:=true;
+      image1.Visible:=false;
+      DataStocks.FDQueryExpire.Close;
+      DataStocks.FDQueryExpire.Open();
+      DataSource1.DataSet:=DataStocks.FDQueryExpire;
+    end
 end;
 
 end.

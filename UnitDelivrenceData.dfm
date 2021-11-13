@@ -61,8 +61,8 @@ object DataModuleDelivrence: TDataModuleDelivrence
         'rtie.TypeVente>:y1) and (Sortie.TypeVente<:y2)) and (Sortie.clie' +
         'nt=:c)'
       'order by NumOpr;')
-    Left = 376
-    Top = 352
+    Left = 432
+    Top = 248
     ParamData = <
       item
         Name = 'X1'
@@ -107,8 +107,8 @@ object DataModuleDelivrence: TDataModuleDelivrence
       
         'WHERE ((Sortie.TypePaim>:x1) and (Sortie.TypePaim<:x2)) and ((So' +
         'rtie.TypeVente>:y1) and (Sortie.TypeVente<:y2))')
-    Left = 256
-    Top = 352
+    Left = 312
+    Top = 248
     ParamData = <
       item
         Name = 'X1'
@@ -174,8 +174,8 @@ object DataModuleDelivrence: TDataModuleDelivrence
       'SELECT Sortie.*'
       'FROM Sortie'
       'WHERE NumOpr=:x')
-    Left = 496
-    Top = 352
+    Left = 552
+    Top = 248
     ParamData = <
       item
         Name = 'X'
@@ -194,14 +194,123 @@ object DataModuleDelivrence: TDataModuleDelivrence
         ' Sortie.NumOpr'
       'WHERE (Sortie.TypePaim=:x) '
       'order by NumOpr;')
-    Left = 376
-    Top = 424
+    Left = 432
+    Top = 320
     ParamData = <
       item
         Name = 'X'
         DataType = ftInteger
         ParamType = ptInput
         Value = Null
+      end>
+  end
+  object FDQuerySortieDate: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select SortieProduits.*,Sortie.date'
+      
+        'FROM SortieProduits INNER JOIN Sortie ON SortieProduits.NumOpr =' +
+        ' Sortie.NumOpr'
+      'where (Sortie.Date>=:x) and (Sortie.Date<=:y) '
+      'order by NumOpr;')
+    Left = 312
+    Top = 424
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'Y'
+        DataType = ftDate
+        ParamType = ptInput
+      end>
+  end
+  object FDQueryBenifsomsortie: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      
+        'select Sortie.date,sum(PrixAchat*Quantite) as achats,sum(PrixVen' +
+        'te*Quantite) as ventes'
+      
+        'FROM SortieProduits INNER JOIN Sortie ON SortieProduits.NumOpr =' +
+        ' Sortie.NumOpr'
+      'where (Sortie.Date>=:x) and (Sortie.Date<=:y)'
+      'group by Sortie.date;')
+    Left = 440
+    Top = 424
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'Y'
+        DataType = ftDate
+        ParamType = ptInput
+      end>
+  end
+  object FDQueryBeniforderProduit: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      
+        'select id, sum(quantite) as q,sum(quantite*(prixvente-prixachat)' +
+        ') as p '
+      
+        'FROM SortieProduits INNER JOIN Sortie ON SortieProduits.NumOpr =' +
+        ' Sortie.NumOpr'
+      'where (Sortie.Date>=:x) and (Sortie.Date<=:y)'
+      'group by id;'
+      '')
+    Left = 576
+    Top = 424
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'Y'
+        DataType = ftDate
+        ParamType = ptInput
+      end>
+  end
+  object FDQueryBenifOrderUtilisateur: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      
+        'SELECT users.id,sum(quantite*prixvente) as v,sum(quantite*(prixv' +
+        'ente-prixachat)) as b'
+      
+        'FROM SortieProduits INNER JOIN Sortie ON SortieProduits.NumOpr =' +
+        ' Sortie.NumOpr'
+      'inner JOIN users '
+      'ON (Sortie.numuser=users.numuser)'
+      'where (Sortie.Date>=:x) and (Sortie.Date<=:y)'
+      'group by  users.id;'
+      ''
+      ''
+      ''
+      '')
+    Left = 744
+    Top = 424
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'Y'
+        DataType = ftDate
+        ParamType = ptInput
       end>
   end
 end

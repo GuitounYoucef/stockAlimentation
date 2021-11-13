@@ -35,38 +35,38 @@ implementation
 
 {$R *.dfm}
 
-uses UnitVenteComptoir,unit36;
-
+uses UnitVenteComptoir,unit36, DataStocksUnite;
+//------------------------------------------------------------------------------
 procedure TFormRechercheStock.Button1Click(Sender: TObject);
 var key:word;
 begin
-if length(EditQunt.Text)>0 then
-begin
-FormVenteComptoir.VenteProduit(DataModule1.FD27QueryRechIDProduitstock.FieldValues['Code'],'*****',strtoint(EditQunt.Text));
-EditQunt.Clear;
-close;
-end
-else
-MessageDlg('عليك إدخال الكمية', mtInformation, [mbOK], 0);
+    if length(EditQunt.Text)>0 then
+    begin
+        FormVenteComptoir.VenteProduit(DataStocks.FDQueryRechProdLikeId.FieldValues['Code'],'*****',strtoint(EditQunt.Text));
+        EditQunt.Clear;
+        close;
+    end
+    else
+        MessageDlg('عليك إدخال الكمية', mtInformation, [mbOK], 0);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormRechercheStock.FormShow(Sender: TObject);
 begin
-    DataModule1.FD27QueryRechIDProduitstock.Params.ParamValues['x']:='%%';
-    DataModule1.FD27QueryRechIDProduitstock.Active:=false;
-    DataModule1.FD27QueryRechIDProduitstock.Active:=true;
+    DataStocks.FDQueryRechProdLikeId.Params.ParamValues['x']:='%%';
+    DataStocks.FDQueryRechProdLikeId.Active:=false;
+    DataStocks.FDQueryRechProdLikeId.Active:=true;
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormRechercheStock.SearchBox1Change(Sender: TObject);
 begin
-DataModule1.FD27QueryRechIDProduitstock.Params.ParamValues['x']:='%'+SearchBox1.Text+'%';
-DataModule1.FD27QueryRechIDProduitstock.Active:=false;
-DataModule1.FD27QueryRechIDProduitstock.Active:=true;
+    DataStocks.FDQueryRechProdLikeId.Params.ParamValues['x']:='%'+SearchBox1.Text+'%';
+    DataStocks.FDQueryRechProdLikeId.Active:=false;
+    DataStocks.FDQueryRechProdLikeId.Active:=true;
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormRechercheStock.SearchBox1Enter(Sender: TObject);
 begin
-LoadKeyboardLayout('00000401', KLF_ACTIVATE);
+    LoadKeyboardLayout('00000401', KLF_ACTIVATE);
 end;
-
+//------------------------------------------------------------------------------
 end.

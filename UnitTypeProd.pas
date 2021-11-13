@@ -49,92 +49,89 @@ var
 implementation
 
 {$R *.dfm}
-uses unit36;
-
+uses unit36, DataParametrageUnite;
+//------------------------------------------------------------------------------
 procedure TFormTypeProd.Button1Click(Sender: TObject);
 begin
-
-if (length(Edit2.Text)>0) and (DataModule1.FDQueryType.RecordCount>0) then
-begin
-DataModule1.FDQueryProducteur.Insert;
-DataModule1.FDQueryProducteur.FieldValues['Type']:=DataModule1.FDQueryType.FieldValues['type'];
-DataModule1.FDQueryProducteur.FieldValues['producteur']:=Edit2.Text;
-DataModule1.FDQueryProducteur.Next;
-Edit2.Clear;
+    if (length(Edit2.Text)>0) and (DataParametrage.FDQueryType.RecordCount>0) then
+    begin
+      DataParametrage.FDQueryProducteur.Insert;
+      DataParametrage.FDQueryProducteur.FieldValues['Type']:=DataParametrage.FDQueryType.FieldValues['type'];
+      DataParametrage.FDQueryProducteur.FieldValues['producteur']:=Edit2.Text;
+      DataParametrage.FDQueryProducteur.Next;
+      Edit2.Clear;
+    end;
 end;
-
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormTypeProd.Button2Click(Sender: TObject);
 begin
-if DataModule1.FDQueryProducteur.RecordCount>0 then
-DBNavigator2.BtnClick(nbdelete);
+    if DataParametrage.FDQueryProducteur.RecordCount>0 then
+       DBNavigator2.BtnClick(nbdelete);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormTypeProd.Button3Click(Sender: TObject);
 begin
-if length(Edit1.Text)>0 then
-begin
-DataModule1.FDQueryType.Insert;
-DataModule1.FDQueryType.FieldValues['Type']:=Edit1.Text;
-DataModule1.FDQueryType.Post;
+    if length(Edit1.Text)>0 then
+    begin
+        DataParametrage.FDQueryType.Insert;
+        DataParametrage.FDQueryType.FieldValues['Type']:=Edit1.Text;
+        DataParametrage.FDQueryType.Post;
 
-Edit1.Clear;
-if (DataModule1.FDQueryType.RecordCount>0) then
-DataModule1.FDQueryProducteur.Params.ParamValues['x']:=DataModule1.FDQueryType.FieldValues['Type']
-else
-DataModule1.FDQueryProducteur.Params.ParamValues['x']:='';
-DataModule1.FDQueryProducteur.Active:=false;
-DataModule1.FDQueryProducteur.Active:=true;
+        Edit1.Clear;
+        if (DataParametrage.FDQueryType.RecordCount>0) then
+            DataParametrage.FDQueryProducteur.Params.ParamValues['x']:=DataParametrage.FDQueryType.FieldValues['Type']
+        else
+        DataParametrage.FDQueryProducteur.Params.ParamValues['x']:='';
+        DataParametrage.FDQueryProducteur.Active:=false;
+        DataParametrage.FDQueryProducteur.Active:=true;
+    end;
 end;
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormTypeProd.Button5Click(Sender: TObject);
 begin
-if DataModule1.FDQueryType.RecordCount>0 then
-begin
-DBNavigator1.BtnClick(nbdelete);
+    if DataParametrage.FDQueryType.RecordCount>0 then
+    begin
+    DBNavigator1.BtnClick(nbdelete);
+    end;
 end;
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormTypeProd.DBGrid2CellClick(Column: TColumn);
 begin
-if (DataModule1.FDQueryType.RecordCount>0) then
-DataModule1.FDQueryProducteur.Params.ParamValues['x']:=DataModule1.FDQueryType.FieldValues['Type']
-else
-DataModule1.FDQueryProducteur.Params.ParamValues['x']:='';
-DataModule1.FDQueryProducteur.Active:=false;
-DataModule1.FDQueryProducteur.Active:=true;
+    if (DataParametrage.FDQueryType.RecordCount>0) then
+        DataParametrage.FDQueryProducteur.Params.ParamValues['x']:=DataParametrage.FDQueryType.FieldValues['Type']
+    else
+    DataParametrage.FDQueryProducteur.Params.ParamValues['x']:='';
+    DataParametrage.FDQueryProducteur.Active:=false;
+    DataParametrage.FDQueryProducteur.Active:=true;
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormTypeProd.Edit1KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-if key=VK_RETURN then
-begin
-  Button3Click(Edit1);
+    if key=VK_RETURN then
+    begin
+      Button3Click(Edit1);
+    end;
 end;
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormTypeProd.Edit2KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-if key=VK_RETURN then
-begin
-  Button1Click(Edit2);
+    if key=VK_RETURN then
+    begin
+      Button1Click(Edit2);
+    end;
 end;
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormTypeProd.FormShow(Sender: TObject);
 begin
-LoadKeyboardLayout('00000401', KLF_ACTIVATE);
-if (DataModule1.FDQueryType.RecordCount>0) then
-DataModule1.FDQueryProducteur.Params.ParamValues['x']:=DataModule1.FDQueryType.FieldValues['Type']
-else
-DataModule1.FDQueryProducteur.Params.ParamValues['x']:='';
-DataModule1.FDQueryProducteur.Active:=false;
-DataModule1.FDQueryProducteur.Active:=true;
-
+    LoadKeyboardLayout('00000401', KLF_ACTIVATE);
+    if (DataParametrage.FDQueryType.RecordCount>0) then
+       DataParametrage.FDQueryProducteur.Params.ParamValues['x']:=DataParametrage.FDQueryType.FieldValues['Type']
+    else
+    DataParametrage.FDQueryProducteur.Params.ParamValues['x']:='';
+    DataParametrage.FDQueryProducteur.Active:=false;
+    DataParametrage.FDQueryProducteur.Active:=true;
 end;
 
 end.

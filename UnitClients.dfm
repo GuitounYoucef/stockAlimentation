@@ -1500,7 +1500,7 @@ object FormClients: TFormClients
     end
   end
   object DataSource1: TDataSource
-    DataSet = DataModule1.FD2QueryClient
+    DataSet = DataParametrage.FDQueryClientByName
     Left = 245
     Top = 8
   end

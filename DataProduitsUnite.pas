@@ -15,8 +15,9 @@ type
     FDTableProduits: TFDTable;
     FDConnection1: TFDConnection;
     FDTableStocksNames: TFDTable;
-    FDQueryFindProduitByCode: TFDQuery;
     FDQueryProdDejaUtilise: TFDQuery;
+    FDQueryFindProduitByCode: TFDQuery;
+    FDQueryProduitLikeId: TFDQuery;
     function TrouverProduit(codeProd,id:string):boolean;
     procedure FDQueryFindProduitByCodeAfterEdit(DataSet: TDataSet);
     procedure NouveauProduit();
@@ -43,29 +44,30 @@ implementation
 uses UnitProduits, DataFacturationUnite;
 
 {$R *.dfm}
+//------------------------------------------------------------------------------
 procedure TDataProduits.chargerImage(lien: string);
 begin
     FDTableProduits.Edit;
     FDTableProduits.FieldValues['lien']:=lien;
     FDTableProduits.Post;
 end;
-
+//------------------------------------------------------------------------------
 procedure TDataProduits.FDQueryFindProduitByCodeAfterEdit(DataSet: TDataSet);
 begin
   FDQueryFindProduitByCode.Post;
 end;
-
+//------------------------------------------------------------------------------
 procedure TDataProduits.FDQueryFindProduitByCodeAfterPost(DataSet: TDataSet);
 begin
   FDTableProduits.Close;
   FDTableProduits.Open();
 end;
-
+//------------------------------------------------------------------------------
 procedure TDataProduits.NouveauProduit;
 begin
-FDQueryFindProduitByCode.Insert;
+    FDQueryFindProduitByCode.Insert;
 end;
-
+//------------------------------------------------------------------------------
 function TDataProduits.ProdDejaUtilise: boolean;
 begin
     FDQueryProdDejaUtilise.Params.ParamValues['x']:=FDTableProduits.FieldValues['id'];
@@ -76,14 +78,14 @@ begin
      result:=false
     else result:=true;
 end;
-
+//------------------------------------------------------------------------------
 function TDataProduits.TableProduitEstVite: boolean;
 begin
     if FDTableProduits.RecordCount=0 then
     result:=true
     else result:=false;
 end;
-
+//------------------------------------------------------------------------------
 function TDataProduits.TrouverProduit(codeProd,id:string):boolean;
 begin
     FDQueryFindProduitByCode.Params.ParamValues['c']:=codeProd;
@@ -101,7 +103,6 @@ begin
         result:=false;
     end
     else result:=true;
-
 end;
 
 end.

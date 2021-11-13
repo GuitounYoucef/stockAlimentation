@@ -1143,7 +1143,6 @@ object FormRechercheNomProduit: TFormRechercheNomProduit
       000000000000}
   end
   object DataSource1: TDataSource
-    DataSet = DataModule1.FD28QueryProduitid
     Left = 112
     Top = 160
   end

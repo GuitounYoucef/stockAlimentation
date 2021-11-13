@@ -94,7 +94,7 @@ var
 implementation
 {$R *.dfm}
 uses UnitEtatStock, UnitProduits, UnitFacturation, Unit25,
-  DataProduitsUnite, DataStocksUnite, DataFacturationUnite;
+  DataProduitsUnite, DataStocksUnite, DataFacturationUnite, UnitVenteComptoir;
 //______________________________________________________________________________
 function genererCodeBar():string;
 var t1,p1,id1:string;
@@ -217,6 +217,9 @@ begin
     EditQunt.Clear;
     EditQunt.SetFocus;
     QtL:=true;
+    if DataProduits.FDTableStocksNames.RecordCount=1 then
+       cxLookupComboBoxStockName.ItemIndex:=0;
+
 end;
 //______________________________________________________________________________
 //______________________________________________________________________________
@@ -232,6 +235,12 @@ if verifierChampProd() then
        ProdExiste:=true;
     end;
       case f of
+        1:if verifierChampQtStock() then
+            begin
+              AjouterStocke();
+              FormVenteComptoir.VenteProduit(DBEditCode.Text,DBEditId.Text,1);
+              close;
+            end;
         5: if verifierChampQtStock() then
             begin
               AjouterStocke();
@@ -251,20 +260,26 @@ end;
 procedure TFormAjouterProduits.AfficherForm(fenetreSource:integer);
 begin
       case fenetreSource of
-        5: begin
+        1,5: begin
                 Height:=598;
                 GridPanel1.RowCollection.Items[2].Value:=130;
                 cxLookupComboBoxStockName.Enabled:=true;
+                DBEditId.Enabled:=false;
+                DBEditCode.Enabled:=false;
              end;
         8: begin
                 Height:=598;
                 GridPanel1.RowCollection.Items[2].Value:=130;
                 cxLookupComboBoxStockName.Enabled:=false;
+                DBEditId.Enabled:=false;
+                DBEditCode.Enabled:=false;
              end;
         6: begin
                 Height:=468;
                 GridPanel1.RowCollection.Items[2].Value:=0;
                 cxLookupComboBoxStockName.Enabled:=true;
+                DBEditId.Enabled:=true;
+                DBEditCode.Enabled:=true;
              end;
 
       end;

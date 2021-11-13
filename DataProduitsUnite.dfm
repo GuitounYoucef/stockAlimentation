@@ -32,34 +32,6 @@ object DataProduits: TDataProduits
     Left = 272
     Top = 40
   end
-  object FDQueryFindProduitByCode: TFDQuery
-    Active = True
-    AfterEdit = FDQueryFindProduitByCodeAfterEdit
-    AfterPost = FDQueryFindProduitByCodeAfterPost
-    Connection = FDConnection1
-    UpdateOptions.AssignedValues = [uvCheckReadOnly]
-    UpdateOptions.CheckReadOnly = False
-    SQL.Strings = (
-      'select produits.*'
-      'from produits'
-      'where ((Code=:c) or (id=:i))'
-      '')
-    Left = 424
-    Top = 40
-    ParamData = <
-      item
-        Name = 'C'
-        DataType = ftWideString
-        ParamType = ptInput
-        Value = Null
-      end
-      item
-        Name = 'I'
-        DataType = ftWideString
-        ParamType = ptInput
-        Value = Null
-      end>
-  end
   object FDQueryProdDejaUtilise: TFDQuery
     Active = True
     Connection = FDConnection1
@@ -81,6 +53,44 @@ object DataProduits: TDataProduits
       end
       item
         Name = 'Y'
+        DataType = ftWideString
+        ParamType = ptInput
+      end>
+  end
+  object FDQueryFindProduitByCode: TFDQuery
+    Active = True
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select produits.*'
+      'from produits'
+      'where ((Code=:c) or (id=:i))')
+    Left = 440
+    Top = 40
+    ParamData = <
+      item
+        Name = 'C'
+        DataType = ftWideString
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'I'
+        DataType = ftWideString
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
+  object FDQueryProduitLikeId: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select  Produits.*'
+      'from Produits'
+      'where Produits.Id like :x')
+    Left = 272
+    Top = 124
+    ParamData = <
+      item
+        Name = 'X'
         DataType = ftWideString
         ParamType = ptInput
       end>

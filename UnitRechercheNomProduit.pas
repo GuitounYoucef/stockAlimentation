@@ -34,56 +34,57 @@ var
 implementation
 
 {$R *.dfm}
-
-uses UnitVenteComptoir, UnitEtatStock, UnitFacturation,unit36;
+//------------------------------------------------------------------------------
+uses UnitVenteComptoir, UnitEtatStock, UnitFacturation,unit36,
+  DataProduitsUnite;
 
 procedure TFormRechercheNomProduit.Button1Click(Sender: TObject);
 var k:word;
     s:TShiftState;
 begin
-if (DataModule1.FD28QueryProduitid.RecordCount>0) then
-case f of
- 5:begin
-     FormEtatStock.EditCodeBar.Text:=DataModule1.FD28QueryProduitid.FieldValues['code'];
-     k:=VK_RETURN;
-     s:=[ssShift];
-     FormEtatStock.EditCodeBarKeyDown(FormRechercheNomProduit,k,s);
-     close;
-   end;
- 8:begin
-     formFacturation.EditCodeProduit.Text:=DataModule1.FD28QueryProduitid.FieldValues['code'];
-     k:=VK_RETURN;
-     s:=[ssShift];
-     formFacturation.EditCodeProduitKeyDown(FormRechercheNomProduit,k,s);
-     close;
-   end
- end
-else
-MessageDlg('عليك إدخال الكمية', mtInformation, [mbOK], 0);
+    if (DataProduits.FDQueryProduitLikeId.RecordCount>0) then
+    case f of
+     5:begin
+         FormEtatStock.EditCodeBar.Text:=DataProduits.FDQueryProduitLikeId.FieldValues['code'];
+         k:=VK_RETURN;
+         s:=[ssShift];
+         FormEtatStock.EditCodeBarKeyDown(FormRechercheNomProduit,k,s);
+         close;
+       end;
+     8:begin
+         formFacturation.EditCodeProduit.Text:=DataProduits.FDQueryProduitLikeId.FieldValues['code'];
+         k:=VK_RETURN;
+         s:=[ssShift];
+         formFacturation.EditCodeProduitKeyDown(FormRechercheNomProduit,k,s);
+         close;
+       end
+     end
+    else
+    MessageDlg('عليك إدخال الكمية', mtInformation, [mbOK], 0);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormRechercheNomProduit.DBGrid1DblClick(Sender: TObject);
 begin
-Button1Click(FormRechercheNomProduit)
+    Button1Click(FormRechercheNomProduit)
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormRechercheNomProduit.FormShow(Sender: TObject);
 begin
-    DataModule1.FD28QueryProduitid.Params.ParamValues['x']:='%%';
-    DataModule1.FD28QueryProduitid.Active:=false;
-    DataModule1.FD28QueryProduitid.Active:=true;
+    DataProduits.FDQueryProduitLikeId.Params.ParamValues['x']:='%%';
+    DataProduits.FDQueryProduitLikeId.Active:=false;
+    DataProduits.FDQueryProduitLikeId.Active:=true;
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormRechercheNomProduit.SearchBox1Change(Sender: TObject);
 begin
-DataModule1.FD28QueryProduitid.Params.ParamValues['x']:='%'+SearchBox1.Text+'%';
-DataModule1.FD28QueryProduitid.Active:=false;
-DataModule1.FD28QueryProduitid.Active:=true;
+    DataProduits.FDQueryProduitLikeId.Params.ParamValues['x']:='%'+SearchBox1.Text+'%';
+    DataProduits.FDQueryProduitLikeId.Active:=false;
+    DataProduits.FDQueryProduitLikeId.Active:=true;
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormRechercheNomProduit.SearchBox1Enter(Sender: TObject);
 begin
-LoadKeyboardLayout('00000401', KLF_ACTIVATE);
+    LoadKeyboardLayout('00000401', KLF_ACTIVATE);
 end;
 
 

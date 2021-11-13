@@ -1691,7 +1691,6 @@ object FormTempsNotification: TFormTempsNotification
     end
   end
   object DataSource1: TDataSource
-    DataSet = DataModule1.FD17TableDure
     Left = 144
   end
 end

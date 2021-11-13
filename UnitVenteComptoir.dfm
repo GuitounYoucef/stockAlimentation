@@ -46227,7 +46227,6 @@ object FormVenteComptoir: TFormVenteComptoir
       'mobile2=mobile2'
       'Fax1=Fax1'
       'Fax2=Fax2')
-    DataSet = DataModule1.FDTableImprimante
     BCDToCurrency = False
     Left = 577
     Top = 49

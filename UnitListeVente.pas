@@ -51,37 +51,37 @@ uses UnitVenteComptoir,unit36;
 function TFormListeVente.retourneprodstock():boolean;
 begin
 
-if DataModule1.FD35QueryDetailListe.RecordCount>0 then
-begin
-   DataModule1.FD35QueryStockRetourn.Params.ParamValues['x']:=DataModule1.FD35QueryDetailListe.FieldValues['id'];
-   DataModule1.FD35QueryStockRetourn.Params.ParamValues['y']:=DataModule1.FD35QueryDetailListe.FieldValues['code'];
-   DataModule1.FD35QueryStockRetourn.Params.ParamValues['z']:=DataModule1.FD35QueryDetailListe.FieldValues['numstock'];
-   DataModule1.FD35QueryStockRetourn.Active:=false;
-   DataModule1.FD35QueryStockRetourn.Active:=true;
-   if (DataModule1.FD35QueryStockRetourn.RecordCount>0) and (DataModule1.FD35QueryStockRetourn.FieldValues['Quantite']>0) then
-    begin
-      DataModule1.FD35QueryStockRetourn.Edit;
-      DataModule1.FD35QueryStockRetourn.FieldValues['Quantite']:=DataModule1.FD35QueryStockRetourn.FieldValues['Quantite']+DataModule1.FD35QueryDetailListe.FieldValues['Quantite'];
-      DataModule1.FD35QueryStockRetourn.Post;
-      DataModule1.FD35TableRetourndeliv.Insert;
-      DataModule1.FD35TableRetourndeliv.FieldValues['annee']:=DataModule1.FD35QueryDetailListe.FieldValues['annee'];
-      DataModule1.FD35TableRetourndeliv.FieldValues['num']:=DataModule1.FD35QueryDetailListe.FieldValues['num'];
-      DataModule1.FD35TableRetourndeliv.FieldValues['typevente']:=DataModule1.FD35QueryDetailListe.FieldValues['typevente'];
-      DataModule1.FD35TableRetourndeliv.FieldValues['Date']:=DataModule1.FD35QueryDetailListe.FieldValues['Date'];
-      DataModule1.FD35TableRetourndeliv.FieldValues['Client']:=DataModule1.FD35QueryDetailListe.FieldValues['Client'];
-      DataModule1.FD35TableRetourndeliv.FieldValues['id']:=DataModule1.FD35QueryDetailListe.FieldValues['id'];
-      DataModule1.FD35TableRetourndeliv.FieldValues['Code']:=DataModule1.FD35QueryDetailListe.FieldValues['Code'];
-      DataModule1.FD35TableRetourndeliv.FieldValues['Quantite']:=DataModule1.FD35QueryDetailListe.FieldValues['Quantite'];
-      DataModule1.FD35TableRetourndeliv.FieldValues['NumStock']:=DataModule1.FD35QueryDetailListe.FieldValues['NumStock'];
-      DataModule1.FD35TableRetourndeliv.Next;
-      DataModule1.FD35QueryDetailListe.Edit;
-      DataModule1.FD35QueryDetailListe.FieldValues['Quantite']:=0;
-     DataModule1.FD35QueryDetailListe.Post;
-
-      result:=true;
-    end else result:=false;
-end
-else result:=false;
+//if DataModule1.FD35QueryDetailListe.RecordCount>0 then
+//begin
+//   DataModule1.FD35QueryStockRetourn.Params.ParamValues['x']:=DataModule1.FD35QueryDetailListe.FieldValues['id'];
+//   DataModule1.FD35QueryStockRetourn.Params.ParamValues['y']:=DataModule1.FD35QueryDetailListe.FieldValues['code'];
+//   DataModule1.FD35QueryStockRetourn.Params.ParamValues['z']:=DataModule1.FD35QueryDetailListe.FieldValues['numstock'];
+//   DataModule1.FD35QueryStockRetourn.Active:=false;
+//   DataModule1.FD35QueryStockRetourn.Active:=true;
+//   if (DataModule1.FD35QueryStockRetourn.RecordCount>0) and (DataModule1.FD35QueryStockRetourn.FieldValues['Quantite']>0) then
+//    begin
+//      DataModule1.FD35QueryStockRetourn.Edit;
+//      DataModule1.FD35QueryStockRetourn.FieldValues['Quantite']:=DataModule1.FD35QueryStockRetourn.FieldValues['Quantite']+DataModule1.FD35QueryDetailListe.FieldValues['Quantite'];
+//      DataModule1.FD35QueryStockRetourn.Post;
+//      DataModule1.FD35TableRetourndeliv.Insert;
+//      DataModule1.FD35TableRetourndeliv.FieldValues['annee']:=DataModule1.FD35QueryDetailListe.FieldValues['annee'];
+//      DataModule1.FD35TableRetourndeliv.FieldValues['num']:=DataModule1.FD35QueryDetailListe.FieldValues['num'];
+//      DataModule1.FD35TableRetourndeliv.FieldValues['typevente']:=DataModule1.FD35QueryDetailListe.FieldValues['typevente'];
+//      DataModule1.FD35TableRetourndeliv.FieldValues['Date']:=DataModule1.FD35QueryDetailListe.FieldValues['Date'];
+//      DataModule1.FD35TableRetourndeliv.FieldValues['Client']:=DataModule1.FD35QueryDetailListe.FieldValues['Client'];
+//      DataModule1.FD35TableRetourndeliv.FieldValues['id']:=DataModule1.FD35QueryDetailListe.FieldValues['id'];
+//      DataModule1.FD35TableRetourndeliv.FieldValues['Code']:=DataModule1.FD35QueryDetailListe.FieldValues['Code'];
+//      DataModule1.FD35TableRetourndeliv.FieldValues['Quantite']:=DataModule1.FD35QueryDetailListe.FieldValues['Quantite'];
+//      DataModule1.FD35TableRetourndeliv.FieldValues['NumStock']:=DataModule1.FD35QueryDetailListe.FieldValues['NumStock'];
+//      DataModule1.FD35TableRetourndeliv.Next;
+//      DataModule1.FD35QueryDetailListe.Edit;
+//      DataModule1.FD35QueryDetailListe.FieldValues['Quantite']:=0;
+//     DataModule1.FD35QueryDetailListe.Post;
+//
+//      result:=true;
+//    end else result:=false;
+//end
+//else result:=false;
 end;
 
 procedure TFormListeVente.Button1Click(Sender: TObject);
@@ -96,21 +96,21 @@ end;
 procedure TFormListeVente.Button3Click(Sender: TObject);
 var b:boolean;
 begin
-b:=false;
-if DataModule1.FD35QueryDetailListe.RecordCount>0 then
-begin
-if MessageDlg('هل تريد فعلا حذف  عملية البيع',mtConfirmation,mbYesNo,0)=mrYes then
-begin
-DataModule1.FD35QueryDetailListe.First;
-while not DataModule1.FD35QueryDetailListe.Eof do
-begin
-   b:=retourneprodstock();
-   DataModule1.FD35QueryDetailListe.Next;
-end;
-end;
-if b then
- showmessage('         تم إلغاء عملية البيع           ');
-end;
+//b:=false;
+//if DataModule1.FD35QueryDetailListe.RecordCount>0 then
+//begin
+//if MessageDlg('هل تريد فعلا حذف  عملية البيع',mtConfirmation,mbYesNo,0)=mrYes then
+//begin
+//DataModule1.FD35QueryDetailListe.First;
+//while not DataModule1.FD35QueryDetailListe.Eof do
+//begin
+//   b:=retourneprodstock();
+//   DataModule1.FD35QueryDetailListe.Next;
+//end;
+//end;
+//if b then
+// showmessage('         تم إلغاء عملية البيع           ');
+//end;
 end;
 
 end.

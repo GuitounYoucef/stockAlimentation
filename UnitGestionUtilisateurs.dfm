@@ -155,6 +155,10 @@ object FormGestionUtilisateurs: TFormGestionUtilisateurs
     object TabSheet2: TTabSheet
       Caption = #1573#1606#1588#1575#1569' '#1581#1587#1575#1576
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label3: TLabel
         Left = 390
         Top = 10
@@ -405,7 +409,6 @@ object FormGestionUtilisateurs: TFormGestionUtilisateurs
     end
   end
   object DataSource1: TDataSource
-    DataSet = DataModule1.FD24TableUsers
     Left = 140
     Top = 258
   end

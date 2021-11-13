@@ -692,7 +692,6 @@ object FormTypeProd: TFormTypeProd
       Top = 2
       Width = 220
       Height = 25
-      DataSource = DataModule1.DataSource91
       TabOrder = 1
       Visible = False
     end
@@ -701,7 +700,6 @@ object FormTypeProd: TFormTypeProd
       Top = 2
       Width = 220
       Height = 25
-      DataSource = DataModule1.DataSource92
       TabOrder = 2
       Visible = False
     end
@@ -739,7 +737,6 @@ object FormTypeProd: TFormTypeProd
       Top = 134
       Width = 242
       Height = 228
-      DataSource = DataModule1.DataSource91
       DrawingStyle = gdsClassic
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
@@ -857,7 +854,6 @@ object FormTypeProd: TFormTypeProd
       Top = 134
       Width = 242
       Height = 228
-      DataSource = DataModule1.DataSource92
       DrawingStyle = gdsClassic
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText

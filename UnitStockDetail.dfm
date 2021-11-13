@@ -1,6 +1,7 @@
 object FormStockDetail: TFormStockDetail
   Left = 0
   Top = 0
+  Align = alClient
   Caption = 'FormStockDetail'
   ClientHeight = 586
   ClientWidth = 1331
@@ -13,7 +14,6 @@ object FormStockDetail: TFormStockDetail
   FormStyle = fsStayOnTop
   OldCreateOrder = False
   Position = poDesktopCenter
-  OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -38,11 +38,12 @@ object FormStockDetail: TFormStockDetail
         Column = 1
         Control = DBGrid1
         Row = 1
+        RowSpan = 2
       end
       item
         Column = 1
         Control = DBNavigator1
-        Row = 2
+        Row = 3
       end
       item
         Column = 0
@@ -56,7 +57,10 @@ object FormStockDetail: TFormStockDetail
         Value = 90.000000000000000000
       end
       item
-        Value = 100.000000000000000000
+        Value = 48.899755501222490000
+      end
+      item
+        Value = 51.100244498777510000
       end
       item
         SizeStyle = ssAbsolute
@@ -70,11 +74,11 @@ object FormStockDetail: TFormStockDetail
       Left = 67
       Top = 91
       Width = 1196
-      Height = 444
+      Height = 443
       TabStop = False
       Align = alClient
       BiDiMode = bdRightToLeft
-      DataSource = DataSource1
+      DataSource = DataSourceAllStockByDate
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -21
@@ -89,7 +93,6 @@ object FormStockDetail: TFormStockDetail
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
       StyleElements = [seBorder]
-      OnKeyDown = DBGrid1KeyDown
       Columns = <
         item
           Expanded = False
@@ -106,12 +109,12 @@ object FormStockDetail: TFormStockDetail
           Title.Font.Height = -16
           Title.Font.Name = 'Cairo'
           Title.Font.Style = [fsBold]
-          Width = 193
+          Width = 332
           Visible = True
         end
         item
           Expanded = False
-          FieldName = 'producteur'
+          FieldName = 'Producteur'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -15
@@ -252,7 +255,7 @@ object FormStockDetail: TFormStockDetail
         end
         item
           Expanded = False
-          FieldName = 'code'
+          FieldName = 'Code'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -15
@@ -271,10 +274,10 @@ object FormStockDetail: TFormStockDetail
     end
     object DBNavigator1: TDBNavigator
       Left = 395
-      Top = 540
+      Top = 539
       Width = 540
       Height = 40
-      DataSource = DataSource1
+      DataSource = DataSourceAllStockByDate
       VisibleButtons = [nbDelete, nbEdit, nbPost]
       Anchors = []
       TabOrder = 1
@@ -1853,8 +1856,8 @@ object FormStockDetail: TFormStockDetail
       end
     end
   end
-  object DataSource1: TDataSource
-    DataSet = DataModule1.FDQueryProduitstock33
+  object DataSourceAllStockByDate: TDataSource
+    DataSet = DataStocks.FDTableStock
     Left = 96
     Top = 240
   end

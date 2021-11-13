@@ -52,89 +52,88 @@ implementation
 
 {$R *.dfm}
 
-uses UnitConnexion,unit36;
-
+uses UnitConnexion,unit36, DataParametrageUnite;
+//------------------------------------------------------------------------------
 procedure TFormGestionUtilisateurs.ADOTable1AfterScroll(DataSet: TDataSet);
 begin
-if DataModule1.FD24TableUsers.FieldValues['active']=true then
-begin
-ButtonAct.Enabled:=false;
-ButtonDes.Enabled:=true;
-end
-else
-begin
-ButtonAct.Enabled:=true;
-ButtonDes.Enabled:=false;
-end
-
+    if DataParametrage.FDTableUsers.FieldValues['active']=true then
+    begin
+    ButtonAct.Enabled:=false;
+    ButtonDes.Enabled:=true;
+    end
+    else
+    begin
+    ButtonAct.Enabled:=true;
+    ButtonDes.Enabled:=false;
+    end
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormGestionUtilisateurs.Button1Click(Sender: TObject);
 begin
-if (DataModule1.FDQuery115.FieldValues['motpasse']=EditCourant.Text) and (EditNouveau.Text=EditCinfNouveau.Text)  then
-begin
-  DataModule1.FDQuery115.Edit;
-  DataModule1.FDQuery115.FieldValues['motpasse']:=EditNouveau.Text;
-  DataModule1.FDQuery115.Post;
-  MessageDlg('تم تغيير كلمة المرور بنجاح',mtInformation,[mbOK],0);
-  close;
-end
-else
-   if (DataModule1.FDQuery115.FieldValues['motpasse']<>EditCourant.Text) then
-     MessageDlg('خطأ في كلمة المرور الحالية',mtInformation,[mbOK],0)
-     else if (EditNouveau.Text<>EditCinfNouveau.Text) then
-          MessageDlg('خطأ في تأكيد كلمة المرور',mtInformation,[mbOK],0);
+    if (DataParametrage.FDQueryLoginUser.FieldValues['motpasse']=EditCourant.Text) and (EditNouveau.Text=EditCinfNouveau.Text)  then
+    begin
+      DataParametrage.FDQueryLoginUser.Edit;
+      DataParametrage.FDQueryLoginUser.FieldValues['motpasse']:=EditNouveau.Text;
+      DataParametrage.FDQueryLoginUser.Post;
+      MessageDlg('تم تغيير كلمة المرور بنجاح',mtInformation,[mbOK],0);
+      close;
+    end
+    else
+       if (DataParametrage.FDQueryLoginUser.FieldValues['motpasse']<>EditCourant.Text) then
+         MessageDlg('خطأ في كلمة المرور الحالية',mtInformation,[mbOK],0)
+         else if (EditNouveau.Text<>EditCinfNouveau.Text) then
+              MessageDlg('خطأ في تأكيد كلمة المرور',mtInformation,[mbOK],0);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormGestionUtilisateurs.Button2Click(Sender: TObject);
 begin
-if (length(EditId.Text)>0) and (length(EditMotpass.Text)>0) and (length(ComboBoxTypeCompte.Text)>0) then
-begin
-  DataModule1.FD24TableUsers.Insert;
-  DataModule1.FD24TableUsers.FieldValues['id']:=EditId.Text;
-  DataModule1.FD24TableUsers.FieldValues['motpasse']:=EditMotpass.Text;
-  if ComboBoxTypeCompte.Text='مدير' then
-   DataModule1.FD24TableUsers.FieldValues['privilege']:=0
-  else
-  if ComboBoxTypeCompte.Text='مسير' then
-   DataModule1.FD24TableUsers.FieldValues['privilege']:=1
-  else
-  if ComboBoxTypeCompte.Text='بائع' then
-   DataModule1.FD24TableUsers.FieldValues['privilege']:=2;
-   DataModule1.FD24TableUsers.FieldValues['type']:=ComboBoxTypeCompte.Text;
-   DataModule1.FD24TableUsers.FieldValues['Active']:=true;
-   DataModule1.FD24TableUsers.Next;
+    if (length(EditId.Text)>0) and (length(EditMotpass.Text)>0) and (length(ComboBoxTypeCompte.Text)>0) then
+    begin
+      DataParametrage.FDTableUsers.Insert;
+      DataParametrage.FDTableUsers.FieldValues['id']:=EditId.Text;
+      DataParametrage.FDTableUsers.FieldValues['motpasse']:=EditMotpass.Text;
+      if ComboBoxTypeCompte.Text='مدير' then
+       DataParametrage.FDTableUsers.FieldValues['privilege']:=0
+      else
+      if ComboBoxTypeCompte.Text='مسير' then
+       DataParametrage.FDTableUsers.FieldValues['privilege']:=1
+      else
+      if ComboBoxTypeCompte.Text='بائع' then
+       DataParametrage.FDTableUsers.FieldValues['privilege']:=2;
+       DataParametrage.FDTableUsers.FieldValues['type']:=ComboBoxTypeCompte.Text;
+       DataParametrage.FDTableUsers.FieldValues['Active']:=true;
+       DataParametrage.FDTableUsers.Next;
+    end;
 end;
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormGestionUtilisateurs.ButtonActClick(Sender: TObject);
 begin
-if DataModule1.FD24TableUsers.FieldValues['active']=false then
-begin
-DataModule1.FD24TableUsers.Edit;
-DataModule1.FD24TableUsers.FieldValues['active']:=true;
-DataModule1.FD24TableUsers.Post;
-ADOTable1AfterScroll(DataModule1.FD24TableUsers);
+    if DataParametrage.FDTableUsers.FieldValues['active']=false then
+    begin
+    DataParametrage.FDTableUsers.Edit;
+    DataParametrage.FDTableUsers.FieldValues['active']:=true;
+    DataParametrage.FDTableUsers.Post;
+    ADOTable1AfterScroll(DataParametrage.FDTableUsers);
+    end;
 end;
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormGestionUtilisateurs.ButtonDesClick(Sender: TObject);
 begin
-if DataModule1.FD24TableUsers.RecNo>1 then
-begin
-DataModule1.FD24TableUsers.Edit;
-DataModule1.FD24TableUsers.FieldValues['active']:=false;
-DataModule1.FD24TableUsers.Post;
-ADOTable1AfterScroll(DataModule1.FD24TableUsers);
+    if DataParametrage.FDTableUsers.RecNo>1 then
+    begin
+    DataParametrage.FDTableUsers.Edit;
+    DataParametrage.FDTableUsers.FieldValues['active']:=false;
+    DataParametrage.FDTableUsers.Post;
+    ADOTable1AfterScroll(DataParametrage.FDTableUsers);
+    end;
 end;
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormGestionUtilisateurs.FormShow(Sender: TObject);
 begin
-PageControl1.TabWidth:=(PageControl1.Width div 3)-2;
-EditCourant.Clear;
-EditNouveau.Clear;
-EditCinfNouveau.Clear;
+    PageControl1.TabWidth:=(PageControl1.Width div 3)-2;
+    EditCourant.Clear;
+    EditNouveau.Clear;
+    EditCinfNouveau.Clear;
 end;
 
 end.

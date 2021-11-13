@@ -25,7 +25,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
-    procedure PaimentFactureShow(som:longint);
+    procedure PaimentFactureShow(som:real);
   private
 
     { Déclarations privées }
@@ -43,16 +43,15 @@ implementation
 
 uses UnitFacturation, UnitListeFactures, UnitDelivrence,unit36,DataFacturationUnite,
   UnitDelivrenceData, DataStocksUnite;
-
-procedure TFormPaiementCredit.PaimentFactureShow(som:longint);
+//------------------------------------------------------------------------------
+procedure TFormPaiementCredit.PaimentFactureShow(som:real);
 begin
-fenetre:=8;
-EditSom.Text:=inttostr(trunc(som));
-editrest.text:=inttostr(trunc(som));
-show;
+    fenetre:=8;
+    EditSom.Text:=inttostr(trunc(som));
+    editrest.text:=inttostr(trunc(som));
+    show;
 end;
-
-
+//------------------------------------------------------------------------------
 procedure TFormPaiementCredit.BitBtn1Click(Sender: TObject);
 begin
     case fenetre of
@@ -63,23 +62,21 @@ begin
               close;
             end;
         end;
-
-
-          34: begin
+        34: begin
               if strtofloat(editrest.Text)>=0 then
               begin
                 with FormListeFactures do
                   begin
-                  DataModule1.FD34QueryFacPaie.Edit;
-                  DataModule1.FD34QueryFacPaie.FieldValues['total']:=strtofloat(editsom.Text);
-                  DataModule1.FD34QueryFacPaie.FieldValues['reste']:=strtofloat(editrest.Text);
+                  DataFacturation.FDQueryFacturePayee.Edit;
+                  DataFacturation.FDQueryFacturePayee.FieldValues['total']:=strtofloat(editsom.Text);
+                  DataFacturation.FDQueryFacturePayee.FieldValues['reste']:=strtofloat(editrest.Text);
                   if strtofloat(editsom.Text)=strtofloat(editrest.Text) then
-                     DataModule1.FD34QueryFacPaie.FieldValues['TypePaiement']:=3;
-                  DataModule1.FD34QueryFacPaie.Post;
-                  DataModule1.FD34QueryFacPaie.Active:=false;
-                  DataModule1.FD34QueryFacPaie.Active:=true;
+                     DataFacturation.FDQueryFacturePayee.FieldValues['TypePaiement']:=3;
+                  DataFacturation.FDQueryFacturePayee.Post;
+                  DataFacturation.FDQueryFacturePayee.Active:=false;
+                  DataFacturation.FDQueryFacturePayee.Active:=true;
                   FormPaiementCredit.close;
-                  dataModule1.FD34QueryFacPaieAfterScroll(DataModule1.FD34QueryFacPaie);
+                  DataFacturation.FDQueryFacturePayeeAfterScroll(DataFacturation.FDQueryFacturePayee);
                   end;
               end;
           end;
@@ -101,34 +98,31 @@ begin
                   end;
            end;
 end;
-
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormPaiementCredit.BitBtn2Click(Sender: TObject);
 begin
-close;
+    close;
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormPaiementCredit.Button1Click(Sender: TObject);
 begin
-editpaie.Text :=editsom.Text;
+    editpaie.Text :=editsom.Text;
 end;
-
-
-
+//------------------------------------------------------------------------------
 procedure TFormPaiementCredit.EditPaieChange(Sender: TObject);
 var x:real;
 begin
-x:=strtofloat(editsom.Text)-strtofloat(editpaie.Text);
-if x>=0 then
-editrest.Text:=floattostr(x)
-else
-begin
-MessageDlg('المبلغ المدفوع أكبر من المبلغ المستحق', mtInformation, [mbOK], 0);
-editpaie.Text:='0';
+    x:=strtofloat(editsom.Text)-strtofloat(editpaie.Text);
+    if x>=0 then
+        editrest.Text:=floattostr(x)
+    else
+    begin
+        MessageDlg('المبلغ المدفوع أكبر من المبلغ المستحق', mtInformation, [mbOK], 0);
+        editpaie.Text:='0';
+    end;
 end;
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormPaiementCredit.FormShow(Sender: TObject);
 begin
 //editpaie.text:='0';

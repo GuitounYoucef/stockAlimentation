@@ -26611,7 +26611,7 @@ object FormConnexion: TFormConnexion
       230000000049454E44AE426082}
     Stretch = True
   end
-  object Edit1: TEdit
+  object EditPassword: TEdit
     Left = 209
     Top = 153
     Width = 204
@@ -26627,11 +26627,12 @@ object FormConnexion: TFormConnexion
     PasswordChar = #7
     TabOrder = 0
     StyleElements = [seClient, seBorder]
-    OnKeyDown = Edit1KeyDown
+    OnEnter = EditPasswordEnter
+    OnKeyDown = EditPasswordKeyDown
   end
-  object ComboBox1: TComboBox
+  object ComboBoxUser: TComboBox
     Left = 209
-    Top = 103
+    Top = 109
     Width = 204
     Height = 38
     Style = csDropDownList
@@ -26646,7 +26647,7 @@ object FormConnexion: TFormConnexion
     TabOrder = 1
     StyleElements = [seClient, seBorder]
   end
-  object Button2: TButton
+  object ButtonConnecter: TButton
     Left = 357
     Top = 216
     Width = 126
@@ -26663,7 +26664,7 @@ object FormConnexion: TFormConnexion
     ParentFont = False
     TabOrder = 2
     StyleElements = [seClient, seBorder]
-    OnClick = Button2Click
+    OnClick = ButtonConnecterClick
   end
   object Button1: TButton
     Left = 220

@@ -599,7 +599,7 @@ object FormFournisseurs: TFormFournisseurs
     end
   end
   object DataSource1: TDataSource
-    DataSet = DataModule1.FD10QueryLikeFounisseurNom
+    DataSet = DataParametrage.FDQueryFounisseurByName
     Left = 389
     Top = 8
   end

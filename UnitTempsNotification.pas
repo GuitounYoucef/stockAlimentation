@@ -37,15 +37,15 @@ implementation
 uses unit36;
 
 {$R *.dfm}
-
+//------------------------------------------------------------------------------
 procedure TFormTempsNotification.DBGrid1KeyPress(Sender: TObject; var Key: Char);
 begin
-MessageDlg(Key + ' has been pressed', mtInformation, [mbOK], 0)
+    MessageDlg(Key + ' has been pressed', mtInformation, [mbOK], 0)
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormTempsNotification.FormKeyPress(Sender: TObject; var Key: Char);
 begin
-MessageDlg(Key + ' has been pressed', mtInformation, [mbOK], 0)
+    MessageDlg(Key + ' has been pressed', mtInformation, [mbOK], 0)
 end;
 
 end.

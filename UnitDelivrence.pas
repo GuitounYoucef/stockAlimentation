@@ -76,87 +76,83 @@ implementation
 uses UnitVenteComptoir, UnitPaiementCredit,unit36, UnitDelivrenceData;
 
 
-
+//------------------------------------------------------------------------------
 procedure TFormDelivrence.Button1Click(Sender: TObject);
 begin
-frxReport1.ShowReport(true);
+    frxReport1.ShowReport(true);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormDelivrence.Button2Click(Sender: TObject);
 begin
-if DataModuleDelivrence.FD12QueryImp.RecordCount>0 then
-frxReport1.ShowReport(true);
+    if DataModuleDelivrence.FD12QueryImp.RecordCount>0 then
+    frxReport1.ShowReport(true);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormDelivrence.Button3Click(Sender: TObject);
 var crd:Credit;
 begin
-if DataModuleDelivrence.FDQueryDelivrence.RecordCount>0 then
-if (DataModuleDelivrence.FDQueryListe.RecordCount>0) and(DataModuleDelivrence.FDQueryDelivrence.FieldValues['typepaim']=2 ) then
-begin
-   crd:=DataModuleDelivrence.RecupererCredit(DataModuleDelivrence.FDQueryDelivrence.FieldValues['NumClient']);
-   FormPaiementCredit.EditSom.Text:=floattostr(DataModuleDelivrence.SommeListProd());
-   FormPaiementCredit.EditPaie.Text:=floattostr(crd.payee);
-   FormPaiementCredit.fenetre:=12;
-   FormPaiementCredit.show;
+    if DataModuleDelivrence.FDQueryDelivrence.RecordCount>0 then
+    if (DataModuleDelivrence.FDQueryListe.RecordCount>0) and(DataModuleDelivrence.FDQueryDelivrence.FieldValues['typepaim']=2 ) then
+    begin
+       crd:=DataModuleDelivrence.RecupererCredit(DataModuleDelivrence.FDQueryDelivrence.FieldValues['NumClient']);
+       FormPaiementCredit.EditSom.Text:=floattostr(DataModuleDelivrence.SommeListProd());
+       FormPaiementCredit.EditPaie.Text:=floattostr(crd.payee);
+       FormPaiementCredit.fenetre:=12;
+       FormPaiementCredit.show;
+    end;
 end;
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormDelivrence.ComboBox1Change(Sender: TObject);
 begin
-DataModuleDelivrence.ChangerTypePaiement(ComboBox1.ItemIndex);
-dxGaugeDigitalScale1.Value:=FloatTostrF(DataModuleDelivrence.SommeParTypePaiment(ComboBox1.ItemIndex+1), ffFixed, 12, 2);
-
+    DataModuleDelivrence.ChangerTypePaiement(ComboBox1.ItemIndex);
+    dxGaugeDigitalScale1.Value:=FloatTostrF(DataModuleDelivrence.SommeParTypePaiment(ComboBox1.ItemIndex+1), ffFixed, 12, 2);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormDelivrence.ComboBox2Change(Sender: TObject);
 begin
-DataModuleDelivrence.ChangerTypeVente(ComboBox2.ItemIndex);
-dxGaugeControl1DigitalScale1.Value:=FloatTostrF(DataModuleDelivrence.SommeListProd(), ffFixed, 12, 2);
-
-end;
-
+    DataModuleDelivrence.ChangerTypeVente(ComboBox2.ItemIndex);
+    dxGaugeControl1DigitalScale1.Value:=FloatTostrF(DataModuleDelivrence.SommeListProd(), ffFixed, 12, 2);
+ end;
+//------------------------------------------------------------------------------
 procedure TFormDelivrence.DataSource2StateChange(Sender: TObject);
 begin
-dxGaugeControl1DigitalScale1.Value:=FloatTostrF(DataModuleDelivrence.SommeListProd(), ffFixed, 12, 2);
-
+    dxGaugeControl1DigitalScale1.Value:=FloatTostrF(DataModuleDelivrence.SommeListProd(), ffFixed, 12, 2);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormDelivrence.DataSource2UpdateData(Sender: TObject);
 begin
-dxGaugeControl1DigitalScale1.Value:=FloatTostrF(DataModuleDelivrence.SommeListProd(), ffFixed, 12, 2);
-
+    dxGaugeControl1DigitalScale1.Value:=FloatTostrF(DataModuleDelivrence.SommeListProd(), ffFixed, 12, 2);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormDelivrence.FormShow(Sender: TObject);
 var x:real;
 begin
-ComboBox1.ItemIndex:=3;
-ComboBox2.ItemIndex:=2;
-DataModuleDelivrence.ChangerTypeVente(2);
-DataModuleDelivrence.ChangerTypePaiement(3);
-dxGaugeControl1DigitalScale1.Value:=FloatTostrF(DataModuleDelivrence.SommeListProd(), ffFixed, 12, 2);
-x:=DataModuleDelivrence.SommeParTypePaiment(ComboBox1.ItemIndex+1);
-dxGaugeDigitalScale1.Value:=FloatTostrF(x, ffFixed, 12, 2);
-ComboBox1.ItemIndex
+    ComboBox1.ItemIndex:=3;
+    ComboBox2.ItemIndex:=2;
+    DataModuleDelivrence.ChangerTypeVente(2);
+    DataModuleDelivrence.ChangerTypePaiement(3);
+    dxGaugeControl1DigitalScale1.Value:=FloatTostrF(DataModuleDelivrence.SommeListProd(), ffFixed, 12, 2);
+    x:=DataModuleDelivrence.SommeParTypePaiment(ComboBox1.ItemIndex+1);
+    dxGaugeDigitalScale1.Value:=FloatTostrF(x, ffFixed, 12, 2);
+    ComboBox1.ItemIndex
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormDelivrence.SearchBox1Change(Sender: TObject);
 var som:real;
 begin
 
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormDelivrence.SearchBox1Click(Sender: TObject);
 begin
-LoadKeyboardLayout('00000401', KLF_ACTIVATE);
+    LoadKeyboardLayout('00000401', KLF_ACTIVATE);
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormDelivrence.SearchBox1Enter(Sender: TObject);
 begin
-LoadKeyboardLayout('00000401', KLF_ACTIVATE);
+    LoadKeyboardLayout('00000401', KLF_ACTIVATE);
 end;
-
+//------------------------------------------------------------------------------
 initialization;
 typevente:=2;
 typepaim:=2;

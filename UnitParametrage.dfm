@@ -38,7 +38,7 @@ object FormParametrage: TFormParametrage
       Top = 56
       AutoSize = False
       DataBinding.DataField = 'NomStocke'
-      DataBinding.DataSource = DataSource1
+      DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -51,7 +51,7 @@ object FormParametrage: TFormParametrage
       Top = 105
       AutoSize = False
       DataBinding.DataField = 'mobile1'
-      DataBinding.DataSource = DataSource1
+      DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -64,7 +64,7 @@ object FormParametrage: TFormParametrage
       Top = 105
       AutoSize = False
       DataBinding.DataField = 'mobile2'
-      DataBinding.DataSource = DataSource1
+      DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -77,7 +77,7 @@ object FormParametrage: TFormParametrage
       Top = 154
       AutoSize = False
       DataBinding.DataField = 'Fax1'
-      DataBinding.DataSource = DataSource1
+      DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -90,7 +90,7 @@ object FormParametrage: TFormParametrage
       Top = 154
       AutoSize = False
       DataBinding.DataField = 'Fax2'
-      DataBinding.DataSource = DataSource1
+      DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -198,7 +198,7 @@ object FormParametrage: TFormParametrage
       Left = 42
       Top = 261
       DataBinding.DataField = 'Normale'
-      DataBinding.DataSource = DataSource1
+      DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -211,7 +211,7 @@ object FormParametrage: TFormParametrage
       Left = 42
       Top = 310
       DataBinding.DataField = 'CodeBar'
-      DataBinding.DataSource = DataSource1
+      DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -224,7 +224,7 @@ object FormParametrage: TFormParametrage
       Left = 42
       Top = 359
       DataBinding.DataField = 'Ticket'
-      DataBinding.DataSource = DataSource1
+      DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -273,7 +273,7 @@ object FormParametrage: TFormParametrage
       Left = 467
       Top = 461
       DataBinding.DataField = 'stockid'
-      DataBinding.DataSource = DataSource3
+      DataBinding.DataSource = DataSourceParametrage
       Properties.OnChange = cxDBComboBoxstockidPropertiesChange
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
@@ -380,7 +380,7 @@ object FormParametrage: TFormParametrage
       Left = 44
       Top = 466
       DataBinding.DataField = 'Langue'
-      DataBinding.DataSource = DataSource3
+      DataBinding.DataSource = DataSourceParametrage
       Properties.Items.Strings = (
         #1575#1604#1573#1606#1580#1604#1610#1586#1610#1577
         #1575#1604#1593#1585#1576#1610#1577
@@ -398,7 +398,7 @@ object FormParametrage: TFormParametrage
       Top = 56
       AutoSize = False
       DataBinding.DataField = 'Adresse'
-      DataBinding.DataSource = DataSource1
+      DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
@@ -667,18 +667,18 @@ object FormParametrage: TFormParametrage
       Index = 0
     end
   end
-  object DataSource1: TDataSource
-    DataSet = DataModule1.FDTableImprimante
+  object DataSourceImprimante: TDataSource
+    DataSet = DataParametrage.FDTableImprimante
     Left = 144
     Top = 16
   end
   object DataSource2: TDataSource
-    DataSet = DataModule1.FDTableStockid25
+    DataSet = DataStocks.FDTableStockid
     Left = 456
     Top = 392
   end
-  object DataSource3: TDataSource
-    DataSet = DataModule1.FDTableParametrage
+  object DataSourceParametrage: TDataSource
+    DataSet = DataParametrage.FDTableParametrage
     Left = 456
     Top = 507
   end

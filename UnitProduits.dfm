@@ -8028,7 +8028,6 @@ object FormProduits: TFormProduits
       'PrixVente=PrixVente'
       'PrixVenteGros=PrixVenteGros'
       'QuantiteLot=QuantiteLot')
-    DataSet = DataModule1.FDQuery61
     BCDToCurrency = False
     Left = 729
     Top = 505

@@ -107,7 +107,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses  Unit36,UnitDelivrenceData;
+uses  Unit36,UnitDelivrenceData, DataParametrageUnite;
 
 {$R *.dfm}
 
@@ -134,24 +134,24 @@ begin
   FDQueryTrouverProd.Close;
   FDQueryTrouverProd.Open();
   if FDQueryTrouverProd.RecordCount>0 then
-  begin
-     listP.num:=1;
-     listP.id:=FDQueryTrouverProd.FieldValues['id'];
-     listP.producteur:=FDQueryTrouverProd.FieldValues['producteur'];
-     listP.code:=FDQueryTrouverProd.FieldValues['code'];
-     listP.PrixAchat:=FDQueryTrouverProd.FieldValues['PrixAchat'];
-     if typevente=2 then  // Vente Gros
-     begin
-        listP.quantite:=FDQueryTrouverProd.FieldValues['QuantiteLot']*quantite;
-        listP.PrixVente:=FDQueryTrouverProd.FieldValues['PrixVenteGros'];
-     end
-     else
-     begin   // Vente Detail
-       listP.quantite:=quantite;
-       listP.PrixVente:=FDQueryTrouverProd.FieldValues['PrixVente'];
-     end;
-     listP.somme:=listP.quantite*listP.PrixVente;
-  end
+    begin
+       listP.num:=1;
+       listP.id:=FDQueryTrouverProd.FieldValues['id'];
+       listP.producteur:=FDQueryTrouverProd.FieldValues['producteur'];
+       listP.code:=FDQueryTrouverProd.FieldValues['code'];
+       listP.PrixAchat:=FDQueryTrouverProd.FieldValues['PrixAchat'];
+       if typevente=2 then  // Vente Gros
+       begin
+          listP.quantite:=FDQueryTrouverProd.FieldValues['QuantiteLot']*quantite;
+          listP.PrixVente:=FDQueryTrouverProd.FieldValues['PrixVenteGros'];
+       end
+       else
+       begin   // Vente Detail
+         listP.quantite:=quantite;
+         listP.PrixVente:=FDQueryTrouverProd.FieldValues['PrixVente'];
+       end;
+       listP.somme:=listP.quantite*listP.PrixVente;
+    end
   else listP.quantite:=0;
   result :=listP;
 end;
@@ -286,7 +286,7 @@ begin
     operation.TypePaim:=1;
     operation.Client:='*';
     operation.NumStock:=DataModuleVente.FDTableParametrage.FieldValues['stocknum'];
-    operation.numUser:=DataModule1.FDQuery115.FieldValues['Numuser'];
+    operation.numUser:=DataParametrage.FDQueryLoginUser.FieldValues['Numuser'];
     //----------
     FDQueryListOprsSortie.Params.ParamValues['a']:=inttostr(myYear);
     FDQueryListOprsSortie.Params.ParamValues['t']:=typvente;
@@ -322,7 +322,7 @@ begin
     NouvelleSorite(Opr);
     AfficherListProd();
 end;
-
+//------------------------------------------------------------------------------
 procedure TDataModuleVente.ModifierTypePaiment(TP:integer);
 begin
     if FDQueryListOprsSortie.RecordCount>0 then
@@ -333,7 +333,7 @@ begin
     FDQueryListOprsSortie.Post;
     end;
 end;
-
+//------------------------------------------------------------------------------
 procedure TDataModuleVente.ModifierNomClient(Client:string);
 begin
     if FDQueryListOprsSortie.RecordCount>0 then
@@ -350,21 +350,21 @@ begin
         else operation.NumClient:=0;
     end;
 end;
-
+//------------------------------------------------------------------------------
 function TDataModuleVente.GetPrixVenteList():real;
 begin
     if FDQueryListeProdBD.RecordCount>0 then
        result:=FDQueryListeProdBD.FieldValues['PrixVente']
     else result:=-1;
 end;
-
+//------------------------------------------------------------------------------
 function TDataModuleVente.GetPrixAchatList():real;
 begin
     if FDQueryListeProdBD.RecordCount>0 then
        result:=FDQueryListeProdBD.FieldValues['PrixAchat']
     else result:=-1;
 end;
-
+//------------------------------------------------------------------------------
 procedure TDataModuleVente.PutPrixVenteList(prix:real);
 begin
     if FDQueryListeProdBD.RecordCount>0 then
@@ -374,14 +374,14 @@ begin
         FDQueryListeProdBD.Post;
     end;
 end;
-
+//------------------------------------------------------------------------------
 function TDataModuleVente.GetQuantiteList():real;
 begin
     if FDQueryListeProdBD.RecordCount>0 then
        result:=FDQueryListeProdBD.FieldValues['Quantite']
     else result:=-1;
 end;
-
+//------------------------------------------------------------------------------
 procedure TDataModuleVente.PutQuantiteList(Quantite:real);
 begin
     if FDQueryListeProdBD.RecordCount>0 then
@@ -392,7 +392,7 @@ begin
     end;
 
 end;
-
+//------------------------------------------------------------------------------
 function TDataModuleVente.GetCodeProduitList():string;
 begin
     if FDQueryListeProdBD.RecordCount>0 then

@@ -23,7 +23,7 @@ type
     Label2: TLabel;
     DateTimePicker1: TDateTimePicker;
     DateTimePicker2: TDateTimePicker;
-    Button1: TButton;
+    ButtonRecherche: TButton;
     ImageList1: TImageList;
     Panel1: TPanel;
     Image1: TImage;
@@ -68,7 +68,7 @@ type
     cxGrid3DBTableView1Column3: TcxGridDBColumn;
     dxLayoutLookAndFeelList1: TdxLayoutLookAndFeelList;
     dxLayoutSkinLookAndFeel1: TdxLayoutSkinLookAndFeel;
-    procedure Button1Click(Sender: TObject);
+    procedure ButtonRechercheClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dxLayoutControl1Group_Root1TabChanging(Sender: TObject;
       ANewTabIndex: Integer; var Allow: Boolean);
@@ -82,38 +82,20 @@ var
   FormBenifices: TFormBenifices;
 
 implementation
-uses unit36;
+uses unit36, UnitDelivrenceData;
 
 {$R *.dfm}
 
-procedure TFormBenifices.Button1Click(Sender: TObject);
-var x,y:real;
-    begin
-    DataModule1.FD30QuerySortieDate.Params.ParamValues['x']:=datetostr(DateTimePicker1.Date);
-    DataModule1.FD30QuerySortieDate.Params.ParamValues['y']:=datetostr(DateTimePicker2.Date);
-    DataModule1.FD30QuerySortieDate.Active:=false;
-    DataModule1.FD30QuerySortieDate.Active:=true;
-    if DataModule1.FD30QuerySortieDate.RecordCount>0 then
-    begin
-      DataModule1.FD30Querysomsortie.Params.ParamValues['x']:=datetostr(DateTimePicker1.Date);
-      DataModule1.FD30Querysomsortie.Params.ParamValues['y']:=datetostr(DateTimePicker2.Date);
-      DataModule1.FD30Querysomsortie.Active:=false;
-      DataModule1.FD30Querysomsortie.Active:=true;
-      DataModule1.FD30QueryorderProduit.Params.ParamValues['x']:=datetostr(DateTimePicker1.Date);
-      DataModule1.FD30QueryorderProduit.Params.ParamValues['y']:=datetostr(DateTimePicker2.Date);
-      DataModule1.FD30QueryorderProduit.Active:=false;
-      DataModule1.FD30QueryorderProduit.Active:=true;
-      DataModule1.FD30QueryOrderUtilisateur.Params.ParamValues['x']:=datetostr(DateTimePicker1.Date);
-      DataModule1.FD30QueryOrderUtilisateur.Params.ParamValues['y']:=datetostr(DateTimePicker2.Date);
-      DataModule1.FD30QueryOrderUtilisateur.Active:=false;
-      DataModule1.FD30QueryOrderUtilisateur.Active:=true;
-    begin
-      x:=DataModule1.FD30Querysomsortie.FieldValues['ventes']-DataModule1.FD30Querysomsortie.FieldValues['achats'];
-      y:=DataModule1.FD30Querysomsortie.FieldValues['ventes'];
-      dxGaugeControl3DigitalScale1.Value:=FloatTostrF(y,ffFixed,12,2);
-      dxGaugeControl4DigitalScale1.Value:=FloatTostrF(x,ffFixed,12,2);
-    end;
-    end;
+procedure TFormBenifices.ButtonRechercheClick(Sender: TObject);
+var ventes,achats,revenu:real;
+ begin
+    achats:=0;
+    ventes:=0;
+    revenu:=0;
+    DataModuleDelivrence.CalculerRevenu(ventes,achats,datetostr(DateTimePicker1.Date),datetostr(DateTimePicker2.Date));
+    revenu:=ventes-achats;
+    dxGaugeControl3DigitalScale1.Value:=FloatTostrF(revenu,ffFixed,12,2);
+    dxGaugeControl4DigitalScale1.Value:=FloatTostrF(ventes,ffFixed,12,2);
 end;
 
 procedure TFormBenifices.dxLayoutControl1Group_Root1TabChanging(Sender: TObject;
@@ -146,7 +128,7 @@ procedure TFormBenifices.FormShow(Sender: TObject);
 begin
 DateTimePicker1.Date:=date;
 DateTimePicker2.Date:=date;
-Button1Click(FormBenifices);
+ButtonRechercheClick(FormBenifices);
 end;
 
 end.

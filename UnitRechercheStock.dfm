@@ -1202,7 +1202,6 @@ object FormRechercheStock: TFormRechercheStock
       000000000000}
   end
   object DataSource1: TDataSource
-    DataSet = DataModule1.FD27QueryRechIDProduitstock
     Left = 112
     Top = 168
   end

@@ -66,7 +66,7 @@ x:integer;
 implementation
 {$R *.dfm}
 uses UnitVenteComptoir, UnitPaiementCredit,DataFacturationUnite,
-  UnitFacturation, DataStocksUnite;
+  UnitFacturation, DataStocksUnite,DataParametrageUnite;
 //____________________________________________________________________________________
 procedure TFormListeFactures.ButtonPaimentClick(Sender: TObject);
 begin
@@ -127,7 +127,7 @@ end;
 
 procedure TFormListeFactures.DBGrid1CellClick(Column: TColumn);
 begin
-dxGaugeControl1DigitalScale1.Value:=inttostr(DataFacturation.calculerSomFacture());
+dxGaugeControl1DigitalScale1.Value:=floattostr(DataFacturation.calculerSomFacture());
 end;
 
 procedure TFormListeFactures.cxButtonCosulterClick(Sender: TObject);

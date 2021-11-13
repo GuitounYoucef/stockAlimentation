@@ -42,9 +42,9 @@ type
     cxDBComboBoxTicket: TcxDBComboBox;
     dxLayoutItem12: TdxLayoutItem;
     dxLayoutAutoCreatedGroup3: TdxLayoutAutoCreatedGroup;
-    DataSource1: TDataSource;
+    DataSourceImprimante: TDataSource;
     DataSource2: TDataSource;
-    DataSource3: TDataSource;
+    DataSourceParametrage: TDataSource;
     DBGrid1: TDBGrid;
     dxLayoutItem14: TdxLayoutItem;
     dxLayoutAutoCreatedGroup4: TdxLayoutAutoCreatedGroup;
@@ -74,65 +74,64 @@ var
   FormParametrage: TFormParametrage;
 
 implementation
-uses unit36;
+uses unit36, DataParametrageUnite, DataStocksUnite;
 
 {$R *.dfm}
 
 
-
+//------------------------------------------------------------------------------
 procedure TFormParametrage.cxButton1Click(Sender: TObject);
 begin
-if length(cxTextEdit1.Text)>0 then
-begin
-  DataModule1.FDTableStockid25.Insert;
-  DataModule1.FDTableStockid25.FieldValues['id']:=cxTextEdit1.Text;
-  cxDBComboBoxStockid.Properties.Items.Add(cxTextEdit1.Text);
-  DataModule1.FDTableStockid25.Next;
-  cxTextEdit1.Clear;
+    if length(cxTextEdit1.Text)>0 then
+    begin
+      DataStocks.FDTableStockid.Insert;
+      DataStocks.FDTableStockid.FieldValues['id']:=cxTextEdit1.Text;
+      cxDBComboBoxStockid.Properties.Items.Add(cxTextEdit1.Text);
+      DataStocks.FDTableStockid.Next;
+      cxTextEdit1.Clear;
+    end;
 end;
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormParametrage.cxButton2Click(Sender: TObject);
 begin
-DataModule1.FDTableImprimante.Edit;
-DataModule1.FDTableParametrage.Edit;
-DataModule1.FDTableImprimante.Post;
-DataModule1.FDTableParametrage.Post;
-close;
+    DataParametrage.FDTableImprimante.Edit;
+    DataParametrage.FDTableParametrage.Edit;
+    DataParametrage.FDTableImprimante.Post;
+    DataParametrage.FDTableParametrage.Post;
+    close;
 end;
-
+//------------------------------------------------------------------------------
 procedure TFormParametrage.cxDBComboBoxstockidPropertiesChange(Sender: TObject);
 begin
-DataModule1.FDQuerystockid25.Params.ParamValues['x']:=cxDBComboBoxstockid.Text;
-DataModule1.FDQuerystockid25.Close;
-DataModule1.FDQuerystockid25.Open();
-if DataModule1.FDQuerystockid25.RecordCount>0 then
-begin
-  DataModule1.FDTableParametrage.Edit;
-  DataModule1.FDTableParametrage.FieldValues['stocknum']:= DataModule1.FDQuerystockid25.FieldValues['Numstock'];
-  DataModule1.FDTableParametrage.Post;
+    DataParametrage.FDQuerystockByid.Params.ParamValues['x']:=cxDBComboBoxstockid.Text;
+    DataParametrage.FDQuerystockByid.Close;
+    DataParametrage.FDQuerystockByid.Open();
+    if DataParametrage.FDQuerystockByid.RecordCount>0 then
+    begin
+      DataParametrage.FDTableParametrage.Edit;
+      DataParametrage.FDTableParametrage.FieldValues['stocknum']:= DataParametrage.FDQuerystockByid.FieldValues['Numstock'];
+      DataParametrage.FDTableParametrage.Post;
+    end;
 end;
-end;
-
+//------------------------------------------------------------------------------
 procedure TFormParametrage.FormCreate(Sender: TObject);
 var i:integer;
 begin
-LoadKeyboardLayout('00000401', KLF_ACTIVATE);
-cxDBComboBoxNormale.Properties.Items.Clear;
-for i :=0 to Printer.Printers.Count-1  do
-begin
-cxDBComboBoxNormale.Properties.Items.Add(printer.printers[i]);
-cxDBComboBoxCodeBar.Properties.Items.Add(printer.printers[i]);
-cxDBComboBoxTicket.Properties.Items.Add(printer.printers[i]);
-end;
-
-cxDBComboBoxStockid.Properties.Items.Clear;
-DataModule1.FDTableStockid25.First;
-while not DataModule1.FDTableStockid25.Eof do
-begin
-  cxDBComboBoxStockid.Properties.Items.Add(DataModule1.FDTableStockid25.FieldValues['id']);
-  DataModule1.FDTableStockid25.Next;
-end;
+    LoadKeyboardLayout('00000401', KLF_ACTIVATE);
+    cxDBComboBoxNormale.Properties.Items.Clear;
+    for i :=0 to Printer.Printers.Count-1  do
+    begin
+      cxDBComboBoxNormale.Properties.Items.Add(printer.printers[i]);
+      cxDBComboBoxCodeBar.Properties.Items.Add(printer.printers[i]);
+      cxDBComboBoxTicket.Properties.Items.Add(printer.printers[i]);
+    end;
+    cxDBComboBoxStockid.Properties.Items.Clear;
+    DataStocks.FDTableStockid.First;
+    while not DataStocks.FDTableStockid.Eof do
+    begin
+      cxDBComboBoxStockid.Properties.Items.Add(DataStocks.FDTableStockid.FieldValues['id']);
+      DataStocks.FDTableStockid.Next;
+    end;
 end;
 
 end.

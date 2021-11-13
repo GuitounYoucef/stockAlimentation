@@ -14,6 +14,19 @@ type
   TDataParametrage = class(TDataModule)
     FDConnection1: TFDConnection;
     FDTableImprimante: TFDTable;
+    FDQueryClientByCatg: TFDQuery;
+    FDTableParametrage: TFDTable;
+    FDQuerystockByid: TFDQuery;
+    FDQueryFounisseurByName: TFDQuery;
+    FDQueryLoginUser: TFDQuery;
+    FDQueryClientByName: TFDQuery;
+    FDQueryType: TFDQuery;
+    FDQueryProducteur: TFDQuery;
+    FDTableUsers: TFDTable;
+    FDTableActivation: TFDTable;
+    FDTableType: TFDTable;
+    FDTableSortieExpire: TFDTable;
+    function Login(user,password:string):boolean;
   private
     { Déclarations privées }
   public
@@ -29,4 +42,20 @@ implementation
 
 {$R *.dfm}
 
+{ TDataParametrage }
+//------------------------------------------------------------------------------
+function TDataParametrage.Login(user, password: string): boolean;
+begin
+result:=false;
+  if ((length(user)>0) and (length(password)>0)) then
+      begin
+        DataParametrage.FDQueryLoginUser.Params.ParamValues['x']:=user;
+        DataParametrage.FDQueryLoginUser.Params.ParamValues['y']:=password;
+        DataParametrage.FDQueryLoginUser.Active:=false;
+        DataParametrage.FDQueryLoginUser.Active:=true;
+        if DataParametrage.FDQueryLoginUser.RecordCount=1 then
+           result:=true
+      end;
+end;
+//------------------------------------------------------------------------------
 end.

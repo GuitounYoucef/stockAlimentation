@@ -167,7 +167,7 @@ object FormListeFactures: TFormListeFactures
           end
           item
             Expanded = False
-            FieldName = 'NomDestination'
+            FieldName = 'NomSource'
             Title.Caption = #1573#1587#1605' '#1575#1604#1605#1605#1608#1606
             Title.Font.Charset = ANSI_CHARSET
             Title.Font.Color = clWindowText
@@ -257,8 +257,6 @@ object FormListeFactures: TFormListeFactures
           Value = 24.615130811339770000
         end>
       TabOrder = 1
-      ExplicitLeft = 365
-      ExplicitTop = 571
       DesignSize = (
         975
         80)
@@ -288,8 +286,6 @@ object FormListeFactures: TFormListeFactures
         Font.Style = [fsBold]
         ParentFont = False
         OnClick = cxButtonCosulterClick
-        ExplicitLeft = 45
-        ExplicitWidth = 388
       end
       object cxButtonImprimer: TcxButton
         Left = 602
@@ -308,10 +304,6 @@ object FormListeFactures: TFormListeFactures
         Font.Style = [fsBold]
         ParentFont = False
         OnClick = cxButtonImprimerClick
-        ExplicitLeft = 45
-        ExplicitTop = 1
-        ExplicitWidth = 388
-        ExplicitHeight = 18
       end
       object cxButtonPaiment: TcxButton
         Left = 781
@@ -330,10 +322,6 @@ object FormListeFactures: TFormListeFactures
         Font.Style = [fsBold]
         ParentFont = False
         OnClick = cxButtonPaimentClick
-        ExplicitLeft = 45
-        ExplicitTop = 1
-        ExplicitWidth = 388
-        ExplicitHeight = 18
       end
     end
     object GridPanel5: TGridPanel
@@ -6251,8 +6239,6 @@ object FormListeFactures: TFormListeFactures
           Value = 5.000324667006810000
         end>
       TabOrder = 4
-      ExplicitLeft = -4
-      ExplicitTop = 176
       object DBGrid2: TDBGrid
         Left = 21
         Top = 20
@@ -6411,8 +6397,9 @@ object FormListeFactures: TFormListeFactures
         ParentBiDiMode = False
         ParentFont = False
         Layout = tlCenter
-        ExplicitLeft = 38
-        ExplicitTop = -5
+        ExplicitLeft = 253
+        ExplicitWidth = 82
+        ExplicitHeight = 23
       end
     end
     object GridPanel8: TGridPanel
@@ -8546,8 +8533,9 @@ object FormListeFactures: TFormListeFactures
       'NomDestination=NomDestination'
       'source=source'
       'NumSource=NumSource'
-      'NumDestination=NumDestination')
-    DataSet = DataModule1.FD34QueryFacPaie
+      'NumDestination=NumDestination'
+      'TypePaiement=TypePaiement')
+    DataSource = DataSourceFacturePayee
     BCDToCurrency = False
     Left = 865
     Top = 369
@@ -8565,7 +8553,7 @@ object FormListeFactures: TFormListeFactures
       'mobile2=mobile2'
       'Fax1=Fax1'
       'Fax2=Fax2')
-    DataSet = DataModule1.FDTableImprimante
+    DataSet = DataParametrage.FDTableImprimante
     BCDToCurrency = False
     Left = 1081
     Top = 369
@@ -8588,10 +8576,10 @@ object FormListeFactures: TFormListeFactures
       'DateConsm=DateConsm'
       'balance=balance'
       'QuantiteLot=QuantiteLot'
-      'NumStock=NumStock'
       'DateEntree=DateEntree'
-      'NumUser=NumUser')
-    DataSet = DataModule1.FD34Querydetail
+      'NumUser=NumUser'
+      'Valide=Valide')
+    DataSource = DataSourceFactureEntrante
     BCDToCurrency = False
     Left = 969
     Top = 369

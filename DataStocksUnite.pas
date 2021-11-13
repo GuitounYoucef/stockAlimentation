@@ -19,6 +19,12 @@ type
     FDQuerySomStoke: TFDQuery;
     FDTableStockid: TFDTable;
     FDQueryRechProdByIdCodeStock: TFDQuery;
+    FDQueryAllStockByDate: TFDQuery;
+    FDQueryAlert: TFDQuery;
+    FDQueryExpire: TFDQuery;
+    FDQueryExpireRecordCount: TFDQuery;
+    FDQueryTypeProdStock: TFDQuery;
+    FDQueryRechProdLikeId: TFDQuery;
     procedure NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;quantite:real;StockDest:integer;DateProd,Dateconsm:TDateTime);
     procedure selectStoke(StokeName:string);
     procedure selectAllStokes();
@@ -26,6 +32,7 @@ type
     function rechercheProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
     function DeleteProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
     procedure EntreeFacture(FDQueryListeProd: TFDQuery;numDest:integer);
+
   private
     { Déclarations privées }
   public
@@ -44,9 +51,7 @@ uses UnitFacturation, Unit36, UnitEtatStock;
 {$R *.dfm}
 
 { TDataStocks }
-
-
-
+//------------------------------------------------------------------------------
 procedure TDataStocks.EntreeFacture(FDQueryListeProd: TFDQuery;numDest:integer);
 begin
     FDQueryListeProd.First;
@@ -73,14 +78,14 @@ begin
           FDQueryListeProd.Next;
         end;
 end;
-
+//------------------------------------------------------------------------------
 procedure TDataStocks.NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;
   quantite: real; StockDest: integer; DateProd, Dateconsm: TDateTime);
 begin
       FDTableStock.Insert;
       FDTableStock.FieldValues['id']:=FDQueryFindProduitByCode.FieldValues['id'];
       FDTableStock.FieldValues['type']:=FDQueryFindProduitByCode.FieldValues['type'];
-      FDTableStock.FieldValues['producteur']:=FDQueryFindProduitByCode.FieldValues['id'];
+      FDTableStock.FieldValues['producteur']:=FDQueryFindProduitByCode.FieldValues['producteur'];
 
       FDTableStock.FieldValues['QuantiteLot']:=FDQueryFindProduitByCode.FieldValues['QuantiteLot'];
       FDTableStock.FieldValues['PrixAchat']:=FDQueryFindProduitByCode.FieldValues['PrixAchat'];
@@ -114,7 +119,7 @@ begin
                end;
      selectAllStokes();
 end;
-
+//------------------------------------------------------------------------------
 procedure TDataStocks.rechercheProdByName(ProdName: string);
 begin
     DataStocks.FDQueryEtatStokeId.Params.ParamValues['i']:='%'+ProdName+'%';
@@ -125,9 +130,7 @@ begin
     DataStocks.FDQuerySomStoke.Close;
     DataStocks.FDQuerySomStoke.Open();
 end;
-
-
-
+//------------------------------------------------------------------------------
 function TDataStocks.rechercheProdByNameCodeSockid(ProdName, CodeProd: string;
   stockId: integer; Quantite: real): boolean;
 begin
@@ -141,7 +144,7 @@ begin
      result:=true
      else result:=false;
 end;
-
+//------------------------------------------------------------------------------
 function TDataStocks.DeleteProdByNameCodeSockid(ProdName, CodeProd: string;
   stockId: integer; Quantite: real): boolean;
   var qnt:real;
@@ -157,7 +160,7 @@ begin
        end
    else result:=false;
 end;
-
+//------------------------------------------------------------------------------
 procedure TDataStocks.selectAllStokes;
 begin
     DataStocks.FDQueryEtatStokeId.Params.ParamValues['x']:=0;
@@ -172,7 +175,7 @@ begin
     FDQuerySomStoke.Close;
     FDQuerySomStoke.Open();
 end;
-
+//------------------------------------------------------------------------------
 procedure TDataStocks.selectStoke(StokeName:string);
 begin
     FDQuerySelectStockId.Params.ParamValues['x']:=StokeName;
@@ -192,5 +195,5 @@ begin
     FDQuerySomStoke.Close;
     FDQuerySomStoke.Open();
 end;
-
+//------------------------------------------------------------------------------
 end.

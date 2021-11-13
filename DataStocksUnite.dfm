@@ -4,7 +4,7 @@ object DataStocks: TDataStocks
   Width = 1209
   object FDTableStock: TFDTable
     Active = True
-    IndexFieldNames = 'Producteur;Type;Code;id'
+    IndexFieldNames = 'NUM'
     Connection = FDConnection1
     UpdateOptions.UpdateTableName = 'Stock'
     TableName = 'Stock'
@@ -146,6 +146,89 @@ object DataStocks: TDataStocks
       item
         Name = 'Q'
         DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object FDQueryAllStockByDate: TFDQuery
+    Connection = FDConnection1
+    UpdateOptions.AssignedValues = [uvRefreshMode]
+    UpdateOptions.RefreshMode = rmAll
+    UpdateOptions.UpdateTableName = 'stock.dbo.Stock'
+    SQL.Strings = (
+      'select  stock.*'
+      'from stock'
+      'where (code=:y)'
+      'order by dateentree;')
+    Left = 568
+    Top = 136
+    ParamData = <
+      item
+        Name = 'Y'
+        DataType = ftWideString
+        ParamType = ptInput
+      end>
+  end
+  object FDQueryAlert: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select stock.* '
+      'from stock '
+      'where alert=0')
+    Left = 392
+    Top = 248
+  end
+  object FDQueryExpire: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select stock.* '
+      'from stock '
+      'where (expire=1) and (quantite>0)')
+    Left = 553
+    Top = 248
+  end
+  object FDQueryExpireRecordCount: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select distinct [sortie-expire].annee,[sortie-expire].num '
+      'from [sortie-expire]'
+      'where annee=:a')
+    Left = 713
+    Top = 248
+    ParamData = <
+      item
+        Name = 'A'
+        DataType = ftWideString
+        ParamType = ptInput
+      end>
+  end
+  object FDQueryTypeProdStock: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select stock.*'
+      'from stock'
+      'where type=:x')
+    Left = 400
+    Top = 368
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftWideString
+        ParamType = ptInput
+      end>
+  end
+  object FDQueryRechProdLikeId: TFDQuery
+    Active = True
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select  Stock.*'
+      'from Stock'
+      'where stock.Id like :x')
+    Left = 744
+    Top = 136
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftWideString
         ParamType = ptInput
       end>
   end

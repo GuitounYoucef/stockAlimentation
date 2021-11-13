@@ -45,46 +45,46 @@ var
   FormClients: TFormClients;
 
 implementation
-uses unit36;
+uses unit36, DataParametrageUnite;
 
 {$R *.dfm}
 
 procedure TFormClients.Button1Click(Sender: TObject);
 begin
-if ((length(EditNomPrenom.Text)>0) and(length(EditAdresse.Text)>0) and(length(ComboBoxType.Text)>0)) then
-begin
-DataModule1.FD2QueryClient.Insert;
-DataModule1.FD2QueryClient.FieldValues['Client']:=EditNomPrenom.Text;
-DataModule1.FD2QueryClient.FieldValues['Adresse']:=EditAdresse.Text;
-DataModule1.FD2QueryClient.FieldValues['NumTel']:=EditTel.Text;
-DataModule1.FD2QueryClient.FieldValues['Type']:=ComboBoxType.Text;
-DataModule1.FD2QueryClient.FieldValues['catg']:=ComboBoxType.ItemIndex+1;
-EditTel.Clear;
-EditNomPrenom.Clear;
-EditAdresse.Clear;
-DataModule1.FD2QueryClient.Next;
-end;
+    if ((length(EditNomPrenom.Text)>0) and(length(EditAdresse.Text)>0) and(length(ComboBoxType.Text)>0)) then
+    begin
+      DataParametrage.FDQueryClientByName.Insert;
+      DataParametrage.FDQueryClientByName.FieldValues['Client']:=EditNomPrenom.Text;
+      DataParametrage.FDQueryClientByName.FieldValues['Adresse']:=EditAdresse.Text;
+      DataParametrage.FDQueryClientByName.FieldValues['NumTel']:=EditTel.Text;
+      DataParametrage.FDQueryClientByName.FieldValues['Type']:=ComboBoxType.Text;
+      DataParametrage.FDQueryClientByName.FieldValues['catg']:=ComboBoxType.ItemIndex+1;
+      EditTel.Clear;
+      EditNomPrenom.Clear;
+      EditAdresse.Clear;
+      DataParametrage.FDQueryClientByName.Next;
+    end;
 end;
 
 procedure TFormClients.Button2Click(Sender: TObject);
 begin
-if (DataModule1.FD2QueryClient.RecordCount>0) and (DataModule1.FD2QueryClient.RecordCount=DataModule1.FD2QueryClient.RecNo) then
-DBNavigator1.BtnClick(nbdelete);
+    if (DataParametrage.FDQueryClientByName.RecordCount>0) and (DataParametrage.FDQueryClientByName.RecordCount=DataParametrage.FDQueryClientByName.RecNo) then
+        DBNavigator1.BtnClick(nbdelete);
 end;
 
 procedure TFormClients.FormShow(Sender: TObject);
 begin
-  LoadKeyboardLayout('00000401', KLF_ACTIVATE);
-DataModule1.FD2QueryClient.Params.ParamValues['x']:='%';
-DataModule1.FD2QueryClient.Active:=false;
-DataModule1.FD2QueryClient.Active:=true;
+    LoadKeyboardLayout('00000401', KLF_ACTIVATE);
+    DataParametrage.FDQueryClientByName.Params.ParamValues['x']:='%';
+    DataParametrage.FDQueryClientByName.Active:=false;
+    DataParametrage.FDQueryClientByName.Active:=true;
 end;
 
 procedure TFormClients.SearchBox1Change(Sender: TObject);
 begin
-DataModule1.FD2QueryClient.Params.ParamValues['x']:='%'+SearchBox1.Text+'%';
-DataModule1.FD2QueryClient.Active:=false;
-DataModule1.FD2QueryClient.Active:=true;
+    DataParametrage.FDQueryClientByName.Params.ParamValues['x']:='%'+SearchBox1.Text+'%';
+    DataParametrage.FDQueryClientByName.Active:=false;
+    DataParametrage.FDQueryClientByName.Active:=true;
 end;
 
 end.

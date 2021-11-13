@@ -159,19 +159,25 @@ object FormEtatStock: TFormEtatStock
             GroupSummaryAlignment = taCenter
             HeaderGlyphAlignmentHorz = taCenter
             Options.Editing = False
-            Width = 172
+            Width = 205
           end
           object cxGrid1DBTableView1Column1: TcxGridDBColumn
             Caption = #1573#1587#1605' '#1575#1604#1587#1604#1593#1577
             DataBinding.FieldName = 'id_1'
             Options.Editing = False
-            Width = 206
+            Width = 298
           end
           object cxGrid1DBTableView1Column2: TcxGridDBColumn
             Caption = #1575#1604#1593#1604#1575#1605#1577
             DataBinding.FieldName = 'producteur'
             Options.Editing = False
             Width = 174
+          end
+          object cxGrid1DBTableView1Column5: TcxGridDBColumn
+            Caption = #1575#1604#1585#1605#1586
+            DataBinding.FieldName = 'code'
+            Options.Editing = False
+            Width = 221
           end
           object cxGrid1DBTableView1Column3: TcxGridDBColumn
             Caption = #1575#1604#1603#1605#1610#1577
@@ -182,12 +188,6 @@ object FormEtatStock: TFormEtatStock
             HeaderGlyphAlignmentHorz = taCenter
             Options.Editing = False
             Width = 106
-          end
-          object cxGrid1DBTableView1Column5: TcxGridDBColumn
-            Caption = #1575#1604#1585#1605#1586
-            DataBinding.FieldName = 'code'
-            Options.Editing = False
-            Width = 221
           end
         end
         object cxGrid1Level1: TcxGridLevel

@@ -28,6 +28,10 @@ end;
     FDTableCreditListe: TFDTable;
     FDQueryOprVente: TFDQuery;
     FDQueryListeParTypePaim: TFDQuery;
+    FDQuerySortieDate: TFDQuery;
+    FDQueryBenifsomsortie: TFDQuery;
+    FDQueryBeniforderProduit: TFDQuery;
+    FDQueryBenifOrderUtilisateur: TFDQuery;
     procedure FDQueryDelivrenceAfterScroll(DataSet: TDataSet);
   private
     { Déclarations privées }
@@ -40,6 +44,7 @@ end;
      procedure UpDateCredit(total,payee:real);
      procedure SetTypePaiementOprVente(NumOpr,typePaiement:integer);
      function SommeParTypePaiment(index:longint):real;
+     procedure CalculerRevenu(Var ventes:real;var achats:real;date1,date2:string);
 
   end;
 
@@ -182,6 +187,36 @@ while not FDQueryListeParTypePaim.Eof do
     end;
 end;
 result:=som;
+end;
+//------------------------------------------------------------------------------
+procedure TDataModuleDelivrence.CalculerRevenu(var ventes: real;
+  var achats: real;date1,date2:string);
+begin
+    FDQueryBenifsomsortie.Params.ParamValues['x']:=date1;
+    FDQueryBenifsomsortie.Params.ParamValues['y']:=date2;
+    FDQueryBenifsomsortie.Active:=false;
+    FDQueryBenifsomsortie.Active:=true;
+    if FDQueryBenifsomsortie.RecordCount>0 then
+    begin
+      ventes:=FDQueryBenifsomsortie.FieldValues['ventes'];
+      achats:=DataModuleDelivrence.FDQueryBenifsomsortie.FieldValues['achats'];
+    end;
+
+    DataModuleDelivrence.FDQuerySortieDate.Params.ParamValues['x']:=date1;
+    DataModuleDelivrence.FDQuerySortieDate.Params.ParamValues['y']:=date2;
+    DataModuleDelivrence.FDQuerySortieDate.Active:=false;
+    DataModuleDelivrence.FDQuerySortieDate.Active:=true;
+
+    DataModuleDelivrence.FDQueryBeniforderProduit.Params.ParamValues['x']:=date1;
+    DataModuleDelivrence.FDQueryBeniforderProduit.Params.ParamValues['y']:=date2;
+    DataModuleDelivrence.FDQueryBeniforderProduit.Active:=false;
+    DataModuleDelivrence.FDQueryBeniforderProduit.Active:=true;
+
+    DataModuleDelivrence.FDQueryBenifOrderUtilisateur.Params.ParamValues['x']:=date1;
+    DataModuleDelivrence.FDQueryBenifOrderUtilisateur.Params.ParamValues['y']:=date2;
+    DataModuleDelivrence.FDQueryBenifOrderUtilisateur.Active:=false;
+    DataModuleDelivrence.FDQueryBenifOrderUtilisateur.Active:=true;
+
 end;
 //------------------------------------------------------------------------------
 procedure TDataModuleDelivrence.ChangerTypePaiement(index:integer);  //recherche avec type de paiment
