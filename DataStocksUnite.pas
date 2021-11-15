@@ -30,7 +30,7 @@ type
     procedure selectAllStokes();
     procedure rechercheProdByName(ProdName:string);
     function rechercheProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
-    function DeleteProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
+    function UpDateQntProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
     procedure EntreeFacture(FDQueryListeProd: TFDQuery;numDest:integer);
 
   private
@@ -145,7 +145,7 @@ begin
      else result:=false;
 end;
 //------------------------------------------------------------------------------
-function TDataStocks.DeleteProdByNameCodeSockid(ProdName, CodeProd: string;
+function TDataStocks.UpDateQntProdByNameCodeSockid(ProdName, CodeProd: string;
   stockId: integer; Quantite: real): boolean;
   var qnt:real;
 begin

@@ -322,7 +322,7 @@ begin
     if FDQueryFactureEntrante.RecordCount>0 then
        if FDQueryFactureEntrante.FieldValues['Valide']=true then
           begin
-            b:=DataStocks.DeleteProdByNameCodeSockid(FDQueryFactureEntrante.FieldValues['id'],
+            b:=DataStocks.UpDateQntProdByNameCodeSockid(FDQueryFactureEntrante.FieldValues['id'],
                                                      FDQueryFactureEntrante.FieldValues['Code'],
                                                      FDQueryFacture.FieldValues['NumDestination'],
                                                      FDQueryFactureEntrante.FieldValues['Quantite']);

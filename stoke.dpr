@@ -34,7 +34,8 @@ uses
   DataFacturationUnite in 'DataFacturationUnite.pas' {DataFacturation: TDataModule},
   DataProduitsUnite in 'DataProduitsUnite.pas' {DataProduits: TDataModule},
   DataStocksUnite in 'DataStocksUnite.pas' {DataStocks: TDataModule},
-  DataParametrageUnite in 'DataParametrageUnite.pas' {DataParametrage: TDataModule};
+  DataParametrageUnite in 'DataParametrageUnite.pas' {DataParametrage: TDataModule},
+  UnitUpdateRecordFact in 'UnitUpdateRecordFact.pas' {FormUpdateRecordFact};
 
 {$R *.res}
 
@@ -75,7 +76,6 @@ begin
   Application.CreateForm(TFormStockDetail, FormStockDetail);
   Application.CreateForm(TFormListeFactures, FormListeFactures);
   Application.CreateForm(TFormListeVente, FormListeVente);
-
-
+  Application.CreateForm(TFormUpdateRecordFact, FormUpdateRecordFact);
   Application.Run;
 end.

@@ -120,7 +120,7 @@ implementation
 
 {$R *.dfm}
 
-uses UnitPrixQntUpDateVente,  Unit22, UnitRechercheStock, UnitListeVente, Unit36,UnitDelivrenceData,
+uses UnitPrixQntUpDateVente,  Unit22, UnitRechercheStock, UnitListeVente, UnitDelivrenceData,
   UnitAjouterProduits,DataParametrageUnite;
 //------------------------------------------------------------------------------
 procedure TFormVenteComptoir.ButtonSupprimerClick(Sender: TObject);
@@ -276,7 +276,10 @@ procedure TFormVenteComptoir.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
     case Key of
-      VK_RETURN:VenteProduit('*****',cxLookupComboBoxCodeProd.Text,1);
+      VK_RETURN:begin
+                   VenteProduit('*****',cxLookupComboBoxCodeProd.Text,1);
+                   cxLookupComboBoxCodeProd.ClearSelection;
+                end;
       VK_F5:ButtonImpTicketClick(FormVenteComptoir);
       VK_F6:ButtonImpBonRecpClick(FormVenteComptoir);
       VK_F1:ButtonNouvOprClick(FormVenteComptoir);
