@@ -154,6 +154,7 @@ object FormFacturation: TFormFacturation
         TitleFont.Height = -11
         TitleFont.Name = 'Tahoma'
         TitleFont.Style = []
+        OnDblClick = DBGrid1DblClick
         Columns = <
           item
             Expanded = False
@@ -8770,7 +8771,7 @@ object FormFacturation: TFormFacturation
     end
   end
   object DataSourceFactureEntrante: TDataSource
-    DataSet = DataFacturation.FDQueryFactureEntrante
+    DataSet = DataFacturation.FDQueryFactureRecords
     Left = 707
     Top = 264
   end
@@ -9740,7 +9741,6 @@ object FormFacturation: TFormFacturation
       'NumStock=NumStock'
       'DateEntree=DateEntree'
       'NumUser=NumUser')
-    DataSet = DataFacturation.FDQueryFactureEntrante
     BCDToCurrency = False
     Left = 985
     Top = 393

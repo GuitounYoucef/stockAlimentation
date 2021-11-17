@@ -37,11 +37,7 @@ object DataProduits: TDataProduits
     Connection = FDConnection1
     SQL.Strings = (
       'select id,code'
-      'from Entree'
-      'where ((id=:x) and (code=:y))'
-      'union'
-      'select id,code'
-      'from stock'
+      'from EntreesProduits'
       'where ((id=:x) and (code=:y))')
     Left = 608
     Top = 40
@@ -50,6 +46,7 @@ object DataProduits: TDataProduits
         Name = 'X'
         DataType = ftWideString
         ParamType = ptInput
+        Value = Null
       end
       item
         Name = 'Y'
@@ -81,6 +78,7 @@ object DataProduits: TDataProduits
       end>
   end
   object FDQueryProduitLikeId: TFDQuery
+    Active = True
     Connection = FDConnection1
     SQL.Strings = (
       'select  Produits.*'

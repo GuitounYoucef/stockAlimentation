@@ -31,7 +31,7 @@ type
     procedure rechercheProdByName(ProdName:string);
     function rechercheProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
     function UpDateQntProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
-    procedure EntreeFacture(FDQueryListeProd: TFDQuery;numDest:integer);
+
 
   private
     { Déclarations privées }
@@ -46,43 +46,25 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses UnitFacturation, Unit36, UnitEtatStock;
+uses UnitFacturation, Unit36, UnitEtatStock, DataParametrageUnite;
 
 {$R *.dfm}
 
 { TDataStocks }
 //------------------------------------------------------------------------------
-procedure TDataStocks.EntreeFacture(FDQueryListeProd: TFDQuery;numDest:integer);
-begin
-    FDQueryListeProd.First;
-    while not FDQueryListeProd.Eof do
-        begin
-          FDTableStock.Insert;
-          FDTableStock.FieldValues['id']:=FDQueryListeProd.FieldValues['id'];
-          FDTableStock.FieldValues['type']:=FDQueryListeProd.FieldValues['type'];
-          FDTableStock.FieldValues['producteur']:=FDQueryListeProd.FieldValues['producteur'];
-          FDTableStock.FieldValues['Quantite']:=FDQueryListeProd.FieldValues['Quantite'];
-          FDTableStock.FieldValues['PrixAchat']:=FDQueryListeProd.FieldValues['PrixAchat'];
-          FDTableStock.FieldValues['PrixVente']:=FDQueryListeProd.FieldValues['PrixVente'];
-          FDTableStock.FieldValues['QuantiteLot']:=FDQueryListeProd.FieldValues['QuantiteLot'];
-          FDTableStock.FieldValues['PrixVenteGros']:=FDQueryListeProd.FieldValues['PrixVenteGros'];
-          FDTableStock.FieldValues['DateProd']:=FDQueryListeProd.FieldValues['DateProd'];
-          FDTableStock.FieldValues['DateConsm']:=FDQueryListeProd.FieldValues['DateConsm'];
-          FDTableStock.FieldValues['code']:=FDQueryListeProd.FieldValues['code'];
-          FDTableStock.FieldValues['balance']:=FDQueryListeProd.FieldValues['balance'];
-          FDTableStock.FieldValues['dateentree']:=date;
-          FDTableStock.FieldValues['expire']:=false;
-          FDTableStock.FieldValues['alert']:=false;
-          FDTableStock.FieldValues['NumStock']:=numDest;
-          FDTableStock.Next;
-          FDQueryListeProd.Next;
-        end;
-end;
+
 //------------------------------------------------------------------------------
 procedure TDataStocks.NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;
   quantite: real; StockDest: integer; DateProd, Dateconsm: TDateTime);
+var myYear, myMonth, myDay : Word;
+
 begin
+      DecodeDate(Date, myYear, myMonth, myDay);
+
       FDTableStock.Insert;
+      FDTableStock.FieldValues['Annee']:=IntToStr(myYear);
+      FDTableStock.FieldValues['Num']:=0;
+
       FDTableStock.FieldValues['id']:=FDQueryFindProduitByCode.FieldValues['id'];
       FDTableStock.FieldValues['type']:=FDQueryFindProduitByCode.FieldValues['type'];
       FDTableStock.FieldValues['producteur']:=FDQueryFindProduitByCode.FieldValues['producteur'];
@@ -95,14 +77,14 @@ begin
       FDTableStock.FieldValues['balance']:=false;
 
       FDTableStock.FieldValues['Quantite']:=quantite;
+      FDTableStock.FieldValues['QuantiteInitial']:=quantite;
       FDTableStock.FieldValues['NumStock']:=StockDest;
       FDTableStock.FieldValues['DateProd']:=DateProd;
       FDTableStock.FieldValues['DateConsm']:=Dateconsm;
       FDTableStock.FieldValues['DateEntree']:=date;
+      FDTableStock.FieldValues['Valide']:=true;
 
-      FDTableStock.FieldValues['expire']:=false;
-      FDTableStock.FieldValues['alert']:=false;
-      //FDTableStock.FieldValues['NumUser']:=DataModule1.FDQuery115.FieldValues['NumUser'];
+      FDTableStock.FieldValues['NumUser']:=DataParametrage.FDQueryLoginUser.FieldValues['NumUser'];
       FDTableStock.Next;
 
       if (FDQueryFindProduitByCode.FieldValues['Lien']<>null) then

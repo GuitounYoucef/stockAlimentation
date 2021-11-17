@@ -72,20 +72,21 @@ object DataFacturation: TDataFacturation
         ParamType = ptInput
       end>
   end
-  object FDQueryFactureEntrante: TFDQuery
+  object FDQueryFactureRecords: TFDQuery
     Active = True
     Connection = FDConnection1
     SQL.Strings = (
-      'select Entree.*'
-      'from Entree'
-      'where(( Entree.Annee=:x) and (Entree.Num=:y))')
-    Left = 536
-    Top = 22
+      'select EntreesProduits.*'
+      'from EntreesProduits'
+      'where(( Annee=:x) and (Num=:y))')
+    Left = 712
+    Top = 318
     ParamData = <
       item
         Name = 'X'
         DataType = ftWideString
         ParamType = ptInput
+        Value = Null
       end
       item
         Name = 'Y'
@@ -118,6 +119,7 @@ object DataFacturation: TDataFacturation
     Top = 24
   end
   object FDQueryStocksNamesSource: TFDQuery
+    Active = True
     Connection = FDConnection1
     SQL.Strings = (
       'select stockid.*'
@@ -137,9 +139,9 @@ object DataFacturation: TDataFacturation
     Active = True
     Connection = FDConnection1
     SQL.Strings = (
-      'select distinct Facture.Num'
-      'from Facture'
-      'where Facture.Annee=:x')
+      'select distinct Entrees.Num'
+      'from Entrees'
+      'where Annee=:x')
     Left = 1120
     Top = 22
     ParamData = <
@@ -179,8 +181,8 @@ object DataFacturation: TDataFacturation
     Active = True
     IndexFieldNames = 'Num;Annee'
     Connection = FDConnection1
-    UpdateOptions.UpdateTableName = 'Facture'
-    TableName = 'Facture'
+    UpdateOptions.UpdateTableName = 'Entrees'
+    TableName = 'Entrees'
     Left = 688
     Top = 120
   end
@@ -210,6 +212,7 @@ object DataFacturation: TDataFacturation
     Top = 120
   end
   object FDQueryFindStockNum: TFDQuery
+    Active = True
     Connection = FDConnection1
     SQL.Strings = (
       'select stockid.*'
@@ -229,11 +232,11 @@ object DataFacturation: TDataFacturation
     Active = True
     Connection = FDConnection1
     SQL.Strings = (
-      'select facture.*'
-      'from facture'
+      'select Entrees.*'
+      'from Entrees'
       'where(( Annee=:x) and (Num=:y))')
-    Left = 688
-    Top = 254
+    Left = 568
+    Top = 318
     ParamData = <
       item
         Name = 'X'
@@ -252,8 +255,8 @@ object DataFacturation: TDataFacturation
     AfterScroll = FDQueryFacturePayeeAfterScroll
     Connection = FDConnection1
     SQL.Strings = (
-      'select facture.*'
-      'from facture'
+      'select Entrees.*'
+      'from Entrees'
       'where TypePaiement=:x')
     Left = 392
     Top = 326

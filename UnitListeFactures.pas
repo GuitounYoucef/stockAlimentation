@@ -91,17 +91,17 @@ begin
     DataFacturation.FDQueryFacturePayee.Open;
     if DataFacturation.FDQueryFacturePayee.RecordCount>0 then
     begin
-      DataFacturation.FDQueryFactureEntrante.Params.ParamValues['x']:=DataFacturation.FDQueryFacturePayee.FieldValues['annee'];
-      DataFacturation.FDQueryFactureEntrante.Params.ParamValues['y']:=DataFacturation.FDQueryFacturePayee.FieldValues['num'];
-      DataFacturation.FDQueryFactureEntrante.Close;
-      DataFacturation.FDQueryFactureEntrante.Open;
+      DataFacturation.FDQueryFactureRecords.Params.ParamValues['x']:=DataFacturation.FDQueryFacturePayee.FieldValues['annee'];
+      DataFacturation.FDQueryFactureRecords.Params.ParamValues['y']:=DataFacturation.FDQueryFacturePayee.FieldValues['num'];
+      DataFacturation.FDQueryFactureRecords.Close;
+      DataFacturation.FDQueryFactureRecords.Open;
     end
     else
     begin
-      DataFacturation.FDQueryFactureEntrante.Params.ParamValues['x']:=0;
-      DataFacturation.FDQueryFactureEntrante.Params.ParamValues['y']:=0;
-      DataFacturation.FDQueryFactureEntrante.Close;
-      DataFacturation.FDQueryFactureEntrante.Open;
+      DataFacturation.FDQueryFactureRecords.Params.ParamValues['x']:=0;
+      DataFacturation.FDQueryFactureRecords.Params.ParamValues['y']:=0;
+      DataFacturation.FDQueryFactureRecords.Close;
+      DataFacturation.FDQueryFactureRecords.Open;
     end
 end;
 

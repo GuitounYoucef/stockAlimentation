@@ -83,6 +83,7 @@ type
     procedure cxLookupComboBoxCodeProdEnter(Sender: TObject);
 
     procedure FormShow(Sender: TObject);
+    procedure DBGrid1DblClick(Sender: TObject);
 
 
   private
@@ -106,7 +107,7 @@ implementation
 {$R *.dfm}
 
 uses UnitPaiementCredit, UnitRechercheNomProduit, UnitAjouterProduits, DataProduitsUnite,
-  DataFacturationUnite,DataParametrageUnite;
+  DataFacturationUnite,DataParametrageUnite, UnitUpdateRecordFact;
 
 procedure TFormFacturation.ButtonValiderClick(Sender: TObject);
 begin
@@ -121,7 +122,7 @@ end;
 //------------------------------------------------------------------------------
 procedure TFormFacturation.ButtonImprimerClick(Sender: TObject);
 begin
-    if DataFacturation.FDQueryFactureEntrante.RecordCount>0 then
+    if DataFacturation.FDQueryFactureRecords.RecordCount>0 then
       frxReportFacture.ShowReport(true);
 end;
 //------------------------------------------------------------------------------
@@ -179,10 +180,15 @@ end;
 
 
 
+procedure TFormFacturation.DBGrid1DblClick(Sender: TObject);
+begin
+FormUpdateRecordFact.show;
+end;
+
 //------------------------------------------------------------------------------
 procedure TFormFacturation.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-    if (valide=false) and (DataFacturation.FDQueryFactureEntrante.RecordCount>0) then
+    if (valide=false) and (DataFacturation.FDQueryFactureRecords.RecordCount>0) then
     if MessageDlg('بيانات الفاتورة لم يتم تأكيدها . هل تريد فعلا إلغاء عملية حجز البيانات ؟', mtConfirmation, [mbNo,mbYes], 0) = mrYes then
       DataFacturation.SupprimerFacture()
     else

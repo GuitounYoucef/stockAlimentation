@@ -27,7 +27,7 @@ type
     FDQueryCodeProduit: TFDQuery;
     FDConnection1: TFDConnection;
     FDQueryFindProductInStoke: TFDQuery;
-    FDQueryFactureEntrante: TFDQuery;
+    FDQueryFactureRecords: TFDQuery;
     FDQueryProducteur: TFDQuery;
     FDTableListFounisseurs: TFDTable;
     FDQueryStocksNamesSource: TFDQuery;
@@ -132,7 +132,7 @@ end;
 
 function TDataFacturation.EntreesFactureEstvide(): boolean;
 begin
-   if FDQueryFactureEntrante.RecordCount=0 then
+   if FDQueryFactureRecords.RecordCount=0 then
       result:=true
    else result:=false;
 end;
@@ -163,28 +163,30 @@ end;
 procedure TDataFacturation.NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;
   quantite: real; DateProd, Dateconsm: TDateTime);
 begin
-      FDQueryFactureEntrante.Insert;
-      FDQueryFactureEntrante.FieldValues['id']:=FDQueryFindProduitByCode.FieldValues['id'];
-      FDQueryFactureEntrante.FieldValues['Annee']:=formFacturation.Annee;
-      FDQueryFactureEntrante.FieldValues['num']:=formFacturation.Num;
-      FDQueryFactureEntrante.FieldValues['type']:=FDQueryFindProduitByCode.FieldValues['type'];
-      FDQueryFactureEntrante.FieldValues['producteur']:=FDQueryFindProduitByCode.FieldValues['id'];
+      FDQueryFactureRecords.Insert;
+      FDQueryFactureRecords.FieldValues['id']:=FDQueryFindProduitByCode.FieldValues['id'];
+      FDQueryFactureRecords.FieldValues['Annee']:=formFacturation.Annee;
+      FDQueryFactureRecords.FieldValues['num']:=formFacturation.Num;
+      FDQueryFactureRecords.FieldValues['type']:=FDQueryFindProduitByCode.FieldValues['type'];
+      FDQueryFactureRecords.FieldValues['producteur']:=FDQueryFindProduitByCode.FieldValues['producteur'];
 
-      FDQueryFactureEntrante.FieldValues['QuantiteLot']:=FDQueryFindProduitByCode.FieldValues['QuantiteLot'];
-      FDQueryFactureEntrante.FieldValues['PrixAchat']:=FDQueryFindProduitByCode.FieldValues['PrixAchat'];
-      FDQueryFactureEntrante.FieldValues['PrixVente']:=FDQueryFindProduitByCode.FieldValues['PrixVente'];
-      FDQueryFactureEntrante.FieldValues['PrixVenteGros']:=FDQueryFindProduitByCode.FieldValues['PrixVenteGros'];
-      FDQueryFactureEntrante.FieldValues['code']:=FDQueryFindProduitByCode.FieldValues['code'];
-      FDQueryFactureEntrante.FieldValues['balance']:=false;
+      FDQueryFactureRecords.FieldValues['QuantiteLot']:=FDQueryFindProduitByCode.FieldValues['QuantiteLot'];
+      FDQueryFactureRecords.FieldValues['PrixAchat']:=FDQueryFindProduitByCode.FieldValues['PrixAchat'];
+      FDQueryFactureRecords.FieldValues['PrixVente']:=FDQueryFindProduitByCode.FieldValues['PrixVente'];
+      FDQueryFactureRecords.FieldValues['PrixVenteGros']:=FDQueryFindProduitByCode.FieldValues['PrixVenteGros'];
+      FDQueryFactureRecords.FieldValues['code']:=FDQueryFindProduitByCode.FieldValues['code'];
+      FDQueryFactureRecords.FieldValues['balance']:=false;
 
-      FDQueryFactureEntrante.FieldValues['Quantite']:=quantite;
-      FDQueryFactureEntrante.FieldValues['DateProd']:=DateProd;
-      FDQueryFactureEntrante.FieldValues['DateConsm']:=Dateconsm;
-      FDQueryFactureEntrante.FieldValues['DateEntree']:=date;
+      FDQueryFactureRecords.FieldValues['QuantiteInitial']:=quantite;
+      FDQueryFactureRecords.FieldValues['Quantite']:=quantite;
+      FDQueryFactureRecords.FieldValues['DateProd']:=DateProd;
+      FDQueryFactureRecords.FieldValues['DateConsm']:=Dateconsm;
+      FDQueryFactureRecords.FieldValues['DateEntree']:=date;
 
-      FDQueryFactureEntrante.FieldValues['NumUser']:=DataParametrage.FDQueryLoginUser.FieldValues['NumUser'];
 
-      FDQueryFactureEntrante.Next;
+      FDQueryFactureRecords.FieldValues['NumUser']:=DataParametrage.FDQueryLoginUser.FieldValues['NumUser'];
+
+      FDQueryFactureRecords.Next;
       calculerSomFacture();
 //      formFacturation.dxGaugeControl1DigitalScale1.Value:=inttostr(calculerSomFacture());
 //      formFacturation.som:=calculerSomFacture();
@@ -205,12 +207,12 @@ end;
 function TDataFacturation.calculerSomFacture: real;
 var som:real;
 begin
-    FDQueryFactureEntrante.First;
+    FDQueryFactureRecords.First;
     som:=0;
-    while not FDQueryFactureEntrante.Eof do
+    while not FDQueryFactureRecords.Eof do
     begin
-       som:=som+FDQueryFactureEntrante.FieldValues['PrixAchat']*FDQueryFactureEntrante.FieldValues['Quantite'];
-       FDQueryFactureEntrante.Next;
+       som:=som+FDQueryFactureRecords.FieldValues['PrixAchat']*FDQueryFactureRecords.FieldValues['Quantite'];
+       FDQueryFactureRecords.Next;
      end;
     formFacturation.dxGaugeControl1DigitalScale1.Value:=floattostr(som);
     result:=som;
@@ -229,10 +231,10 @@ begin
     FDQueryNumFacture.Active:=true;
     num:=FDQueryNumFacture.RecordCount+1;
 
-    FDQueryFactureEntrante.Params.ParamValues['x']:=Annee;
-    FDQueryFactureEntrante.Params.ParamValues['y']:=num;
-    FDQueryFactureEntrante.Active:=false;
-    FDQueryFactureEntrante.Active:=true;
+    FDQueryFactureRecords.Params.ParamValues['x']:=Annee;
+    FDQueryFactureRecords.Params.ParamValues['y']:=num;
+    FDQueryFactureRecords.Active:=false;
+    FDQueryFactureRecords.Active:=true;
 
     FDQueryFacture.Params.ParamValues['x']:=Annee;
     FDQueryFacture.Params.ParamValues['y']:=num;
@@ -244,10 +246,10 @@ end;
 //------------------------------------------------------------------------------
 function TDataFacturation.RechercheFacture(var Annee: string;var num: integer): string;
 begin
-    FDQueryFactureEntrante.Params.ParamValues['x']:=Annee;
-    FDQueryFactureEntrante.Params.ParamValues['y']:=num;
-    FDQueryFactureEntrante.Active:=false;
-    FDQueryFactureEntrante.Active:=true;
+    FDQueryFactureRecords.Params.ParamValues['x']:=Annee;
+    FDQueryFactureRecords.Params.ParamValues['y']:=num;
+    FDQueryFactureRecords.Active:=false;
+    FDQueryFactureRecords.Active:=true;
 
     FDQueryFacture.Params.ParamValues['x']:=Annee;
     FDQueryFacture.Params.ParamValues['y']:=num;
@@ -290,7 +292,8 @@ begin
    FDQueryFacture.FieldValues['source']:=facture.source;
 
    FDQueryFacture.FieldValues['NumDestination']:=facture.NumDestination;
-   FDQueryFacture.FieldValues['dat']:=date;
+   FDQueryFacture.FieldValues['DateEntree']:=date;
+   FDQueryFacture.FieldValues['TypeEntree']:=2;   // 1 :inventaire; 2:facture
   end
   else
    begin
@@ -301,16 +304,17 @@ begin
    end;
    FDQueryFacture.post;
 
-   FDQueryFactureEntrante.First;
-   while not FDQueryFactureEntrante.Eof do
+   FDQueryFactureRecords.First;
+   while not FDQueryFactureRecords.Eof do
    begin
-      if FDQueryFactureEntrante.FieldValues['Valide']<>true then
+      if FDQueryFactureRecords.FieldValues['Valide']<>true then
            begin
-              FDQueryFactureEntrante.Edit;
-              FDQueryFactureEntrante.FieldValues['Valide']:=true;
-              FDQueryFactureEntrante.Post;
+              FDQueryFactureRecords.Edit;
+              FDQueryFactureRecords.FieldValues['Valide']:=true;
+              FDQueryFactureRecords.FieldValues['NumStock']:=facture.NumDestination;
+              FDQueryFactureRecords.Post;
            end;
-      FDQueryFactureEntrante.Next;
+      FDQueryFactureRecords.Next;
    end;
 
 
@@ -319,23 +323,23 @@ end;
 function TDataFacturation.SupprimerEntree():boolean;
 var b :boolean;
 begin
-    if FDQueryFactureEntrante.RecordCount>0 then
-       if FDQueryFactureEntrante.FieldValues['Valide']=true then
+    if FDQueryFactureRecords.RecordCount>0 then
+       if FDQueryFactureRecords.FieldValues['Valide']=true then
           begin
-            b:=DataStocks.UpDateQntProdByNameCodeSockid(FDQueryFactureEntrante.FieldValues['id'],
-                                                     FDQueryFactureEntrante.FieldValues['Code'],
+            b:=DataStocks.UpDateQntProdByNameCodeSockid(FDQueryFactureRecords.FieldValues['id'],
+                                                     FDQueryFactureRecords.FieldValues['Code'],
                                                      FDQueryFacture.FieldValues['NumDestination'],
-                                                     FDQueryFactureEntrante.FieldValues['Quantite']);
+                                                     FDQueryFactureRecords.FieldValues['Quantite']);
             if b then
                 begin
-                     FDQueryFactureEntrante.Delete;
+                     FDQueryFactureRecords.Delete;
                      result:=true
                 end
                 else result:=false;
           end
           else
           begin
-             FDQueryFactureEntrante.Delete;
+             FDQueryFactureRecords.Delete;
              result:=true;
           end;
 
@@ -343,11 +347,11 @@ end;
 //------------------------------------------------------------------------------
 procedure TDataFacturation.SupprimerFacture();
 begin
-      FDQueryFactureEntrante.Active:=false;
-      FDQueryFactureEntrante.Active:=true;
-      FDQueryFactureEntrante.First;
-      while not FDQueryFactureEntrante.Eof do
-                FDQueryFactureEntrante.Delete;
+      FDQueryFactureRecords.Active:=false;
+      FDQueryFactureRecords.Active:=true;
+      FDQueryFactureRecords.First;
+      while not FDQueryFactureRecords.Eof do
+                FDQueryFactureRecords.Delete;
 end;
 
 

@@ -90,7 +90,7 @@ begin
 
                     with formFacturation do
                     begin
-                        DataStocks.EntreeFacture(DataFacturation.FDQueryFactureEntrante,destination);
+                        //DataStocks.EntreeFacture(DataFacturation.FDQueryFactureRecords,destination);
                         close;
                         valide:=true;
                     end;

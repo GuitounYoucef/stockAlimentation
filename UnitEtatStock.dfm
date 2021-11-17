@@ -126,12 +126,13 @@ object FormEtatStock: TFormEtatStock
         BiDiMode = bdRightToLeft
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -16
+        Font.Height = -13
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 0
+        LevelTabs.Style = 2
         LookAndFeel.Kind = lfStandard
         LookAndFeel.NativeStyle = False
         LookAndFeel.ScrollbarMode = sbmDefault
@@ -152,42 +153,45 @@ object FormEtatStock: TFormEtatStock
           OptionsView.GroupSummaryLayout = gslAlignWithColumns
           OptionsView.RowSeparatorColor = clGradientInactiveCaption
           OptionsView.ShowColumnFilterButtons = sfbWhenSelected
-          object cxGrid1DBTableView1Column4: TcxGridDBColumn
-            Caption = #1573#1587#1605' '#1575#1604#1605#1582#1586#1606
+          object cxGrid1DBTableViewPordId: TcxGridDBColumn
+            Caption = #1573#1587#1605' '#1575#1604#1587#1604#1593#1577
             DataBinding.FieldName = 'id'
             FooterAlignmentHorz = taCenter
             GroupSummaryAlignment = taCenter
             HeaderGlyphAlignmentHorz = taCenter
             Options.Editing = False
-            Width = 205
+            Width = 335
           end
-          object cxGrid1DBTableView1Column1: TcxGridDBColumn
-            Caption = #1573#1587#1605' '#1575#1604#1587#1604#1593#1577
-            DataBinding.FieldName = 'id_1'
-            Options.Editing = False
-            Width = 298
-          end
-          object cxGrid1DBTableView1Column2: TcxGridDBColumn
-            Caption = #1575#1604#1593#1604#1575#1605#1577
-            DataBinding.FieldName = 'producteur'
-            Options.Editing = False
-            Width = 174
-          end
-          object cxGrid1DBTableView1Column5: TcxGridDBColumn
+          object cxGrid1DBTableViewProdCode: TcxGridDBColumn
             Caption = #1575#1604#1585#1605#1586
             DataBinding.FieldName = 'code'
             Options.Editing = False
-            Width = 221
+            Width = 141
           end
-          object cxGrid1DBTableView1Column3: TcxGridDBColumn
+          object cxGrid1DBTableViewQuantite: TcxGridDBColumn
             Caption = #1575#1604#1603#1605#1610#1577
             DataBinding.FieldName = 's'
+            Options.Editing = False
+            Width = 59
+          end
+          object cxGrid1DBTableViewPrixVente: TcxGridDBColumn
+            Caption = #1587#1593#1585' '#1575#1604#1576#1610#1593
+            DataBinding.FieldName = 'PrixVente'
             FooterAlignmentHorz = taCenter
             GroupSummaryAlignment = taCenter
             HeaderAlignmentHorz = taCenter
             HeaderGlyphAlignmentHorz = taCenter
             Options.Editing = False
-            Width = 106
+            Width = 120
+          end
+          object cxGrid1DBTableViewtotal: TcxGridDBColumn
+            Caption = #1575#1604#1605#1580#1605#1608#1593
+            DataBinding.ValueType = 'String'
+            FooterAlignmentHorz = taRightJustify
+            GroupSummaryAlignment = taRightJustify
+            HeaderAlignmentVert = vaTop
+            HeaderGlyphAlignmentHorz = taRightJustify
+            Width = 120
           end
         end
         object cxGrid1Level1: TcxGridLevel
@@ -12105,5 +12109,10 @@ object FormEtatStock: TFormEtatStock
     DataSet = DataProduits.FDTableProduits
     Left = 451
     Top = 352
+  end
+  object cxStyleRepository1: TcxStyleRepository
+    PixelsPerInch = 96
+    object cxStyle1: TcxStyle
+    end
   end
 end

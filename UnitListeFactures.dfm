@@ -6459,7 +6459,7 @@ object FormListeFactures: TFormListeFactures
     Top = 257
   end
   object DataSourceFactureEntrante: TDataSource
-    DataSet = DataFacturation.FDQueryFactureEntrante
+    DataSet = DataFacturation.FDQueryFactureRecords
     Left = 281
     Top = 249
   end

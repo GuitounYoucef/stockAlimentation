@@ -60,14 +60,16 @@ type
     cxGrid1DBTableView1: TcxGridDBTableView;
     cxGrid1Level1: TcxGridLevel;
     cxGrid1: TcxGrid;
-    cxGrid1DBTableView1Column1: TcxGridDBColumn;
-    cxGrid1DBTableView1Column2: TcxGridDBColumn;
-    cxGrid1DBTableView1Column3: TcxGridDBColumn;
-    cxGrid1DBTableView1Column4: TcxGridDBColumn;
-    cxGrid1DBTableView1Column5: TcxGridDBColumn;
+    cxGrid1DBTableViewProdCode: TcxGridDBColumn;
+    cxGrid1DBTableViewPrixVente: TcxGridDBColumn;
+    cxGrid1DBTableViewPordId: TcxGridDBColumn;
+    cxGrid1DBTableViewQuantite: TcxGridDBColumn;
     GridPanel8: TGridPanel;
     cxLookupComboBoxCodeProd: TcxLookupComboBox;
     DataSourceListProduits: TDataSource;
+    cxGrid1DBTableViewtotal: TcxGridDBColumn;
+    cxStyleRepository1: TcxStyleRepository;
+    cxStyle1: TcxStyle;
     procedure FormShow(Sender: TObject);
     procedure ButtonImprListeStokeClick(Sender: TObject);
 
@@ -85,6 +87,7 @@ type
       Shift: TShiftState);
 
     procedure selectRechercheObj();
+    procedure UpdateGrid();
 
   private
     { Déclarations privées }
@@ -114,6 +117,7 @@ begin
     if DataStocks.FDQueryEtatStokeId.RecordCount>0 then
     frxReportNormal.ShowReport(true);
 end;
+
 //______________________________________________________________________________
 procedure TFormEtatStock.ButtonListeProdClick(Sender: TObject);
 begin
@@ -156,6 +160,7 @@ begin
   else
       DataStocks.selectStoke(ComboBoxStokesListe.Text);
   updateafficheurs();
+  UpdateGrid();
 end;
 procedure TFormEtatStock.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
@@ -210,6 +215,7 @@ procedure TFormEtatStock.ajouterProduit(codeProd, id: string);
 begin
     FormAjouterProduits.TrouverProduitForm(codeProd,id);
     FormAjouterProduits.AfficherForm(5);
+    UpdateGrid();
 
 end;
 //______________________________________________________________________________
@@ -228,6 +234,8 @@ begin
         end;
     ComboBoxStokesListe.Items.Add('الكل');
     updateafficheurs();
+    UpdateGrid();
+
 end;
 //______________________________________________________________________________
 procedure TFormEtatStock.SearchBox1Change(Sender: TObject);
@@ -236,6 +244,7 @@ begin
       begin
         DataStocks.rechercheProdByName(SearchBox1.Text);
         updateafficheurs();
+        UpdateGrid();
       end
 end;
 //______________________________________________________________________________
@@ -244,4 +253,14 @@ begin
     LoadKeyboardLayout('00000401', KLF_ACTIVATE);
 end;
 
+
+procedure TFormEtatStock.UpdateGrid();
+var i:integer;
+    begin
+      for I := 0 to cxGrid1DBTableView1.DataController.RecordCount-1 do
+      begin
+          cxGrid1DBTableView1.DataController.Values[i,4]:='    '+floattostr(cxGrid1DBTableView1.DataController.Values[i,3]*
+          cxGrid1DBTableView1.DataController.Values[i,2]);
+      end;
+end;
 end.

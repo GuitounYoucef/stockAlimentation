@@ -6,8 +6,8 @@ object DataStocks: TDataStocks
     Active = True
     IndexFieldNames = 'NUM'
     Connection = FDConnection1
-    UpdateOptions.UpdateTableName = 'Stock'
-    TableName = 'Stock'
+    UpdateOptions.UpdateTableName = 'stock.dbo.EntreesProduits'
+    TableName = 'stock.dbo.EntreesProduits'
     Left = 264
     Top = 40
   end
@@ -28,19 +28,13 @@ object DataStocks: TDataStocks
       end>
   end
   object FDQueryEtatStokeId: TFDQuery
-    Active = True
     Connection = FDConnection1
     SQL.Strings = (
-      
-        'select stockid.id,sum(stock.quantite) as s,stock.id,stock.code,s' +
-        'tock.producteur'
-      'from stock'
-      'inner JOIN stockid '
-      'ON (stock.numstock=stockid.numstock)'
-      
-        'where (stock.numstock>:x) and (stock.numstock<:y) and (stock.id ' +
-        'like :i)'
-      'group by stockid.id,stock.id,code,producteur;'
+      'select sum(quantite) as s,id,code,producteur,  PrixVente'
+      'from EntreesProduits'
+      'where (numstock>:x) and (numstock<:y) and (id like :i)'
+      'group by id,code,producteur,PrixVente'
+      ''
       ''
       '')
     Left = 560
@@ -84,10 +78,8 @@ object DataStocks: TDataStocks
       
         'select sum(quantite*prixachat) as a,sum(quantite*prixvente) as v' +
         ',sum(quantite*(prixvente-prixachat)) as b'
-      'from stock'
-      
-        'where (stock.numstock>:x) and (stock.numstock<:y) and (stock.id ' +
-        'like :i)'
+      'from EntreesProduits'
+      'where (numstock>:x) and (numstock<:y) and (id like :i)'
       '')
     Left = 704
     Top = 40
@@ -96,6 +88,7 @@ object DataStocks: TDataStocks
         Name = 'X'
         DataType = ftInteger
         ParamType = ptInput
+        Value = Null
       end
       item
         Name = 'Y'
@@ -120,11 +113,11 @@ object DataStocks: TDataStocks
   object FDQueryRechProdByIdCodeStock: TFDQuery
     Connection = FDConnection1
     SQL.Strings = (
-      'select stock.*'
-      'from stock'
+      'select EntreesProduits.*'
+      'from EntreesProduits'
       
-        'where ((id=:x) and (code=:y) and (numstock=:z) and (expire=0) an' +
-        'd (Alert=0) and (quantite>=:q))')
+        'where ((id=:x) and (code=:y) and (numstock=:z)  and (quantite>=:' +
+        'q))')
     Left = 392
     Top = 132
     ParamData = <
@@ -132,6 +125,7 @@ object DataStocks: TDataStocks
         Name = 'X'
         DataType = ftWideString
         ParamType = ptInput
+        Value = Null
       end
       item
         Name = 'Y'
@@ -155,8 +149,8 @@ object DataStocks: TDataStocks
     UpdateOptions.RefreshMode = rmAll
     UpdateOptions.UpdateTableName = 'stock.dbo.Stock'
     SQL.Strings = (
-      'select  stock.*'
-      'from stock'
+      'select  EntreesProduits.*'
+      'from EntreesProduits'
       'where (code=:y)'
       'order by dateentree;')
     Left = 568
@@ -166,6 +160,7 @@ object DataStocks: TDataStocks
         Name = 'Y'
         DataType = ftWideString
         ParamType = ptInput
+        Value = Null
       end>
   end
   object FDQueryAlert: TFDQuery
@@ -204,8 +199,8 @@ object DataStocks: TDataStocks
   object FDQueryTypeProdStock: TFDQuery
     Connection = FDConnection1
     SQL.Strings = (
-      'select stock.*'
-      'from stock'
+      'select EntreesProduits.*'
+      'from EntreesProduits'
       'where type=:x')
     Left = 400
     Top = 368
@@ -214,15 +209,15 @@ object DataStocks: TDataStocks
         Name = 'X'
         DataType = ftWideString
         ParamType = ptInput
+        Value = Null
       end>
   end
   object FDQueryRechProdLikeId: TFDQuery
-    Active = True
     Connection = FDConnection1
     SQL.Strings = (
-      'select  Stock.*'
-      'from Stock'
-      'where stock.Id like :x')
+      'select  EntreesProduits.*'
+      'from EntreesProduits'
+      'where Id like :x')
     Left = 744
     Top = 136
     ParamData = <
@@ -230,6 +225,7 @@ object DataStocks: TDataStocks
         Name = 'X'
         DataType = ftWideString
         ParamType = ptInput
+        Value = Null
       end>
   end
 end
