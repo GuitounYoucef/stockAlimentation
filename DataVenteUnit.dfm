@@ -15,14 +15,11 @@ object DataModuleVente: TDataModuleVente
     Top = 32
   end
   object FDQueryTrouverProd: TFDQuery
-    Active = True
     Connection = FDConnection1
     SQL.Strings = (
-      'select Stock.*'
-      'from Stock'
-      
-        'where (((Stock.code=:z) or (Stock.id=:x)) and (Stock.Quantite>=:' +
-        'q) and (Stock.Numstock=:n))'
+      'select EntreesProduits.*'
+      'from EntreesProduits'
+      'where (((code=:z) or (id=:x)) and (Numstock=:n))'
       'order by DateConsm;')
     Left = 208
     Top = 32
@@ -31,15 +28,11 @@ object DataModuleVente: TDataModuleVente
         Name = 'Z'
         DataType = ftString
         ParamType = ptInput
+        Value = Null
       end
       item
         Name = 'X'
         DataType = ftString
-        ParamType = ptInput
-      end
-      item
-        Name = 'Q'
-        DataType = ftInteger
         ParamType = ptInput
       end
       item
@@ -98,10 +91,10 @@ object DataModuleVente: TDataModuleVente
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 448
-    Top = 32
+    Left = 584
+    Top = 40
     Content = {
-      414442530F00533B99030000FF00010001FF02FF0304002A000000460044004D
+      414442530F00264799030000FF00010001FF02FF0304002A000000460044004D
       0065006D005400610062006C0065004C00690073007400500072006F00640075
       006900740005000A0000005400610062006C0065000600000000000700000800
       32000000090000FF0AFF0B04000400000069006400050004000000690064000C
@@ -354,7 +347,7 @@ object DataModuleVente: TDataModuleVente
     Left = 448
     Top = 104
     Content = {
-      414442530F00533BD0000000FF00010001FF02FF03040020000000460044004D
+      414442530F002647D0000000FF00010001FF02FF03040020000000460044004D
       0065006D005400610062006C00650043007200650064006900740005000A0000
       005400610062006C006500060000000000070000080032000000090000FF0AFF
       0B04000C00000043007200650064006900740005000C00000043007200650064
@@ -397,6 +390,38 @@ object DataModuleVente: TDataModuleVente
       item
         Name = 'X'
         DataType = ftString
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
+  object FDQueryTrouverProdTotal: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select sum(quantite) as s,id,code'
+      'from EntreesProduits'
+      'where (((code=:c) or (id=:i)) and (Numstock=:n))'
+      'group by id,code'
+      ''
+      ''
+      '')
+    Left = 352
+    Top = 32
+    ParamData = <
+      item
+        Name = 'C'
+        DataType = ftWideString
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'I'
+        DataType = ftWideString
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'N'
+        DataType = ftInteger
         ParamType = ptInput
         Value = Null
       end>

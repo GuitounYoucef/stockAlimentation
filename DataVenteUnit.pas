@@ -63,6 +63,7 @@ type
     FDMemTableCredit: TFDMemTable;
     FDMemTableCreditCredit: TFloatField;
     FDQueryFindClientByName: TFDQuery;
+    FDQueryTrouverProdTotal: TFDQuery;
   private
     { Déclarations privées }
   public
@@ -129,7 +130,6 @@ var listP:Produits;
 begin
   FDQueryTrouverProd.Params.ParamValues['z']:=code;
   FDQueryTrouverProd.Params.ParamValues['x']:=id;
-  FDQueryTrouverProd.Params.ParamValues['q']:=quantite;
   FDQueryTrouverProd.Params.ParamValues['n']:=numStock;
   FDQueryTrouverProd.Close;
   FDQueryTrouverProd.Open();
@@ -157,17 +157,43 @@ begin
 end;
 //------------------------------------------------
 procedure TDataModuleVente.ModifierQuantiteStock(numStock:integer;code:string;quantite:real);
+var q:real;
 begin
+  q:=quantite;
   FDQueryTrouverProd.Params.ParamValues['z']:=code;
-  FDQueryTrouverProd.Params.ParamValues['q']:=quantite;
   FDQueryTrouverProd.Params.ParamValues['n']:=numStock;
   FDQueryTrouverProd.Close;
   FDQueryTrouverProd.Open();
-  if FDQueryTrouverProd.RecordCount>0 then
+  if ((FDQueryTrouverProd.RecordCount>0) and (q<0)) then   // retourner
   begin
-    FDQueryTrouverProd.Edit;
-    FDQueryTrouverProd.FieldValues['quantite']:=FDQueryTrouverProd.FieldValues['quantite']-quantite;
-    FDQueryTrouverProd.Post;
+      FDQueryTrouverProd.Edit;
+      FDQueryTrouverProd.FieldValues['quantite']:=FDQueryTrouverProd.FieldValues['quantite']-q;
+      FDQueryTrouverProd.Post;
+  end
+  else                                                 // retirer
+  while ((not FDQueryTrouverProd.Eof) and (q>0)) do
+  begin
+    if FDQueryTrouverProd.FieldValues['quantite']-q<0 then
+    begin
+
+      FDQueryTrouverProd.Edit;
+      if FDQueryTrouverProd.RecordCount=FDQueryTrouverProd.RecNo then
+         FDQueryTrouverProd.FieldValues['quantite']:=FDQueryTrouverProd.FieldValues['quantite']-q
+      else
+         begin
+           q:=q-FDQueryTrouverProd.FieldValues['quantite'];
+           FDQueryTrouverProd.FieldValues['quantite']:=0;
+         end;
+      FDQueryTrouverProd.Post;
+    end
+    else
+    begin
+      FDQueryTrouverProd.Edit;
+      FDQueryTrouverProd.FieldValues['quantite']:=FDQueryTrouverProd.FieldValues['quantite']-q;
+      FDQueryTrouverProd.Post;
+      q:=0;
+    end;
+    FDQueryTrouverProd.Next;
   end;
 end;
 
