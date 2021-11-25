@@ -182,7 +182,7 @@ object FormFacturation: TFormFacturation
           end
           item
             Expanded = False
-            FieldName = 'Quantite'
+            FieldName = 'QuantiteInitial'
             Title.Caption = #1575#1604#1603#1605#1610#1577
             Title.Font.Charset = ANSI_CHARSET
             Title.Font.Color = clWindowText
@@ -8780,7 +8780,7 @@ object FormFacturation: TFormFacturation
     DrawingStyle = dsFocus
     Height = 30
     Width = 30
-    Left = 642
+    Left = 506
     Top = 391
     Bitmap = {
       494C01010500540004001E001E00FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600

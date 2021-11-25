@@ -13,19 +13,22 @@ type
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    DBEdit1: TDBEdit;
+    DBEditId: TDBEdit;
     DBNavigator1: TDBNavigator;
     Panel2: TPanel;
     BitBtn1: TBitBtn;
     Label4: TLabel;
     Label5: TLabel;
-    DBEditQuantite: TDBEdit;
-    DBEditPrixAchat: TDBEdit;
-    DBEditPrixVente: TDBEdit;
-    DBEditPrixVenteGros: TDBEdit;
     DataSourceFactureEntrante: TDataSource;
+    EditQuantite: TEdit;
+    EditPrixAchat: TEdit;
+    EditPrixVenteDetail: TEdit;
+    EditPrixVenteGros: TEdit;
     procedure DBEditQuantiteEnter(Sender: TObject);
     procedure DBEditQuantiteExit(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+
   private
     { DÈclarations privÈes }
   public
@@ -35,6 +38,7 @@ type
 var
   FormUpdateRecordFact: TFormUpdateRecordFact;
   QntInitial:real;
+  QuantiteInitial,Quantite, QuantiteNouv,PrixAchat,PrixVenteDetail,PrixVenteGros:real;
 
 
 
@@ -42,6 +46,36 @@ implementation
 
 {$R *.dfm}
 uses DataFacturationUnite,DataStocksUnite;
+procedure TFormUpdateRecordFact.BitBtn1Click(Sender: TObject);
+
+begin
+
+    if (strtofloat(EditPrixAchat.Text)>0) then
+    begin
+        if (strtofloat(EditPrixAchat.Text)<=strtofloat(EditPrixVenteGros.Text)) then
+           begin
+              if (strtofloat(EditPrixVenteDetail.Text)>=strtofloat(EditPrixVenteGros.Text)) then
+                 begin
+                    QuantiteInitial:=DataFacturation.FDQueryFactureRecords.FieldValues['QuantiteInitial'];
+                    Quantite:=DataFacturation.FDQueryFactureRecords.FieldValues['Quantite'];
+                    QuantiteNouv:=strtofloat(EditQuantite.Text);
+                    if (QuantiteNouv>QuantiteInitial) or (QuantiteInitial-QuantiteNouv>=Quantite) then
+                    begin
+                      DataFacturation.FDQueryFactureRecords.Edit;
+                      DataFacturation.FDQueryFactureRecords.FieldValues['Quantite']:=Quantite-(QuantiteInitial-QuantiteNouv);
+                      DataFacturation.FDQueryFactureRecords.FieldValues['QuantiteInitial']:=QuantiteNouv;
+                      DataFacturation.FDQueryFactureRecords.Post;
+                      close;
+                    end
+                    else showmessage('«·ﬂ„Ì… «·ÃœÌœ… √ﬁ· „‰ «·ﬂ„Ì… «· Ì  „ »Ì⁄Â« „‰ Â–Â «·›« Ê—…');
+                 end
+                 else showmessage('”⁄— «·»Ì⁄ »«· Ã“∆… ÌÃ» √‰ ÌﬂÊ‰ √ﬂ»—  √Ê Ì”«ÊÌ ”⁄·— «·»Ì⁄ »«·Ã„·…');
+           end
+           else showmessage('”⁄— «·»Ì⁄ »«·Ã„·… ÌÃ» √‰ ÌﬂÊ‰ √ﬂ»— „‰ ”⁄— «·‘—«¡');
+    end
+    else showmessage('”⁄— «·»Ì⁄ ÌÃ» √‰ ÌﬂÊ‰ √ﬂ»— „‰ 0');
+end;
+
 procedure TFormUpdateRecordFact.DBEditQuantiteEnter(Sender: TObject);
 
 begin
@@ -61,6 +95,18 @@ begin
 //       DataFacturation.FDQueryFactureEntrante.FieldValues['Quantite']:=QntInitial;
 //       DataFacturation.FDQueryFactureEntrante.Post;
 //   end;
+end;
+
+procedure TFormUpdateRecordFact.FormShow(Sender: TObject);
+begin
+    PrixAchat:=DataFacturation.FDQueryFactureRecords.FieldValues['PrixAchat'];
+    PrixVenteDetail:=DataFacturation.FDQueryFactureRecords.FieldValues['PrixVente'];
+    PrixVenteGros:=DataFacturation.FDQueryFactureRecords.FieldValues['PrixVenteGros'];
+
+    EditPrixAchat.Text:=floattostr(PrixAchat);
+    EditPrixVenteDetail.Text:=floattostr(PrixVenteDetail);
+    EditPrixVenteGros.Text:=floattostr(PrixVenteGros);
+    EditQuantite.Text:=floattostr(DataFacturation.FDQueryFactureRecords.FieldValues['QuantiteInitial']);
 end;
 
 end.

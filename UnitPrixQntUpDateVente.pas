@@ -35,7 +35,8 @@ implementation
 
 {$R *.dfm}
 
-uses UnitVenteComptoir,unit36, DataVenteUnit, DataParametrageUnite;
+uses UnitVenteComptoir,unit36, DataVenteUnit, DataParametrageUnite,
+  DataStocksUnite;
 //------------------------------------------------------------------------------
 procedure TFormPrixQntUpDateVente.BitBtn1Click(Sender: TObject);
 var som,q,r,x:real;
@@ -54,7 +55,7 @@ begin
             if p.quantite >=r  then
             begin
               DataModuleVente.PutQuantiteList(q);
-              DataModuleVente.ModifierQuantiteStock(DataModuleVente.operation.NumStock,code,r);
+              DataStocks.ModifierQuantiteStock(DataModuleVente.operation.NumStock,code,r);
             end
             else
             MessageDlg('السلعة المطلوبة غير متوفرة في المخزن' + ' : ' +

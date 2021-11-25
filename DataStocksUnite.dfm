@@ -115,9 +115,7 @@ object DataStocks: TDataStocks
     SQL.Strings = (
       'select EntreesProduits.*'
       'from EntreesProduits'
-      
-        'where ((id=:x) and (code=:y) and (numstock=:z)  and (quantite>=:' +
-        'q))')
+      'where ((id=:x) and (code=:y) and (numstock=:z))')
     Left = 392
     Top = 132
     ParamData = <
@@ -134,11 +132,6 @@ object DataStocks: TDataStocks
       end
       item
         Name = 'Z'
-        DataType = ftInteger
-        ParamType = ptInput
-      end
-      item
-        Name = 'Q'
         DataType = ftInteger
         ParamType = ptInput
       end>

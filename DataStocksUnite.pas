@@ -31,6 +31,7 @@ type
     procedure rechercheProdByName(ProdName:string);
     function rechercheProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
     function UpDateQntProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
+    function ModifierQuantiteStock(numStock:integer;code:string;quantite:real):boolean;
 
 
   private
@@ -54,6 +55,56 @@ uses UnitFacturation, Unit36, UnitEtatStock, DataParametrageUnite;
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
+function TDataStocks.ModifierQuantiteStock(numStock: integer; code: string;
+  quantite: real):boolean;
+var q:real;
+begin
+  result:=false;
+  q:=quantite;
+  FDQueryRechProdByIdCodeStock.Params.ParamValues['z']:=code;
+  FDQueryRechProdByIdCodeStock.Params.ParamValues['n']:=numStock;
+  FDQueryRechProdByIdCodeStock.Close;
+  FDQueryRechProdByIdCodeStock.Open();
+  if ((FDQueryRechProdByIdCodeStock.RecordCount>0) and (q<0)) then   // retourner
+  begin
+      FDQueryRechProdByIdCodeStock.Edit;
+      FDQueryRechProdByIdCodeStock.FieldValues['quantite']:=FDQueryRechProdByIdCodeStock.FieldValues['quantite']-q;
+      FDQueryRechProdByIdCodeStock.Post;
+      result:=true;
+  end
+  else                                                 // retirer
+  while ((not FDQueryRechProdByIdCodeStock.Eof) and (q>0)) do
+  begin
+    if FDQueryRechProdByIdCodeStock.FieldValues['quantite']-q<0 then
+    begin
+
+      FDQueryRechProdByIdCodeStock.Edit;
+      if FDQueryRechProdByIdCodeStock.RecordCount=FDQueryRechProdByIdCodeStock.RecNo then
+      if FDQueryRechProdByIdCodeStock.FieldValues['Num']<>0 then
+      begin
+         FDQueryRechProdByIdCodeStock.FieldValues['quantite']:=FDQueryRechProdByIdCodeStock.FieldValues['quantite']-q;
+         result:=true;
+      end
+      else
+         begin
+           q:=q-FDQueryRechProdByIdCodeStock.FieldValues['quantite'];
+           FDQueryRechProdByIdCodeStock.FieldValues['quantite']:=0;
+         end;
+      FDQueryRechProdByIdCodeStock.Post;
+    end
+    else
+    begin
+      FDQueryRechProdByIdCodeStock.Edit;
+      FDQueryRechProdByIdCodeStock.FieldValues['quantite']:=FDQueryRechProdByIdCodeStock.FieldValues['quantite']-q;
+      FDQueryRechProdByIdCodeStock.Post;
+      q:=0;
+      result:=true;
+    end;
+    FDQueryRechProdByIdCodeStock.Next;
+  end;
+
+end;
+
 procedure TDataStocks.NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;
   quantite: real; StockDest: integer; DateProd, Dateconsm: TDateTime);
 var myYear, myMonth, myDay : Word;

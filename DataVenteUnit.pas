@@ -73,8 +73,6 @@ type
    procedure SupprimerProdList(numList:integer);
    function CalculerSomme():real;
    //------------------------
-   procedure ModifierQuantiteStock(numStock:integer;code:string;quantite:real);
-   //------------------------
    procedure NouvelleOpr(typvente,fenetre:integer);
    function Parcourir(dist:integer):longint;
    procedure ValiderOpr(Opr:Operation);
@@ -108,7 +106,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses  Unit36,UnitDelivrenceData, DataParametrageUnite;
+uses  Unit36,UnitDelivrenceData, DataParametrageUnite, DataStocksUnite;
 
 {$R *.dfm}
 
@@ -155,47 +153,6 @@ begin
   else listP.quantite:=0;
   result :=listP;
 end;
-//------------------------------------------------
-procedure TDataModuleVente.ModifierQuantiteStock(numStock:integer;code:string;quantite:real);
-var q:real;
-begin
-  q:=quantite;
-  FDQueryTrouverProd.Params.ParamValues['z']:=code;
-  FDQueryTrouverProd.Params.ParamValues['n']:=numStock;
-  FDQueryTrouverProd.Close;
-  FDQueryTrouverProd.Open();
-  if ((FDQueryTrouverProd.RecordCount>0) and (q<0)) then   // retourner
-  begin
-      FDQueryTrouverProd.Edit;
-      FDQueryTrouverProd.FieldValues['quantite']:=FDQueryTrouverProd.FieldValues['quantite']-q;
-      FDQueryTrouverProd.Post;
-  end
-  else                                                 // retirer
-  while ((not FDQueryTrouverProd.Eof) and (q>0)) do
-  begin
-    if FDQueryTrouverProd.FieldValues['quantite']-q<0 then
-    begin
-
-      FDQueryTrouverProd.Edit;
-      if FDQueryTrouverProd.RecordCount=FDQueryTrouverProd.RecNo then
-         FDQueryTrouverProd.FieldValues['quantite']:=FDQueryTrouverProd.FieldValues['quantite']-q
-      else
-         begin
-           q:=q-FDQueryTrouverProd.FieldValues['quantite'];
-           FDQueryTrouverProd.FieldValues['quantite']:=0;
-         end;
-      FDQueryTrouverProd.Post;
-    end
-    else
-    begin
-      FDQueryTrouverProd.Edit;
-      FDQueryTrouverProd.FieldValues['quantite']:=FDQueryTrouverProd.FieldValues['quantite']-q;
-      FDQueryTrouverProd.Post;
-      q:=0;
-    end;
-    FDQueryTrouverProd.Next;
-  end;
-end;
 
 //------------------------------------------------
 procedure TDataModuleVente.AjouterProdList(P:Produits);
@@ -212,14 +169,14 @@ begin
       FDQueryListeProdBD.FieldValues['PrixVente']:=p.PrixVente;
       FDQueryListeProdBD.FieldValues['PrixAchat']:=p.PrixAchat;
       FDQueryListeProdBD.FieldValues['NumOpr']:=FDQueryListOprsSortie.FieldValues['NumOpr'];
-      ModifierQuantiteStock(Operation.NumStock,p.code,p.quantite);
+      DataStocks.ModifierQuantiteStock(Operation.NumStock,p.code,p.quantite);
       FDQueryListeProdBD.Post;
     end
     else
     begin
       FDQueryListeProdBD.Edit;
       FDQueryListeProdBD.FieldValues['quantite']:=FDQueryListeProdBD.FieldValues['quantite']+p.quantite;
-      ModifierQuantiteStock(Operation.NumStock,p.code,p.quantite);
+      DataStocks.ModifierQuantiteStock(Operation.NumStock,p.code,p.quantite);
       FDQueryListeProdBD.Post;
     end;
     end
@@ -230,7 +187,7 @@ var i:integer;
 begin
     if FDQueryListeProdBD.RecordCount>0 then
     begin
-    ModifierQuantiteStock(operation.NumStock,FDQueryListeProdBD.FieldValues['CodeProduit'],-FDQueryListeProdBD.FieldValues['Quantite']);
+    DataStocks.ModifierQuantiteStock(operation.NumStock,FDQueryListeProdBD.FieldValues['CodeProduit'],-FDQueryListeProdBD.FieldValues['Quantite']);
     FDQueryListeProdBD.Delete;
     end;
 end;

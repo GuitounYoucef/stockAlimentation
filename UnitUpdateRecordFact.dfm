@@ -15,6 +15,7 @@ object FormUpdateRecordFact: TFormUpdateRecordFact
   FormStyle = fsStayOnTop
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -96,7 +97,7 @@ object FormUpdateRecordFact: TFormUpdateRecordFact
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object DBEdit1: TDBEdit
+    object DBEditId: TDBEdit
       Left = 20
       Top = 24
       Width = 250
@@ -121,65 +122,59 @@ object FormUpdateRecordFact: TFormUpdateRecordFact
       TabOrder = 1
       Visible = False
     end
-    object DBEditQuantite: TDBEdit
+    object EditQuantite: TEdit
       Left = 20
       Top = 68
-      Width = 250
+      Width = 247
       Height = 38
-      DataField = 'Quantite'
-      DataSource = DataSourceFactureEntrante
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Cairo'
       Font.Style = [fsBold]
+      NumbersOnly = True
       ParentFont = False
       TabOrder = 2
-      OnEnter = DBEditQuantiteEnter
-      OnExit = DBEditQuantiteExit
     end
-    object DBEditPrixAchat: TDBEdit
-      Left = 20
+    object EditPrixAchat: TEdit
+      Left = 23
       Top = 112
-      Width = 250
+      Width = 247
       Height = 38
-      DataField = 'PrixAchat'
-      DataSource = DataSourceFactureEntrante
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Cairo'
       Font.Style = [fsBold]
+      NumbersOnly = True
       ParentFont = False
       TabOrder = 3
     end
-    object DBEditPrixVente: TDBEdit
-      Left = 20
+    object EditPrixVenteDetail: TEdit
+      Left = 23
       Top = 156
-      Width = 250
+      Width = 247
       Height = 38
-      DataField = 'PrixVente'
-      DataSource = DataSourceFactureEntrante
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Cairo'
       Font.Style = [fsBold]
+      NumbersOnly = True
       ParentFont = False
       TabOrder = 4
     end
-    object DBEditPrixVenteGros: TDBEdit
-      Left = 20
+    object EditPrixVenteGros: TEdit
+      Left = 23
       Top = 200
-      Width = 250
+      Width = 247
       Height = 38
-      DataField = 'PrixVenteGros'
-      DataSource = DataSourceFactureEntrante
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
       Font.Name = 'Cairo'
       Font.Style = [fsBold]
+      NumbersOnly = True
       ParentFont = False
       TabOrder = 5
     end
@@ -205,9 +200,11 @@ object FormUpdateRecordFact: TFormUpdateRecordFact
       NumGlyphs = 2
       ParentFont = False
       TabOrder = 0
+      OnClick = BitBtn1Click
     end
   end
   object DataSourceFactureEntrante: TDataSource
+    DataSet = DataFacturation.FDQueryFactureRecords
     Left = 341
     Top = 256
   end
