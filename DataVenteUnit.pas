@@ -88,6 +88,7 @@ type
    function GetQuantiteList():real;
    procedure PutQuantiteList(Quantite:real);
    function GetCodeProduitList():string;
+   function GetIdProduitList():string;
    function CalculerCredit():real;
 
    function estDernierOperation():boolean;
@@ -122,6 +123,7 @@ begin
     FDMemTableCredit.Post;
     result:=x;
 end;
+
 //------------------------------------------------------------------------------
 function TDataModuleVente.TrouverPrduit(numStock,typevente:integer;id,code:string;quantite:real):Produits;
 var listP:Produits;
@@ -169,14 +171,14 @@ begin
       FDQueryListeProdBD.FieldValues['PrixVente']:=p.PrixVente;
       FDQueryListeProdBD.FieldValues['PrixAchat']:=p.PrixAchat;
       FDQueryListeProdBD.FieldValues['NumOpr']:=FDQueryListOprsSortie.FieldValues['NumOpr'];
-      DataStocks.ModifierQuantiteStock(Operation.NumStock,p.code,p.quantite);
+      DataStocks.ModifierQuantiteStock(Operation.NumStock,p.code,p.id,p.quantite);
       FDQueryListeProdBD.Post;
     end
     else
     begin
       FDQueryListeProdBD.Edit;
       FDQueryListeProdBD.FieldValues['quantite']:=FDQueryListeProdBD.FieldValues['quantite']+p.quantite;
-      DataStocks.ModifierQuantiteStock(Operation.NumStock,p.code,p.quantite);
+      DataStocks.ModifierQuantiteStock(Operation.NumStock,p.code,p.id,p.quantite);
       FDQueryListeProdBD.Post;
     end;
     end
@@ -187,7 +189,10 @@ var i:integer;
 begin
     if FDQueryListeProdBD.RecordCount>0 then
     begin
-    DataStocks.ModifierQuantiteStock(operation.NumStock,FDQueryListeProdBD.FieldValues['CodeProduit'],-FDQueryListeProdBD.FieldValues['Quantite']);
+    DataStocks.ModifierQuantiteStock(operation.NumStock,
+                                     FDQueryListeProdBD.FieldValues['CodeProduit'],
+                                     FDQueryListeProdBD.FieldValues['id'],
+                                     -FDQueryListeProdBD.FieldValues['Quantite']);
     FDQueryListeProdBD.Delete;
     end;
 end;
@@ -380,6 +385,13 @@ function TDataModuleVente.GetCodeProduitList():string;
 begin
     if FDQueryListeProdBD.RecordCount>0 then
        result:=FDQueryListeProdBD.FieldValues['CodeProduit']
+    else result:='*';
+end;
+
+function TDataModuleVente.GetIdProduitList: string;
+begin
+    if FDQueryListeProdBD.RecordCount>0 then
+       result:=FDQueryListeProdBD.FieldValues['id']
     else result:='*';
 end;
 

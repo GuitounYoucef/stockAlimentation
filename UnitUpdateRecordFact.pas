@@ -47,31 +47,45 @@ implementation
 {$R *.dfm}
 uses DataFacturationUnite,DataStocksUnite;
 procedure TFormUpdateRecordFact.BitBtn1Click(Sender: TObject);
+var b:boolean;
 
 begin
-
+    b:=false;
     if (strtofloat(EditPrixAchat.Text)>0) then
     begin
+       DataFacturation.FDQueryFactureRecords.Edit;
+       if (strtofloat(EditPrixAchat.Text)<>DataFacturation.FDQueryFactureRecords.FieldValues['PrixAchat']) then
+           DataFacturation.FDQueryFactureRecords.FieldValues['PrixAchat']:=strtofloat(EditPrixAchat.Text);
+
         if (strtofloat(EditPrixAchat.Text)<=strtofloat(EditPrixVenteGros.Text)) then
            begin
+            if (strtofloat(EditPrixVenteGros.Text)<>DataFacturation.FDQueryFactureRecords.FieldValues['PrixVenteGros']) then
+              DataFacturation.FDQueryFactureRecords.FieldValues['PrixVenteGros']:=strtofloat(EditPrixVenteGros.Text);
+
               if (strtofloat(EditPrixVenteDetail.Text)>=strtofloat(EditPrixVenteGros.Text)) then
                  begin
+                    if (strtofloat(EditPrixVenteDetail.Text)<>DataFacturation.FDQueryFactureRecords.FieldValues['PrixVente']) then
+                      DataFacturation.FDQueryFactureRecords.FieldValues['PrixVente']:=strtofloat(EditPrixVenteDetail.Text);
+
                     QuantiteInitial:=DataFacturation.FDQueryFactureRecords.FieldValues['QuantiteInitial'];
                     Quantite:=DataFacturation.FDQueryFactureRecords.FieldValues['Quantite'];
                     QuantiteNouv:=strtofloat(EditQuantite.Text);
+                    if (QuantiteNouv<>QuantiteInitial)then
                     if (QuantiteNouv>QuantiteInitial) or (QuantiteInitial-QuantiteNouv>=Quantite) then
                     begin
-                      DataFacturation.FDQueryFactureRecords.Edit;
+                      if (strtofloat(EditPrixVenteDetail.Text)<>DataFacturation.FDQueryFactureRecords.FieldValues['PrixVente']) then
+                        DataFacturation.FDQueryFactureRecords.FieldValues['PrixVente']:=strtofloat(EditPrixVenteDetail.Text);
                       DataFacturation.FDQueryFactureRecords.FieldValues['Quantite']:=Quantite-(QuantiteInitial-QuantiteNouv);
                       DataFacturation.FDQueryFactureRecords.FieldValues['QuantiteInitial']:=QuantiteNouv;
-                      DataFacturation.FDQueryFactureRecords.Post;
-                      close;
+
                     end
                     else showmessage('«·ﬂ„Ì… «·ÃœÌœ… √ﬁ· „‰ «·ﬂ„Ì… «· Ì  „ »Ì⁄Â« „‰ Â–Â «·›« Ê—…');
                  end
                  else showmessage('”⁄— «·»Ì⁄ »«· Ã“∆… ÌÃ» √‰ ÌﬂÊ‰ √ﬂ»—  √Ê Ì”«ÊÌ ”⁄·— «·»Ì⁄ »«·Ã„·…');
            end
            else showmessage('”⁄— «·»Ì⁄ »«·Ã„·… ÌÃ» √‰ ÌﬂÊ‰ √ﬂ»— „‰ ”⁄— «·‘—«¡');
+           DataFacturation.FDQueryFactureRecords.Post;
+           close;
     end
     else showmessage('”⁄— «·»Ì⁄ ÌÃ» √‰ ÌﬂÊ‰ √ﬂ»— „‰ 0');
 end;

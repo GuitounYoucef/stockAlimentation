@@ -31,7 +31,7 @@ type
     procedure rechercheProdByName(ProdName:string);
     function rechercheProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
     function UpDateQntProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
-    function ModifierQuantiteStock(numStock:integer;code:string;quantite:real):boolean;
+    function ModifierQuantiteStock(numStock:integer;code,id:string;quantite:real):boolean;
 
 
   private
@@ -55,14 +55,15 @@ uses UnitFacturation, Unit36, UnitEtatStock, DataParametrageUnite;
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-function TDataStocks.ModifierQuantiteStock(numStock: integer; code: string;
+function TDataStocks.ModifierQuantiteStock(numStock: integer; code,id: string;
   quantite: real):boolean;
 var q:real;
 begin
   result:=false;
   q:=quantite;
-  FDQueryRechProdByIdCodeStock.Params.ParamValues['z']:=code;
-  FDQueryRechProdByIdCodeStock.Params.ParamValues['n']:=numStock;
+  FDQueryRechProdByIdCodeStock.Params.ParamValues['x']:=id;
+  FDQueryRechProdByIdCodeStock.Params.ParamValues['y']:=code;
+  FDQueryRechProdByIdCodeStock.Params.ParamValues['z']:=numStock;
   FDQueryRechProdByIdCodeStock.Close;
   FDQueryRechProdByIdCodeStock.Open();
   if ((FDQueryRechProdByIdCodeStock.RecordCount>0) and (q<0)) then   // retourner

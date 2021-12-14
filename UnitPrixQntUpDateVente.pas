@@ -41,7 +41,7 @@ uses UnitVenteComptoir,unit36, DataVenteUnit, DataParametrageUnite,
 procedure TFormPrixQntUpDateVente.BitBtn1Click(Sender: TObject);
 var som,q,r,x:real;
     p:Produits;
-    code:string;
+    code,id:string;
 begin
     if DataModuleVente.GetPrixAchatList()<=strtofloat(EditPrix.Text) then
     begin
@@ -50,12 +50,13 @@ begin
           q:=strtofloat(EditQuantite.Text);
           r:=q-DataModuleVente.GetQuantiteList();
           code:=DataModuleVente.GetCodeProduitList();
+          id:=DataModuleVente.GetIdProduitList();
           p := DataModuleVente.TrouverPrduit(DataModuleVente.operation.NumStock,
                                              DataModuleVente.operation.typevente, '',code,r);
             if p.quantite >=r  then
             begin
               DataModuleVente.PutQuantiteList(q);
-              DataStocks.ModifierQuantiteStock(DataModuleVente.operation.NumStock,code,r);
+              DataStocks.ModifierQuantiteStock(DataModuleVente.operation.NumStock,code,id,r);
             end
             else
             MessageDlg('السلعة المطلوبة غير متوفرة في المخزن' + ' : ' +
