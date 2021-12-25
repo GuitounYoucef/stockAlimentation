@@ -3,7 +3,7 @@ object FormStockDetail: TFormStockDetail
   Top = 0
   Align = alClient
   Caption = 'FormStockDetail'
-  ClientHeight = 586
+  ClientHeight = 662
   ClientWidth = 1331
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -14,21 +14,22 @@ object FormStockDetail: TFormStockDetail
   FormStyle = fsStayOnTop
   OldCreateOrder = False
   Position = poDesktopCenter
-  OnShow = FormShow
+  OnActivate = FormActivate
+  OnMouseEnter = FormMouseEnter
   PixelsPerInch = 96
   TextHeight = 13
   object GridPanel2: TGridPanel
     Left = 0
     Top = 0
     Width = 1331
-    Height = 586
+    Height = 662
     Align = alClient
     ColumnCollection = <
       item
         Value = 4.999865280119292000
       end
       item
-        Value = 90.000146425484960000
+        Value = 90.000146425484950000
       end
       item
         Value = 4.999988294395743000
@@ -37,19 +38,33 @@ object FormStockDetail: TFormStockDetail
       item
         Column = 1
         Control = DBGrid1
-        Row = 1
-        RowSpan = 2
-      end
-      item
-        Column = 1
-        Control = DBNavigator1
-        Row = 3
+        Row = 2
       end
       item
         Column = 0
         ColumnSpan = 3
         Control = GridPanel7
         Row = 0
+      end
+      item
+        Column = 1
+        Control = DBGrid2
+        Row = 5
+      end
+      item
+        Column = 1
+        Control = Label1
+        Row = 1
+      end
+      item
+        Column = 1
+        Control = Label2
+        Row = 4
+      end
+      item
+        Column = 1
+        Control = DBNavigator2
+        Row = 3
       end>
     RowCollection = <
       item
@@ -57,10 +72,22 @@ object FormStockDetail: TFormStockDetail
         Value = 90.000000000000000000
       end
       item
-        Value = 48.899755501222490000
+        SizeStyle = ssAbsolute
+        Value = 50.000000000000000000
       end
       item
-        Value = 51.100244498777510000
+        Value = 53.669834544431420000
+      end
+      item
+        SizeStyle = ssAbsolute
+        Value = 50.000000000000000000
+      end
+      item
+        SizeStyle = ssAbsolute
+        Value = 50.000000000000000000
+      end
+      item
+        Value = 46.330165455568580000
       end
       item
         SizeStyle = ssAbsolute
@@ -69,16 +96,19 @@ object FormStockDetail: TFormStockDetail
     TabOrder = 0
     DesignSize = (
       1331
-      586)
+      662)
     object DBGrid1: TDBGrid
       Left = 67
-      Top = 91
+      Top = 141
       Width = 1196
-      Height = 443
+      Height = 198
       TabStop = False
       Align = alClient
       BiDiMode = bdRightToLeft
-      DataSource = DataSourceAllStockByDate
+      DataSource = DataSourceAllStockInventaire
+      DrawingStyle = gdsGradient
+      GradientEndColor = clCream
+      GradientStartColor = clGray
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -21
@@ -106,28 +136,28 @@ object FormStockDetail: TFormStockDetail
           Title.Caption = #1573#1587#1605' '#1575#1604#1605#1606#1578#1580
           Title.Font.Charset = ANSI_CHARSET
           Title.Font.Color = clWindowText
-          Title.Font.Height = -16
+          Title.Font.Height = -13
           Title.Font.Name = 'Cairo'
           Title.Font.Style = [fsBold]
-          Width = 332
+          Width = 330
           Visible = True
         end
         item
           Expanded = False
-          FieldName = 'Producteur'
+          FieldName = 'Code'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -15
           Font.Name = 'Cairo'
           Font.Style = [fsBold]
           ReadOnly = True
-          Title.Caption = #1575#1604#1605#1606#1578#1580
+          Title.Caption = #1575#1604#1585#1605#1586
           Title.Font.Charset = ANSI_CHARSET
           Title.Font.Color = clWindowText
-          Title.Font.Height = -16
+          Title.Font.Height = -13
           Title.Font.Name = 'Cairo'
           Title.Font.Style = [fsBold]
-          Width = 111
+          Width = 130
           Visible = True
         end
         item
@@ -141,10 +171,10 @@ object FormStockDetail: TFormStockDetail
           Title.Caption = #1575#1604#1603#1605#1610#1577
           Title.Font.Charset = ANSI_CHARSET
           Title.Font.Color = clWindowText
-          Title.Font.Height = -16
+          Title.Font.Height = -13
           Title.Font.Name = 'Cairo'
           Title.Font.Style = [fsBold]
-          Width = 61
+          Width = 60
           Visible = True
         end
         item
@@ -159,10 +189,10 @@ object FormStockDetail: TFormStockDetail
           Title.Caption = #1578#1575#1585#1610#1582' '#1575#1604#1583#1582#1608#1604
           Title.Font.Charset = ANSI_CHARSET
           Title.Font.Color = clWindowText
-          Title.Font.Height = -16
+          Title.Font.Height = -13
           Title.Font.Name = 'Cairo'
           Title.Font.Style = [fsBold]
-          Width = 114
+          Width = 110
           Visible = True
         end
         item
@@ -176,7 +206,7 @@ object FormStockDetail: TFormStockDetail
           Title.Caption = #1587#1593#1585' '#1575#1604#1588#1585#1575#1569
           Title.Font.Charset = ANSI_CHARSET
           Title.Font.Color = clWindowText
-          Title.Font.Height = -16
+          Title.Font.Height = -13
           Title.Font.Name = 'Cairo'
           Title.Font.Style = [fsBold]
           Width = 120
@@ -193,10 +223,10 @@ object FormStockDetail: TFormStockDetail
           Title.Caption = #1587#1593#1585' '#1575#1604#1576#1610#1593' '#1576#1575#1604#1578#1580#1586#1574#1577
           Title.Font.Charset = ANSI_CHARSET
           Title.Font.Color = clWindowText
-          Title.Font.Height = -16
+          Title.Font.Height = -13
           Title.Font.Name = 'Cairo'
           Title.Font.Style = [fsBold]
-          Width = 139
+          Width = 120
           Visible = True
         end
         item
@@ -210,14 +240,13 @@ object FormStockDetail: TFormStockDetail
           Title.Caption = #1587#1593#1585' '#1575#1604#1576#1610#1593' '#1576#1575#1604#1580#1605#1604#1577
           Title.Font.Charset = ANSI_CHARSET
           Title.Font.Color = clWindowText
-          Title.Font.Height = -16
+          Title.Font.Height = -13
           Title.Font.Name = 'Cairo'
           Title.Font.Style = [fsBold]
-          Width = 132
+          Width = 120
           Visible = True
         end
         item
-          Alignment = taRightJustify
           Expanded = False
           FieldName = 'DateProd'
           Font.Charset = ANSI_CHARSET
@@ -228,14 +257,13 @@ object FormStockDetail: TFormStockDetail
           Title.Caption = #1578#1575#1585#1610#1582' '#1575#1604#1573#1606#1578#1575#1580
           Title.Font.Charset = ANSI_CHARSET
           Title.Font.Color = clWindowText
-          Title.Font.Height = -16
+          Title.Font.Height = -13
           Title.Font.Name = 'Cairo'
           Title.Font.Style = [fsBold]
-          Width = 117
+          Width = 120
           Visible = True
         end
         item
-          Alignment = taRightJustify
           Expanded = False
           FieldName = 'DateConsm'
           Font.Charset = ANSI_CHARSET
@@ -247,40 +275,12 @@ object FormStockDetail: TFormStockDetail
           Title.Caption = #1606#1607#1575#1610#1577' '#1575#1604#1589#1604#1575#1581#1610#1577
           Title.Font.Charset = ANSI_CHARSET
           Title.Font.Color = clWindowText
-          Title.Font.Height = -16
+          Title.Font.Height = -13
           Title.Font.Name = 'Cairo'
           Title.Font.Style = [fsBold]
-          Width = 132
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Code'
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Cairo'
-          Font.Style = [fsBold]
-          ReadOnly = True
-          Title.Caption = #1585#1605#1586' '#1575#1604#1588#1585#1610#1591
-          Title.Font.Charset = ANSI_CHARSET
-          Title.Font.Color = clWindowText
-          Title.Font.Height = -16
-          Title.Font.Name = 'Cairo'
-          Title.Font.Style = [fsBold]
-          Width = 188
+          Width = 120
           Visible = True
         end>
-    end
-    object DBNavigator1: TDBNavigator
-      Left = 395
-      Top = 539
-      Width = 540
-      Height = 40
-      DataSource = DataSourceAllStockByDate
-      VisibleButtons = [nbDelete, nbEdit, nbPost]
-      Anchors = []
-      TabOrder = 1
     end
     object GridPanel7: TGridPanel
       Left = 1
@@ -316,7 +316,7 @@ object FormStockDetail: TFormStockDetail
         end>
       RowCollection = <
         item
-          Value = 9.924856540400423000
+          Value = 9.924856540400424000
         end
         item
           Value = 80.103386422045390000
@@ -324,7 +324,7 @@ object FormStockDetail: TFormStockDetail
         item
           Value = 9.971757037554189000
         end>
-      TabOrder = 2
+      TabOrder = 1
       object Label10: TLabel
         Left = 973
         Top = 9
@@ -1855,10 +1855,278 @@ object FormStockDetail: TFormStockDetail
         ExplicitHeight = 99
       end
     end
+    object DBGrid2: TDBGrid
+      Left = 67
+      Top = 439
+      Width = 1196
+      Height = 171
+      TabStop = False
+      Align = alClient
+      BiDiMode = bdRightToLeft
+      DataSource = DataSourceAllStockFacture
+      DrawingStyle = gdsGradient
+      FixedColor = clBtnShadow
+      GradientStartColor = clGray
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Times New Roman'
+      Font.Style = []
+      ParentBiDiMode = False
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 2
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      StyleElements = []
+      OnDblClick = DBGrid2DblClick
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'id'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Cairo'
+          Font.Style = [fsBold]
+          Title.Caption = #1573#1587#1605' '#1575#1604#1605#1606#1578#1580
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Width = 330
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Code'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Cairo'
+          Font.Style = [fsBold]
+          Title.Caption = #1575#1604#1585#1605#1586
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Width = 130
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Quantite'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Cairo'
+          Font.Style = [fsBold]
+          Title.Caption = #1575#1604#1603#1605#1610#1577
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Width = 60
+          Visible = True
+        end
+        item
+          Alignment = taRightJustify
+          Expanded = False
+          FieldName = 'DateEntree'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Cairo'
+          Font.Style = [fsBold]
+          Title.Caption = #1578#1575#1585#1610#1582' '#1575#1604#1583#1582#1608#1604
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Width = 110
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PrixAchat'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Cairo'
+          Font.Style = [fsBold]
+          Title.Caption = #1587#1593#1585' '#1575#1604#1588#1585#1575#1569
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Width = 120
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PrixVente'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Cairo'
+          Font.Style = [fsBold]
+          Title.Caption = #1587#1593#1585' '#1575#1604#1576#1610#1593' '#1576#1575#1604#1578#1580#1586#1574#1577
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Width = 120
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'PrixVenteGros'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Cairo'
+          Font.Style = [fsBold]
+          Title.Caption = #1587#1593#1585' '#1575#1604#1576#1610#1593' '#1576#1575#1604#1580#1605#1604#1577
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Width = 120
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'DateProd'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Cairo'
+          Font.Style = [fsBold]
+          Title.Caption = #1578#1575#1585#1610#1582' '#1575#1604#1573#1606#1578#1575#1580
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Width = 120
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'DateConsm'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Cairo'
+          Font.Style = [fsBold]
+          ImeMode = imAlpha
+          Title.Caption = #1606#1607#1575#1610#1577' '#1575#1604#1589#1604#1575#1581#1610#1577
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Width = 120
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Annee'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Cairo'
+          Font.Style = [fsBold]
+          Title.Caption = #1587#1606#1577' '#1575#1604#1601#1575#1578#1608#1585#1577
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Num'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Cairo'
+          Font.Style = [fsBold]
+          Title.Caption = #1585#1602#1605' '#1575#1604#1601#1575#1578#1608#1585#1577
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end>
+    end
+    object Label1: TLabel
+      Left = 1149
+      Top = 91
+      Width = 114
+      Height = 50
+      Align = alRight
+      BiDiMode = bdRightToLeft
+      Caption = '    '#1602#1575#1574#1605#1577' '#1575#1604#1580#1585#1583
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -19
+      Font.Name = 'Cairo'
+      Font.Style = [fsBold]
+      ParentBiDiMode = False
+      ParentFont = False
+      Layout = tlCenter
+      ExplicitHeight = 36
+    end
+    object Label2: TLabel
+      Left = 1128
+      Top = 389
+      Width = 135
+      Height = 50
+      Align = alRight
+      BiDiMode = bdRightToLeft
+      Caption = '    '#1602#1575#1574#1605#1577' '#1575#1604#1601#1608#1575#1578#1610#1585
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -19
+      Font.Name = 'Cairo'
+      Font.Style = [fsBold]
+      ParentBiDiMode = False
+      ParentFont = False
+      Layout = tlCenter
+      ExplicitHeight = 36
+    end
+    object DBNavigator2: TDBNavigator
+      Left = 393
+      Top = 344
+      Width = 543
+      Height = 39
+      DataSource = DataSourceAllStockFacture
+      VisibleButtons = [nbDelete, nbEdit, nbPost]
+      Anchors = []
+      TabOrder = 3
+    end
   end
-  object DataSourceAllStockByDate: TDataSource
-    DataSet = DataStocks.FDTableStock
-    Left = 96
+  object DataSourceAllStockInventaire: TDataSource
+    DataSet = DataStocks.FDQueryStockInventaire
+    Left = 168
     Top = 240
+  end
+  object DataSourceAllStockFacture: TDataSource
+    DataSet = DataStocks.FDQueryStockFacture
+    Left = 152
+    Top = 480
   end
 end

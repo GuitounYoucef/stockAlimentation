@@ -35,7 +35,7 @@ type
     GridPanel8: TGridPanel;
     DBNavigator2: TDBNavigator;
     ImageList2: TImageList;
-    frxReport1: TfrxReport;
+    frxReportFacture: TfrxReport;
     frxDBDataset3: TfrxDBDataset;
     frxDBDataset2: TfrxDBDataset;
     frxDBDataset1: TfrxDBDataset;
@@ -79,12 +79,12 @@ procedure TFormListeFactures.ComboBox1Change(Sender: TObject);
 begin
     if ComboBox1.Text=ComboBox1.Items[0] then
     begin
-      DataFacturation.FDQueryFacturePayee.Params.ParamValues['x']:=1;
+      DataFacturation.FDQueryFacturePayee.Params.ParamValues['x']:=2;
       cxButtonPaiment.Enabled:=true;
     end
     else
     begin
-      DataFacturation.FDQueryFacturePayee.Params.ParamValues['x']:=2;
+      DataFacturation.FDQueryFacturePayee.Params.ParamValues['x']:=1;
       cxButtonPaiment.Enabled:=false;
     end;
     DataFacturation.FDQueryFacturePayee.Close;
@@ -109,7 +109,7 @@ end;
 procedure TFormListeFactures.cxButtonImprimerClick(Sender: TObject);
 begin
     if DataFacturation.FDQueryFacturePayee.RecordCount>0 then
-       frxReport1.ShowReport(true);
+       frxReportFacture.ShowReport(true);
 end;
 
 procedure TFormListeFactures.cxButtonPaimentClick(Sender: TObject);
@@ -135,7 +135,7 @@ Var Annee,NomDest:string;
     num:integer;
 begin
     if not DataFacturation.FacturePayeeEstVide(Annee,NomDest,Num) then
-       FormFacturation.RechercheFactureForm(Annee,NomDest,Num);
+       FormFacturation.RechercheFactureForm(Annee,Num);
 end;
 
 //____________________________________________________________________________________

@@ -3,8 +3,8 @@ object FormParametrage: TFormParametrage
   Top = 0
   BorderStyle = bsDialog
   Caption = 'FormParametrage'
-  ClientHeight = 602
-  ClientWidth = 822
+  ClientHeight = 660
+  ClientWidth = 824
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,8 +19,8 @@ object FormParametrage: TFormParametrage
   object dxLayoutControl1: TdxLayoutControl
     Left = 0
     Top = 0
-    Width = 822
-    Height = 602
+    Width = 824
+    Height = 660
     Align = alClient
     BiDiMode = bdRightToLeft
     Font.Charset = ANSI_CHARSET
@@ -33,83 +33,86 @@ object FormParametrage: TFormParametrage
     ParentFont = False
     TabOrder = 0
     Transparent = True
+    ShowDesignSelectors = False
+    ExplicitWidth = 822
+    ExplicitHeight = 602
     object cxDBTextEdit1: TcxDBTextEdit
-      Left = 423
-      Top = 56
+      Left = 425
+      Top = 105
       AutoSize = False
       DataBinding.DataField = 'NomStocke'
       DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
-      TabOrder = 0
+      TabOrder = 1
       Height = 37
       Width = 239
     end
     object cxDBTextEdit3: TcxDBTextEdit
-      Left = 425
-      Top = 105
+      Left = 427
+      Top = 154
       AutoSize = False
       DataBinding.DataField = 'mobile1'
       DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
-      TabOrder = 2
+      TabOrder = 3
       Height = 37
       Width = 237
     end
     object cxDBTextEdit4: TcxDBTextEdit
-      Left = 42
-      Top = 105
+      Left = 44
+      Top = 154
       AutoSize = False
       DataBinding.DataField = 'mobile2'
       DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
-      TabOrder = 3
+      TabOrder = 4
       Height = 37
       Width = 301
     end
     object cxDBTextEdit5: TcxDBTextEdit
-      Left = 430
-      Top = 154
+      Left = 432
+      Top = 203
       AutoSize = False
       DataBinding.DataField = 'Fax1'
       DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
-      TabOrder = 4
+      TabOrder = 5
       Height = 37
       Width = 232
     end
     object cxDBTextEdit6: TcxDBTextEdit
-      Left = 42
-      Top = 154
+      Left = 44
+      Top = 203
       AutoSize = False
       DataBinding.DataField = 'Fax2'
       DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
-      TabOrder = 5
+      TabOrder = 6
       Height = 37
       Width = 302
     end
     object cxTextEdit1: TcxTextEdit
-      Left = 482
-      Top = 261
+      Left = 484
+      Top = 310
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
-      TabOrder = 6
+      TabOrder = 7
       Width = 209
     end
     object cxButton1: TcxButton
-      Left = 362
-      Top = 261
+      Left = 364
+      Top = 310
       Width = 93
       Height = 37
       Caption = #1573#1590#1575#1601#1577
@@ -191,26 +194,13 @@ object FormParametrage: TFormParametrage
         AF8C79B0F2E07880E0E097D81F04FF9B913C4FA5F7A18CE78149EFCFFF17FB37
         66AFE935F6829A2E0000000049454E44AE426082}
       OptionsImage.Layout = blGlyphRight
-      TabOrder = 9
+      TabOrder = 10
       OnClick = cxButton1Click
     end
     object cxDBComboBoxNormale: TcxDBComboBox
-      Left = 42
-      Top = 261
-      DataBinding.DataField = 'Normale'
-      DataBinding.DataSource = DataSourceImprimante
-      Style.BorderColor = clWindowFrame
-      Style.BorderStyle = ebs3D
-      Style.HotTrack = False
-      Style.ButtonStyle = bts3D
-      Style.PopupBorderStyle = epbsFrame3D
-      TabOrder = 10
-      Width = 176
-    end
-    object cxDBComboBoxCodeBar: TcxDBComboBox
-      Left = 42
+      Left = 44
       Top = 310
-      DataBinding.DataField = 'CodeBar'
+      DataBinding.DataField = 'Normale'
       DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
@@ -220,10 +210,10 @@ object FormParametrage: TFormParametrage
       TabOrder = 11
       Width = 176
     end
-    object cxDBComboBoxTicket: TcxDBComboBox
-      Left = 42
+    object cxDBComboBoxCodeBar: TcxDBComboBox
+      Left = 44
       Top = 359
-      DataBinding.DataField = 'Ticket'
+      DataBinding.DataField = 'CodeBar'
       DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
@@ -233,9 +223,22 @@ object FormParametrage: TFormParametrage
       TabOrder = 12
       Width = 176
     end
+    object cxDBComboBoxTicket: TcxDBComboBox
+      Left = 44
+      Top = 408
+      DataBinding.DataField = 'Ticket'
+      DataBinding.DataSource = DataSourceImprimante
+      Style.BorderColor = clWindowFrame
+      Style.BorderStyle = ebs3D
+      Style.HotTrack = False
+      Style.ButtonStyle = bts3D
+      Style.PopupBorderStyle = epbsFrame3D
+      TabOrder = 13
+      Width = 176
+    end
     object DBGrid1: TDBGrid
-      Left = 469
-      Top = 312
+      Left = 471
+      Top = 361
       Width = 309
       Height = 135
       BorderStyle = bsNone
@@ -247,7 +250,7 @@ object FormParametrage: TFormParametrage
       Font.Style = [fsBold]
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       ParentFont = False
-      TabOrder = 7
+      TabOrder = 8
       TitleFont.Charset = ANSI_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -15
@@ -270,8 +273,9 @@ object FormParametrage: TFormParametrage
         end>
     end
     object cxDBComboBoxstockid: TcxDBComboBox
-      Left = 467
-      Top = 461
+      Left = 469
+      Top = 510
+      AutoSize = False
       DataBinding.DataField = 'stockid'
       DataBinding.DataSource = DataSourceParametrage
       Properties.OnChange = cxDBComboBoxstockidPropertiesChange
@@ -280,12 +284,13 @@ object FormParametrage: TFormParametrage
       Style.HotTrack = False
       Style.ButtonStyle = bts3D
       Style.PopupBorderStyle = epbsFrame3D
-      TabOrder = 8
+      TabOrder = 9
+      Height = 42
       Width = 224
     end
     object cxButton2: TcxButton
-      Left = 20
-      Top = 537
+      Left = 22
+      Top = 586
       Width = 782
       Height = 40
       Caption = #1578#1600#1600#1571#1603#1600#1600#1610#1600#1600#1600#1583
@@ -373,12 +378,12 @@ object FormParametrage: TFormParametrage
         BC0000000049454E44AE426082}
       OptionsImage.Layout = blGlyphRight
       PopupAlignment = paCenter
-      TabOrder = 14
+      TabOrder = 15
       OnClick = cxButton2Click
     end
     object cxDBComboBox1: TcxDBComboBox
-      Left = 44
-      Top = 466
+      Left = 46
+      Top = 515
       DataBinding.DataField = 'Langue'
       DataBinding.DataSource = DataSourceParametrage
       Properties.Items.Strings = (
@@ -390,21 +395,32 @@ object FormParametrage: TFormParametrage
       Style.HotTrack = False
       Style.ButtonStyle = bts3D
       Style.PopupBorderStyle = epbsFrame3D
-      TabOrder = 13
+      TabOrder = 14
       Width = 174
     end
     object cxDBTextEdit2: TcxDBTextEdit
-      Left = 43
-      Top = 56
+      Left = 45
+      Top = 105
       AutoSize = False
       DataBinding.DataField = 'Adresse'
       DataBinding.DataSource = DataSourceImprimante
       Style.BorderColor = clWindowFrame
       Style.BorderStyle = ebs3D
       Style.HotTrack = False
-      TabOrder = 1
+      TabOrder = 2
       Height = 37
       Width = 302
+    end
+    object cxDBComboBox2: TcxDBComboBox
+      Left = 58
+      Top = 56
+      Style.BorderColor = clWindowFrame
+      Style.BorderStyle = ebs3D
+      Style.HotTrack = False
+      Style.ButtonStyle = bts3D
+      Style.PopupBorderStyle = epbsFrame3D
+      TabOrder = 0
+      Width = 606
     end
     object dxLayoutControl1Group_Root: TdxLayoutGroup
       AlignHorz = ahLeft
@@ -434,6 +450,7 @@ object FormParametrage: TFormParametrage
       SizeOptions.Height = 300
       SizeOptions.Width = 454
       ButtonOptions.Buttons = <>
+      ItemIndex = 1
       LayoutDirection = ldHorizontal
       Index = 0
     end
@@ -531,7 +548,7 @@ object FormParametrage: TFormParametrage
     object dxLayoutAutoCreatedGroup1: TdxLayoutAutoCreatedGroup
       Parent = dxLayoutGroup1
       LayoutDirection = ldHorizontal
-      Index = 2
+      Index = 3
     end
     object dxLayoutItem7: TdxLayoutItem
       Parent = dxLayoutAutoCreatedGroup4
@@ -586,7 +603,7 @@ object FormParametrage: TFormParametrage
     object dxLayoutAutoCreatedGroup3: TdxLayoutAutoCreatedGroup
       Parent = dxLayoutGroup1
       LayoutDirection = ldHorizontal
-      Index = 1
+      Index = 2
     end
     object dxLayoutItem14: TdxLayoutItem
       Parent = dxLayoutAutoCreatedGroup4
@@ -620,6 +637,7 @@ object FormParametrage: TFormParametrage
     end
     object dxLayoutItem15: TdxLayoutItem
       Parent = dxLayoutAutoCreatedGroup4
+      AlignVert = avClient
       CaptionOptions.Text = #1605#1582#1586#1606' '#1575#1604#1576#1610#1593
       Control = cxDBComboBoxstockid
       ControlOptions.OriginalHeight = 37
@@ -664,6 +682,17 @@ object FormParametrage: TFormParametrage
       Parent = dxLayoutGroup1
       AlignVert = avTop
       LayoutDirection = ldHorizontal
+      Index = 1
+    end
+    object dxLayoutItem18: TdxLayoutItem
+      Parent = dxLayoutGroup1
+      AlignHorz = ahLeft
+      AlignVert = avTop
+      CaptionOptions.Text = #1606#1608#1593' '#1575#1604#1606#1588#1575#1591
+      Control = cxDBComboBox2
+      ControlOptions.OriginalHeight = 37
+      ControlOptions.OriginalWidth = 606
+      ControlOptions.ShowBorder = False
       Index = 0
     end
   end

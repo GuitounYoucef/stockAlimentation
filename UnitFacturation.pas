@@ -11,7 +11,8 @@ uses
   cxLookAndFeelPainters, cxContainer, cxEdit, dxSkinsCore,
   dxSkinsDefaultPainters, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit,
   cxDBLookupEdit, cxDBLookupComboBox, cxClasses, dxGaugeCustomScale,
-  dxGaugeDigitalScale, dxGaugeControl, Vcl.Menus, cxImageList, cxButtons;
+  dxGaugeDigitalScale, dxGaugeControl, Vcl.Menus, cxImageList, cxButtons,
+  Vcl.WinXCtrls, dxGDIPlusClasses;
 
 type
   TFormFacturation = class(TForm)
@@ -22,7 +23,6 @@ type
     DBGrid1: TDBGrid;
     GridPanel4: TGridPanel;
     EditCodeProduit: TEdit;
-    ButtonBalance: TButton;
     GridPanel6: TGridPanel;
     Image2: TImage;
     GridPanel7: TGridPanel;
@@ -34,9 +34,8 @@ type
     ButtonValider: TButton;
     ButtonImprimer: TButton;
     frxDBDatasetFacture: TfrxDBDataset;
-    ButtonProduits: TButton;
-    frxDBDataset2: TfrxDBDataset;
-    frxDBDataset3: TfrxDBDataset;
+    frxDBDatasetImp: TfrxDBDataset;
+    frxDBDatasetRecords: TfrxDBDataset;
     GridPanel9: TGridPanel;
     EditNum: TEdit;
     Label5: TLabel;
@@ -61,6 +60,7 @@ type
     cxButtonSupprimerEntree: TcxButton;
     cxImageList1: TcxImageList;
     DataSourceListProduits: TDataSource;
+    ToggleSwitchRechDetail: TToggleSwitch;
     procedure ButtonImprimerClick(Sender: TObject);
     procedure ButtonValiderClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
@@ -78,7 +78,7 @@ type
     procedure EditCodeProduitChange(Sender: TObject);
     procedure selectRechercheObj();
     procedure NouvelleFactureForm();
-    procedure RechercheFactureForm(a,d:string;n:integer);
+    procedure RechercheFactureForm(a:string;n:integer);
     procedure intializationAffichage(aff:boolean);
     procedure cxLookupComboBoxCodeProdEnter(Sender: TObject);
 
@@ -90,7 +90,7 @@ type
     { Déclarations privées }
   public
   var
-  valide,update:boolean;
+  valide,update,paiement:boolean;
   Annee,codebar,NomDestination:string;
   som:longint;
   num,source,destination,typeops,numstoke:integer;
@@ -101,6 +101,7 @@ var
   FormFacturation: TFormFacturation;
   b,exist,balance:boolean;
   tp,id,prod,rechercheObj:string;
+  selectItem:integer;
 
 implementation
 
@@ -128,8 +129,7 @@ end;
 //------------------------------------------------------------------------------
 procedure TFormFacturation.ButtonProduitsClick(Sender: TObject);
 begin
-    FormRechercheNomProduit.show;
-    FormRechercheNomProduit.f:=8;
+
 end;
 //------------------------------------------------------------------------------
 procedure TFormFacturation.ComboBoxTypeSourceChange(Sender: TObject);
@@ -188,11 +188,22 @@ end;
 //------------------------------------------------------------------------------
 procedure TFormFacturation.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-    if (valide=false) and (DataFacturation.FDQueryFactureRecords.RecordCount>0) then
+if (DataFacturation.FDQueryFactureRecords.RecordCount>0) then
+begin
+    if (valide=false) then
+    begin
     if MessageDlg('بيانات الفاتورة لم يتم تأكيدها . هل تريد فعلا إلغاء عملية حجز البيانات ؟', mtConfirmation, [mbNo,mbYes], 0) = mrYes then
       DataFacturation.SupprimerFacture()
     else
        Action := caNone;
+    end
+    else
+    if not paiement then
+    begin
+     FormPaiementCredit.PaimentFactureShow(DataFacturation.calculerSomFacture());
+     Action := caNone;
+    end;
+end;
 end;
 //------------------------------------------------------------------------------
 procedure TFormFacturation.FormKeyPress(Sender: TObject; var Key: Char);
@@ -209,6 +220,7 @@ end;
 procedure TFormFacturation.intializationAffichage(aff: boolean);
 begin
     dxGaugeControl1DigitalScale1.Value:='0';
+    paiement:=false;
     valide:=not aff;
     frxReportFacture.PrintOptions.Printer:=DataFacturation.FDTableImprimante.FieldValues['Normale'];
 
@@ -230,13 +242,12 @@ begin
     intializationAffichage(true);
 end;
 
-procedure TFormFacturation.RechercheFactureForm(a,d:string;n:integer);
+procedure TFormFacturation.RechercheFactureForm(a:string;n:integer);
 begin
     Annee:=a;
     Num:=n;
-    NomDestination:=d;
-    destination:=DataFacturation.TrouverStockNum(d);
     EditNum.Text:=DataFacturation.RechercheFacture(Annee,Num);
+    NomDestination:=DataFacturation.facture.NomDestination;
     intializationAffichage(false);
 end;
 
@@ -284,11 +295,13 @@ end;
 procedure TFormFacturation.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
-
-  if key=VK_RETURN then
+  if (key=VK_RETURN)then
+     selectItem:=selectItem+1;
+  if (selectItem=2) then
      begin
-       ajouterProduit('******',cxLookupComboBoxCodeProd.Text);
+       ajouterProduit('******',cxLookupComboBoxCodeProd.SelText);
        cxLookupComboBoxCodeProd.ClearSelection;
+       selectItem:=0;
      end;
 end;
 
@@ -309,9 +322,18 @@ begin
      and (length(cxLookupComboBoxstockid.Text)>0)) or(cxLookupComboBoxstockid.Enabled=false)
   then
       begin
+        if ToggleSwitchRechDetail.State = tssOn then
+        begin
         FormAjouterProduits.AfficherForm(8);
         FormAjouterProduits.TrouverProduitForm(codeProd,id);
         FormAjouterProduits.cxLookupComboBoxStockName.Text:=NomDestination;
+        end
+        else
+        begin
+          FormAjouterProduits.TrouverProduitForm(codeProd,id);
+          FormAjouterProduits.EditQunt.Text:='1';
+          FormAjouterProduits.ajouterfacture();
+        end;
       end
       else
       begin
@@ -325,5 +347,6 @@ end;
 
 initialization;
 b:=true;
+selectItem:=0;
 
 end.

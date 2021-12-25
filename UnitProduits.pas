@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Buttons, Vcl.Grids,
   Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Imaging.pngimage, Data.Win.ADODB,
   Vcl.DBCtrls, Vcl.Imaging.jpeg, System.ImageList, Vcl.ImgList, Vcl.ComCtrls,
-  frxClass, frxDBSet, frxBarcode, Vcl.ExtDlgs;
+  frxClass, frxDBSet, frxBarcode, Vcl.ExtDlgs, Vcl.WinXCtrls, dxGDIPlusClasses;
 
 type
   TFormProduits = class(TForm)
@@ -25,18 +25,21 @@ type
     Image3: TImage;
     DBNavigator1: TDBNavigator;
     frxReportNormal: TfrxReport;
-    frxDBDataset1: TfrxDBDataset;
+    frxDBDatasetProduits: TfrxDBDataset;
     ButtonPhotoProd: TButton;
     DBGrid2: TDBGrid;
     OpenPictureDialog1: TOpenPictureDialog;
     frxReportCodeBar: TfrxReport;
     DataSourceTableProduits: TDataSource;
+    SearchBox1: TSearchBox;
+    frxDBDataset1: TfrxDBDataset;
 
     procedure ButtonNouveauProdClick(Sender: TObject);
     procedure ButtonSuuprimerProdClick(Sender: TObject);
     procedure ButtonPhotoProdClick(Sender: TObject);
     procedure ButtonImprInventaireClick(Sender: TObject);
     procedure ButtonImprCodeBarClick(Sender: TObject);
+    procedure SearchBox1Change(Sender: TObject);
 
 
   private
@@ -67,7 +70,10 @@ end;
 procedure TFormProduits.ButtonImprCodeBarClick(Sender: TObject);
 begin
     if not DataProduits.TableProduitEstVite() then
+    begin
+      DataProduits.TrouverProduit(DataProduits.FDQueryProduit.FieldValues['code'],DataProduits.FDQueryProduit.FieldValues['id']);
       frxReportCodeBar.ShowReport(true);
+    end;
 end;
 //------------------------------------------------------------------------------
 procedure TFormProduits.ButtonPhotoProdClick(Sender: TObject);
@@ -96,6 +102,11 @@ begin
     else
       MessageDlg('حذف السلعة غير مسموح بسبب إستعمالها في تخزين سابق', mtInformation, [mbOK], 0);
     end;
+end;
+
+procedure TFormProduits.SearchBox1Change(Sender: TObject);
+begin
+DataProduits.rechProduitById(SearchBox1.Text);
 end;
 
 initialization;

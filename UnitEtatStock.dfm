@@ -14,6 +14,7 @@ object FormEtatStock: TFormEtatStock
   FormStyle = fsStayOnTop
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnMouseEnter = FormMouseEnter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -139,6 +140,7 @@ object FormEtatStock: TFormEtatStock
         LookAndFeel.SkinName = 'DarkSide'
         object cxGrid1DBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
+          OnCellDblClick = cxGrid1DBTableView1CellDblClick
           DataController.DataSource = DataSourceEtatStoke
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <>
@@ -210,7 +212,7 @@ object FormEtatStock: TFormEtatStock
           Value = 5.242582927141019000
         end
         item
-          Value = 52.447049289457810000
+          Value = 52.447049289457800000
         end
         item
           Value = 11.902988991363120000
@@ -228,7 +230,7 @@ object FormEtatStock: TFormEtatStock
           Value = 11.960688962872580000
         end
         item
-          Value = 4.730069926322599000
+          Value = 4.730069926322600000
         end>
       ControlCollection = <
         item
@@ -345,11 +347,6 @@ object FormEtatStock: TFormEtatStock
           Column = 1
           Control = ButtonBalance
           Row = 3
-        end
-        item
-          Column = 3
-          Control = ButtonListeProd
-          Row = 3
         end>
       RowCollection = <
         item
@@ -412,27 +409,7 @@ object FormEtatStock: TFormEtatStock
         ParentBiDiMode = False
         ParentFont = False
         TabOrder = 1
-      end
-      object ButtonListeProd: TButton
-        Left = 164
-        Top = 53
-        Width = 140
-        Height = 36
-        Align = alClient
-        BiDiMode = bdRightToLeft
-        Caption = #1602#1575#1574#1605#1577' '#1575#1604#1587#1604#1593
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -19
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        ImageIndex = 7
-        ImageMargins.Left = 3
-        Images = ImageList1
-        ParentBiDiMode = False
-        ParentFont = False
-        TabOrder = 2
-        OnClick = ButtonListeProdClick
+        Visible = False
       end
     end
     object GridPanel5: TGridPanel
@@ -10324,6 +10301,7 @@ object FormEtatStock: TFormEtatStock
         Style.Font.Style = []
         Style.IsFontAssigned = True
         TabOrder = 0
+        OnEnter = cxLookupComboBoxCodeProdEnter
         OnKeyDown = cxLookupComboBoxCodeProdKeyDown
         Width = 284
       end
@@ -11760,12 +11738,12 @@ object FormEtatStock: TFormEtatStock
       'begin'
       ''
       'end.')
-    Left = 977
-    Top = 417
+    Left = 841
+    Top = 393
     Datasets = <
       item
         DataSet = frxDBDataset1
-        DataSetName = 'frxDBDataset1'
+        DataSetName = 'frxDB'
       end>
     Variables = <>
     Style = <
@@ -11853,8 +11831,8 @@ object FormEtatStock: TFormEtatStock
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWhite
-          Font.Height = -16
-          Font.Name = 'Arial'
+          Font.Height = -11
+          Font.Name = 'Cairo'
           Font.Style = [fsBold]
           Frame.Typ = []
           Fill.BackColor = clGray
@@ -11862,8 +11840,6 @@ object FormEtatStock: TFormEtatStock
           Memo.UTF8W = (
             #1602#1575#1574#1605#1577' '#1575#1604#1587#1604#1593' '#1575#1604#1605#1582#1586#1606#1577)
           ParentFont = False
-          Style = 'Title'
-          VAlign = vaCenter
         end
       end
       object PageHeader1: TfrxPageHeader
@@ -11874,13 +11850,13 @@ object FormEtatStock: TFormEtatStock
         Width = 718.110700000000000000
         object Memo6: TfrxMemoView
           AllowVectorExport = True
-          Left = 263.453236520000000000
+          Left = 59.358616520000000000
           Width = 63.551535790000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clMaroon
-          Font.Height = -13
-          Font.Name = 'Arial'
+          Font.Height = -11
+          Font.Name = 'cairo'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Fill.BackColor = 10218495
@@ -11888,17 +11864,16 @@ object FormEtatStock: TFormEtatStock
           Memo.UTF8W = (
             ' '#1575#1604#1603#1605#1610#1577' ')
           ParentFont = False
-          VAlign = vaCenter
         end
         object Memo7: TfrxMemoView
           AllowVectorExport = True
           Left = 327.004772310000000000
-          Width = 176.161807480000000000
+          Width = 353.799717480000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clMaroon
-          Font.Height = -13
-          Font.Name = 'Arial'
+          Font.Height = -11
+          Font.Name = 'cairo'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Fill.BackColor = 10218495
@@ -11906,45 +11881,24 @@ object FormEtatStock: TFormEtatStock
           Memo.UTF8W = (
             ' '#1573#1587#1605' '#1575#1604#1587#1604#1593#1577' ')
           ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo8: TfrxMemoView
-          AllowVectorExport = True
-          Left = 503.166579790000000000
-          Width = 157.440306450000000000
-          Height = 22.677180000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clMaroon
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Fill.BackColor = 10218495
-          HAlign = haRight
-          Memo.UTF8W = (
-            ' '#1575#1604#1605#1615#1589#1606#1593' ')
-          ParentFont = False
-          VAlign = vaCenter
         end
         object Memo9: TfrxMemoView
           AllowVectorExport = True
-          Left = 58.661616240000000000
+          Left = 122.913626240000000000
           Width = 204.905019980000000000
           Height = 22.677180000000000000
-          DataSet = frxDBDataset1
-          DataSetName = 'frxDBDataset1'
+          DataSetName = 'EtatStock'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clMaroon
-          Font.Height = -13
-          Font.Name = 'Arial'
+          Font.Height = -11
+          Font.Name = 'cairo'
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Fill.BackColor = 10218495
           HAlign = haRight
           Memo.UTF8W = (
-            ' '#1585#1605#1586' '#1575#1604#1588#1585#1610#1591' ')
+            #1575#1604#1585#1605#1586)
           ParentFont = False
-          VAlign = vaCenter
         end
       end
       object MasterData1: TfrxMasterData
@@ -11954,15 +11908,15 @@ object FormEtatStock: TFormEtatStock
         Top = 166.299320000000000000
         Width = 718.110700000000000000
         DataSet = frxDBDataset1
-        DataSetName = 'frxDBDataset1'
+        DataSetName = 'frxDB'
         RowCount = 0
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 263.453236520000000000
+          Left = 59.358616520000000000
           Width = 63.551535790000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
-          DataSetName = 'frxDBDataset1'
+          DataSetName = 'frxDB'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -11971,16 +11925,16 @@ object FormEtatStock: TFormEtatStock
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '  [frxDBDataset1."s"]  ')
+            '[frxDB."s"]')
           ParentFont = False
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
           Left = 327.004772310000000000
-          Width = 176.161807480000000000
+          Width = 353.799717480000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
-          DataSetName = 'frxDBDataset1'
+          DataSetName = 'frxDB'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -11989,34 +11943,16 @@ object FormEtatStock: TFormEtatStock
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            ' [frxDBDataset1."id"] ')
-          ParentFont = False
-        end
-        object Memo15: TfrxMemoView
-          AllowVectorExport = True
-          Left = 503.166579790000000000
-          Width = 157.440306450000000000
-          Height = 18.897650000000000000
-          DataSet = frxDBDataset1
-          DataSetName = 'frxDBDataset1'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          HAlign = haRight
-          Memo.UTF8W = (
-            ' [frxDBDataset1."Producteur"] ')
+            '[frxDB."id"]')
           ParentFont = False
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 58.661616240000000000
+          Left = 122.913626240000000000
           Width = 204.905019980000000000
           Height = 18.897650000000000000
           DataSet = frxDBDataset1
-          DataSetName = 'frxDBDataset1'
+          DataSetName = 'frxDB'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -12025,7 +11961,7 @@ object FormEtatStock: TFormEtatStock
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           HAlign = haRight
           Memo.UTF8W = (
-            '  [frxDBDataset1."code"]  ')
+            '[frxDB."code"]')
           ParentFont = False
         end
       end
@@ -12093,18 +12029,6 @@ object FormEtatStock: TFormEtatStock
       end
     end
   end
-  object frxDBDataset1: TfrxDBDataset
-    UserName = 'frxDBDataset1'
-    CloseDataSource = False
-    FieldAliases.Strings = (
-      's=s'
-      'id=id'
-      'code=code'
-      'producteur=producteur')
-    BCDToCurrency = False
-    Left = 1073
-    Top = 425
-  end
   object DataSourceListProduits: TDataSource
     DataSet = DataProduits.FDTableProduits
     Left = 451
@@ -12114,5 +12038,19 @@ object FormEtatStock: TFormEtatStock
     PixelsPerInch = 96
     object cxStyle1: TcxStyle
     end
+  end
+  object frxDBDataset1: TfrxDBDataset
+    UserName = 'frxDB'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      's=s'
+      'id=id'
+      'code=code'
+      'producteur=producteur'
+      'PrixVente=PrixVente')
+    DataSet = DataStocks.FDQueryEtatStokeId
+    BCDToCurrency = False
+    Left = 1006
+    Top = 401
   end
 end

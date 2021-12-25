@@ -45,9 +45,9 @@ type
     Image4: TImage;
     Image5: TImage;
     DataSourceListeProdBD: TDataSource;
-    frxReport1: TfrxReport;
+    frxReportFactureVenteCmr: TfrxReport;
     frxDBDataset2: TfrxDBDataset;
-    frxReport2: TfrxReport;
+    frxReportBonLivraisonCmr: TfrxReport;
     GridPanel9: TGridPanel;
     ButtonSupprimer: TButton;
     ButtonNouvOpr: TButton;
@@ -81,6 +81,8 @@ type
     GridPanel5: TGridPanel;
     cxLookupComboBoxCodeProd: TcxLookupComboBox;
     DataSourceListProduits: TDataSource;
+    frxReportBonLivraisonAdm: TfrxReport;
+    frxReportFactureVenteAdm: TfrxReport;
     procedure FormShow(Sender: TObject);
     procedure ButtonSupprimerClick(Sender: TObject);
     procedure ButtonNouvOprClick(Sender: TObject);
@@ -100,6 +102,7 @@ type
     procedure VenteProduit(codeProduit,id:string;quantite:integer);
     procedure cxLookupComboBoxCodeProdKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure cxLookupComboBoxCodeProdEnter(Sender: TObject);
   private
     { Déclarations privées }
   public
@@ -115,6 +118,7 @@ type
 
 var
   FormVenteComptoir: TFormVenteComptoir;
+  selectItem:integer;
 
 implementation
 
@@ -181,17 +185,19 @@ procedure TFormVenteComptoir.ButtonImpBonRecpClick(Sender: TObject);
 begin
     if cxGrid1DBTableView1.DataController.RecordCount > 0 then
     begin
-     // DataModuleVente.CalculerCredit();
-      frxReport1.ShowReport(true);
+       if DataParametrage.FDTableParametrage.FieldValues['Acitivite']=1 then
+          frxReportFactureVenteCmr.ShowReport(true)
+       else frxReportFactureVenteAdm.ShowReport(true)
     end;
 end;
 //------------------------------------------------------------------------------
 procedure TFormVenteComptoir.ButtonImpTicketClick(Sender: TObject);
 begin
-    if cxGrid1DBTableView1.DataController.RecordCount > 0 then
+    if (cxGrid1DBTableView1.DataController.RecordCount > 0) and
+       (DataParametrage.FDTableParametrage.FieldValues['Acitivite']=1) then
     begin
-      //DataModuleVente.CalculerCredit();
-     frxReport2.ShowReport(true);
+
+      frxReportBonLivraisonCmr.ShowReport(true)
     end;
 end;
 //------------------------------------------------------------------------------
@@ -233,7 +239,7 @@ procedure TFormVenteComptoir.VenteProduit(codeProduit,id:string;quantite:integer
 var p: Produits;
 begin
     p := DataModuleVente.TrouverPrduit(DataModuleVente.operation.NumStock,DataModuleVente.operation.typevente,id, codeProduit,quantite);
-    if ((Length(DataModuleVente.operation.Client) > 1) and (DataModuleVente.operation.typevente = 2)) or
+    if ((DataModuleVente.operation.NumClient> 0) and (DataModuleVente.operation.typevente = 2)) or
       (DataModuleVente.operation.typevente = 1) then
       begin
       if p.quantite > 0 then
@@ -253,8 +259,13 @@ begin
           [mbOK], 0);}
     end
     else
+    begin
+      if DataParametrage.FDTableParametrage.FieldValues['Acitivite']=1 then
       MessageDlg('عليك إختيار إسم الزبون قبل بداية عملية البيع بالجملة',
-        mtInformation, [mbOK], 0);
+        mtInformation, [mbOK], 0)
+      else MessageDlg('عليك إختيار إسم الزبون قبل بداية عملية التسليم',
+        mtInformation, [mbOK], 0)
+    end;
      Edit1.Clear;
 end;
 //------------------------------------------------------------------------------
@@ -272,13 +283,24 @@ begin
     end;
 end;
 //------------------------------------------------------------------------------
+procedure TFormVenteComptoir.cxLookupComboBoxCodeProdEnter(Sender: TObject);
+begin
+LoadKeyboardLayout('0000040c', KLF_ACTIVATE);
+end;
+
 procedure TFormVenteComptoir.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
     case Key of
       VK_RETURN:begin
+                  selectItem:=selectItem+1;
+                  if (selectItem=2) then
+                  begin
                    VenteProduit('*****',cxLookupComboBoxCodeProd.Text,1);
                    cxLookupComboBoxCodeProd.ClearSelection;
+                   selectItem:=0;
+                   end
+
                 end;
       VK_F5:ButtonImpTicketClick(FormVenteComptoir);
       VK_F6:ButtonImpBonRecpClick(FormVenteComptoir);

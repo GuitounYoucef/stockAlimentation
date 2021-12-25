@@ -1,41 +1,8 @@
 object DataModuleDelivrence: TDataModuleDelivrence
   OldCreateOrder = False
+  OnCreate = DataModuleCreate
   Height = 759
   Width = 1301
-  object FDQueryCreditListe: TFDQuery
-    Active = True
-    Connection = FDConnection1
-    SQL.Strings = (
-      'select creditListe.*'
-      'from creditListe'
-      'where (NumCredit=:x)')
-    Left = 324
-    Top = 32
-    ParamData = <
-      item
-        Name = 'X'
-        DataType = ftLargeint
-        ParamType = ptInput
-        Value = Null
-      end>
-  end
-  object FDQueryCredit: TFDQuery
-    Active = True
-    Connection = FDConnection1
-    SQL.Strings = (
-      'select credit.*'
-      'from credit'
-      'where (NumClient=:x) and (ferme=0)')
-    Left = 212
-    Top = 32
-    ParamData = <
-      item
-        Name = 'X'
-        DataType = ftLargeint
-        ParamType = ptInput
-        Value = Null
-      end>
-  end
   object FDConnection1: TFDConnection
     Params.Strings = (
       'Server=srv-stock'
@@ -49,7 +16,6 @@ object DataModuleDelivrence: TDataModuleDelivrence
     Top = 32
   end
   object FDQueryListe: TFDQuery
-    Active = True
     Connection = FDConnection1
     SQL.Strings = (
       'SELECT SortieProduits.*'
@@ -98,12 +64,13 @@ object DataModuleDelivrence: TDataModuleDelivrence
       end>
   end
   object FDQueryDelivrence: TFDQuery
-    Active = True
     AfterScroll = FDQueryDelivrenceAfterScroll
     Connection = FDConnection1
     SQL.Strings = (
       'SELECT DISTINCT Clients.*,Sortie.TypePaim'
-      'FROM Clients INNER JOIN Sortie ON Clients.Client = Sortie.Client'
+      
+        'FROM Clients INNER JOIN Sortie ON Clients.NumClient = Sortie.Num' +
+        'Client'
       
         'WHERE ((Sortie.TypePaim>:x1) and (Sortie.TypePaim<:x2)) and ((So' +
         'rtie.TypeVente>:y1) and (Sortie.TypeVente<:y2))')
@@ -134,7 +101,6 @@ object DataModuleDelivrence: TDataModuleDelivrence
       end>
   end
   object FD12QueryImp: TFDQuery
-    Active = True
     Connection = FDConnection1
     SQL.Strings = (
       'select Sortie.*'
@@ -158,14 +124,6 @@ object DataModuleDelivrence: TDataModuleDelivrence
         DataType = ftInteger
         ParamType = ptInput
       end>
-  end
-  object FDTableCreditListe: TFDTable
-    Active = True
-    Connection = FDConnection1
-    UpdateOptions.UpdateTableName = 'stock.dbo.CreditListe'
-    TableName = 'stock.dbo.CreditListe'
-    Left = 464
-    Top = 32
   end
   object FDQueryOprVente: TFDQuery
     Active = True
@@ -207,7 +165,9 @@ object DataModuleDelivrence: TDataModuleDelivrence
   object FDQuerySortieDate: TFDQuery
     Connection = FDConnection1
     SQL.Strings = (
-      'select SortieProduits.*,Sortie.date'
+      
+        'select SortieProduits.*,Sortie.date,(SortieProduits.PrixVente*So' +
+        'rtieProduits.Quantite) as som'
       
         'FROM SortieProduits INNER JOIN Sortie ON SortieProduits.NumOpr =' +
         ' Sortie.NumOpr'
@@ -300,6 +260,50 @@ object DataModuleDelivrence: TDataModuleDelivrence
       '')
     Left = 744
     Top = 424
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'Y'
+        DataType = ftDate
+        ParamType = ptInput
+      end>
+  end
+  object FDQueryFrais: TFDQuery
+    Active = True
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select Frais.*'
+      'FROM Frais'
+      'where (DateOp>=:x) and (DateOp<=:y) ')
+    Left = 312
+    Top = 504
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'Y'
+        DataType = ftDate
+        ParamType = ptInput
+      end>
+  end
+  object FDQuerySommeFrais: TFDQuery
+    Active = True
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select sum(Montant) as somme'
+      'FROM Frais'
+      'where (DateOp>=:x) and (DateOp<=:y) ')
+    Left = 448
+    Top = 504
     ParamData = <
       item
         Name = 'X'

@@ -104,6 +104,7 @@ object FormPaiementCredit: TFormPaiementCredit
       NumbersOnly = True
       ParentFont = False
       TabOrder = 1
+      Text = '0'
       StyleElements = [seBorder]
       OnChange = EditPaieChange
     end

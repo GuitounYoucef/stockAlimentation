@@ -151,10 +151,6 @@
             <Form>FormRechercheStock</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UnitRechercheNomProduit.pas">
-            <Form>FormRechercheNomProduit</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UnitBenifices.pas">
             <Form>FormBenifices</Form>
             <FormType>dfm</FormType>
@@ -228,6 +224,15 @@
         <DCCReference Include="UnitUpdateRecordFact.pas">
             <Form>FormUpdateRecordFact</Form>
             <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="UnitFrais.pas">
+            <Form>FormFrais</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="DataFraisUnit.pas">
+            <Form>DataFrais</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

@@ -213,7 +213,7 @@ procedure TFormAjouterProduits.FormShow(Sender: TObject);
 begin
     DateTimePicker1.Date:=date;
     DateTimePicker2.Date:=date+3650;
-    LoadKeyboardLayout('00000401', KLF_ACTIVATE);
+    LoadKeyboardLayout('0000040c', KLF_ACTIVATE);
     EditQunt.Clear;
     EditQunt.SetFocus;
     QtL:=true;
@@ -320,7 +320,8 @@ begin
     b:=false;
     with formFacturation do
       begin
-        DataFacturation.NouvelleEntree(DataProduits.FDQueryFindProduitByCode,strtoint(EditQunt.Text),DateTimePicker1.Date,DateTimePicker2.Date);
+        if not DataFacturation.NouvelleEntree(DataProduits.FDQueryFindProduitByCode,strtoint(EditQunt.Text),DateTimePicker1.Date,DateTimePicker2.Date) then
+           showmessage('تمت إضافة هذه السلعة سابقا');
         FormAjouterProduits.close;
       end;
 end;

@@ -145,6 +145,11 @@ object FormListeFactures: TFormListeFactures
           item
             Expanded = False
             FieldName = 'Annee'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Cairo'
+            Font.Style = [fsBold]
             Title.Caption = #1575#1604#1587#1606#1577
             Title.Font.Charset = ANSI_CHARSET
             Title.Font.Color = clWindowText
@@ -157,6 +162,11 @@ object FormListeFactures: TFormListeFactures
           item
             Expanded = False
             FieldName = 'Num'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Cairo'
+            Font.Style = [fsBold]
             Title.Caption = #1575#1604#1585#1602#1605
             Title.Font.Charset = ANSI_CHARSET
             Title.Font.Color = clWindowText
@@ -168,6 +178,11 @@ object FormListeFactures: TFormListeFactures
           item
             Expanded = False
             FieldName = 'NomSource'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Cairo'
+            Font.Style = [fsBold]
             Title.Caption = #1573#1587#1605' '#1575#1604#1605#1605#1608#1606
             Title.Font.Charset = ANSI_CHARSET
             Title.Font.Color = clWindowText
@@ -179,7 +194,12 @@ object FormListeFactures: TFormListeFactures
           end
           item
             Expanded = False
-            FieldName = 'dat'
+            FieldName = 'DateEntree'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Cairo'
+            Font.Style = [fsBold]
             Title.Caption = #1575#1604#1578#1575#1585#1610#1582
             Title.Font.Charset = ANSI_CHARSET
             Title.Font.Color = clWindowText
@@ -187,6 +207,30 @@ object FormListeFactures: TFormListeFactures
             Title.Font.Name = 'Cairo'
             Title.Font.Style = [fsBold]
             Width = 158
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'total'
+            Title.Caption = #1575#1604#1605#1576#1604#1594' '#1575#1604#1603#1604#1610
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clWindowText
+            Title.Font.Height = -15
+            Title.Font.Name = 'Cairo'
+            Title.Font.Style = [fsBold]
+            Width = 120
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'reste'
+            Title.Caption = #1575#1604#1605#1576#1604#1594' '#1575#1604#1605#1578#1576#1602#1610
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clWindowText
+            Title.Font.Height = -15
+            Title.Font.Name = 'Cairo'
+            Title.Font.Style = [fsBold]
+            Width = 120
             Visible = True
           end>
       end
@@ -216,7 +260,7 @@ object FormListeFactures: TFormListeFactures
           Value = 160.000000000000000000
         end
         item
-          Value = 3.880378251154269000
+          Value = 3.880378251154268000
         end
         item
           SizeStyle = ssAbsolute
@@ -6267,6 +6311,11 @@ object FormListeFactures: TFormListeFactures
           item
             Expanded = False
             FieldName = 'id'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Cairo'
+            Font.Style = [fsBold]
             Title.Alignment = taCenter
             Title.Caption = #1573#1587#1605' '#1575#1604#1587#1604#1593#1577
             Title.Font.Charset = ANSI_CHARSET
@@ -6281,6 +6330,11 @@ object FormListeFactures: TFormListeFactures
             Alignment = taCenter
             Expanded = False
             FieldName = 'Quantite'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Cairo'
+            Font.Style = [fsBold]
             Title.Alignment = taCenter
             Title.Caption = #1575#1604#1603#1605#1610#1577
             Title.Font.Charset = ANSI_CHARSET
@@ -6294,6 +6348,11 @@ object FormListeFactures: TFormListeFactures
           item
             Expanded = False
             FieldName = 'PrixAchat'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Cairo'
+            Font.Style = [fsBold]
             Title.Caption = #1587#1593#1585' '#1575#1604#1588#1585#1575#1569
             Title.Font.Charset = ANSI_CHARSET
             Title.Font.Color = clWindowText
@@ -7873,7 +7932,7 @@ object FormListeFactures: TFormListeFactures
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000}
   end
-  object frxReport1: TfrxReport
+  object frxReportFacture: TfrxReport
     Version = '6.3.3'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
@@ -7889,7 +7948,7 @@ object FormListeFactures: TFormListeFactures
       'begin'
       ''
       'end.')
-    Left = 665
+    Left = 625
     Top = 369
     Datasets = <
       item
@@ -8514,6 +8573,84 @@ object FormListeFactures: TFormListeFactures
           Frame.Width = 0.500000000000000000
           Memo.UTF8W = (
             #1575#1604#1605#1576#1604#1594' '#1575#1604#1573#1580#1605#1575#1604#1610' :')
+          ParentFont = False
+          RTLReading = True
+        end
+        object Memo32: TfrxMemoView
+          AllowVectorExport = True
+          Left = 32.456710000000000000
+          Top = 39.236240000000000000
+          Width = 133.039370080000000000
+          Height = 26.456710000000000000
+          DisplayFormat.FormatStr = '%2.2f'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Cairo'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.500000000000000000
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[<Facture."total">-<Facture."reste">]')
+          ParentFont = False
+          RTLReading = True
+        end
+        object Memo33: TfrxMemoView
+          AllowVectorExport = True
+          Left = 166.630045750000000000
+          Top = 39.456710000000000000
+          Width = 94.488250000000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Cairo'
+          Font.Style = []
+          Frame.Typ = []
+          Frame.Width = 0.500000000000000000
+          Memo.UTF8W = (
+            #1575#1604#1605#1576#1604#1594' '#1575#1604#1605#1583#1601#1608#1593' :')
+          ParentFont = False
+          RTLReading = True
+        end
+        object Memo34: TfrxMemoView
+          AllowVectorExport = True
+          Left = 32.236240000000000000
+          Top = 74.031540000000000000
+          Width = 133.039370080000000000
+          Height = 26.456710000000000000
+          DisplayFormat.FormatStr = '%2.2f'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Cairo'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.500000000000000000
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[Facture."reste"]')
+          ParentFont = False
+          RTLReading = True
+        end
+        object Memo35: TfrxMemoView
+          AllowVectorExport = True
+          Left = 166.409575750000000000
+          Top = 74.252010000000000000
+          Width = 94.488250000000000000
+          Height = 22.677180000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -12
+          Font.Name = 'Cairo'
+          Font.Style = []
+          Frame.Typ = []
+          Frame.Width = 0.500000000000000000
+          Memo.UTF8W = (
+            #1575#1604#1605#1576#1604#1594' '#1575#1604#1605#1578#1576#1602#1610' :')
           ParentFont = False
           RTLReading = True
         end

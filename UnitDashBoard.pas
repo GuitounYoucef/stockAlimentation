@@ -65,8 +65,8 @@ type
     dxTileControl1Item5: TdxTileControlItem;
     dxTileControl1Item6: TdxTileControlItem;
     dxTileControl1Group5: TdxTileControlGroup;
-    dxTileControl1Item7: TdxTileControlItem;
-    dxTileControl1Item10: TdxTileControlItem;
+    dxTileControlVenteDetail: TdxTileControlItem;
+    dxTileControlVenteGros: TdxTileControlItem;
     dxBarLargeButton6: TdxBarLargeButton;
     dxBarLargeButton7: TdxBarLargeButton;
     cxImageList1: TcxImageList;
@@ -116,8 +116,8 @@ type
     dxTileControl1Item1dxTileControlItemFrame2: TdxTileControlItemFrame;
     dxTileControl1Item7dxTileControlItemFrame1: TdxTileControlItemFrame;
     dxTileControl1Item7dxTileControlItemFrame2: TdxTileControlItemFrame;
-    dxTileControl1Item10dxTileControlItemFrame1: TdxTileControlItemFrame;
-    dxTileControl1Item10dxTileControlItemFrame2: TdxTileControlItemFrame;
+    dxTileControlVentreGrosFrame1: TdxTileControlItemFrame;
+    dxTileControlVentreGrosFrame2: TdxTileControlItemFrame;
     dxTileControl1Item3dxTileControlItemFrame1: TdxTileControlItemFrame;
     dxTileControl1Item3dxTileControlItemFrame2: TdxTileControlItemFrame;
     dxTileControl1Item4dxTileControlItemFrame1: TdxTileControlItemFrame;
@@ -152,8 +152,10 @@ type
     OpenDialog1: TOpenDialog;
     dxTaskbarProgress1: TdxTaskbarProgress;
     FileSaveDialog1: TFileSaveDialog;
-    procedure dxTileControl1Item7Click(Sender: TdxTileControlItem);
-    procedure dxTileControl1Item10Click(Sender: TdxTileControlItem);
+    dxBarButton3: TdxBarButton;
+    dxBarLargeButton40: TdxBarLargeButton;
+    procedure dxTileControlVenteDetailClick(Sender: TdxTileControlItem);
+    procedure dxTileControlVenteGrosClick(Sender: TdxTileControlItem);
     procedure dxTileControl1Item2Click(Sender: TdxTileControlItem);
     procedure dxTileControl1Item12Click(Sender: TdxTileControlItem);
     procedure dxTileControl1Item8Click(Sender: TdxTileControlItem);
@@ -191,6 +193,7 @@ type
     procedure dxBarLargeButton8Click(Sender: TObject);
     procedure dxBarLargeButton33Click(Sender: TObject);
     procedure dxBarLargeButton32Click(Sender: TObject);
+    procedure dxBarLargeButton40Click(Sender: TObject);
   private
     { Déclarations privées }
   public
@@ -207,7 +210,7 @@ implementation
 
 uses UnitVenteComptoir, UnitDelivrence, UnitEtatStock, UnitProduits, UnitClients, UnitFournisseurs, UnitNotifications, UnitFacturation, UnitListeFactures, UnitTypeProd,
   UnitTempsNotification, Unit25,UnitGestionUtilisateurs ,unit36, UnitConnexion, UnitBenifices, UnitAccueil, UnitParametrage, UnitLirePrix, UnitSauvegarde,DataVenteUnit,
-  DataStocksUnite, DataParametrageUnite;
+  DataStocksUnite, DataParametrageUnite, UnitFrais;
 
 function GetMotherBoardSerial:String;
 var
@@ -281,37 +284,39 @@ begin
     //if DataModule1.FD37TableSortie.RecordCount>5000 then
     //close;
     //MessageDlg('هذا البرنامج عبارة عن نسخة تجريبية. تسمح بإجراء 5000 عملية بيع كحد أقصى',mtInformation,[mbOK],0);
-    DataParametrage.FDTableType.First;
-    while not DataParametrage.FDTableType.Eof do
-    begin
-      DataStocks.FDQueryTypeProdStock.Params.ParamValues['x']:=DataParametrage.FDTableType.FieldValues['type'];
-      DataStocks.FDQueryTypeProdStock.Active:=false;
-      DataStocks.FDQueryTypeProdStock.Active:=true;
-      while not DataStocks.FDQueryTypeProdStock.Eof do
-         begin
-           //form12.Label1.Caption:=floattostr(DataStocks.FDQueryTypeProdStock.FieldValues['dateconsm']-date);
-           //form18.Show;
-           if DataStocks.FDQueryTypeProdStock.FieldValues['dateconsm']+DataParametrage.FDTableType.FieldValues['dure']>date then
-           begin
-             if DataStocks.FDQueryTypeProdStock.FieldValues['dateconsm']<=date then
-              begin
-                 DataStocks.FDQueryTypeProdStock.Edit;
-                 DataStocks.FDQueryTypeProdStock.FieldValues['alert']:=false;
-                 DataStocks.FDQueryTypeProdStock.FieldValues['expire']:=true;
-                 DataStocks.FDQueryTypeProdStock.Post;
+//    DataParametrage.FDTableType.First;
+//    while not DataParametrage.FDTableType.Eof do
+//    begin
+//      DataStocks.FDQueryTypeProdStock.Params.ParamValues['x']:=DataParametrage.FDTableType.FieldValues['type'];
+//      DataStocks.FDQueryTypeProdStock.Active:=false;
+//      DataStocks.FDQueryTypeProdStock.Active:=true;
+//      while not DataStocks.FDQueryTypeProdStock.Eof do
+//         begin
+//           //form12.Label1.Caption:=floattostr(DataStocks.FDQueryTypeProdStock.FieldValues['dateconsm']-date);
+//           //form18.Show;
+//           if DataStocks.FDQueryTypeProdStock.FieldValues['dateconsm']+DataParametrage.FDTableType.FieldValues['dure']>date then
+//           begin
+//             if DataStocks.FDQueryTypeProdStock.FieldValues['dateconsm']<=date then
+//              begin
+//                 DataStocks.FDQueryTypeProdStock.Edit;
+//                 DataStocks.FDQueryTypeProdStock.FieldValues['alert']:=false;
+//                 DataStocks.FDQueryTypeProdStock.FieldValues['expire']:=true;
+//                 DataStocks.FDQueryTypeProdStock.Post;
+//
+//              end
+//              else
+//              begin
+//                 DataStocks.FDQueryTypeProdStock.Edit;
+//                 DataStocks.FDQueryTypeProdStock.FieldValues['alert']:=true;
+//                 DataStocks.FDQueryTypeProdStock.FieldValues['expire']:=false;
+//                 DataStocks.FDQueryTypeProdStock.Post;
+//              end;
+//           end;
+//           DataStocks.FDQueryTypeProdStock.Next;
+//         end;
+//    DataParametrage.FDTableType.Next;
+//    end;
 
-              end
-              else
-              begin
-                 DataStocks.FDQueryTypeProdStock.Edit;
-                 DataStocks.FDQueryTypeProdStock.FieldValues['alert']:=true;
-                 DataStocks.FDQueryTypeProdStock.FieldValues['expire']:=false;
-                 DataStocks.FDQueryTypeProdStock.Post;
-              end;
-           end;
-           DataStocks.FDQueryTypeProdStock.Next;
-         end;
-    DataParametrage.FDTableType.Next;
     case DataParametrage.FDQueryLoginUser.FieldValues['privilege'] of
     1:begin
       FormGestionUtilisateurs.PageControl1.Pages[1].TabVisible:=false;
@@ -322,24 +327,20 @@ begin
       FormGestionUtilisateurs.PageControl1.Pages[2].TabVisible:=false;
       end;
     end;
-    end;
-    with FormNotifications do
-    begin
-    DataStocks.FDQueryAlert.Close;
-    DataStocks.FDQueryAlert.Open();
-    DataStocks.FDQueryExpire.Close;
-    DataStocks.FDQueryExpire.Open();
-      if DataStocks.FDQueryAlert.RecordCount>0 then
-      begin
-        f:=1;
-        //show;
-      end;
-      if DataStocks.FDQueryExpire.RecordCount>0 then
-      begin
-        f:=2;
-        //show;
-      end;
-    end;
+   if DataParametrage.FDTableParametrage.FieldValues['Acitivite']=2 then
+   begin
+    dxTileControlVenteDetail.Visible:=false;
+    dxTileControlVentreGrosFrame1.Text1.Value:='عملية تسليم';
+    dxTileControlVentreGrosFrame2.Text1.Value:='عملية تسليم';
+   end;
+
+end;
+procedure TFormDashBoard.dxTileControlVenteGrosClick(Sender: TdxTileControlItem);
+var myYear, myMonth, myDay : Word;
+begin
+if DataParametrage.FDTableParametrage.FieldValues['Acitivite']=1 then
+   vente('   بيع بالجملة     ',2)
+else vente('  عملية تسليم   ',2)
 end;
 
 procedure TFormDashBoard.dxBarLargeButton11Click(Sender: TObject);
@@ -507,6 +508,11 @@ begin
 FormLirePrix.Show;
 end;
 
+procedure TFormDashBoard.dxBarLargeButton40Click(Sender: TObject);
+begin
+FormFrais.show;
+end;
+
 procedure TFormDashBoard.dxBarLargeButton7Click(Sender: TObject);
 begin
 vente('   بيع بالتجزئة     ',1);
@@ -523,11 +529,7 @@ if Privilege(2) then
 FormDelivrence.show;
 end;
 
-procedure TFormDashBoard.dxTileControl1Item10Click(Sender: TdxTileControlItem);
-var myYear, myMonth, myDay : Word;
-begin
-vente('   بيع بالجملة     ',2);
-end;
+
 
 procedure TFormDashBoard.dxTileControl1Item12Click(Sender: TdxTileControlItem);
 begin
@@ -592,7 +594,7 @@ begin
     end;
 end;
 
-procedure TFormDashBoard.dxTileControl1Item7Click(Sender: TdxTileControlItem);
+procedure TFormDashBoard.dxTileControlVenteDetailClick(Sender: TdxTileControlItem);
 
 begin
 vente('   بيع بالتجزئة     ',1);

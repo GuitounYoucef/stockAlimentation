@@ -4,8 +4,8 @@ object FormBenifices: TFormBenifices
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'FormBenifices'
-  ClientHeight = 644
-  ClientWidth = 765
+  ClientHeight = 748
+  ClientWidth = 767
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FormBenifices: TFormBenifices
   PixelsPerInch = 96
   TextHeight = 13
   object GridPanel2: TGridPanel
-    Left = 3
+    Left = 2
     Top = 0
     Width = 759
     Height = 139
@@ -110,47 +110,47 @@ object FormBenifices: TFormBenifices
     TabOrder = 0
     object Label1: TLabel
       Left = 602
-      Top = 97
+      Top = 103
       Width = 140
-      Height = 36
+      Height = 30
       Align = alBottom
       Alignment = taRightJustify
       BiDiMode = bdRightToLeft
       Caption = #1605#1606' : '
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -19
+      Font.Height = -16
       Font.Name = 'Cairo'
       Font.Style = [fsBold]
       ParentBiDiMode = False
       ParentFont = False
       Layout = tlCenter
-      ExplicitWidth = 40
+      ExplicitWidth = 34
     end
     object Label2: TLabel
       Left = 306
-      Top = 97
+      Top = 103
       Width = 139
-      Height = 36
+      Height = 30
       Align = alBottom
       Alignment = taRightJustify
       BiDiMode = bdRightToLeft
       Caption = #1573#1604#1609' : '
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -19
+      Font.Height = -16
       Font.Name = 'Cairo'
       Font.Style = [fsBold]
       ParentBiDiMode = False
       ParentFont = False
       Layout = tlCenter
-      ExplicitWidth = 43
+      ExplicitWidth = 37
     end
     object DateTimePicker1: TDateTimePicker
       Left = 454
-      Top = 89
+      Top = 95
       Width = 139
-      Height = 44
+      Height = 38
       Align = alBottom
       BiDiMode = bdRightToLeft
       Date = 43642.000000000000000000
@@ -158,7 +158,7 @@ object FormBenifices: TFormBenifices
       DateMode = dmUpDown
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -19
+      Font.Height = -16
       Font.Name = 'Cairo'
       Font.Style = [fsBold]
       ParentBiDiMode = False
@@ -167,9 +167,9 @@ object FormBenifices: TFormBenifices
     end
     object DateTimePicker2: TDateTimePicker
       Left = 159
-      Top = 89
+      Top = 95
       Width = 138
-      Height = 44
+      Height = 38
       Align = alBottom
       BiDiMode = bdRightToLeft
       Date = 43642.000000000000000000
@@ -177,7 +177,7 @@ object FormBenifices: TFormBenifices
       DateMode = dmUpDown
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -19
+      Font.Height = -16
       Font.Name = 'Cairo'
       Font.Style = [fsBold]
       ParentBiDiMode = False
@@ -193,7 +193,7 @@ object FormBenifices: TFormBenifices
       Caption = #1576#1581#1579'    '
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -19
+      Font.Height = -16
       Font.Name = 'Cairo'
       Font.Style = [fsBold]
       ImageIndex = 0
@@ -2018,8 +2018,8 @@ object FormBenifices: TFormBenifices
     AlignWithMargins = True
     Left = 3
     Top = 139
-    Width = 759
-    Height = 502
+    Width = 761
+    Height = 606
     BiDiMode = bdRightToLeft
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
@@ -2033,10 +2033,16 @@ object FormBenifices: TFormBenifices
     Transparent = True
     LayoutLookAndFeel = dxLayoutSkinLookAndFeel1
     object cxGrid1: TcxGrid
-      Left = 62
-      Top = 101
-      Width = 652
-      Height = 290
+      Left = 45
+      Top = 122
+      Width = 671
+      Height = 191
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Cairo'
+      Font.Style = [fsBold]
+      ParentFont = False
       TabOrder = 0
       LookAndFeel.NativeStyle = False
       LookAndFeel.ScrollbarMode = sbmDefault
@@ -2074,6 +2080,11 @@ object FormBenifices: TFormBenifices
           DataBinding.FieldName = 'Quantite'
           Width = 106
         end
+        object cxGrid1DBTableView1Column1: TcxGridDBColumn
+          Caption = #1575#1604#1605#1580#1605#1608#1593
+          DataBinding.FieldName = 'som'
+          Width = 120
+        end
         object cxGrid1DBTableView1Column5: TcxGridDBColumn
           Caption = #1578#1575#1585#1610#1582' '#1575#1604#1576#1610#1593
           DataBinding.FieldName = 'date'
@@ -2085,9 +2096,9 @@ object FormBenifices: TFormBenifices
       end
     end
     object dxGaugeControl3: TdxGaugeControl
-      Left = 405
-      Top = 403
-      Width = 227
+      Left = 388
+      Top = 510
+      Width = 246
       Height = 49
       BorderStyle = cxcbsNone
       Transparent = True
@@ -2099,14 +2110,14 @@ object FormBenifices: TFormBenifices
       end
     end
     object dxGaugeControl4: TdxGaugeControl
-      Left = 62
-      Top = 403
+      Left = 45
+      Top = 510
       Width = 232
       Height = 51
       BorderStyle = cxcbsNone
       Transparent = True
       object dxGaugeControl4DigitalScale1: TdxGaugeDigitalScale
-        OptionsLayout.CenterPositionFactorX = 0.504347801208496100
+        OptionsLayout.CenterPositionFactorX = 0.508658170700073200
         OptionsView.DigitCount = 12
         OptionsView.DisplayMode = sdmSevenSegment
         OptionsView.SegmentColorOn = -256
@@ -2116,9 +2127,9 @@ object FormBenifices: TFormBenifices
     object cxGrid2: TcxGrid
       Left = 10000
       Top = 10000
-      Width = 652
+      Width = 669
       Height = 356
-      TabOrder = 3
+      TabOrder = 4
       Visible = False
       object cxGrid2DBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
@@ -2157,7 +2168,7 @@ object FormBenifices: TFormBenifices
       Top = 10000
       Width = 652
       Height = 356
-      TabOrder = 4
+      TabOrder = 5
       Visible = False
       object cxGrid3DBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
@@ -2191,6 +2202,73 @@ object FormBenifices: TFormBenifices
         GridView = cxGrid3DBTableView1
       end
     end
+    object DBGrid1: TDBGrid
+      Left = 46
+      Top = 366
+      Width = 669
+      Height = 131
+      BorderStyle = bsNone
+      DataSource = DataSourceFrais
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Cairo'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 1
+      TitleFont.Charset = ANSI_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -16
+      TitleFont.Name = 'Cairo'
+      TitleFont.Style = [fsBold]
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'Num'
+          Title.Caption = #1575#1604#1585#1602#1605
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Width = 100
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Montant'
+          Title.Caption = #1575#1604#1605#1576#1604#1594
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Remarque'
+          Title.Caption = #1575#1604#1605#1604#1575#1581#1592#1577
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Width = 300
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'DateOp'
+          Title.Caption = #1575#1604#1578#1575#1585#1610#1582
+          Title.Font.Charset = ANSI_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -13
+          Title.Font.Name = 'Cairo'
+          Title.Font.Style = [fsBold]
+          Visible = True
+        end>
+    end
     object dxLayoutControl1Group_Root1: TdxLayoutGroup
       AlignHorz = ahClient
       AlignVert = avClient
@@ -2209,6 +2287,7 @@ object FormBenifices: TFormBenifices
       CaptionOptions.Text = #1575#1604#1571#1585#1576#1600#1600#1575#1581'           '
       AllowRemove = False
       ButtonOptions.Buttons = <>
+      ItemIndex = 2
       Index = 0
     end
     object dxLayoutGroup2: TdxLayoutGroup
@@ -2234,14 +2313,13 @@ object FormBenifices: TFormBenifices
     end
     object dxLayoutItem1: TdxLayoutItem
       Parent = dxLayoutGroup1
-      AlignHorz = ahClient
       CaptionOptions.Text = #1602#1575#1574#1605#1577' '#1575#1604#1605#1576#1610#1593#1575#1578
       CaptionOptions.Layout = clTop
       SizeOptions.AssignedValues = [sovSizableVert]
       SizeOptions.SizableVert = True
-      SizeOptions.Height = 330
+      SizeOptions.Height = 231
       Control = cxGrid1
-      ControlOptions.OriginalHeight = 290
+      ControlOptions.OriginalHeight = 191
       ControlOptions.OriginalWidth = 250
       ControlOptions.ShowBorder = False
       Index = 0
@@ -2279,7 +2357,7 @@ object FormBenifices: TFormBenifices
     object dxLayoutAutoCreatedGroup1: TdxLayoutAutoCreatedGroup
       Parent = dxLayoutGroup1
       LayoutDirection = ldHorizontal
-      Index = 1
+      Index = 2
     end
     object dxLayoutItem5: TdxLayoutItem
       Parent = dxLayoutGroup3
@@ -2304,6 +2382,15 @@ object FormBenifices: TFormBenifices
       ControlOptions.OriginalWidth = 250
       ControlOptions.ShowBorder = False
       Index = 0
+    end
+    object dxLayoutItem6: TdxLayoutItem
+      Parent = dxLayoutGroup1
+      CaptionOptions.Text = #1575#1604#1578#1603#1575#1604#1610#1601
+      CaptionOptions.Layout = clTop
+      Control = DBGrid1
+      ControlOptions.OriginalHeight = 131
+      ControlOptions.OriginalWidth = 320
+      Index = 1
     end
   end
   object ImageList1: TImageList
@@ -2813,5 +2900,10 @@ object FormBenifices: TFormBenifices
       LookAndFeel.SkinName = 'DarkSide'
       PixelsPerInch = 96
     end
+  end
+  object DataSourceFrais: TDataSource
+    DataSet = DataModuleDelivrence.FDQueryFrais
+    Left = 457
+    Top = 591
   end
 end

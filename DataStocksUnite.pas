@@ -25,6 +25,10 @@ type
     FDQueryExpireRecordCount: TFDQuery;
     FDQueryTypeProdStock: TFDQuery;
     FDQueryRechProdLikeId: TFDQuery;
+    FDQueryStockInventaire: TFDQuery;
+    FDQueryStockFacture: TFDQuery;
+    FDQueryStockInventaireByProd: TFDQuery;
+    FDQueryStockFactureByProd: TFDQuery;
     procedure NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;quantite:real;StockDest:integer;DateProd,Dateconsm:TDateTime);
     procedure selectStoke(StokeName:string);
     procedure selectAllStokes();
@@ -32,6 +36,7 @@ type
     function rechercheProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
     function UpDateQntProdByNameCodeSockid(ProdName,CodeProd:string;stockId:integer;Quantite:real):boolean;
     function ModifierQuantiteStock(numStock:integer;code,id:string;quantite:real):boolean;
+    procedure RefrechStockQuery();
 
 
   private
@@ -178,6 +183,21 @@ begin
      result:=true
      else result:=false;
 end;
+procedure TDataStocks.RefrechStockQuery;
+begin
+FDQueryStockInventaire.Close;
+FDQueryStockInventaire.Open();
+
+FDQueryStockFacture.Close;
+FDQueryStockFacture.Open();
+
+FDQueryStockInventaireByProd.Close;
+FDQueryStockInventaireByProd.Open();
+
+FDQueryStockFactureByProd.Close;
+FDQueryStockFactureByProd.Open();
+end;
+
 //------------------------------------------------------------------------------
 function TDataStocks.UpDateQntProdByNameCodeSockid(ProdName, CodeProd: string;
   stockId: integer; Quantite: real): boolean;

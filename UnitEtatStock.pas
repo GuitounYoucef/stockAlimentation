@@ -41,11 +41,9 @@ type
     Image1: TImage;
     Image4: TImage;
     frxReportNormal: TfrxReport;
-    frxDBDataset1: TfrxDBDataset;
     ButtonConsultation: TButton;
     SearchBox1: TSearchBox;
     ButtonBalance: TButton;
-    ButtonListeProd: TButton;
     ComboBoxStokesListe: TComboBox;
     Label1: TLabel;
     Label2: TLabel;
@@ -70,6 +68,7 @@ type
     cxGrid1DBTableViewtotal: TcxGridDBColumn;
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1: TcxStyle;
+    frxDBDataset1: TfrxDBDataset;
     procedure FormShow(Sender: TObject);
     procedure ButtonImprListeStokeClick(Sender: TObject);
 
@@ -88,6 +87,11 @@ type
 
     procedure selectRechercheObj();
     procedure UpdateGrid();
+    procedure cxGrid1DBTableView1CellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
+    procedure FormMouseEnter(Sender: TObject);
+    procedure cxLookupComboBoxCodeProdEnter(Sender: TObject);
 
   private
     { Déclarations privées }
@@ -103,6 +107,7 @@ var
   FormEtatStock: TFormEtatStock;
   lien,rechercheObj:string;
   searchResult : TSearchRec;
+  selectItem:integer;
 
 implementation
 
@@ -121,8 +126,7 @@ end;
 //______________________________________________________________________________
 procedure TFormEtatStock.ButtonListeProdClick(Sender: TObject);
 begin
-    FormRechercheNomProduit.show;
-    FormRechercheNomProduit.f:=5;
+
 end;
 //______________________________________________________________________________
 procedure updateafficheurs();
@@ -148,7 +152,8 @@ end;
 //______________________________________________________________________________
 procedure TFormEtatStock.ButtonConsultationClick(Sender: TObject);
 begin
-    FormStockDetail.DataSourceAllStockByDate.DataSet:=DataStocks.FDTableStock;
+    FormStockDetail.DataSourceAllStockInventaire.DataSet:=DataStocks.FDQueryStockInventaire;
+    FormStockDetail.DataSourceAllStockFacture.DataSet:=DataStocks.FDQueryStockFacture;
     FormStockDetail.show;
 end;
 //______________________________________________________________________________
@@ -162,14 +167,31 @@ begin
   updateafficheurs();
   UpdateGrid();
 end;
+procedure TFormEtatStock.cxGrid1DBTableView1CellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+FormStockDetail.rechByProd(DataStocks.FDQueryEtatStokeId.FieldValues['id'],
+                           DataStocks.FDQueryEtatStokeId.FieldValues['code']);
+
+end;
+
+procedure TFormEtatStock.cxLookupComboBoxCodeProdEnter(Sender: TObject);
+begin
+LoadKeyboardLayout('0000040c', KLF_ACTIVATE);
+end;
+
 procedure TFormEtatStock.cxLookupComboBoxCodeProdKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
-     if key=VK_RETURN then
+  if key=VK_RETURN then
+      selectItem:=selectItem+1;
+  if (selectItem=2) then
      begin
        ajouterProduit('******',cxLookupComboBoxCodeProd.Text);
        cxLookupComboBoxCodeProd.ClearSelection;
        rechercheObj:='cxLookupComboBox';
+       selectItem:=0;
      end;
 end;
 
@@ -219,6 +241,11 @@ begin
 
 end;
 //______________________________________________________________________________
+procedure TFormEtatStock.FormMouseEnter(Sender: TObject);
+begin
+FormShow(FormEtatStock)
+end;
+
 procedure TFormEtatStock.FormShow(Sender: TObject);
 var i:integer;
 begin

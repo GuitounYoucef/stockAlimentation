@@ -16,12 +16,19 @@ type
   TFormStockDetail = class(TForm)
     GridPanel2: TGridPanel;
     DBGrid1: TDBGrid;
-    DataSourceAllStockByDate: TDataSource;
-    DBNavigator1: TDBNavigator;
+    DataSourceAllStockInventaire: TDataSource;
     GridPanel7: TGridPanel;
     Label10: TLabel;
     Image3: TImage;
-    procedure FormShow(Sender: TObject);
+    DBGrid2: TDBGrid;
+    Label1: TLabel;
+    Label2: TLabel;
+    DataSourceAllStockFacture: TDataSource;
+    DBNavigator2: TDBNavigator;
+    procedure rechByProd(id,code:string);
+    procedure DBGrid2DblClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormMouseEnter(Sender: TObject);
   private
     { Déclarations privées }
   public
@@ -35,12 +42,44 @@ implementation
 
 {$R *.dfm}
 
-uses UnitEtatStock,unit36,DataStocksUnite;
+uses UnitEtatStock,unit36,DataStocksUnite, UnitFacturation;
 
-procedure TFormStockDetail.FormShow(Sender: TObject);
+procedure TFormStockDetail.DBGrid2DblClick(Sender: TObject);
 begin
-    DataStocks.FDTableStock.Close;
-    DataStocks.FDTableStock.Open();
+  if DataSourceAllStockFacture.DataSet=DataStocks.FDQueryStockFacture then
+     FormFacturation.RechercheFactureForm(DataStocks.FDQueryStockFacture.FieldValues['Annee'],
+                                          DataStocks.FDQueryStockFacture.FieldValues['Num'])
+  else if DataSourceAllStockFacture.DataSet=DataStocks.FDQueryStockFactureByProd then
+           FormFacturation.RechercheFactureForm(DataStocks.FDQueryStockFactureByProd.FieldValues['Annee'],
+                                                DataStocks.FDQueryStockFactureByProd.FieldValues['Num']);
+  close();
+end;
+
+procedure TFormStockDetail.FormActivate(Sender: TObject);
+begin
+DataStocks.RefrechStockQuery();
+end;
+
+procedure TFormStockDetail.FormMouseEnter(Sender: TObject);
+begin
+    DataStocks.RefrechStockQuery();
+end;
+
+procedure TFormStockDetail.rechByProd(id, code: string);
+begin
+    DataStocks.FDQueryStockInventaireByProd.Params.ParamValues['i']:=id;
+    DataStocks.FDQueryStockInventaireByProd.Params.ParamValues['c']:=code;
+    DataStocks.FDQueryStockInventaireByProd.Close;
+    DataStocks.FDQueryStockInventaireByProd.Open();
+
+    DataStocks.FDQueryStockFactureByProd.Params.ParamValues['i']:=id;
+    DataStocks.FDQueryStockFactureByProd.Params.ParamValues['c']:=code;
+    DataStocks.FDQueryStockFactureByProd.Close;
+    DataStocks.FDQueryStockFactureByProd.Open();
+
+    FormStockDetail.DataSourceAllStockInventaire.DataSet:=DataStocks.FDQueryStockInventaireByProd;
+    FormStockDetail.DataSourceAllStockFacture.DataSet:=DataStocks.FDQueryStockFactureByProd;
+    show;
 end;
 
 end.

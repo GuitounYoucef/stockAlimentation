@@ -18,7 +18,6 @@ uses
   UnitPaiementCredit in 'UnitPaiementCredit.pas' {FormPaiementCredit},
   UnitGestionUtilisateurs in 'UnitGestionUtilisateurs.pas' {FormGestionUtilisateurs},
   UnitRechercheStock in 'UnitRechercheStock.pas' {FormRechercheStock},
-  UnitRechercheNomProduit in 'UnitRechercheNomProduit.pas' {FormRechercheNomProduit},
   UnitBenifices in 'UnitBenifices.pas' {FormBenifices},
   UnitAjouterProduits in 'UnitAjouterProduits.pas' {FormAjouterProduits},
   UnitStockDetail in 'UnitStockDetail.pas' {FormStockDetail},
@@ -35,7 +34,9 @@ uses
   DataProduitsUnite in 'DataProduitsUnite.pas' {DataProduits: TDataModule},
   DataStocksUnite in 'DataStocksUnite.pas' {DataStocks: TDataModule},
   DataParametrageUnite in 'DataParametrageUnite.pas' {DataParametrage: TDataModule},
-  UnitUpdateRecordFact in 'UnitUpdateRecordFact.pas' {FormUpdateRecordFact};
+  UnitUpdateRecordFact in 'UnitUpdateRecordFact.pas' {FormUpdateRecordFact},
+  UnitFrais in 'UnitFrais.pas' {FormFrais},
+  DataFraisUnit in 'DataFraisUnit.pas' {DataFrais: TDataModule};
 
 {$R *.res}
 
@@ -70,12 +71,13 @@ begin
   Application.CreateForm(TFormPaiementCredit, FormPaiementCredit);
   Application.CreateForm(TFormGestionUtilisateurs, FormGestionUtilisateurs);
   Application.CreateForm(TFormRechercheStock, FormRechercheStock);
-  Application.CreateForm(TFormRechercheNomProduit, FormRechercheNomProduit);
   Application.CreateForm(TFormBenifices, FormBenifices);
   Application.CreateForm(TFormAjouterProduits, FormAjouterProduits);
   Application.CreateForm(TFormStockDetail, FormStockDetail);
   Application.CreateForm(TFormListeFactures, FormListeFactures);
   Application.CreateForm(TFormListeVente, FormListeVente);
   Application.CreateForm(TFormUpdateRecordFact, FormUpdateRecordFact);
+  Application.CreateForm(TFormFrais, FormFrais);
+  Application.CreateForm(TDataFrais, DataFrais);
   Application.Run;
 end.

@@ -91,8 +91,10 @@ begin
                     with formFacturation do
                     begin
                         //DataStocks.EntreeFacture(DataFacturation.FDQueryFactureRecords,destination);
-                        close;
+
                         valide:=true;
+                        paiement:=true;
+                        close;
                     end;
                    close;
                   end;
@@ -125,7 +127,7 @@ end;
 //------------------------------------------------------------------------------
 procedure TFormPaiementCredit.FormShow(Sender: TObject);
 begin
-//editpaie.text:='0';
+EditPaieChange(FormPaiementCredit)
 end;
 
 end.

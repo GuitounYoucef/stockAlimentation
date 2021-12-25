@@ -29,7 +29,7 @@ object DataProduits: TDataProduits
     Connection = FDConnection1
     UpdateOptions.UpdateTableName = 'stockid'
     TableName = 'stockid'
-    Left = 272
+    Left = 312
     Top = 40
   end
   object FDQueryProdDejaUtilise: TFDQuery
@@ -55,7 +55,6 @@ object DataProduits: TDataProduits
       end>
   end
   object FDQueryFindProduitByCode: TFDQuery
-    Active = True
     Connection = FDConnection1
     SQL.Strings = (
       'select produits.*'
@@ -84,13 +83,30 @@ object DataProduits: TDataProduits
       'select  Produits.*'
       'from Produits'
       'where Produits.Id like :x')
-    Left = 272
-    Top = 124
+    Left = 312
+    Top = 116
     ParamData = <
       item
         Name = 'X'
         DataType = ftWideString
         ParamType = ptInput
+      end>
+  end
+  object FDQueryProduit: TFDQuery
+    Active = True
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select produits.*'
+      'from produits'
+      'where  (id like :i)')
+    Left = 160
+    Top = 120
+    ParamData = <
+      item
+        Name = 'I'
+        DataType = ftWideString
+        ParamType = ptInput
+        Value = '%%'
       end>
   end
 end

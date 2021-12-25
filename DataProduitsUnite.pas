@@ -18,6 +18,7 @@ type
     FDQueryProdDejaUtilise: TFDQuery;
     FDQueryFindProduitByCode: TFDQuery;
     FDQueryProduitLikeId: TFDQuery;
+    FDQueryProduit: TFDQuery;
     function TrouverProduit(codeProd,id:string):boolean;
     procedure FDQueryFindProduitByCodeAfterEdit(DataSet: TDataSet);
     procedure NouveauProduit();
@@ -25,6 +26,7 @@ type
     procedure chargerImage(lien:string);
     function ProdDejaUtilise():boolean;
     procedure FDQueryFindProduitByCodeAfterPost(DataSet: TDataSet);
+    procedure rechProduitById(id:string);
 
   private
     { Déclarations privées }
@@ -78,10 +80,17 @@ begin
      result:=false
     else result:=true;
 end;
+procedure TDataProduits.rechProduitById(id: string);
+begin
+FDQueryProduit.Params.ParamValues['i']:='%'+id+'%';
+FDQueryProduit.Close;
+FDQueryProduit.Open();
+end;
+
 //------------------------------------------------------------------------------
 function TDataProduits.TableProduitEstVite: boolean;
 begin
-    if FDTableProduits.RecordCount=0 then
+    if FDQueryProduit.RecordCount=0 then
     result:=true
     else result:=false;
 end;

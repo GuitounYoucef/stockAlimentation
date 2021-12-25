@@ -38,40 +38,6 @@ object DataFacturation: TDataFacturation
     Left = 80
     Top = 24
   end
-  object FDQueryFindProductInStoke: TFDQuery
-    Active = True
-    Connection = FDConnection1
-    SQL.Strings = (
-      'select Stock.*'
-      'from Stock'
-      
-        'where (((Stock.code=:z) or (Stock.id=:x)) and (Stock.Quantite>=:' +
-        'q) and (Stock.Numstock=:n))'
-      'order by DateConsm;')
-    Left = 384
-    Top = 24
-    ParamData = <
-      item
-        Name = 'Z'
-        DataType = ftString
-        ParamType = ptInput
-      end
-      item
-        Name = 'X'
-        DataType = ftString
-        ParamType = ptInput
-      end
-      item
-        Name = 'Q'
-        DataType = ftInteger
-        ParamType = ptInput
-      end
-      item
-        Name = 'N'
-        DataType = ftInteger
-        ParamType = ptInput
-      end>
-  end
   object FDQueryFactureRecords: TFDQuery
     Active = True
     Connection = FDConnection1

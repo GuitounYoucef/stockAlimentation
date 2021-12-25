@@ -8,7 +8,7 @@ object DataStocks: TDataStocks
     Connection = FDConnection1
     UpdateOptions.UpdateTableName = 'stock.dbo.EntreesProduits'
     TableName = 'stock.dbo.EntreesProduits'
-    Left = 264
+    Left = 176
     Top = 40
   end
   object FDQuerySelectStockId: TFDQuery
@@ -18,7 +18,7 @@ object DataStocks: TDataStocks
       'select NumStock'
       'from stockid'
       'where id=:x')
-    Left = 384
+    Left = 576
     Top = 40
     ParamData = <
       item
@@ -37,7 +37,7 @@ object DataStocks: TDataStocks
       ''
       ''
       '')
-    Left = 560
+    Left = 752
     Top = 40
     ParamData = <
       item
@@ -81,7 +81,7 @@ object DataStocks: TDataStocks
       'from EntreesProduits'
       'where (numstock>:x) and (numstock<:y) and (id like :i)'
       '')
-    Left = 704
+    Left = 896
     Top = 40
     ParamData = <
       item
@@ -107,7 +107,7 @@ object DataStocks: TDataStocks
     Connection = FDConnection1
     UpdateOptions.UpdateTableName = 'stockid'
     TableName = 'stockid'
-    Left = 840
+    Left = 1032
     Top = 40
   end
   object FDQueryRechProdByIdCodeStock: TFDQuery
@@ -116,8 +116,8 @@ object DataStocks: TDataStocks
       'select EntreesProduits.*'
       'from EntreesProduits'
       'where ((id=:x) and (code=:y) and (numstock=:z))')
-    Left = 392
-    Top = 132
+    Left = 576
+    Top = 244
     ParamData = <
       item
         Name = 'X'
@@ -146,8 +146,8 @@ object DataStocks: TDataStocks
       'from EntreesProduits'
       'where (code=:y)'
       'order by dateentree;')
-    Left = 568
-    Top = 136
+    Left = 752
+    Top = 248
     ParamData = <
       item
         Name = 'Y'
@@ -162,8 +162,8 @@ object DataStocks: TDataStocks
       'select stock.* '
       'from stock '
       'where alert=0')
-    Left = 392
-    Top = 248
+    Left = 576
+    Top = 360
   end
   object FDQueryExpire: TFDQuery
     Connection = FDConnection1
@@ -171,8 +171,8 @@ object DataStocks: TDataStocks
       'select stock.* '
       'from stock '
       'where (expire=1) and (quantite>0)')
-    Left = 553
-    Top = 248
+    Left = 737
+    Top = 360
   end
   object FDQueryExpireRecordCount: TFDQuery
     Connection = FDConnection1
@@ -180,8 +180,8 @@ object DataStocks: TDataStocks
       'select distinct [sortie-expire].annee,[sortie-expire].num '
       'from [sortie-expire]'
       'where annee=:a')
-    Left = 713
-    Top = 248
+    Left = 897
+    Top = 360
     ParamData = <
       item
         Name = 'A'
@@ -195,8 +195,8 @@ object DataStocks: TDataStocks
       'select EntreesProduits.*'
       'from EntreesProduits'
       'where type=:x')
-    Left = 400
-    Top = 368
+    Left = 584
+    Top = 480
     ParamData = <
       item
         Name = 'X'
@@ -211,11 +211,89 @@ object DataStocks: TDataStocks
       'select  EntreesProduits.*'
       'from EntreesProduits'
       'where Id like :x')
-    Left = 744
-    Top = 136
+    Left = 928
+    Top = 248
     ParamData = <
       item
         Name = 'X'
+        DataType = ftWideString
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
+  object FDQueryStockInventaire: TFDQuery
+    Connection = FDConnection1
+    UpdateOptions.AssignedValues = [uvRefreshMode]
+    UpdateOptions.RefreshMode = rmAll
+    UpdateOptions.UpdateTableName = 'stock.dbo.Stock'
+    SQL.Strings = (
+      'select  EntreesProduits.*'
+      'from EntreesProduits'
+      'where (Num=0)'
+      'order by dateentree;')
+    Left = 288
+    Top = 40
+  end
+  object FDQueryStockFacture: TFDQuery
+    Connection = FDConnection1
+    UpdateOptions.AssignedValues = [uvRefreshMode]
+    UpdateOptions.RefreshMode = rmAll
+    UpdateOptions.UpdateTableName = 'stock.dbo.Stock'
+    SQL.Strings = (
+      'select  EntreesProduits.*'
+      'from EntreesProduits'
+      'where (Num>0)'
+      'order by dateentree;')
+    Left = 448
+    Top = 40
+  end
+  object FDQueryStockInventaireByProd: TFDQuery
+    Connection = FDConnection1
+    UpdateOptions.AssignedValues = [uvRefreshMode]
+    UpdateOptions.RefreshMode = rmAll
+    UpdateOptions.UpdateTableName = 'stock.dbo.Stock'
+    SQL.Strings = (
+      'select  EntreesProduits.*'
+      'from EntreesProduits'
+      'where (Num=0) and (id=:i) and (code=:c)'
+      'order by dateentree;')
+    Left = 288
+    Top = 128
+    ParamData = <
+      item
+        Name = 'I'
+        DataType = ftWideString
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'C'
+        DataType = ftWideString
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
+  object FDQueryStockFactureByProd: TFDQuery
+    Connection = FDConnection1
+    UpdateOptions.AssignedValues = [uvRefreshMode]
+    UpdateOptions.RefreshMode = rmAll
+    UpdateOptions.UpdateTableName = 'stock.dbo.Stock'
+    SQL.Strings = (
+      'select  EntreesProduits.*'
+      'from EntreesProduits'
+      'where (Num>0) and (id=:i) and (code=:c)'
+      'order by dateentree;')
+    Left = 456
+    Top = 128
+    ParamData = <
+      item
+        Name = 'I'
+        DataType = ftWideString
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'C'
         DataType = ftWideString
         ParamType = ptInput
         Value = Null

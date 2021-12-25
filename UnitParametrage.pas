@@ -59,6 +59,10 @@ type
     cxDBTextEdit2: TcxDBTextEdit;
     dxLayoutItem2: TdxLayoutItem;
     dxLayoutAutoCreatedGroup5: TdxLayoutAutoCreatedGroup;
+    dxLayoutItem17: TdxLayoutItem;
+    dxLayoutItem16: TdxLayoutItem;
+    cxDBComboBox2: TcxDBComboBox;
+    dxLayoutItem18: TdxLayoutItem;
     procedure cxButton2Click(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxDBComboBoxstockidPropertiesChange(Sender: TObject);

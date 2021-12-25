@@ -1,4 +1,4 @@
-unit UnitUpdateRecordFact;
+ï»¿unit UnitUpdateRecordFact;
 
 interface
 
@@ -30,9 +30,9 @@ type
     procedure FormShow(Sender: TObject);
 
   private
-    { Déclarations privées }
+    { DÃ©clarations privÃ©es }
   public
-    { Déclarations publiques }
+    { DÃ©clarations publiques }
   end;
 
 var
@@ -45,7 +45,7 @@ var
 implementation
 
 {$R *.dfm}
-uses DataFacturationUnite,DataStocksUnite;
+uses DataFacturationUnite,DataStocksUnite, UnitFacturation;
 procedure TFormUpdateRecordFact.BitBtn1Click(Sender: TObject);
 var b:boolean;
 
@@ -55,23 +55,30 @@ begin
     begin
        DataFacturation.FDQueryFactureRecords.Edit;
        if (strtofloat(EditPrixAchat.Text)<>DataFacturation.FDQueryFactureRecords.FieldValues['PrixAchat']) then
+          begin
            DataFacturation.FDQueryFactureRecords.FieldValues['PrixAchat']:=strtofloat(EditPrixAchat.Text);
+
+          end;
 
         if (strtofloat(EditPrixAchat.Text)<=strtofloat(EditPrixVenteGros.Text)) then
            begin
             if (strtofloat(EditPrixVenteGros.Text)<>DataFacturation.FDQueryFactureRecords.FieldValues['PrixVenteGros']) then
+             begin
               DataFacturation.FDQueryFactureRecords.FieldValues['PrixVenteGros']:=strtofloat(EditPrixVenteGros.Text);
+             end;
 
               if (strtofloat(EditPrixVenteDetail.Text)>=strtofloat(EditPrixVenteGros.Text)) then
                  begin
                     if (strtofloat(EditPrixVenteDetail.Text)<>DataFacturation.FDQueryFactureRecords.FieldValues['PrixVente']) then
-                      DataFacturation.FDQueryFactureRecords.FieldValues['PrixVente']:=strtofloat(EditPrixVenteDetail.Text);
+                     begin
+                        DataFacturation.FDQueryFactureRecords.FieldValues['PrixVente']:=strtofloat(EditPrixVenteDetail.Text);
+                     end;
 
                     QuantiteInitial:=DataFacturation.FDQueryFactureRecords.FieldValues['QuantiteInitial'];
                     Quantite:=DataFacturation.FDQueryFactureRecords.FieldValues['Quantite'];
                     QuantiteNouv:=strtofloat(EditQuantite.Text);
                     if (QuantiteNouv<>QuantiteInitial)then
-                    if (QuantiteNouv>QuantiteInitial) or (QuantiteInitial-QuantiteNouv>=Quantite) then
+                    if (QuantiteNouv>QuantiteInitial) or (QuantiteInitial-QuantiteNouv>=Quantite) or (Quantite=QuantiteInitial) then
                     begin
                       if (strtofloat(EditPrixVenteDetail.Text)<>DataFacturation.FDQueryFactureRecords.FieldValues['PrixVente']) then
                         DataFacturation.FDQueryFactureRecords.FieldValues['PrixVente']:=strtofloat(EditPrixVenteDetail.Text);
@@ -79,15 +86,15 @@ begin
                       DataFacturation.FDQueryFactureRecords.FieldValues['QuantiteInitial']:=QuantiteNouv;
 
                     end
-                    else showmessage('ÇáßãíÉ ÇáÌÏíÏÉ ÃŞá ãä ÇáßãíÉ ÇáÊí Êã ÈíÚåÇ ãä åĞå ÇáİÇÊæÑÉ');
+                    else showmessage('Ù„Ø§ ÙŠÙ…ÙƒÙ†Ùƒ ØªÙ‚Ù„ÙŠØµ Ø§Ù„ÙƒÙ…ÙŠØ© ÙÙ‚Ø¯ ØªÙ… Ø¨ÙŠØ¹ Ø¬Ø²Ø¡ Ù…Ù†Ù‡Ø§');
                  end
-                 else showmessage('ÓÚÑ ÇáÈíÚ ÈÇáÊÌÒÆÉ íÌÈ Ãä íßæä ÃßÈÑ  Ãæ íÓÇæí ÓÚáÑ ÇáÈíÚ ÈÇáÌãáÉ');
+                 else showmessage('Ø³Ø¹Ø± Ø§Ù„Ø¨ÙŠØ¹ Ø¨Ø§Ù„ØªØ¬Ø²Ø¦Ø© ÙŠØ¬Ø¨ Ø£Ù† ÙŠÙƒÙˆÙ† Ø£ÙƒØ¨Ø±  Ø£Ùˆ ÙŠØ³Ø§ÙˆÙŠ Ø³Ø¹Ù„Ø± Ø§Ù„Ø¨ÙŠØ¹ Ø¨Ø§Ù„Ø¬Ù…Ù„Ø©');
            end
-           else showmessage('ÓÚÑ ÇáÈíÚ ÈÇáÌãáÉ íÌÈ Ãä íßæä ÃßÈÑ ãä ÓÚÑ ÇáÔÑÇÁ');
+           else showmessage('Ø³Ø¹Ø± Ø§Ù„Ø¨ÙŠØ¹ Ø¨Ø§Ù„Ø¬Ù…Ù„Ø© ÙŠØ¬Ø¨ Ø£Ù† ÙŠÙƒÙˆÙ† Ø£ÙƒØ¨Ø± Ù…Ù† Ø³Ø¹Ø± Ø§Ù„Ø´Ø±Ø§Ø¡');
            DataFacturation.FDQueryFactureRecords.Post;
            close;
     end
-    else showmessage('ÓÚÑ ÇáÈíÚ íÌÈ Ãä íßæä ÃßÈÑ ãä 0');
+    else showmessage('Ø³Ø¹Ø± Ø§Ù„Ø¨ÙŠØ¹ ÙŠØ¬Ø¨ Ø£Ù† ÙŠÙƒÙˆÙ† Ø£ÙƒØ¨Ø± Ù…Ù† 0');
 end;
 
 procedure TFormUpdateRecordFact.DBEditQuantiteEnter(Sender: TObject);

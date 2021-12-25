@@ -239,10 +239,13 @@ begin
     FDQueryListOprsSortie.FieldValues['typevente']:=Opr.typevente;
     FDQueryListOprsSortie.FieldValues['Date']:=Date;
     FDQueryListOprsSortie.FieldValues['TypePaim']:=Opr.TypePaim;
-    FDQueryListOprsSortie.FieldValues['Client']:=Opr.Client;
-    FDQueryListOprsSortie.FieldValues['NumCredit']:=Opr.NumCredit;
+    FDQueryListOprsSortie.FieldValues['NumClient']:=Opr.NumClient;
+
     FDQueryListOprsSortie.FieldValues['NumStock']:=Opr.NumStock;
     FDQueryListOprsSortie.FieldValues['numUser']:=Opr.numUser;
+    FDQueryListOprsSortie.FieldValues['RestePayer']:=0;
+    FDQueryListOprsSortie.FieldValues['LastUpdate']:=date;
+
     FDQueryListOprsSortie.Post;
     end;
 end;
@@ -272,7 +275,7 @@ begin
     operation.Num:=DataModuleVente.FDQueryNumVente.RecordCount+1;
     operation.typevente:=typvente;
     operation.TypePaim:=1;
-    operation.Client:='*';
+    operation.NumClient:=0;
     operation.NumStock:=DataModuleVente.FDTableParametrage.FieldValues['stocknum'];
     operation.numUser:=DataParametrage.FDQueryLoginUser.FieldValues['Numuser'];
     //----------
@@ -324,17 +327,19 @@ end;
 //------------------------------------------------------------------------------
 procedure TDataModuleVente.ModifierNomClient(Client:string);
 begin
-    if FDQueryListOprsSortie.RecordCount>0 then
+ //   if FDQueryListOprsSortie.RecordCount>0 then
     begin
-        operation.Client:=Client;
-        FDQueryListOprsSortie.Edit;
-        FDQueryListOprsSortie.FieldValues['Client']:=Client;
-        FDQueryListOprsSortie.Post;
+
         FDQueryFindClientByName.Params.ParamValues['x']:=Client;
         FDQueryFindClientByName.Close;
         FDQueryFindClientByName.Open();
         if FDQueryFindClientByName.RecordCount>0 then
-          operation.NumClient:=FDQueryFindClientByName.FieldValues['NumClient']
+        begin
+          operation.NumClient:=FDQueryFindClientByName.FieldValues['NumClient'];
+          FDQueryListOprsSortie.Edit;
+          FDQueryListOprsSortie.FieldValues['NumClient']:=operation.NumClient;
+          FDQueryListOprsSortie.Post;
+        end
         else operation.NumClient:=0;
     end;
 end;

@@ -1,6 +1,7 @@
 object FormAjouterProduits: TFormAjouterProduits
   Left = 0
   Top = 0
+  BiDiMode = bdRightToLeft
   BorderStyle = bsDialog
   Caption = 'FormAjouterProduits'
   ClientHeight = 568
@@ -13,6 +14,7 @@ object FormAjouterProduits: TFormAjouterProduits
   Font.Style = []
   FormStyle = fsStayOnTop
   OldCreateOrder = False
+  ParentBiDiMode = False
   Position = poDesktopCenter
   OnShow = FormShow
   PixelsPerInch = 96
@@ -72,7 +74,7 @@ object FormAjouterProduits: TFormAjouterProduits
       Width = 898
       Height = 250
       Align = alClient
-      Alignment = taRightJustify
+      Alignment = taLeftJustify
       BiDiMode = bdRightToLeft
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
@@ -85,13 +87,13 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label2: TLabel
         Left = 228
         Top = 34
-        Width = 183
-        Height = 36
+        Width = 157
+        Height = 30
         Alignment = taRightJustify
         Caption = #1603#1605#1610#1577' '#1575#1604#1608#1581#1583#1577' '#1575#1604#1603#1576#1585#1609' : '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -100,13 +102,13 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label3: TLabel
         Left = 226
         Top = 188
-        Width = 165
-        Height = 36
+        Width = 143
+        Height = 30
         Alignment = taRightJustify
         Caption = #1587#1593#1585' '#1575#1604#1576#1610#1593' '#1576#1575#1604#1578#1580#1586#1574#1577' : '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -115,13 +117,13 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label4: TLabel
         Left = 226
         Top = 87
-        Width = 107
-        Height = 36
+        Width = 92
+        Height = 30
         Alignment = taRightJustify
         Caption = #1587#1593#1585' '#1575#1604#1588#1585#1575#1569' : '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -130,13 +132,13 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label5: TLabel
         Left = 226
         Top = 138
-        Width = 163
-        Height = 36
+        Width = 141
+        Height = 30
         Alignment = taRightJustify
         Caption = #1587#1593#1585' '#1575#1604#1576#1610#1593' '#1576#1575#1604#1580#1605#1604#1577' : '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -145,13 +147,13 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label6: TLabel
         Left = 716
         Top = 138
-        Width = 55
-        Height = 36
+        Width = 48
+        Height = 30
         Alignment = taRightJustify
         Caption = #1575#1604#1606#1608#1593' : '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -160,13 +162,13 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label7: TLabel
         Left = 716
         Top = 188
-        Width = 75
-        Height = 36
+        Width = 65
+        Height = 30
         Alignment = taRightJustify
         Caption = #1575#1604#1605#1615#1589#1606#1593' : '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -175,13 +177,13 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label8: TLabel
         Left = 716
         Top = 34
-        Width = 114
-        Height = 36
+        Width = 98
+        Height = 30
         Alignment = taRightJustify
         Caption = #1573#1587#1605' '#1575#1604#1587#1604#1593#1577' : '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -190,13 +192,13 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label9: TLabel
         Left = 716
         Top = 87
-        Width = 58
-        Height = 36
+        Width = 51
+        Height = 30
         Alignment = taRightJustify
         Caption = #1575#1604#1585#1605#1586'  : '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -314,12 +316,12 @@ object FormAjouterProduits: TFormAjouterProduits
         Left = 446
         Top = 31
         Width = 264
-        Height = 44
+        Height = 38
         DataField = 'id'
         DataSource = DataSourceFindProduitByCode
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -330,13 +332,13 @@ object FormAjouterProduits: TFormAjouterProduits
         Left = 443
         Top = 85
         Width = 267
-        Height = 44
+        Height = 38
         Hint = 'Press Space to Generate'
         DataField = 'Code'
         DataSource = DataSourceFindProduitByCode
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -348,12 +350,12 @@ object FormAjouterProduits: TFormAjouterProduits
         Left = 64
         Top = 31
         Width = 163
-        Height = 44
+        Height = 38
         DataField = 'QuantiteLot'
         DataSource = DataSourceFindProduitByCode
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -364,12 +366,12 @@ object FormAjouterProduits: TFormAjouterProduits
         Left = 64
         Top = 84
         Width = 163
-        Height = 44
+        Height = 38
         DataField = 'PrixAchat'
         DataSource = DataSourceFindProduitByCode
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -382,12 +384,12 @@ object FormAjouterProduits: TFormAjouterProduits
         Left = 64
         Top = 135
         Width = 163
-        Height = 44
+        Height = 38
         DataField = 'PrixVenteGros'
         DataSource = DataSourceFindProduitByCode
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -400,12 +402,12 @@ object FormAjouterProduits: TFormAjouterProduits
         Left = 64
         Top = 185
         Width = 163
-        Height = 44
+        Height = 38
         DataField = 'PrixVente'
         DataSource = DataSourceFindProduitByCode
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -423,7 +425,7 @@ object FormAjouterProduits: TFormAjouterProduits
         Properties.ListColumns = <>
         Style.Font.Charset = ANSI_CHARSET
         Style.Font.Color = clWindowText
-        Style.Font.Height = -19
+        Style.Font.Height = -16
         Style.Font.Name = 'Cairo'
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
@@ -439,7 +441,7 @@ object FormAjouterProduits: TFormAjouterProduits
         Properties.ListColumns = <>
         Style.Font.Charset = ANSI_CHARSET
         Style.Font.Color = clWindowText
-        Style.Font.Height = -19
+        Style.Font.Height = -16
         Style.Font.Name = 'Cairo'
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
@@ -465,13 +467,13 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label11: TLabel
         Left = 716
         Top = 25
-        Width = 105
-        Height = 36
+        Width = 90
+        Height = 30
         Alignment = taRightJustify
         Caption = #1578#1575#1585#1610#1582' '#1575#1604#1573#1606#1578#1575#1580' : '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -480,14 +482,14 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label12: TLabel
         Left = 228
         Top = 25
-        Width = 180
-        Height = 36
+        Width = 154
+        Height = 30
         Alignment = taRightJustify
         BiDiMode = bdRightToLeft
         Caption = #1578#1575#1585#1610#1582' '#1606#1607#1575#1610#1577' '#1575#1604#1589#1604#1575#1581#1610#1577' : '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentBiDiMode = False
@@ -497,13 +499,13 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label1: TLabel
         Left = 226
         Top = 78
-        Width = 132
-        Height = 36
+        Width = 112
+        Height = 30
         Alignment = taRightJustify
         Caption = #1575#1604#1603#1605#1610#1577' '#1575#1604#1603#1604#1610#1577' : '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -530,13 +532,13 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label20: TLabel
         Left = 716
         Top = 78
-        Width = 111
-        Height = 36
+        Width = 96
+        Height = 30
         Alignment = taRightJustify
         Caption = #1573#1587#1605' '#1575#1604#1605#1582#1586#1606' : '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -564,14 +566,14 @@ object FormAjouterProduits: TFormAjouterProduits
         Left = 96
         Top = 23
         Width = 131
-        Height = 44
+        Height = 38
         BiDiMode = bdLeftToRight
         Date = 43871.000000000000000000
         Time = 0.047155127307632940
         DateMode = dmUpDown
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentBiDiMode = False
@@ -582,14 +584,14 @@ object FormAjouterProduits: TFormAjouterProduits
         Left = 584
         Top = 23
         Width = 132
-        Height = 44
+        Height = 38
         BiDiMode = bdLeftToRight
         Date = 43871.000000000000000000
         Time = 0.047155127307632940
         DateMode = dmUpDown
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentBiDiMode = False
@@ -661,7 +663,7 @@ object FormAjouterProduits: TFormAjouterProduits
         Caption = ' '#1573#1590#1575#1601#1577'    '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ImageIndex = 0
@@ -681,7 +683,7 @@ object FormAjouterProduits: TFormAjouterProduits
         DataSource = DataSourceFindProduitByCode
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -19
+        Font.Height = -16
         Font.Name = 'Cairo'
         Font.Style = [fsBold]
         ParentFont = False
@@ -703,6 +705,7 @@ object FormAjouterProduits: TFormAjouterProduits
       Width = 898
       Height = 100
       Align = alClient
+      BiDiMode = bdLeftToRight
       ColumnCollection = <
         item
           Value = 4.929187372249116000
@@ -732,6 +735,7 @@ object FormAjouterProduits: TFormAjouterProduits
           Control = Image3
           Row = 1
         end>
+      ParentBiDiMode = False
       RowCollection = <
         item
           Value = 9.924856540400423000

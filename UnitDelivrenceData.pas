@@ -19,20 +19,20 @@ Credit=record
 end;
 
   TDataModuleDelivrence = class(TDataModule)
-    FDQueryCreditListe: TFDQuery;
-    FDQueryCredit: TFDQuery;
     FDConnection1: TFDConnection;
     FDQueryListe: TFDQuery;
     FDQueryDelivrence: TFDQuery;
     FD12QueryImp: TFDQuery;
-    FDTableCreditListe: TFDTable;
     FDQueryOprVente: TFDQuery;
     FDQueryListeParTypePaim: TFDQuery;
     FDQuerySortieDate: TFDQuery;
     FDQueryBenifsomsortie: TFDQuery;
     FDQueryBeniforderProduit: TFDQuery;
     FDQueryBenifOrderUtilisateur: TFDQuery;
+    FDQueryFrais: TFDQuery;
+    FDQuerySommeFrais: TFDQuery;
     procedure FDQueryDelivrenceAfterScroll(DataSet: TDataSet);
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Déclarations privées }
   public
@@ -44,7 +44,7 @@ end;
      procedure UpDateCredit(total,payee:real);
      procedure SetTypePaiementOprVente(NumOpr,typePaiement:integer);
      function SommeParTypePaiment(index:longint):real;
-     procedure CalculerRevenu(Var ventes:real;var achats:real;date1,date2:string);
+     procedure CalculerRevenu(var frais:real;Var ventes:real;var achats:real;date1,date2:string);
 
   end;
 
@@ -72,85 +72,14 @@ end;
 procedure TDataModuleDelivrence.UpDateCredit(total,payee:real);
 var AncienCredit:credit;
 begin
-FDQueryCredit.Params.ParamValues['x']:=FDQueryDelivrence.FieldValues['NumClient'];
-FDQueryCredit.Close;
-FDQueryCredit.Open;
-if DataModuleDelivrence.FDQueryCredit.RecordCount=1 then     // Ancien Credit
-begin
-  FDQueryCreditListe.Params.ParamValues['x']:=FDQueryCredit.FieldValues['NumCredit'];
-  FDQueryCreditListe.Close;
-  FDQueryCreditListe.Open();
-  if FDQueryCreditListe.RecordCount>0 then
-  begin
-    FDQueryCreditListe.Last;
-    AncienCredit.NumAncienVente:=FDQueryCreditListe.FieldValues['NumAncienVente'];
-    AncienCredit.NumActuelVente:=FDQueryCreditListe.FieldValues['NumActuelVente'];
-    FDQueryCreditListe.insert;
-    FDQueryCreditListe.FieldValues['NumAncienVente']:=AncienCredit.NumAncienVente;
-    FDQueryCreditListe.FieldValues['NumActuelVente']:=AncienCredit.NumActuelVente;
-    FDQueryCreditListe.FieldValues['total']:=total;
-    FDQueryCreditListe.FieldValues['payee']:=payee;
-    FDQueryCreditListe.FieldValues['temps']:=date;
-    FDQueryCreditListe.FieldValues['NumCredit']:=FDQueryCredit.FieldValues['NumCredit'];
-    FDQueryCreditListe.FieldValues['NumOpr']:=FDQueryCreditListe.RecordCount+1;
-    FDQueryCreditListe.Post;
-  end;
-if total=payee then   // fermeture de credit
-begin
-  FDQueryCredit.Edit;
-  FDQueryCredit.FieldValues['ferme']:=true;
-  FDQueryCredit.Post;
-  FDQueryListe.First;
-  while not FDQueryListe.Eof do
-  begin
-     SetTypePaiementOprVente(FDQueryListe.FieldValues['NumOpr'],3);
-     FDQueryListe.Next;
-  end;
-end;
-FDQueryDelivrence.Close;
-FDQueryDelivrence.Open();
-end;
+
+
 end;
 //------------------------------------------------------------------------------
 function TDataModuleDelivrence.RecupererCredit(NumClient:longint):Credit;
 var crd:Credit;
 begin
-FDQueryCredit.Params.ParamValues['x']:=DataModuleDelivrence.FDQueryDelivrence.FieldValues['NumClient'];
-FDQueryCredit.Close;
-FDQueryCredit.Open;
-if DataModuleDelivrence.FDQueryCredit.RecordCount=1 then     // Recuperer Ancien Credit
-begin
-  FDQueryCreditListe.Params.ParamValues['x']:=FDQueryCredit.FieldValues['NumCredit'];
-  FDQueryCreditListe.Close;
-  FDQueryCreditListe.Open();
-  if FDQueryCreditListe.RecordCount>0 then
-  begin
-    FDQueryCreditListe.Last;
-    crd.NumAncienVente:=FDQueryCreditListe.FieldValues['NumAncienVente'];
-    crd.NumActuelVente:=FDQueryCreditListe.FieldValues['NumActuelVente'];
-    crd.total:=FDQueryCreditListe.FieldValues['total'];
-    crd.payee:=FDQueryCreditListe.FieldValues['payee'];
-  end;
-end
-else
-begin     // Creee Nouveau Credit
-  FDQueryCredit.Insert;
-  FDQueryCredit.FieldValues['NumClient']:=NumClient;
-  FDQueryCredit.FieldValues['ferme']:=0;
-  FDQueryCredit.Post;
-  FDTableCreditListe.Insert;
-  FDTableCreditListe.FieldValues['NumCredit']:=FDQueryCredit.FieldValues['NumCredit'];
-  FDTableCreditListe.FieldValues['NumOpr']:=1;
-  FDTableCreditListe.FieldValues['total']:=SommeListProd();
-  FDTableCreditListe.FieldValues['payee']:=0;
-  FDTableCreditListe.FieldValues['temps']:=date;
-  FDQueryListe.First;
-  FDTableCreditListe.FieldValues['NumAncienVente']:=FDQueryListe.FieldValues['NumOpr'];
-  FDQueryListe.Last;
-  FDTableCreditListe.FieldValues['NumActuelVente']:=FDQueryListe.FieldValues['NumOpr'];
-  FDTableCreditListe.Post;
-end;
-result:=crd;
+
 end;
 
 //------------------------------------------------------------------------------
@@ -189,7 +118,7 @@ end;
 result:=som;
 end;
 //------------------------------------------------------------------------------
-procedure TDataModuleDelivrence.CalculerRevenu(var ventes: real;
+procedure TDataModuleDelivrence.CalculerRevenu(var frais:real;var ventes: real;
   var achats: real;date1,date2:string);
 begin
     FDQueryBenifsomsortie.Params.ParamValues['x']:=date1;
@@ -202,20 +131,34 @@ begin
       achats:=DataModuleDelivrence.FDQueryBenifsomsortie.FieldValues['achats'];
     end;
 
-    DataModuleDelivrence.FDQuerySortieDate.Params.ParamValues['x']:=date1;
-    DataModuleDelivrence.FDQuerySortieDate.Params.ParamValues['y']:=date2;
-    DataModuleDelivrence.FDQuerySortieDate.Active:=false;
-    DataModuleDelivrence.FDQuerySortieDate.Active:=true;
+    FDQuerySortieDate.Params.ParamValues['x']:=date1;
+    FDQuerySortieDate.Params.ParamValues['y']:=date2;
+    FDQuerySortieDate.Active:=false;
+    FDQuerySortieDate.Active:=true;
 
-    DataModuleDelivrence.FDQueryBeniforderProduit.Params.ParamValues['x']:=date1;
-    DataModuleDelivrence.FDQueryBeniforderProduit.Params.ParamValues['y']:=date2;
-    DataModuleDelivrence.FDQueryBeniforderProduit.Active:=false;
-    DataModuleDelivrence.FDQueryBeniforderProduit.Active:=true;
+    FDQueryBeniforderProduit.Params.ParamValues['x']:=date1;
+    FDQueryBeniforderProduit.Params.ParamValues['y']:=date2;
+    FDQueryBeniforderProduit.Active:=false;
+    FDQueryBeniforderProduit.Active:=true;
 
-    DataModuleDelivrence.FDQueryBenifOrderUtilisateur.Params.ParamValues['x']:=date1;
-    DataModuleDelivrence.FDQueryBenifOrderUtilisateur.Params.ParamValues['y']:=date2;
-    DataModuleDelivrence.FDQueryBenifOrderUtilisateur.Active:=false;
-    DataModuleDelivrence.FDQueryBenifOrderUtilisateur.Active:=true;
+    FDQueryBenifOrderUtilisateur.Params.ParamValues['x']:=date1;
+    FDQueryBenifOrderUtilisateur.Params.ParamValues['y']:=date2;
+    FDQueryBenifOrderUtilisateur.Active:=false;
+    FDQueryBenifOrderUtilisateur.Active:=true;
+
+    FDQueryFrais.Params.ParamValues['x']:=date1;
+    FDQueryFrais.Params.ParamValues['y']:=date2;
+    FDQueryFrais.Active:=false;
+    FDQueryFrais.Active:=true;
+    if FDQueryFrais.RecordCount>0 then
+    begin
+    FDQuerySommeFrais.Params.ParamValues['x']:=date1;
+    FDQuerySommeFrais.Params.ParamValues['y']:=date2;
+    FDQuerySommeFrais.Active:=false;
+    FDQuerySommeFrais.Active:=true;
+    frais:=FDQuerySommeFrais.FieldValues['somme']
+    end
+    else frais:=0;
 
 end;
 //------------------------------------------------------------------------------
@@ -280,6 +223,11 @@ DataModuleDelivrence.FDQueryDelivrence.Open;
 if DataModuleDelivrence.FDQueryDelivrence.RecordCount=0 then
    DataModuleDelivrence.FDQueryListe.Close;
 end;
+procedure TDataModuleDelivrence.DataModuleCreate(Sender: TObject);
+begin
+
+end;
+
 //------------------------------------------------------------------------------
 procedure TDataModuleDelivrence.FDQueryDelivrenceAfterScroll(
   DataSet: TDataSet);

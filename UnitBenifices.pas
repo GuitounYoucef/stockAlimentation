@@ -68,6 +68,10 @@ type
     cxGrid3DBTableView1Column3: TcxGridDBColumn;
     dxLayoutLookAndFeelList1: TdxLayoutLookAndFeelList;
     dxLayoutSkinLookAndFeel1: TdxLayoutSkinLookAndFeel;
+    DBGrid1: TDBGrid;
+    dxLayoutItem6: TdxLayoutItem;
+    DataSourceFrais: TDataSource;
+    cxGrid1DBTableView1Column1: TcxGridDBColumn;
     procedure ButtonRechercheClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dxLayoutControl1Group_Root1TabChanging(Sender: TObject;
@@ -87,15 +91,16 @@ uses unit36, UnitDelivrenceData;
 {$R *.dfm}
 
 procedure TFormBenifices.ButtonRechercheClick(Sender: TObject);
-var ventes,achats,revenu:real;
+var frais,ventes,achats,revenu:real;
  begin
     achats:=0;
     ventes:=0;
     revenu:=0;
-    DataModuleDelivrence.CalculerRevenu(ventes,achats,datetostr(DateTimePicker1.Date),datetostr(DateTimePicker2.Date));
-    revenu:=ventes-achats;
-    dxGaugeControl3DigitalScale1.Value:=FloatTostrF(revenu,ffFixed,12,2);
-    dxGaugeControl4DigitalScale1.Value:=FloatTostrF(ventes,ffFixed,12,2);
+    frais:=0;
+    DataModuleDelivrence.CalculerRevenu(frais,ventes,achats,datetostr(DateTimePicker1.Date),datetostr(DateTimePicker2.Date));
+    revenu:=ventes-achats-frais;
+    dxGaugeControl4DigitalScale1.Value:=FloatTostrF(revenu,ffFixed,12,2);
+    dxGaugeControl3DigitalScale1.Value:=FloatTostrF(ventes,ffFixed,12,2);
 end;
 
 procedure TFormBenifices.dxLayoutControl1Group_Root1TabChanging(Sender: TObject;
