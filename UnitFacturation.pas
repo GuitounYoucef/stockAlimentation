@@ -62,13 +62,10 @@ type
     DataSourceListProduits: TDataSource;
     ToggleSwitchRechDetail: TToggleSwitch;
     procedure ButtonImprimerClick(Sender: TObject);
-    procedure ButtonValiderClick(Sender: TObject);
-    procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure EditCodeProduitKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ButtonProduitsClick(Sender: TObject);
     procedure ComboBoxTypeSourceChange(Sender: TObject);
-    procedure ajouterProduit(codeProd,id:string);
     procedure cxLookupComboBoxCodeProdKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure cxLookupComboBoxNomSourcePropertiesChange(Sender: TObject);
@@ -77,13 +74,17 @@ type
     procedure cxLookupComboBoxCodeProdPropertiesChange(Sender: TObject);
     procedure EditCodeProduitChange(Sender: TObject);
     procedure selectRechercheObj();
-    procedure NouvelleFactureForm();
-    procedure RechercheFactureForm(a:string;n:integer);
     procedure intializationAffichage(aff:boolean);
     procedure cxLookupComboBoxCodeProdEnter(Sender: TObject);
-
     procedure FormShow(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
+
+
+    //*************************************************
+    procedure ajouterProduit(codeProd,id:string);
+    procedure NouvelleFactureForm();
+    procedure RechercheFactureForm(a:string;n:integer);
+    procedure ButtonValiderClick(Sender: TObject);
 
 
   private
@@ -91,16 +92,16 @@ type
   public
   var
   valide,update,paiement:boolean;
-  Annee,codebar,NomDestination:string;
+  Annee:string;
   som:longint;
-  num,source,destination,typeops,numstoke:integer;
+  num,typeops:integer;
   { Déclarations publiques }
   end;
 
 var
   FormFacturation: TFormFacturation;
-  b,exist,balance:boolean;
-  tp,id,prod,rechercheObj:string;
+
+  rechercheObj:string;
   selectItem:integer;
 
 implementation
@@ -110,14 +111,12 @@ implementation
 uses UnitPaiementCredit, UnitRechercheNomProduit, UnitAjouterProduits, DataProduitsUnite,
   DataFacturationUnite,DataParametrageUnite, UnitUpdateRecordFact;
 
+  //------------------------------------------------------------------------------
 procedure TFormFacturation.ButtonValiderClick(Sender: TObject);
 begin
-DataFacturation.ValiderInforFavture( num,
-                                     Annee,
-                                     cxLookupComboBoxNomSource.text,
+DataFacturation.ValiderInforFavture( cxLookupComboBoxNomSource.text,
                                      cxLookupComboBoxstockid.text,
                                      typeops);
-
 FormPaiementCredit.PaimentFactureShow(DataFacturation.calculerSomFacture());
 end;
 //------------------------------------------------------------------------------
@@ -156,25 +155,25 @@ end;
 procedure TFormFacturation.cxLookupComboBoxNomSourcePropertiesChange(
   Sender: TObject);
 begin
-cxLookupComboBoxstockid.ClearSelection;
-if typeops=0 then
-begin
-   DataSourceStocksNamesDestination.DataSet:=DataFacturation.FDTableStockid;
-end
-else
-begin
-   DataFacturation.FDQueryStocksNamesDestination.Params.ParamValues['x']:=cxLookupComboBoxNomSource.Text;
-   DataFacturation.FDQueryStocksNamesDestination.Active:=false;
-   DataFacturation.FDQueryStocksNamesDestination.Active:=true;
-   DataSourceStocksNamesDestination.DataSet:=DataFacturation.FDQueryStocksNamesDestination;
-end;
+    cxLookupComboBoxstockid.ClearSelection;
+    if typeops=0 then
+    begin
+       DataSourceStocksNamesDestination.DataSet:=DataFacturation.FDTableStockid;
+    end
+    else
+    begin
+       DataFacturation.FDQueryStocksNamesDestination.Params.ParamValues['x']:=cxLookupComboBoxNomSource.Text;
+       DataFacturation.FDQueryStocksNamesDestination.Active:=false;
+       DataFacturation.FDQueryStocksNamesDestination.Active:=true;
+       DataSourceStocksNamesDestination.DataSet:=DataFacturation.FDQueryStocksNamesDestination;
+    end;
 end;
 
 
 procedure TFormFacturation.cxLookupComboBoxstockidFocusChanged(Sender: TObject);
 begin
-  destination:=DataFacturation.TrouverStockNum(cxLookupComboBoxstockid.Text);
-  NomDestination:=cxLookupComboBoxstockid.Text;
+  DataFacturation.facture.NumDestination:=DataFacturation.TrouverStockNum(cxLookupComboBoxstockid.Text);
+  DataFacturation.facture.NomDestination:=cxLookupComboBoxstockid.Text;
 end;
 
 
@@ -206,10 +205,7 @@ begin
 end;
 end;
 //------------------------------------------------------------------------------
-procedure TFormFacturation.FormKeyPress(Sender: TObject; var Key: Char);
-begin
-MessageDlg(Key + ' has been pressed', mtInformation, [mbOK], 0)
-end;
+
 
 
 procedure TFormFacturation.FormShow(Sender: TObject);
@@ -238,16 +234,14 @@ end;
 procedure TFormFacturation.NouvelleFactureForm;
 begin
 
-    EditNum.Text:=DataFacturation.NouvelleFacture(Annee,Num);
+    EditNum.Text:=DataFacturation.NouvelleFacture();
     intializationAffichage(true);
 end;
 
 procedure TFormFacturation.RechercheFactureForm(a:string;n:integer);
 begin
-    Annee:=a;
-    Num:=n;
-    EditNum.Text:=DataFacturation.RechercheFacture(Annee,Num);
-    NomDestination:=DataFacturation.facture.NomDestination;
+
+    EditNum.Text:=DataFacturation.RechercheFacture(a,n);
     intializationAffichage(false);
 end;
 
@@ -326,7 +320,7 @@ begin
         begin
         FormAjouterProduits.AfficherForm(8);
         FormAjouterProduits.TrouverProduitForm(codeProd,id);
-        FormAjouterProduits.cxLookupComboBoxStockName.Text:=NomDestination;
+        FormAjouterProduits.cxLookupComboBoxStockName.Text:=DataFacturation.facture.NomDestination;
         end
         else
         begin
@@ -337,7 +331,7 @@ begin
       end
       else
       begin
-        if (length(cxLookupComboBoxNomSource.Text)=0) and (length(NomDestination)>0) then
+        if (length(cxLookupComboBoxNomSource.Text)=0) and (length(DataFacturation.facture.NomDestination)>0) then
           MessageDlg('عليك إختيار إسم المصدر قبل ملأ الفاتورة', mtInformation, [mbOK], 0)
         else if (length(cxLookupComboBoxstockid.Text)=0) then
           MessageDlg('عليك إختيار إسم المخزن قبل ملأ الفاتورة', mtInformation, [mbOK], 0);
@@ -346,7 +340,7 @@ begin
 end;
 
 initialization;
-b:=true;
+
 selectItem:=0;
 
 end.

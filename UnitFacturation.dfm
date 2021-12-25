@@ -16,7 +16,6 @@ object FormFacturation: TFormFacturation
   OldCreateOrder = False
   Position = poDesktopCenter
   OnClose = FormClose
-  OnKeyPress = FormKeyPress
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -354,7 +353,6 @@ object FormFacturation: TFormFacturation
         SwitchHeight = 30
         TabOrder = 1
         ThumbColor = clGreen
-        ExplicitLeft = 20
         ExplicitWidth = 129
         ExplicitHeight = 32
       end
@@ -8272,6 +8270,8 @@ object FormFacturation: TFormFacturation
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
         TabOrder = 2
+        ExplicitLeft = 331
+        ExplicitTop = 6
         Width = 167
       end
       object cxLookupComboBoxstockid: TcxLookupComboBox
