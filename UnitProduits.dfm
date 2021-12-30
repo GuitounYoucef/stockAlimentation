@@ -120,8 +120,6 @@ object FormProduits: TFormProduits
           Value = 5.139601714521122000
         end>
       TabOrder = 0
-      ExplicitLeft = 333
-      ExplicitTop = 145
       DesignSize = (
         1038
         520)
@@ -134,7 +132,6 @@ object FormProduits: TFormProduits
         Anchors = []
         TabOrder = 0
         Visible = False
-        ExplicitTop = 4
       end
       object DBGrid2: TDBGrid
         Left = 31
@@ -293,9 +290,6 @@ object FormProduits: TFormProduits
         TextHint = #1576#1581#1579' '#1601#1610' '#1602#1575#1574#1605#1577' '#1575#1604#1587#1604#1593
         StyleElements = [seBorder]
         OnChange = SearchBox1Change
-        ExplicitLeft = 9
-        ExplicitTop = 9
-        ExplicitWidth = 30
       end
     end
     object GridPanel3: TGridPanel

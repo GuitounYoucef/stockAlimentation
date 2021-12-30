@@ -67,16 +67,16 @@ begin
               begin
                 with FormListeFactures do
                   begin
-                  DataFacturation.FDQueryFacturePayee.Edit;
-                  DataFacturation.FDQueryFacturePayee.FieldValues['total']:=strtofloat(editsom.Text);
-                  DataFacturation.FDQueryFacturePayee.FieldValues['reste']:=strtofloat(editrest.Text);
+                  DataFacturation.FDQueryListeFactures.Edit;
+                  DataFacturation.FDQueryListeFactures.FieldValues['total']:=strtofloat(editsom.Text);
+                  DataFacturation.FDQueryListeFactures.FieldValues['reste']:=strtofloat(editrest.Text);
                   if strtofloat(editsom.Text)=strtofloat(editrest.Text) then
-                     DataFacturation.FDQueryFacturePayee.FieldValues['TypePaiement']:=3;
-                  DataFacturation.FDQueryFacturePayee.Post;
-                  DataFacturation.FDQueryFacturePayee.Active:=false;
-                  DataFacturation.FDQueryFacturePayee.Active:=true;
+                     DataFacturation.FDQueryListeFactures.FieldValues['TypePaiement']:=3;
+                  DataFacturation.FDQueryListeFactures.Post;
+                  DataFacturation.FDQueryListeFactures.Active:=false;
+                  DataFacturation.FDQueryListeFactures.Active:=true;
                   FormPaiementCredit.close;
-                  DataFacturation.FDQueryFacturePayeeAfterScroll(DataFacturation.FDQueryFacturePayee);
+                  DataFacturation.FDQueryListeFacturesAfterScroll(DataFacturation.FDQueryListeFactures);
                   end;
               end;
           end;
@@ -91,8 +91,7 @@ begin
                     with formFacturation do
                     begin
                         //DataStocks.EntreeFacture(DataFacturation.FDQueryFactureRecords,destination);
-
-                        valide:=true;
+                         valide:=true;
                         paiement:=true;
                         close;
                     end;

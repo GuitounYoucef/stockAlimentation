@@ -79,20 +79,20 @@ procedure TFormListeFactures.ComboBox1Change(Sender: TObject);
 begin
     if ComboBox1.Text=ComboBox1.Items[0] then
     begin
-      DataFacturation.FDQueryFacturePayee.Params.ParamValues['x']:=2;
+      DataFacturation.FDQueryListeFactures.Params.ParamValues['x']:=2;
       cxButtonPaiment.Enabled:=true;
     end
     else
     begin
-      DataFacturation.FDQueryFacturePayee.Params.ParamValues['x']:=1;
+      DataFacturation.FDQueryListeFactures.Params.ParamValues['x']:=1;
       cxButtonPaiment.Enabled:=false;
     end;
-    DataFacturation.FDQueryFacturePayee.Close;
-    DataFacturation.FDQueryFacturePayee.Open;
-    if DataFacturation.FDQueryFacturePayee.RecordCount>0 then
+    DataFacturation.FDQueryListeFactures.Close;
+    DataFacturation.FDQueryListeFactures.Open;
+    if DataFacturation.FDQueryListeFactures.RecordCount>0 then
     begin
-      DataFacturation.FDQueryFactureRecords.Params.ParamValues['x']:=DataFacturation.FDQueryFacturePayee.FieldValues['annee'];
-      DataFacturation.FDQueryFactureRecords.Params.ParamValues['y']:=DataFacturation.FDQueryFacturePayee.FieldValues['num'];
+      DataFacturation.FDQueryFactureRecords.Params.ParamValues['x']:=DataFacturation.FDQueryListeFactures.FieldValues['annee'];
+      DataFacturation.FDQueryFactureRecords.Params.ParamValues['y']:=DataFacturation.FDQueryListeFactures.FieldValues['num'];
       DataFacturation.FDQueryFactureRecords.Close;
       DataFacturation.FDQueryFactureRecords.Open;
     end
@@ -108,18 +108,18 @@ end;
 
 procedure TFormListeFactures.cxButtonImprimerClick(Sender: TObject);
 begin
-    if DataFacturation.FDQueryFacturePayee.RecordCount>0 then
+    if DataFacturation.FDQueryListeFactures.RecordCount>0 then
        frxReportFacture.ShowReport(true);
 end;
 
 procedure TFormListeFactures.cxButtonPaimentClick(Sender: TObject);
 begin
-    if DataFacturation.FDQueryFacturePayee.RecordCount>0 then
+    if DataFacturation.FDQueryListeFactures.RecordCount>0 then
     begin
       FormPaiementCredit.show;
       FormPaiementCredit.fenetre:=34;
-      FormPaiementCredit.EditSom.Text:=DataFacturation.FDQueryFacturePayee.FieldValues['total'];
-      FormPaiementCredit.editrest.text:=DataFacturation.FDQueryFacturePayee.FieldValues['reste'];
+      FormPaiementCredit.EditSom.Text:=DataFacturation.FDQueryListeFactures.FieldValues['total'];
+      FormPaiementCredit.editrest.text:=DataFacturation.FDQueryListeFactures.FieldValues['reste'];
       FormPaiementCredit.EditPaie.Text:=inttostr(strtoint(FormPaiementCredit.EditSom.Text)-
       strtoint(FormPaiementCredit.Editrest.Text));
     end;
@@ -134,7 +134,7 @@ procedure TFormListeFactures.cxButtonCosulterClick(Sender: TObject);
 Var Annee,NomDest:string;
     num:integer;
 begin
-    if not DataFacturation.FacturePayeeEstVide(Annee,NomDest,Num) then
+    if not DataFacturation.ListeFactureEstVide(Annee,NomDest,Num) then
        FormFacturation.RechercheFactureForm(Annee,Num);
 end;
 

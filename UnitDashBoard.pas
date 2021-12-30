@@ -27,7 +27,8 @@ uses
    Vcl.WinXCtrls,
   Vcl.StdCtrls, Vcl.ButtonGroup, VCLTee.TeePenDlg, VCLTee.TeCanvas,
   VCLTee.TeeEdiGrad, Vcl.ToolWin, Vcl.ActnMan,
-  Vcl.ActnCtrls, Vcl.ComCtrls,ComObj,ActiveX, dxTaskbarProgress;
+  Vcl.ActnCtrls, Vcl.ComCtrls,ComObj,ActiveX, dxTaskbarProgress, dxNavBar,
+  dxNavBarBase, dxNavBarCollns, dxNavBarStyles, Vcl.Menus, cxButtons;
 
 type
   TFormDashBoard = class(TForm)
@@ -154,6 +155,15 @@ type
     FileSaveDialog1: TFileSaveDialog;
     dxBarButton3: TdxBarButton;
     dxBarLargeButton40: TdxBarLargeButton;
+    cxButton1: TcxButton;
+    dxNavBar1: TdxNavBar;
+    dxNavBar1GroupProduits: TdxNavBarGroup;
+    dxNavBar1GroupAchats: TdxNavBarGroup;
+    dxNavBar1GroupVentes: TdxNavBarGroup;
+    dxNavBar1GroupStock: TdxNavBarGroup;
+    dxNavBar1GroupClientsFournissuers: TdxNavBarGroup;
+    dxNavBar1GroupUtilisateurs: TdxNavBarGroup;
+    dxNavBar1GroupParametres: TdxNavBarGroup;
     procedure dxTileControlVenteDetailClick(Sender: TdxTileControlItem);
     procedure dxTileControlVenteGrosClick(Sender: TdxTileControlItem);
     procedure dxTileControl1Item2Click(Sender: TdxTileControlItem);
@@ -194,6 +204,7 @@ type
     procedure dxBarLargeButton33Click(Sender: TObject);
     procedure dxBarLargeButton32Click(Sender: TObject);
     procedure dxBarLargeButton40Click(Sender: TObject);
+    procedure cxButton1Click(Sender: TObject);
   private
     { Déclarations privées }
   public
@@ -341,6 +352,20 @@ begin
 if DataParametrage.FDTableParametrage.FieldValues['Acitivite']=1 then
    vente('   بيع بالجملة     ',2)
 else vente('  عملية تسليم   ',2)
+end;
+
+procedure TFormDashBoard.cxButton1Click(Sender: TObject);
+begin
+if dxNavBar1.Width>0 then
+begin
+  dxNavBar1.Width:=0;
+  cxButton1.Caption:='>>';
+end
+  else
+  begin
+   dxNavBar1.Width:=250;
+   cxButton1.Caption:='<<';
+  end;
 end;
 
 procedure TFormDashBoard.dxBarLargeButton11Click(Sender: TObject);

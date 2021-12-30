@@ -82,7 +82,7 @@ object FormFacturation: TFormFacturation
       end
       item
         SizeStyle = ssAbsolute
-        Value = 60.000000000000000000
+        Value = 100.000000000000000000
       end
       item
         SizeStyle = ssAbsolute
@@ -98,9 +98,9 @@ object FormFacturation: TFormFacturation
     TabOrder = 0
     object GridPanel2: TGridPanel
       Left = 326
-      Top = 161
+      Top = 201
       Width = 1035
-      Height = 520
+      Height = 480
       Align = alClient
       ColumnCollection = <
         item
@@ -131,9 +131,9 @@ object FormFacturation: TFormFacturation
       TabOrder = 0
       object DBGrid1: TDBGrid
         Left = 42
-        Top = 26
+        Top = 24
         Width = 950
-        Height = 466
+        Height = 430
         TabStop = False
         Align = alClient
         BiDiMode = bdRightToLeft
@@ -261,7 +261,7 @@ object FormFacturation: TFormFacturation
     end
     object GridPanel4: TGridPanel
       Left = 1
-      Top = 161
+      Top = 201
       Width = 325
       Height = 100
       Align = alClient
@@ -359,9 +359,9 @@ object FormFacturation: TFormFacturation
     end
     object GridPanel6: TGridPanel
       Left = 1
-      Top = 261
+      Top = 301
       Width = 325
-      Height = 420
+      Height = 380
       Align = alClient
       ColumnCollection = <
         item
@@ -394,7 +394,7 @@ object FormFacturation: TFormFacturation
       TabOrder = 2
       object Image2: TImage
         Left = 12
-        Top = 30
+        Top = 10
         Width = 300
         Height = 360
         Align = alClient
@@ -7961,7 +7961,7 @@ object FormFacturation: TFormFacturation
       Left = 326
       Top = 101
       Width = 1035
-      Height = 60
+      Height = 100
       Align = alClient
       BiDiMode = bdRightToLeft
       ColumnCollection = <
@@ -8052,12 +8052,12 @@ object FormFacturation: TFormFacturation
         end
         item
           Column = 4
-          Control = cxLookupComboBoxNomSource
+          Control = cxDBLookupComboBoxNomSource
           Row = 1
         end
         item
           Column = 1
-          Control = cxLookupComboBoxstockid
+          Control = cxDBLookupComboBoxNomDestination
           Row = 1
         end>
       Font.Charset = ANSI_CHARSET
@@ -8081,7 +8081,7 @@ object FormFacturation: TFormFacturation
       TabOrder = 5
       object EditNum: TEdit
         Left = 856
-        Top = 10
+        Top = 30
         Width = 80
         Height = 38
         Alignment = taRightJustify
@@ -8100,7 +8100,7 @@ object FormFacturation: TFormFacturation
       end
       object Label5: TLabel
         Left = 504
-        Top = 10
+        Top = 30
         Width = 124
         Height = 38
         Align = alClient
@@ -8118,7 +8118,7 @@ object FormFacturation: TFormFacturation
       end
       object ComboBoxTypeSource: TComboBox
         Left = 653
-        Top = 10
+        Top = 30
         Width = 98
         Height = 38
         Align = alClient
@@ -8136,7 +8136,7 @@ object FormFacturation: TFormFacturation
       end
       object Label6: TLabel
         Left = 751
-        Top = 10
+        Top = 30
         Width = 105
         Height = 38
         Align = alClient
@@ -8154,7 +8154,7 @@ object FormFacturation: TFormFacturation
       end
       object Label3: TLabel
         Left = 936
-        Top = 10
+        Top = 30
         Width = 98
         Height = 38
         Align = alClient
@@ -8172,7 +8172,7 @@ object FormFacturation: TFormFacturation
       end
       object Label4: TLabel
         Left = 628
-        Top = 10
+        Top = 30
         Width = 25
         Height = 38
         Align = alClient
@@ -8191,7 +8191,7 @@ object FormFacturation: TFormFacturation
       end
       object Label8: TLabel
         Left = 312
-        Top = 10
+        Top = 30
         Width = 25
         Height = 38
         Align = alClient
@@ -8210,7 +8210,7 @@ object FormFacturation: TFormFacturation
       end
       object Label1: TLabel
         Left = 208
-        Top = 10
+        Top = 30
         Width = 104
         Height = 38
         Align = alClient
@@ -8228,7 +8228,7 @@ object FormFacturation: TFormFacturation
       end
       object Label7: TLabel
         Left = 26
-        Top = 10
+        Top = 30
         Width = 18
         Height = 38
         Align = alRight
@@ -8243,26 +8243,29 @@ object FormFacturation: TFormFacturation
         StyleElements = [seBorder]
         ExplicitHeight = 27
       end
-      object cxLookupComboBoxNomSource: TcxLookupComboBox
+      object cxDBLookupComboBoxNomSource: TcxDBLookupComboBox
         Left = 337
-        Top = 10
+        Top = 30
         Align = alClient
-        BiDiMode = bdRightToLeft
-        ParentBiDiMode = False
+        DataBinding.DataField = 'NomSource'
+        DataBinding.DataSource = DataSourceFacture
         ParentFont = False
-        ParentShowHint = False
         Properties.DropDownAutoSize = True
         Properties.DropDownSizeable = True
+        Properties.KeyFieldNames = 'NomPrenom'
         Properties.ListColumns = <
           item
+            Caption = #1575#1604#1573#1587#1605' '#1608' '#1575#1604#1604#1602#1576
+            Width = 330
             FieldName = 'NomPrenom'
           end
           item
-            FieldName = 'Num'
+            Caption = #1575#1604#1593#1606#1608#1575#1606
+            Width = 300
+            FieldName = 'Adresse'
           end>
         Properties.ListSource = DataSourceNomSource
-        Properties.OnChange = cxLookupComboBoxNomSourcePropertiesChange
-        ShowHint = True
+        Properties.OnChange = cxDBLookupComboBoxNomSourcePropertiesChange
         Style.Font.Charset = ANSI_CHARSET
         Style.Font.Color = clWindowText
         Style.Font.Height = -16
@@ -8270,31 +8273,22 @@ object FormFacturation: TFormFacturation
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
         TabOrder = 2
-        ExplicitLeft = 331
-        ExplicitTop = 6
         Width = 167
       end
-      object cxLookupComboBoxstockid: TcxLookupComboBox
+      object cxDBLookupComboBoxNomDestination: TcxDBLookupComboBox
         Left = 44
-        Top = 10
+        Top = 30
         Align = alClient
-        OnFocusChanged = cxLookupComboBoxstockidFocusChanged
-        BiDiMode = bdRightToLeft
-        ParentBiDiMode = False
+        DataBinding.DataField = 'NomDestination'
+        DataBinding.DataSource = DataSourceFacture
         ParentFont = False
-        ParentShowHint = False
-        Properties.DropDownAutoSize = True
-        Properties.DropDownSizeable = True
         Properties.KeyFieldNames = 'id'
         Properties.ListColumns = <
           item
             FieldName = 'id'
-          end
-          item
-            FieldName = 'NumStock'
           end>
+        Properties.ListOptions.ShowHeader = False
         Properties.ListSource = DataSourceStocksNamesDestination
-        ShowHint = True
         Style.Font.Charset = ANSI_CHARSET
         Style.Font.Color = clWindowText
         Style.Font.Height = -16
@@ -8377,7 +8371,7 @@ object FormFacturation: TFormFacturation
       Left = 1
       Top = 101
       Width = 325
-      Height = 60
+      Height = 100
       Align = alClient
       BiDiMode = bdRightToLeft
       ColumnCollection = <
@@ -8425,21 +8419,25 @@ object FormFacturation: TFormFacturation
       TabOrder = 7
       object cxLookupComboBoxCodeProd: TcxLookupComboBox
         Left = 19
-        Top = 10
+        Top = 30
         Align = alClient
         BiDiMode = bdLeftToRight
         ParentBiDiMode = False
         ParentFont = False
         ParentShowHint = False
+        Properties.CaseSensitiveSearch = True
         Properties.DropDownAutoSize = True
         Properties.DropDownSizeable = True
+        Properties.IncrementalFilteringOptions = [ifoHighlightSearchText, ifoUseContainsOperator]
         Properties.KeyFieldNames = 'id'
         Properties.ListColumns = <
           item
+            Caption = #1573#1587#1605' '#1575#1604#1605#1606#1578#1580
             Width = 330
             FieldName = 'id'
           end
           item
+            Caption = #1575#1604#1585#1605#1586
             Width = 300
             FieldName = 'code'
           end>
@@ -8448,9 +8446,9 @@ object FormFacturation: TFormFacturation
         ShowHint = True
         Style.Font.Charset = ANSI_CHARSET
         Style.Font.Color = clWindowText
-        Style.Font.Height = -17
-        Style.Font.Name = 'Times New Roman'
-        Style.Font.Style = []
+        Style.Font.Height = -15
+        Style.Font.Name = 'Cairo'
+        Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
         TabOrder = 0
         OnEnter = cxLookupComboBoxCodeProdEnter
@@ -10783,7 +10781,12 @@ object FormFacturation: TFormFacturation
   end
   object DataSourceListProduits: TDataSource
     DataSet = DataProduits.FDTableProduits
-    Left = 227
-    Top = 112
+    Left = 243
+    Top = 80
+  end
+  object DataSourceFacture: TDataSource
+    DataSet = DataFacturation.FDQueryFacture
+    Left = 891
+    Top = 32
   end
 end

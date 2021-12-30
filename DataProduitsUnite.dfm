@@ -55,6 +55,7 @@ object DataProduits: TDataProduits
       end>
   end
   object FDQueryFindProduitByCode: TFDQuery
+    Active = True
     Connection = FDConnection1
     SQL.Strings = (
       'select produits.*'

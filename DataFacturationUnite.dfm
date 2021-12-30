@@ -216,9 +216,9 @@ object DataFacturation: TDataFacturation
         ParamType = ptInput
       end>
   end
-  object FDQueryFacturePayee: TFDQuery
+  object FDQueryListeFactures: TFDQuery
     Active = True
-    AfterScroll = FDQueryFacturePayeeAfterScroll
+    AfterScroll = FDQueryListeFacturesAfterScroll
     Connection = FDConnection1
     SQL.Strings = (
       'select Entrees.*'

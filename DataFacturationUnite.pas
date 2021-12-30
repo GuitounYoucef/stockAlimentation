@@ -16,11 +16,7 @@ type
     Annee:string;
     total:real;
     reste:real;
-    NomSource:string;
-    NomDestination:string;
-    source:integer;
-    NumSource:integer;
-    NumDestination:integer;
+
     TypePaiement:integer;
   end;
   TDataFacturation = class(TDataModule)
@@ -37,9 +33,9 @@ type
     FDQueryStocksNamesDestination: TFDQuery;
     FDTableStockid: TFDTable;
     FDQueryFindStockNum: TFDQuery;
-    FDQueryFacturePayee: TFDQuery;
+    FDQueryListeFactures: TFDQuery;
     FDTableFacturesAnnulees: TFDTable;
-    procedure FDQueryFacturePayeeAfterScroll(DataSet: TDataSet);
+    procedure FDQueryListeFacturesAfterScroll(DataSet: TDataSet);
 
 
 
@@ -51,16 +47,14 @@ type
     function NouvelleFacture():string;
     function RechercheFacture(Var Annee:string;var num:integer):string;
     procedure EnregistrerFacture();
-    procedure ValiderInforFavture(    NomSource:string;
-                                      NomDestination:string;
-                                      typeops:integer);
+    procedure ValiderInforFacture(typeops:integer);
    procedure ValiderMontant(som,rest:real);
    function TrouverFournsNum(NomFourn:string):integer;
    function TrouverStockNum(NomStocke:string):integer;
    procedure SupprimerFacture();
    function NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;quantite:real;DateProd,Dateconsm:TDateTime):boolean;
    function SupprimerEntree():boolean;
-   function FacturePayeeEstVide(var Annee:string;var NomDestination:string;var num:integer):boolean;
+   function ListeFactureEstVide(var Annee:string;var NomDestination:string;var num:integer):boolean;
    function EntreesFactureEstvide():boolean;
    function calculerSomFacture():real;
    procedure dataRefrech();
@@ -80,10 +74,9 @@ uses UnitFacturation,  DataStocksUnite, DataParametrageUnite;
 
 {$R *.dfm}
 
-
+//------------------------------------------------------------------------------
 function TDataFacturation.NouvelleFacture():string;
 var myYear, myMonth, myDay : Word;
-
 begin
     DecodeDate(Date, myYear, myMonth, myDay);
     facture.annee:=IntToStr(myYear);
@@ -98,10 +91,12 @@ begin
     FDQueryFactureRecords.Active:=false;
     FDQueryFactureRecords.Active:=true;
 
-    FDQueryFacture.Params.ParamValues['x']:=facture.annee;
-    FDQueryFacture.Params.ParamValues['y']:=facture.num;
-    FDQueryFacture.Active:=false;
-    FDQueryFacture.Active:=true;
+
+     FDQueryFacture.insert;
+     FDQueryFacture.FieldValues['annee']:=facture.Annee;
+     FDQueryFacture.FieldValues['num']:=facture.num;
+     FDQueryFacture.Post;
+
 
     result:=facture.annee+'/'+inttostr(facture.num);
 end;
@@ -117,103 +112,85 @@ begin
     FDQueryFacture.Params.ParamValues['y']:=num;
     FDQueryFacture.Active:=false;
     FDQueryFacture.Active:=true;
-    facture.NomDestination:=FDQueryFacture.FieldValues['NomDestination'];
+
+    facture.annee:=Annee;
+    facture.num:=num;
+
     result:=Annee+'/'+inttostr(num);
 end;
 //------------------------------------------------------------------------------
-procedure TDataFacturation.ValiderInforFavture( NomSource:string;
-                                                NomDestination:string;
-                                                typeops:integer);
+procedure TDataFacturation.ValiderInforFacture(typeops:integer);
 begin
-facture.Nomsource:=Nomsource;
-facture.NomDestination:=NomDestination;
-    if typeops=0 then   // source=fournisseur
-      begin
-        facture.NumSource:=TrouverFournsNum(NomSource);
-        facture.source:=0;
-      end
-      else              // source=stocke
-      begin
-        facture.Numsource:=TrouverStockNum(NomSource);
-        facture.source:=1;
-      end;
-      facture.NumDestination:=TrouverStockNum(NomDestination);
+   FDQueryFacture.Edit;
+      if typeops=0 then   // source=fournisseur
+        begin
+          FDQueryFacture.FieldValues['NumSource']:=TrouverFournsNum(FDQueryFacture.FieldValues['NomSource']);
+          FDQueryFacture.FieldValues['source']:=0;
+        end
+        else              // source=stocke
+        begin
+          FDQueryFacture.FieldValues['NumSource']:=TrouverStockNum(FDQueryFacture.FieldValues['NomSource']);
+          FDQueryFacture.FieldValues['source']:=1;
+        end;
+        FDQueryFacture.FieldValues['NumDestination']:=TrouverStockNum(FDQueryFacture.FieldValues['NomDestination']);
+        FDQueryFacture.FieldValues['DateEntree']:=date;
+        FDQueryFacture.FieldValues['TypeEntree']:=2;   // 1 :inventaire; 2:facture
+    FDQueryFacture.Post;
 end;
 //------------------------------------------------------------------------------
 procedure TDataFacturation.EnregistrerFacture();
 begin
-  if FDQueryFacture.recordcount=0 then
-  begin
-    FDQueryFacture.insert;
+   FDQueryFacture.edit;
    FDQueryFacture.FieldValues['total']:=facture.total;
    FDQueryFacture.FieldValues['reste']:=facture.reste;
    FDQueryFacture.FieldValues['TypePaiement']:=facture.TypePaiement;
-
-   FDQueryFacture.FieldValues['annee']:=facture.Annee;
-   FDQueryFacture.FieldValues['num']:=facture.num;
-   FDQueryFacture.FieldValues['Nomsource']:=facture.NomSource;
-   FDQueryFacture.FieldValues['NomDestination']:=facture.NomDestination;
-
-   FDQueryFacture.FieldValues['NumSource']:=facture.NumSource;
-   FDQueryFacture.FieldValues['source']:=facture.source;
-
-   FDQueryFacture.FieldValues['NumDestination']:=facture.NumDestination;
-   FDQueryFacture.FieldValues['DateEntree']:=date;
-   FDQueryFacture.FieldValues['TypeEntree']:=2;   // 1 :inventaire; 2:facture
-  end
-  else
-   begin
-     FDQueryFacture.edit;
-     FDQueryFacture.FieldValues['total']:=facture.total;
-     FDQueryFacture.FieldValues['reste']:=facture.reste;
-     FDQueryFacture.FieldValues['TypePaiement']:=facture.TypePaiement;
-   end;
    FDQueryFacture.post;
 
    FDQueryFactureRecords.First;
    while not FDQueryFactureRecords.Eof do
-   begin
-      if FDQueryFactureRecords.FieldValues['Valide']<>true then
-           begin
-              FDQueryFactureRecords.Edit;
-              FDQueryFactureRecords.FieldValues['Valide']:=true;
-              FDQueryFactureRecords.FieldValues['NumStock']:=FDQueryFacture.FieldValues['NumDestination'];
-              FDQueryFactureRecords.Post;
-           end;
-      FDQueryFactureRecords.Next;
-   end;
+     begin
+        if FDQueryFactureRecords.FieldValues['Valide']<>true then
+             begin
+                FDQueryFactureRecords.Edit;
+                FDQueryFactureRecords.FieldValues['Valide']:=true;
+                FDQueryFactureRecords.FieldValues['NumStock']:=FDQueryFacture.FieldValues['NumDestination'];
+                FDQueryFactureRecords.Post;
+             end;
+        FDQueryFactureRecords.Next;
+     end;
+
 end;
 //------------------------------------------------------------------------------
 procedure TDataFacturation.SupprimerFacture();
 begin
-      FDQueryFactureRecords.Active:=false;
-      FDQueryFactureRecords.Active:=true;
-      FDQueryFactureRecords.First;
-      while not FDQueryFactureRecords.Eof do
-                FDQueryFactureRecords.Delete;
+    FDQueryFactureRecords.Active:=false;
+    FDQueryFactureRecords.Active:=true;
+    FDQueryFactureRecords.First;
+    while not FDQueryFactureRecords.Eof do
+              FDQueryFactureRecords.Delete;
 end;
 //------------------------------------------------------------------------------
-function TDataFacturation.FacturePayeeEstVide(var Annee:string;var NomDestination:string;var num:integer): boolean;
+function TDataFacturation.ListeFactureEstVide(var Annee:string;var NomDestination:string;var num:integer): boolean;
 begin
-    if FDQueryFacturePayee.RecordCount=0 then
+    if FDQueryListeFactures.RecordCount=0 then
     begin
        result:=true;
     end
     else begin
-            Annee:=FDQueryFacturePayee.FieldValues['Annee'];
-            num:=FDQueryFacturePayee.FieldValues['num'];
-            NomDestination:= FDQueryFacturePayee.FieldValues['NomDestination'];
+            Annee:=FDQueryListeFactures.FieldValues['Annee'];
+            num:=FDQueryListeFactures.FieldValues['num'];
+            NomDestination:= FDQueryListeFactures.FieldValues['NomDestination'];
             result:=false;
          end;
 end;
 //------------------------------------------------------------------------------
-procedure TDataFacturation.FDQueryFacturePayeeAfterScroll(DataSet: TDataSet);
+procedure TDataFacturation.FDQueryListeFacturesAfterScroll(DataSet: TDataSet);
 Var Annee:string;
     num:integer;
 begin
-  Annee:=FDQueryFacturePayee.FieldValues['annee'];
-  Num:=FDQueryFacturePayee.FieldValues['num'];
-  RechercheFacture(Annee,Num);
+    Annee:=FDQueryListeFactures.FieldValues['annee'];
+    Num:=FDQueryListeFactures.FieldValues['num'];
+    RechercheFacture(Annee,Num);
 end;
 //------------------------------------------------------------------------------
 function TDataFacturation.NouvelleEntree(FDQueryFindProduitByCode: TFDQuery;
@@ -248,8 +225,6 @@ begin
 
       FDQueryFactureRecords.Next;
       calculerSomFacture();
-//      formFacturation.dxGaugeControl1DigitalScale1.Value:=inttostr(calculerSomFacture());
-//      formFacturation.som:=calculerSomFacture();
       if (FDQueryFindProduitByCode.FieldValues['Lien']<>null) then
              begin
                formFacturation.Image2.Picture.LoadFromFile(FDQueryFindProduitByCode.FieldValues['Lien']);
@@ -270,20 +245,20 @@ function TDataFacturation.SupprimerEntree():boolean;
 var b :boolean;
 begin
     if FDQueryFactureRecords.RecordCount>0 then
-       if FDQueryFactureRecords.FieldValues['Valide']=true then
+     if FDQueryFactureRecords.FieldValues['Valide']=true then
+        begin
+          if FDQueryFactureRecords.FieldValues['QuantiteInitial']=FDQueryFactureRecords.FieldValues['Quantite'] then
           begin
-            if FDQueryFactureRecords.FieldValues['QuantiteInitial']=FDQueryFactureRecords.FieldValues['Quantite'] then
-                begin
-                     FDQueryFactureRecords.Delete;
-                     result:=true
-                end
-                else result:=false;
+               FDQueryFactureRecords.Delete;
+               result:=true
           end
-          else
-          begin
-             FDQueryFactureRecords.Delete;
-             result:=true;
-          end;
+          else result:=false;
+        end
+        else
+        begin
+           FDQueryFactureRecords.Delete;
+           result:=true;
+        end;
 
 end;
 //------------------------------------------------------------------------------
@@ -309,8 +284,6 @@ begin
     result:=som;
 end;
 
-
-
  //------------------------------------------------------------------------------
 procedure TDataFacturation.ValiderMontant(som,rest:real);
 begin
@@ -330,20 +303,20 @@ end;
 //------------------------------------------------------------------------------
 function TDataFacturation.TrouverFournsNum(NomFourn:string):integer;
 begin
-        FDQuerySelectFournsseurByName.Params.ParamValues['x']:= NomFourn;
-        FDQuerySelectFournsseurByName.Close;
-        FDQuerySelectFournsseurByName.Open();
-        if FDQuerySelectFournsseurByName.RecordCount=1 then
-          result:=FDQuerySelectFournsseurByName.FieldValues['Num'];
+    FDQuerySelectFournsseurByName.Params.ParamValues['x']:= NomFourn;
+    FDQuerySelectFournsseurByName.Close;
+    FDQuerySelectFournsseurByName.Open();
+    if FDQuerySelectFournsseurByName.RecordCount=1 then
+      result:=FDQuerySelectFournsseurByName.FieldValues['Num'];
 end;
 //------------------------------------------------------------------------------
 function TDataFacturation.TrouverStockNum(NomStocke:string):integer;
 begin
-        FDQueryFindStockNum.Params.ParamValues['x']:= NomStocke;
-        FDQueryFindStockNum.Close;
-        FDQueryFindStockNum.Open();
-        if FDQueryFindStockNum.RecordCount=1 then
-           result:=FDQueryFindStockNum.FieldValues['NumStock'];
+    FDQueryFindStockNum.Params.ParamValues['x']:= NomStocke;
+    FDQueryFindStockNum.Close;
+    FDQueryFindStockNum.Open();
+    if FDQueryFindStockNum.RecordCount=1 then
+       result:=FDQueryFindStockNum.FieldValues['NumStock'];
 end;
 
 end.

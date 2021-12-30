@@ -6513,9 +6513,9 @@ object FormListeFactures: TFormListeFactures
     end
   end
   object DataSourceFacturePayee: TDataSource
-    DataSet = DataFacturation.FDQueryFacturePayee
-    Left = 1233
-    Top = 257
+    DataSet = DataFacturation.FDQueryListeFactures
+    Left = 585
+    Top = 281
   end
   object DataSourceFactureEntrante: TDataSource
     DataSet = DataFacturation.FDQueryFactureRecords
