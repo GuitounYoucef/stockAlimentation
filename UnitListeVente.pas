@@ -45,7 +45,7 @@ var
   FormListeVente: TFormListeVente;
 
 implementation
-uses UnitVenteComptoir,unit36;
+uses UnitVenteComptoir;
 {$R *.dfm}
 
 function TFormListeVente.retourneprodstock():boolean;

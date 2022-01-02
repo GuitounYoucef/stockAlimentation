@@ -29,7 +29,7 @@ object FormStockDetail: TFormStockDetail
         Value = 4.999865280119292000
       end
       item
-        Value = 90.000146425484950000
+        Value = 90.000146425484960000
       end
       item
         Value = 4.999988294395743000
@@ -316,7 +316,7 @@ object FormStockDetail: TFormStockDetail
         end>
       RowCollection = <
         item
-          Value = 9.924856540400424000
+          Value = 9.924856540400423000
         end
         item
           Value = 80.103386422045390000
@@ -328,8 +328,8 @@ object FormStockDetail: TFormStockDetail
       object Label10: TLabel
         Left = 973
         Top = 9
-        Width = 280
-        Height = 70
+        Width = 240
+        Height = 69
         Align = alClient
         Alignment = taCenter
         Caption = #1605#1593#1575#1610#1606#1577' '#1605#1583#1602#1602#1577
@@ -340,8 +340,6 @@ object FormStockDetail: TFormStockDetail
         Font.Style = [fsBold]
         ParentFont = False
         Layout = tlCenter
-        ExplicitWidth = 240
-        ExplicitHeight = 69
       end
       object Image3: TImage
         Left = 873

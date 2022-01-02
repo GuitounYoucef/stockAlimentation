@@ -52,7 +52,7 @@ implementation
 
 {$R *.dfm}
 
-uses UnitConnexion,unit36, DataParametrageUnite;
+uses UnitConnexion, DataParametrageUnite;
 //------------------------------------------------------------------------------
 procedure TFormGestionUtilisateurs.ADOTable1AfterScroll(DataSet: TDataSet);
 begin

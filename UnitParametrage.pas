@@ -59,8 +59,6 @@ type
     cxDBTextEdit2: TcxDBTextEdit;
     dxLayoutItem2: TdxLayoutItem;
     dxLayoutAutoCreatedGroup5: TdxLayoutAutoCreatedGroup;
-    dxLayoutItem17: TdxLayoutItem;
-    dxLayoutItem16: TdxLayoutItem;
     cxDBComboBox2: TcxDBComboBox;
     dxLayoutItem18: TdxLayoutItem;
     procedure cxButton2Click(Sender: TObject);
@@ -78,7 +76,7 @@ var
   FormParametrage: TFormParametrage;
 
 implementation
-uses unit36, DataParametrageUnite, DataStocksUnite;
+uses DataParametrageUnite, DataStocksUnite;
 
 {$R *.dfm}
 

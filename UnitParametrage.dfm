@@ -34,8 +34,8 @@ object FormParametrage: TFormParametrage
     TabOrder = 0
     Transparent = True
     ShowDesignSelectors = False
-    ExplicitWidth = 822
-    ExplicitHeight = 602
+    ExplicitWidth = 314
+    ExplicitHeight = 212
     object cxDBTextEdit1: TcxDBTextEdit
       Left = 425
       Top = 105

@@ -34,7 +34,7 @@ var
   FormTempsNotification: TFormTempsNotification;
 
 implementation
-uses unit36;
+
 
 {$R *.dfm}
 //------------------------------------------------------------------------------

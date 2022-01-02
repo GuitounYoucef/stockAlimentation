@@ -52,7 +52,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses UnitFacturation, Unit36, UnitEtatStock, DataParametrageUnite;
+uses UnitFacturation,  UnitEtatStock, DataParametrageUnite;
 
 {$R *.dfm}
 

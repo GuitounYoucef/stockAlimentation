@@ -42,7 +42,7 @@ implementation
 
 {$R *.dfm}
 
-uses UnitEtatStock,unit36,DataStocksUnite, UnitFacturation;
+uses UnitEtatStock,DataStocksUnite, UnitFacturation;
 
 procedure TFormStockDetail.DBGrid2DblClick(Sender: TObject);
 begin

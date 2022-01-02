@@ -6176,12 +6176,10 @@ object FormListeVente: TFormListeVente
       000000000000}
   end
   object DataSource1: TDataSource
-    DataSet = DataModule1.FD35QueryListeVente
     Left = 401
     Top = 137
   end
   object DataSource2: TDataSource
-    DataSet = DataModule1.FD35QueryDetailListe
     Left = 57
     Top = 65
   end

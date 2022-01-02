@@ -42,6 +42,10 @@ object FormGestionUtilisateurs: TFormGestionUtilisateurs
       Font.Name = 'Times New Roman'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label4: TLabel
         Left = 321
         Top = 42

@@ -43,7 +43,7 @@ implementation
 
 {$R *.dfm}
 
-uses UnitVenteComptoir, UnitDashBoard,unit36, UnitAccueil, DataParametrageUnite;
+uses UnitVenteComptoir, UnitDashBoard, UnitAccueil, DataParametrageUnite;
 
 
 procedure TFormConnexion.Button1Click(Sender: TObject);

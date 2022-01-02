@@ -49,7 +49,7 @@ var
 implementation
 
 {$R *.dfm}
-uses unit36, DataParametrageUnite;
+uses DataParametrageUnite;
 //------------------------------------------------------------------------------
 procedure TFormTypeProd.Button1Click(Sender: TObject);
 begin

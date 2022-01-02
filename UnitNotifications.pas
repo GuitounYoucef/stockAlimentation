@@ -39,7 +39,7 @@ var
 
 
 implementation
-uses  DataParametrageUnite, Unit36, DataStocksUnite;
+uses  DataParametrageUnite, DataStocksUnite;
 
 {$R *.dfm}
 //------------------------------------------------------------------------------

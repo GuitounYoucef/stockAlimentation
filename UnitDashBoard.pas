@@ -220,7 +220,7 @@ implementation
 {$R *.dfm}
 
 uses UnitVenteComptoir, UnitDelivrence, UnitEtatStock, UnitProduits, UnitClients, UnitFournisseurs, UnitNotifications, UnitFacturation, UnitListeFactures, UnitTypeProd,
-  UnitTempsNotification, Unit25,UnitGestionUtilisateurs ,unit36, UnitConnexion, UnitBenifices, UnitAccueil, UnitParametrage, UnitLirePrix, UnitSauvegarde,DataVenteUnit,
+  UnitTempsNotification, UnitGestionUtilisateurs , UnitConnexion, UnitBenifices, UnitAccueil, UnitParametrage, UnitLirePrix, UnitSauvegarde,DataVenteUnit,
   DataStocksUnite, DataParametrageUnite, UnitFrais;
 
 function GetMotherBoardSerial:String;
@@ -487,7 +487,7 @@ begin
     Sql := 'USE [MASTER] backup database stock to disk = ''%s''';
     Sql := Format(Sql, [FileName]);
     try
-       DataModule1.FDConnection1.ExecSQL(Sql);
+
       formSauvegarde.Close;
       showmessage('      تم حفظ نسخة إحتياطية من البيانات بنجاح       ');
     finally
@@ -506,7 +506,7 @@ if FileExists(FileName) then begin
     Sql := Format(Sql, [FileName]);
     try
 
-      DataModule1.FDConnection1.ExecSQL(Sql);
+      //DataModule1.FDConnection1.ExecSQL(Sql);
       formSauvegarde.Close;
       showmessage('      تم إسترجاع النسخة الإحتياطية من البيانات بنجاح       ');
     finally

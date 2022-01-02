@@ -35,7 +35,7 @@ implementation
 
 {$R *.dfm}
 //------------------------------------------------------------------------------
-uses UnitVenteComptoir, UnitEtatStock, UnitFacturation,unit36,
+uses UnitVenteComptoir, UnitEtatStock, UnitFacturation,
   DataProduitsUnite;
 
 procedure TFormRechercheNomProduit.Button1Click(Sender: TObject);

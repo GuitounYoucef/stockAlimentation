@@ -93,7 +93,7 @@ var
   FormAjouterProduits: TFormAjouterProduits;
 implementation
 {$R *.dfm}
-uses UnitEtatStock, UnitProduits, UnitFacturation, Unit25,
+uses UnitEtatStock, UnitProduits, UnitFacturation,
   DataProduitsUnite, DataStocksUnite, DataFacturationUnite, UnitVenteComptoir;
 //______________________________________________________________________________
 function genererCodeBar():string;

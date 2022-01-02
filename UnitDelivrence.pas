@@ -73,7 +73,7 @@ implementation
 
 {$R *.dfm}
 
-uses UnitVenteComptoir, UnitPaiementCredit,unit36, UnitDelivrenceData;
+uses UnitVenteComptoir, UnitPaiementCredit, UnitDelivrenceData;
 
 
 //------------------------------------------------------------------------------

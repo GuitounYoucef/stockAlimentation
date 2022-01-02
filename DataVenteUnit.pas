@@ -107,7 +107,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses  Unit36,UnitDelivrenceData, DataParametrageUnite, DataStocksUnite;
+uses  UnitDelivrenceData, DataParametrageUnite, DataStocksUnite;
 
 {$R *.dfm}
 

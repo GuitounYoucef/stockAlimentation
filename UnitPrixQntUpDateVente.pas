@@ -35,7 +35,7 @@ implementation
 
 {$R *.dfm}
 
-uses UnitVenteComptoir,unit36, DataVenteUnit, DataParametrageUnite,
+uses UnitVenteComptoir, DataVenteUnit, DataParametrageUnite,
   DataStocksUnite;
 //------------------------------------------------------------------------------
 procedure TFormPrixQntUpDateVente.BitBtn1Click(Sender: TObject);

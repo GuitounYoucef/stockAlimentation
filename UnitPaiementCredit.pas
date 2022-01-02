@@ -41,7 +41,7 @@ implementation
 
 {$R *.dfm}
 
-uses UnitFacturation, UnitListeFactures, UnitDelivrence,unit36,DataFacturationUnite,
+uses UnitFacturation, UnitListeFactures, UnitDelivrence,DataFacturationUnite,
   UnitDelivrenceData, DataStocksUnite;
 //------------------------------------------------------------------------------
 procedure TFormPaiementCredit.PaimentFactureShow(som:real);

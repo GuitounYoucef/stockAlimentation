@@ -124,7 +124,7 @@ implementation
 
 {$R *.dfm}
 
-uses UnitPrixQntUpDateVente,  Unit22, UnitRechercheStock, UnitListeVente, UnitDelivrenceData,
+uses UnitPrixQntUpDateVente,   UnitRechercheStock, UnitListeVente, UnitDelivrenceData,
   UnitAjouterProduits,DataParametrageUnite;
 //------------------------------------------------------------------------------
 procedure TFormVenteComptoir.ButtonSupprimerClick(Sender: TObject);

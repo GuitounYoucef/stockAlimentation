@@ -45,7 +45,7 @@ var
   FormClients: TFormClients;
 
 implementation
-uses unit36, DataParametrageUnite;
+uses DataParametrageUnite;
 
 {$R *.dfm}
 

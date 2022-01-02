@@ -35,7 +35,7 @@ implementation
 
 {$R *.dfm}
 
-uses UnitVenteComptoir,unit36, DataStocksUnite;
+uses UnitVenteComptoir, DataStocksUnite;
 //------------------------------------------------------------------------------
 procedure TFormRechercheStock.Button1Click(Sender: TObject);
 var key:word;
