@@ -18,7 +18,7 @@ uses
   UnitPaiementCredit in 'UnitPaiementCredit.pas' {FormPaiementCredit},
   UnitGestionUtilisateurs in 'UnitGestionUtilisateurs.pas' {FormGestionUtilisateurs},
   UnitRechercheStock in 'UnitRechercheStock.pas' {FormRechercheStock},
-  UnitBenifices in 'UnitBenifices.pas' {FormBenifices},
+  UnitBenefices in 'UnitBenefices.pas' {FormBenifices},
   UnitAjouterProduits in 'UnitAjouterProduits.pas' {FormAjouterProduits},
   UnitStockDetail in 'UnitStockDetail.pas' {FormStockDetail},
   UnitListeFactures in 'UnitListeFactures.pas' {FormListeFactures},

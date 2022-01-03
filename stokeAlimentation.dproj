@@ -151,7 +151,7 @@
             <Form>FormRechercheStock</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UnitBenifices.pas">
+        <DCCReference Include="UnitBenefices.pas">
             <Form>FormBenifices</Form>
             <FormType>dfm</FormType>
         </DCCReference>

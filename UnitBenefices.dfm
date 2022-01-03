@@ -3,7 +3,7 @@ object FormBenifices: TFormBenifices
   Top = 0
   AutoSize = True
   BorderIcons = [biSystemMenu]
-  Caption = 'FormBenifices'
+  Caption = 'FormBenefices'
   ClientHeight = 748
   ClientWidth = 767
   Color = clBtnFace
