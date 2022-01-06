@@ -45,7 +45,7 @@ object DataParametrage: TDataParametrage
     UpdateOptions.UpdateTableName = 'Parametrage'
     TableName = 'Parametrage'
     Left = 528
-    Top = 32
+    Top = 40
   end
   object FDQuerystockByid: TFDQuery
     Active = True
@@ -101,7 +101,7 @@ object DataParametrage: TDataParametrage
         ParamType = ptInput
       end>
   end
-  object FDQueryClientByName: TFDQuery
+  object FDQueryClientByNameLike: TFDQuery
     Active = True
     Connection = FDConnection1
     SQL.Strings = (
@@ -178,5 +178,57 @@ object DataParametrage: TDataParametrage
     TableName = '[Sortie-Expire]'
     Left = 685
     Top = 304
+  end
+  object FDQueryClientByNum: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select Clients.*'
+      'from Clients'
+      'where NumClient =:Num'
+      '')
+    Left = 848
+    Top = 248
+    ParamData = <
+      item
+        Name = 'NUM'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
+  object FDQuery1: TFDQuery
+    Active = True
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select Clients.*'
+      'from Clients'
+      'where client like :x'
+      'order by type;')
+    Left = 840
+    Top = 48
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftWideString
+        ParamType = ptInput
+      end>
+  end
+  object FDQueryClientParNom: TFDQuery
+    Active = True
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select Clients.*'
+      'from Clients'
+      'where client =:x'
+      'order by type;')
+    Left = 848
+    Top = 176
+    ParamData = <
+      item
+        Name = 'X'
+        DataType = ftWideString
+        ParamType = ptInput
+        Value = '*'
+      end>
   end
 end

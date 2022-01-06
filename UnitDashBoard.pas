@@ -220,7 +220,7 @@ implementation
 {$R *.dfm}
 
 uses UnitVenteComptoir, UnitDelivrence, UnitEtatStock, UnitProduits, UnitClients, UnitFournisseurs, UnitNotifications, UnitFacturation, UnitListeFactures, UnitTypeProd,
-  UnitTempsNotification, UnitGestionUtilisateurs , UnitConnexion, UnitBenifices, UnitAccueil, UnitParametrage, UnitLirePrix, UnitSauvegarde,DataVenteUnit,
+  UnitTempsNotification, UnitGestionUtilisateurs , UnitConnexion, UnitBenefices, UnitAccueil, UnitParametrage, UnitLirePrix, UnitSauvegarde,DataVenteUnit,
   DataStocksUnite, DataParametrageUnite, UnitFrais;
 
 function GetMotherBoardSerial:String;
@@ -353,6 +353,20 @@ if DataParametrage.FDTableParametrage.FieldValues['Acitivite']=1 then
    vente('   بيع بالجملة     ',2)
 else vente('  عملية تسليم   ',2)
 end;
+
+procedure TFormDashBoard.vente(ch:string;typvente:integer);
+
+begin
+    with FormVenteComptoir do
+    if Privilege(3) then
+    begin
+        FormVenteComptoir.Panel1.Caption:=ch;
+        FormVenteComptoir.Caption:=ch;
+        DataModuleVente.NouvelleOpr(typvente);
+        FormVenteComptoir.show;
+    end;
+end;
+
 
 procedure TFormDashBoard.cxButton1Click(Sender: TObject);
 begin
@@ -604,20 +618,7 @@ FormFournisseurs.show;
 end;
 
 
-procedure TFormDashBoard.vente(ch:string;typvente:integer);
-var myYear, myMonth, myDay : Word;
-begin
-    with FormVenteComptoir do
-    if Privilege(3) then
-    begin
-        DecodeDate(Date, myYear, myMonth, myDay);
-        FormVenteComptoir.Panel1.Caption:=ch;
-        FormVenteComptoir.Caption:=ch;
-        DataModuleVente.NouvelleOpr(typvente,1);
-        ComboBoxNomPrenom.Clear;
-        FormVenteComptoir.show;
-    end;
-end;
+
 
 procedure TFormDashBoard.dxTileControlVenteDetailClick(Sender: TdxTileControlItem);
 

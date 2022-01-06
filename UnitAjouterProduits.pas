@@ -291,6 +291,8 @@ end;
 procedure TFormAjouterProduits.NouveauProduitForm;
 begin
    DataProduits.NouveauProduit();
+   DataProduits.FDTableProduits.Close;
+   DataProduits.FDTableProduits.Open();
 end;
 //______________________________________________________________________________
 procedure TFormAjouterProduits.TrouverProduitForm(codeProd,id:string);

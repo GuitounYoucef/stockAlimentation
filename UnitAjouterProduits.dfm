@@ -84,7 +84,6 @@ object FormAjouterProduits: TFormAjouterProduits
       ParentBiDiMode = False
       ParentFont = False
       TabOrder = 0
-      ExplicitWidth = 312
       object Label2: TLabel
         Left = 228
         Top = 34
@@ -656,7 +655,6 @@ object FormAjouterProduits: TFormAjouterProduits
       Font.Style = []
       ParentFont = False
       TabOrder = 1
-      ExplicitWidth = 312
       object ButtonAjouter: TButton
         Left = 64
         Top = 19
@@ -752,8 +750,8 @@ object FormAjouterProduits: TFormAjouterProduits
       object Label10: TLabel
         Left = 654
         Top = 10
-        Width = 202
-        Height = 69
+        Width = 210
+        Height = 78
         Align = alClient
         Alignment = taCenter
         Caption = #1587#1604#1593#1577' '#1580#1583#1610#1583#1577
@@ -764,6 +762,8 @@ object FormAjouterProduits: TFormAjouterProduits
         Font.Style = [fsBold]
         ParentFont = False
         Layout = tlCenter
+        ExplicitWidth = 202
+        ExplicitHeight = 69
       end
       object Image3: TImage
         Left = 554

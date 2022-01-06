@@ -73,7 +73,7 @@ type
    procedure SupprimerProdList(numList:integer);
    function CalculerSomme():real;
    //------------------------
-   procedure NouvelleOpr(typvente,fenetre:integer);
+   procedure NouvelleOpr(typvente:integer);
    function Parcourir(dist:integer):longint;
    procedure ValiderOpr(Opr:Operation);
    procedure NouvelleSorite(Opr:Operation);
@@ -111,16 +111,91 @@ uses  UnitDelivrenceData, DataParametrageUnite, DataStocksUnite;
 
 {$R *.dfm}
 
+procedure TDataModuleVente.NouvelleOpr(typvente:integer);
+var myYear, myMonth, myDay : Word;
+begin
+    DecodeDate(Date, myYear, myMonth, myDay);
+    FDQueryNumVente.Params.ParamValues['x']:=inttostr(myYear);
+    FDQueryNumVente.Params.ParamValues['y']:=typvente;
+    FDQueryNumVente.Active:=false;
+    FDQueryNumVente.Active:=true;
+    // Nombre d'operations de vente
+    operation.Annee:=inttostr(myYear);
+    operation.Num:=DataModuleVente.FDQueryNumVente.RecordCount+1;
+    operation.typevente:=typvente;
+    operation.TypePaim:=1;
+    operation.NumClient:=0;
+    operation.NumStock:=DataModuleVente.FDTableParametrage.FieldValues['stocknum'];
+    operation.numUser:=DataParametrage.FDQueryLoginUser.FieldValues['Numuser'];
+    //----------
+    FDQueryListOprsSortie.Params.ParamValues['a']:=inttostr(myYear);
+    FDQueryListOprsSortie.Params.ParamValues['t']:=typvente;
+    FDQueryListOprsSortie.Active:=false;
+    FDQueryListOprsSortie.Active:=true;
+    FDQueryListOprsSortie.Last;
+    if (operation.Num=1) then
+        ValiderOpr(operation);
+
+
+end;
+//----------------------------------------------------
+procedure TDataModuleVente.ValiderOpr(Opr:Operation);
+begin
+ {  if ((FDQueryListOprsSortie.RecordCount>0) and (FDQueryListeProdBD.RecordCount>0) and(operation.TypePaim=2)) then
+   begin
+      FDQueryListOprsSortie.Edit;
+      FDQueryListOprsSortie.FieldValues['RestePayer']:=CalculerSomme();
+      FDQueryListOprsSortie.Post;
+   end;    }
+
+    NouvelleSorite(Opr);
+    AfficherListProd();
+end;
+//------------------------------------------------------------------------------
+procedure TDataModuleVente.NouvelleSorite(Opr:Operation);
+begin
+    if ((Opr.Num>FDQueryListOprsSortie.RecordCount)or (Opr.Num=1)) then
+    begin
+    FDQueryListOprsSortie.Insert;
+    FDQueryListOprsSortie.FieldValues['Annee']:=Opr.Annee;
+    FDQueryListOprsSortie.FieldValues['Num']:=Opr.Num;
+    FDQueryListOprsSortie.FieldValues['typevente']:=Opr.typevente;
+
+   FDQueryListOprsSortie.FieldValues['Date']:=Date;
+    FDQueryListOprsSortie.FieldValues['TypePaim']:=Opr.TypePaim;
+   FDQueryListOprsSortie.FieldValues['NomClient']:='*';
+    FDQueryListOprsSortie.FieldValues['NumClient']:=DataParametrage.TrouverNumClientParNom('*');
+
+
+
+
+    FDQueryListOprsSortie.FieldValues['RestePayer']:=0;
+    FDQueryListOprsSortie.FieldValues['numUser']:=Opr.numUser;
+    FDQueryListOprsSortie.FieldValues['NumStock']:=Opr.NumStock;
+    FDQueryListOprsSortie.FieldValues['LastUpdate']:=date;
+
+    FDQueryListOprsSortie.Post;
+    end;
+end;
+//------------------------------------------------
+procedure TDataModuleVente.AfficherListProd();
+begin
+    FDQueryListOprsSortie.Params.ParamValues['a']:=Operation.Annee;
+    FDQueryListOprsSortie.Params.ParamValues['t']:=Operation.typevente;
+    FDQueryListOprsSortie.Active:=false;
+    FDQueryListOprsSortie.Active:=true;
+    FDQueryListOprsSortie.Last;
+    FDQueryListeProdBD.Params.ParamValues['x']:=FDQueryListOprsSortie.FieldValues['NumOpr'];
+    FDQueryListeProdBD.Close;
+    FDQueryListeProdBD.Open();
+end;
+//------------------------------------------------
+
 function TDataModuleVente.CalculerCredit():real;
 var crd:credit;
     x:real;
 begin
-    crd:=DataModuleDelivrence.RecupererCredit(operation.NumClient);
-    x:=crd.total-crd.payee;
-    FDMemTableCredit.First;
-    FDMemTableCredit.Edit;
-    FDMemTableCredit.FieldValues['Credit']:=x;
-    FDMemTableCredit.Post;
+
     result:=x;
 end;
 
@@ -212,6 +287,7 @@ begin
     end;
     result :=som;
 end;
+ //------------------------------------------------
 function TDataModuleVente.estDernierOperation: boolean;
 begin
 if (FDQueryListOprsSortie.RecordCount=FDQueryListOprsSortie.RecNo) then
@@ -229,70 +305,9 @@ begin
 end;
 
 //------------------------------------------------
-procedure TDataModuleVente.NouvelleSorite(Opr:Operation);
-begin
-    if ((Opr.Num>FDQueryListOprsSortie.RecordCount)or (Opr.Num=1)) then
-    begin
-    FDQueryListOprsSortie.Insert;
-    FDQueryListOprsSortie.FieldValues['Annee']:=Opr.Annee;
-    FDQueryListOprsSortie.FieldValues['Num']:=Opr.Num;
-    FDQueryListOprsSortie.FieldValues['typevente']:=Opr.typevente;
-    FDQueryListOprsSortie.FieldValues['Date']:=Date;
-    FDQueryListOprsSortie.FieldValues['TypePaim']:=Opr.TypePaim;
-    FDQueryListOprsSortie.FieldValues['NumClient']:=Opr.NumClient;
 
-    FDQueryListOprsSortie.FieldValues['NumStock']:=Opr.NumStock;
-    FDQueryListOprsSortie.FieldValues['numUser']:=Opr.numUser;
-    FDQueryListOprsSortie.FieldValues['RestePayer']:=0;
-    FDQueryListOprsSortie.FieldValues['LastUpdate']:=date;
 
-    FDQueryListOprsSortie.Post;
-    end;
-end;
-//------------------------------------------------
-procedure TDataModuleVente.AfficherListProd();
-begin
-    FDQueryListOprsSortie.Params.ParamValues['a']:=Operation.Annee;
-    FDQueryListOprsSortie.Params.ParamValues['t']:=Operation.typevente;
-    FDQueryListOprsSortie.Active:=false;
-    FDQueryListOprsSortie.Active:=true;
-    FDQueryListOprsSortie.Last;
-    FDQueryListeProdBD.Params.ParamValues['x']:=FDQueryListOprsSortie.FieldValues['NumOpr'];
-    FDQueryListeProdBD.Close;
-    FDQueryListeProdBD.Open();
-end;
-//------------------------------------------------
-procedure TDataModuleVente.NouvelleOpr(typvente,fenetre:integer);
-var myYear, myMonth, myDay : Word;
-begin
-    DecodeDate(Date, myYear, myMonth, myDay);
-    FDQueryNumVente.Params.ParamValues['x']:=inttostr(myYear);
-    FDQueryNumVente.Params.ParamValues['y']:=typvente;
-    FDQueryNumVente.Active:=false;
-    FDQueryNumVente.Active:=true;
-    // Nombre d'oreratipn de vente
-    operation.Annee:=inttostr(myYear);
-    operation.Num:=DataModuleVente.FDQueryNumVente.RecordCount+1;
-    operation.typevente:=typvente;
-    operation.TypePaim:=1;
-    operation.NumClient:=0;
-    operation.NumStock:=DataModuleVente.FDTableParametrage.FieldValues['stocknum'];
-    operation.numUser:=DataParametrage.FDQueryLoginUser.FieldValues['Numuser'];
-    //----------
-    FDQueryListOprsSortie.Params.ParamValues['a']:=inttostr(myYear);
-    FDQueryListOprsSortie.Params.ParamValues['t']:=typvente;
-    FDQueryListOprsSortie.Active:=false;
-    FDQueryListOprsSortie.Active:=true;
-    FDQueryListOprsSortie.Last;
-    case fenetre of
-        1:begin
-            if operation.Num=1 then
-              ValiderOpr(operation);
-          end;
-        2: ValiderOpr(operation);
-    end;
-end;
-//----------------------------------------------------
+
 function TDataModuleVente.Parcourir(dist:integer):longint;
 var p:produits;
 begin
@@ -308,17 +323,12 @@ begin
     end else result:=0;
 end;
 //------------------------------------------------
-procedure TDataModuleVente.ValiderOpr(Opr:Operation);
-begin
-    NouvelleSorite(Opr);
-    AfficherListProd();
-end;
-//------------------------------------------------------------------------------
+
 procedure TDataModuleVente.ModifierTypePaiment(TP:integer);
 begin
     if FDQueryListOprsSortie.RecordCount>0 then
     begin
-    DataModuleVente.operation.TypePaim:=TP;
+   operation.TypePaim:=TP;
     FDQueryListOprsSortie.Edit;
     FDQueryListOprsSortie.FieldValues['TypePaim']:=TP;
     FDQueryListOprsSortie.Post;
@@ -329,18 +339,7 @@ procedure TDataModuleVente.ModifierNomClient(Client:string);
 begin
  //   if FDQueryListOprsSortie.RecordCount>0 then
     begin
-
-        FDQueryFindClientByName.Params.ParamValues['x']:=Client;
-        FDQueryFindClientByName.Close;
-        FDQueryFindClientByName.Open();
-        if FDQueryFindClientByName.RecordCount>0 then
-        begin
-          operation.NumClient:=FDQueryFindClientByName.FieldValues['NumClient'];
-          FDQueryListOprsSortie.Edit;
-          FDQueryListOprsSortie.FieldValues['NumClient']:=operation.NumClient;
-          FDQueryListOprsSortie.Post;
-        end
-        else operation.NumClient:=0;
+      FDQueryListOprsSortie.FieldValues['NumClient']:=DataParametrage.TrouverNumClientParNom(Client);
     end;
 end;
 //------------------------------------------------------------------------------

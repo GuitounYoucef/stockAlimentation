@@ -5688,14 +5688,14 @@ object FormVenteComptoir: TFormVenteComptoir
         end
         item
           Column = 1
-          ColumnSpan = 3
-          Control = ComboBoxNomPrenom
-          Row = 1
+          Control = ToggleSwitchPrintigAuto
+          Row = 3
         end
         item
           Column = 1
-          Control = ToggleSwitchPrintigAuto
-          Row = 3
+          ColumnSpan = 3
+          Control = cxDBLookupComboxClient
+          Row = 1
         end>
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
@@ -5845,8 +5845,6 @@ object FormVenteComptoir: TFormVenteComptoir
         ParentFont = False
         TabOrder = 4
         OnClick = ButtonImpBonRecpClick
-        ExplicitLeft = 161
-        ExplicitTop = 201
       end
       object ButtonImpTicket: TButton
         Left = 9
@@ -5893,34 +5891,6 @@ object FormVenteComptoir: TFormVenteComptoir
         ExplicitWidth = 129
         ExplicitHeight = 32
       end
-      object ComboBoxNomPrenom: TComboBox
-        Left = 9
-        Top = 13
-        Width = 303
-        Height = 38
-        Align = alTop
-        BiDiMode = bdRightToLeft
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Cairo'
-        Font.Style = [fsBold]
-        ParentBiDiMode = False
-        ParentFont = False
-        TabOrder = 7
-        TabStop = False
-        TextHint = #1573#1587#1605' '#1575#1604#1586#1576#1608#1606
-        OnChange = ComboBoxNomPrenomChange
-        Items.Strings = (
-          '2015'
-          '2016'
-          '2017'
-          '2018'
-          '2019'
-          '2020'
-          '2021'
-          '2022')
-      end
       object ToggleSwitchPrintigAuto: TToggleSwitch
         Left = 9
         Top = 62
@@ -5938,11 +5908,39 @@ object FormVenteComptoir: TFormVenteComptoir
         StateCaptions.CaptionOff = #1591#1576#1575#1593#1577' '#1610#1583#1608#1610#1577
         StyleElements = [seFont]
         SwitchHeight = 30
-        TabOrder = 8
+        TabOrder = 7
         ThumbColor = clGreen
         ExplicitLeft = -1
         ExplicitWidth = 156
         ExplicitHeight = 32
+      end
+      object cxDBLookupComboxClient: TcxDBLookupComboBox
+        Left = 9
+        Top = 13
+        Align = alClient
+        BiDiMode = bdRightToLeft
+        DataBinding.DataField = 'NomClient'
+        DataBinding.DataSource = DataSourceListOprsSortie
+        ParentBiDiMode = False
+        ParentFont = False
+        Properties.DropDownAutoSize = True
+        Properties.DropDownSizeable = True
+        Properties.KeyFieldNames = 'Client'
+        Properties.ListColumns = <
+          item
+            Width = 300
+            FieldName = 'Client'
+          end>
+        Properties.ListSource = DataSourceListClient
+        Properties.OnChange = cxDBLookupComboxClientPropertiesChange
+        Style.Font.Charset = ANSI_CHARSET
+        Style.Font.Color = clWindowText
+        Style.Font.Height = -16
+        Style.Font.Name = 'Cairo'
+        Style.Font.Style = [fsBold]
+        Style.IsFontAssigned = True
+        TabOrder = 8
+        Width = 303
       end
     end
     object dxGaugeControl1: TdxGaugeControl
@@ -45518,6 +45516,10 @@ object FormVenteComptoir: TFormVenteComptoir
         DataSetName = 'frxDBDataset1'
       end
       item
+        DataSet = frxDBDatasetNomClient
+        DataSetName = 'frxDBDatasetNomClient'
+      end
+      item
         DataSet = frxDBDatasetSortie
         DataSetName = 'frxDBDatasetSortie'
       end
@@ -45687,7 +45689,7 @@ object FormVenteComptoir: TFormVenteComptoir
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '/')
+            '[frxDBDatasetNomClient."Client"]')
           ParentFont = False
           RTLReading = True
         end
@@ -46254,6 +46256,10 @@ object FormVenteComptoir: TFormVenteComptoir
         DataSetName = 'frxDBDataset1'
       end
       item
+        DataSet = frxDBDatasetNomClient
+        DataSetName = 'frxDBDatasetNomClient'
+      end
+      item
         DataSet = frxDBDatasetSortie
         DataSetName = 'frxDBDatasetSortie'
       end
@@ -46397,7 +46403,7 @@ object FormVenteComptoir: TFormVenteComptoir
         object Memo24: TfrxMemoView
           AllowVectorExport = True
           Left = 20.897650000000000000
-          Top = 91.267780000000000000
+          Top = 92.267780000000000000
           Width = 230.551330000000000000
           Height = 18.897637800000000000
           Font.Charset = DEFAULT_CHARSET
@@ -46408,7 +46414,7 @@ object FormVenteComptoir: TFormVenteComptoir
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '/')
+            '[frxDBDatasetNomClient."Client"]')
           ParentFont = False
           RTLReading = True
         end
@@ -48946,6 +48952,10 @@ object FormVenteComptoir: TFormVenteComptoir
         DataSetName = 'frxDBDataset1'
       end
       item
+        DataSet = frxDBDatasetNomClient
+        DataSetName = 'frxDBDatasetNomClient'
+      end
+      item
         DataSet = frxDBDatasetSortie
         DataSetName = 'frxDBDatasetSortie'
       end
@@ -49100,7 +49110,7 @@ object FormVenteComptoir: TFormVenteComptoir
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '/')
+            '[frxDBDatasetNomClient."Client"]')
           ParentFont = False
           RTLReading = True
         end
@@ -49382,6 +49392,10 @@ object FormVenteComptoir: TFormVenteComptoir
         DataSetName = 'frxDBDataset1'
       end
       item
+        DataSet = frxDBDatasetNomClient
+        DataSetName = 'frxDBDatasetNomClient'
+      end
+      item
         DataSet = frxDBDatasetSortie
         DataSetName = 'frxDBDatasetSortie'
       end
@@ -49453,8 +49467,9 @@ object FormVenteComptoir: TFormVenteComptoir
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      PaperWidth = 210.000000000000000000
-      PaperHeight = 144.800000000000000000
+      Orientation = poLandscape
+      PaperWidth = 144.800000000000000000
+      PaperHeight = 210.000000000000000000
       PaperSize = 256
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
@@ -49466,10 +49481,11 @@ object FormVenteComptoir: TFormVenteComptoir
         Frame.Typ = []
         Height = 207.874150000000000000
         Top = 18.897650000000000000
-        Width = 718.110700000000000000
+        Width = 471.685344000000000000
         object Memo1: TfrxMemoView
           Align = baCenter
           AllowVectorExport = True
+          Left = -123.212678000000000000
           Top = 3.779530000000000000
           Width = 718.110700000000000000
           Height = 60.472480000000000000
@@ -49487,12 +49503,13 @@ object FormVenteComptoir: TFormVenteComptoir
         object Memo21: TfrxMemoView
           Align = baCenter
           AllowVectorExport = True
-          Top = 41.574830000000000000
-          Width = 718.110700000000000000
-          Height = 45.354360000000000000
+          Left = -0.377800440000000000
+          Top = 52.913420000000000000
+          Width = 472.440944880000000000
+          Height = 34.015770000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -24
+          Font.Height = -19
           Font.Name = 'cairo'
           Font.Style = [fsBold]
           Frame.Typ = []
@@ -49504,8 +49521,9 @@ object FormVenteComptoir: TFormVenteComptoir
         object Memo22: TfrxMemoView
           Align = baCenter
           AllowVectorExport = True
+          Left = -0.377800440945000000
           Top = 143.622140000000000000
-          Width = 718.110700000000000000
+          Width = 472.440944881890000000
           Height = 26.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -49522,8 +49540,9 @@ object FormVenteComptoir: TFormVenteComptoir
         object Memo23: TfrxMemoView
           Align = baCenter
           AllowVectorExport = True
+          Left = -0.377953000000000000
           Top = 170.078850000000000000
-          Width = 718.110700000000000000
+          Width = 472.441250000000000000
           Height = 26.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -49539,9 +49558,8 @@ object FormVenteComptoir: TFormVenteComptoir
         end
         object Memo24: TfrxMemoView
           AllowVectorExport = True
-          Left = 18.118120000000000000
           Top = 169.858380000000000000
-          Width = 638.740570000000000000
+          Width = 419.527830000000000000
           Height = 26.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -49551,15 +49569,22 @@ object FormVenteComptoir: TFormVenteComptoir
           Frame.Typ = []
           HAlign = haRight
           Memo.UTF8W = (
-            '/')
+            
+              '[frxDBDatasetNomClient."Client"] - [frxDBDatasetNomClient."Adres' +
+              'se"]')
           ParentFont = False
           RTLReading = True
+          Formats = <
+            item
+            end
+            item
+            end>
         end
         object Memo25: TfrxMemoView
           AllowVectorExport = True
-          Left = 15.118120000000000000
+          Left = 56.692950000000000000
           Top = 143.622140000000000000
-          Width = 653.858690000000000000
+          Width = 355.275820000000000000
           Height = 26.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -49580,7 +49605,7 @@ object FormVenteComptoir: TFormVenteComptoir
         object Line1: TfrxLineView
           Align = baCenter
           AllowVectorExport = True
-          Left = 321.260050000000000000
+          Left = 198.047372000000000000
           Top = 52.913420000000000000
           Width = 75.590600000000000000
           Color = clBlack
@@ -49592,8 +49617,9 @@ object FormVenteComptoir: TFormVenteComptoir
         object Memo28: TfrxMemoView
           Align = baCenter
           AllowVectorExport = True
+          Left = -0.377800440945000000
           Top = 89.708720000000000000
-          Width = 718.110700000000000000
+          Width = 472.440944881890000000
           Height = 26.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -49610,8 +49636,9 @@ object FormVenteComptoir: TFormVenteComptoir
         object Memo29: TfrxMemoView
           Align = baCenter
           AllowVectorExport = True
+          Left = -0.377800440945000000
           Top = 116.165430000000000000
-          Width = 718.110700000000000000
+          Width = 472.440944881890000000
           Height = 26.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -49627,9 +49654,9 @@ object FormVenteComptoir: TFormVenteComptoir
         end
         object Memo30: TfrxMemoView
           AllowVectorExport = True
-          Left = 16.338590000000000000
+          Left = 80.590600000000000000
           Top = 116.944960000000000000
-          Width = 653.858690000000000000
+          Width = 340.157700000000000000
           Height = 26.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -49650,9 +49677,9 @@ object FormVenteComptoir: TFormVenteComptoir
         end
         object Memo31: TfrxMemoView
           AllowVectorExport = True
-          Left = 15.118120000000000000
+          Left = 94.488250000000000000
           Top = 89.708720000000000000
-          Width = 653.858690000000000000
+          Width = 325.039580000000000000
           Height = 26.456710000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -49677,10 +49704,10 @@ object FormVenteComptoir: TFormVenteComptoir
         Frame.Typ = []
         Height = 22.677180000000000000
         Top = 249.448980000000000000
-        Width = 718.110700000000000000
+        Width = 471.685344000000000000
         object Memo6: TfrxMemoView
           AllowVectorExport = True
-          Left = 36.901906520000000000
+          Left = 1.886136520000000000
           Width = 63.551535790000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -49698,8 +49725,8 @@ object FormVenteComptoir: TFormVenteComptoir
         end
         object Memo7: TfrxMemoView
           AllowVectorExport = True
-          Left = 100.453442310000000000
-          Width = 554.114807480000000000
+          Left = 65.437672310000000000
+          Width = 350.020187480000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -49716,8 +49743,8 @@ object FormVenteComptoir: TFormVenteComptoir
         end
         object Memo9: TfrxMemoView
           AllowVectorExport = True
-          Left = 653.268296240000000000
-          Width = 65.062409980000000000
+          Left = 415.157906240000000000
+          Width = 53.723819980000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -49738,13 +49765,13 @@ object FormVenteComptoir: TFormVenteComptoir
         Frame.Typ = []
         Height = 26.456692910000000000
         Top = 332.598640000000000000
-        Width = 718.110700000000000000
+        Width = 471.685344000000000000
         DataSet = frxDBDataset1
         DataSetName = 'frxDBDataset1'
         RowCount = 0
         object Memo13: TfrxMemoView
           AllowVectorExport = True
-          Left = 37.039191890000000000
+          Left = 2.023421890000000000
           Width = 63.551535790000000000
           Height = 26.456692910000000000
           DataSet = frxDBDataset1
@@ -49764,8 +49791,8 @@ object FormVenteComptoir: TFormVenteComptoir
         end
         object Memo14: TfrxMemoView
           AllowVectorExport = True
-          Left = 100.535254880000000000
-          Width = 554.114807480000000000
+          Left = 65.519484880000000000
+          Width = 350.020187480000000000
           Height = 26.456692910000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -49784,8 +49811,8 @@ object FormVenteComptoir: TFormVenteComptoir
         end
         object Memo16: TfrxMemoView
           AllowVectorExport = True
-          Left = 653.047826240000000000
-          Width = 65.062409980000000000
+          Left = 415.937436240000000000
+          Width = 53.723819980000000000
           Height = 26.456692910000000000
           DataSet = frxDBDataset1
           DataSetName = 'frxDBDataset1'
@@ -49806,13 +49833,14 @@ object FormVenteComptoir: TFormVenteComptoir
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush
         Frame.Typ = []
-        Height = 23.677180000000000000
-        Top = 517.795610000000000000
-        Width = 718.110700000000000000
+        Height = 182.417440000000000000
+        Top = 457.323130000000000000
+        Width = 471.685344000000000000
         object Memo17: TfrxMemoView
           Align = baWidth
           AllowVectorExport = True
-          Width = 718.110700000000000000
+          Top = 158.740260000000000000
+          Width = 471.685344000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
@@ -49824,6 +49852,7 @@ object FormVenteComptoir: TFormVenteComptoir
         end
         object Memo18: TfrxMemoView
           AllowVectorExport = True
+          Left = -200.315090000000000000
           Top = 1.000000000000000000
           Height = 22.677180000000000000
           AutoWidth = True
@@ -49839,7 +49868,8 @@ object FormVenteComptoir: TFormVenteComptoir
         end
         object Memo19: TfrxMemoView
           AllowVectorExport = True
-          Width = 718.110700000000000000
+          Top = 158.740260000000000000
+          Width = 472.440944880000000000
           Height = 23.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -49861,6 +49891,7 @@ object FormVenteComptoir: TFormVenteComptoir
         object Memo20: TfrxMemoView
           AllowVectorExport = True
           Left = 3.779530000000000000
+          Top = 158.740260000000000000
           Width = 211.653680000000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -49881,33 +49912,70 @@ object FormVenteComptoir: TFormVenteComptoir
             item
             end>
         end
-      end
-      object Footer1: TfrxFooter
-        FillType = ftBrush
-        Frame.Typ = []
-        Height = 75.590551181102400000
-        Top = 381.732530000000000000
-        Width = 718.110700000000000000
-        object Memo2: TfrxMemoView
-          Align = baCenter
+        object Memo26: TfrxMemoView
           AllowVectorExport = True
-          Left = 228.661565000000000000
-          Top = 22.677180000000000000
-          Width = 260.787570000000000000
+          Left = 302.362400000000000000
+          Top = 3.779530000000000000
+          Width = 151.181200000000000000
           Height = 56.692950000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -15
           Font.Name = 'cairo'
-          Font.Style = [fsBold, fsItalic]
+          Font.Style = [fsBold]
           Frame.Typ = []
           HAlign = haCenter
           Memo.UTF8W = (
-            #1606#1588#1603#1585#1603#1605' '#1593#1604#1609' '#1575#1604#1586#1610#1575#1585#1577)
+            #1571#1605#1610#1606' '#1575#1604#1605#1582#1586#1606)
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo2: TfrxMemoView
+          AllowVectorExport = True
+          Left = 26.078757000000000000
+          Top = 7.559060000000000000
+          Width = 86.929190000000000000
+          Height = 56.692950000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -15
+          Font.Name = 'cairo'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            #1575#1604#1605#1587#1578#1604#1605)
           ParentFont = False
           VAlign = vaCenter
         end
       end
+      object Footer1: TfrxFooter
+        FillType = ftBrush
+        Frame.Typ = []
+        Height = 15.118071180000000000
+        Top = 381.732530000000000000
+        Width = 471.685344000000000000
+      end
     end
+  end
+  object frxDBDatasetNomClient: TfrxDBDataset
+    UserName = 'frxDBDatasetNomClient'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'Client=Client'
+      'NumClient=NumClient'
+      'Adresse=Adresse'
+      'type=type'
+      'Numtel=Numtel'
+      'catg=catg')
+    DataSet = DataParametrage.FDQueryClientByNum
+    BCDToCurrency = False
+    Left = 497
+    Top = 497
+  end
+  object DataSourceListClient: TDataSource
+    DataSet = DataParametrage.FDQueryClientByNameLike
+    Left = 166
+    Top = 280
   end
 end

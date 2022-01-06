@@ -53,38 +53,36 @@ procedure TFormClients.Button1Click(Sender: TObject);
 begin
     if ((length(EditNomPrenom.Text)>0) and(length(EditAdresse.Text)>0) and(length(ComboBoxType.Text)>0)) then
     begin
-      DataParametrage.FDQueryClientByName.Insert;
-      DataParametrage.FDQueryClientByName.FieldValues['Client']:=EditNomPrenom.Text;
-      DataParametrage.FDQueryClientByName.FieldValues['Adresse']:=EditAdresse.Text;
-      DataParametrage.FDQueryClientByName.FieldValues['NumTel']:=EditTel.Text;
-      DataParametrage.FDQueryClientByName.FieldValues['Type']:=ComboBoxType.Text;
-      DataParametrage.FDQueryClientByName.FieldValues['catg']:=ComboBoxType.ItemIndex+1;
+      DataParametrage.FDQueryClientByNameLike.Insert;
+      DataParametrage.FDQueryClientByNameLike.FieldValues['Client']:=EditNomPrenom.Text;
+      DataParametrage.FDQueryClientByNameLike.FieldValues['Adresse']:=EditAdresse.Text;
+      DataParametrage.FDQueryClientByNameLike.FieldValues['NumTel']:=EditTel.Text;
+      DataParametrage.FDQueryClientByNameLike.FieldValues['Type']:=ComboBoxType.Text;
+      DataParametrage.FDQueryClientByNameLike.FieldValues['catg']:=ComboBoxType.ItemIndex+1;
       EditTel.Clear;
       EditNomPrenom.Clear;
       EditAdresse.Clear;
-      DataParametrage.FDQueryClientByName.Next;
+      DataParametrage.FDQueryClientByNameLike.Next;
     end;
 end;
 
 procedure TFormClients.Button2Click(Sender: TObject);
 begin
-    if (DataParametrage.FDQueryClientByName.RecordCount>0) and (DataParametrage.FDQueryClientByName.RecordCount=DataParametrage.FDQueryClientByName.RecNo) then
+    if (DataParametrage.FDQueryClientByNameLike.RecordCount>0) and (DataParametrage.FDQueryClientByNameLike.RecordCount=DataParametrage.FDQueryClientByNameLike.RecNo) then
         DBNavigator1.BtnClick(nbdelete);
 end;
 
 procedure TFormClients.FormShow(Sender: TObject);
 begin
     LoadKeyboardLayout('00000401', KLF_ACTIVATE);
-    DataParametrage.FDQueryClientByName.Params.ParamValues['x']:='%';
-    DataParametrage.FDQueryClientByName.Active:=false;
-    DataParametrage.FDQueryClientByName.Active:=true;
+    DataParametrage.FDQueryClientByNameLike.Params.ParamValues['x']:='%';
+    DataParametrage.FDQueryClientByNameLike.Active:=false;
+    DataParametrage.FDQueryClientByNameLike.Active:=true;
 end;
 
 procedure TFormClients.SearchBox1Change(Sender: TObject);
 begin
-    DataParametrage.FDQueryClientByName.Params.ParamValues['x']:='%'+SearchBox1.Text+'%';
-    DataParametrage.FDQueryClientByName.Active:=false;
-    DataParametrage.FDQueryClientByName.Active:=true;
+DataParametrage.selectClient(SearchBox1.Text);
 end;
 
 end.

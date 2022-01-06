@@ -56,7 +56,6 @@ type
     ButtonImpBonRecp: TButton;
     ButtonImpTicket: TButton;
     ToggleSwitchPaiment: TToggleSwitch;
-    ComboBoxNomPrenom: TComboBox;
     dxGaugeControl2: TdxGaugeControl;
     dxGaugeControl2DigitalScale1: TdxGaugeDigitalScale;
     cxImageList1: TcxImageList;
@@ -83,6 +82,9 @@ type
     DataSourceListProduits: TDataSource;
     frxReportBonLivraisonAdm: TfrxReport;
     frxReportFactureVenteAdm: TfrxReport;
+    frxDBDatasetNomClient: TfrxDBDataset;
+    cxDBLookupComboxClient: TcxDBLookupComboBox;
+    DataSourceListClient: TDataSource;
     procedure FormShow(Sender: TObject);
     procedure ButtonSupprimerClick(Sender: TObject);
     procedure ButtonNouvOprClick(Sender: TObject);
@@ -95,7 +97,7 @@ type
     procedure ButtonListProdsClick(Sender: TObject);
     procedure ButtonImpTicketClick(Sender: TObject);
     procedure DBNavigator1Click(Sender: TObject; Button: TNavigateBtn);
-    procedure ComboBoxNomPrenomChange(Sender: TObject);
+
     procedure cxGrid1DBTableView1CellDblClick(Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
@@ -103,6 +105,7 @@ type
     procedure cxLookupComboBoxCodeProdKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure cxLookupComboBoxCodeProdEnter(Sender: TObject);
+    procedure cxDBLookupComboxClientPropertiesChange(Sender: TObject);
   private
     { Déclarations privées }
   public
@@ -136,23 +139,9 @@ begin
     dxGaugeControl1DigitalScale1.Value :=FloatTostrF(DataModuleVente.CalculerSomme(), ffFixed, 12, 2);
 end;
 //------------------------------------------------------------------------------
-procedure TFormVenteComptoir.ComboBoxNomPrenomChange(Sender: TObject);
-begin
-    if length(ComboBoxNomPrenom.Text)>1 then
-    DataModuleVente.ModifierNomClient(ComboBoxNomPrenom.Text);
-end;
+
  //------------------------------------------------------------------------------
-procedure TFormVenteComptoir.UpdateGrid();
-var i:integer;
-    begin
-      for I := 0 to cxGrid1DBTableView1.DataController.RecordCount-1 do
-      begin
-          cxGrid1DBTableView1.DataController.Values[i,0]:=i+1;
-          cxGrid1DBTableView1.DataController.Values[i,6]:=cxGrid1DBTableView1.DataController.Values[i,5]*
-          cxGrid1DBTableView1.DataController.Values[i,4];
-      end;
-end;
-//------------------------------------------------------------------------------
+
 procedure TFormVenteComptoir.ButtonNouvOprClick(Sender: TObject);
 // nouvelle ops
 begin
@@ -165,10 +154,10 @@ begin
               1:ButtonImpTicketClick(FormVenteComptoir);
               2:ButtonImpBonRecpClick(FormVenteComptoir);
             end;
-          // DataModuleVente.ValiderOpr(DataModuleVente.operation);
-          DataModuleVente.NouvelleOpr(DataModuleVente.operation.typevente, 2);
+          //DataModuleVente.ValiderOpr(DataModuleVente.operation);
+          DataModuleVente.NouvelleOpr(DataModuleVente.operation.typevente);
           ToggleSwitchPaiment.State := tssoff;
-          ComboBoxNomPrenom.Text := '';
+
           dxGaugeControl1DigitalScale1.Value := FloatTostrF(0, ffFixed, 12, 2);
           dxGaugeControl2DigitalScale1.Value :=
             inttostr(DataModuleVente.operation.num);
@@ -185,6 +174,7 @@ procedure TFormVenteComptoir.ButtonImpBonRecpClick(Sender: TObject);
 begin
     if cxGrid1DBTableView1.DataController.RecordCount > 0 then
     begin
+       DataParametrage.TrouverClientParNum(DataModuleVente.FDQueryListOprsSortie.FieldValues['NumClient']);
        if DataParametrage.FDTableParametrage.FieldValues['Acitivite']=1 then
           frxReportFactureVenteCmr.ShowReport(true)
        else frxReportFactureVenteAdm.ShowReport(true)
@@ -196,7 +186,7 @@ begin
     if (cxGrid1DBTableView1.DataController.RecordCount > 0) and
        (DataParametrage.FDTableParametrage.FieldValues['Acitivite']=1) then
     begin
-
+      DataParametrage.TrouverClientParNum(DataModuleVente.FDQueryListOprsSortie.FieldValues['NumClient']);
       frxReportBonLivraisonCmr.ShowReport(true)
     end;
 end;
@@ -239,7 +229,7 @@ procedure TFormVenteComptoir.VenteProduit(codeProduit,id:string;quantite:integer
 var p: Produits;
 begin
     p := DataModuleVente.TrouverPrduit(DataModuleVente.operation.NumStock,DataModuleVente.operation.typevente,id, codeProduit,quantite);
-    if ((DataModuleVente.operation.NumClient> 0) and (DataModuleVente.operation.typevente = 2)) or
+    if ((length(cxDBLookupComboxClient.Text)>1) and (DataModuleVente.operation.typevente = 2)) or
       (DataModuleVente.operation.typevente = 1) then
       begin
       if p.quantite > 0 then
@@ -321,20 +311,11 @@ begin
     FloatTostrF(DataModuleVente.CalculerSomme(), ffFixed, 12, 2);
     DataParametrage.FDTableImprimante.Active := false;
     DataParametrage.FDTableImprimante.Active := true;
-    if Length(ComboBoxNomPrenom.Text) > 0 then
-      ComboBoxNomPrenom.Enabled := false
-    else
-      ComboBoxNomPrenom.Enabled := true;
-    ComboBoxNomPrenom.Clear;
-    DataParametrage.FDQueryClientByCatg.Params.ParamValues['x'] :=DataModuleVente.operation.typevente;
-    DataParametrage.FDQueryClientByCatg.Active := false;
-    DataParametrage.FDQueryClientByCatg.Active := true;
-    while not DataParametrage.FDQueryClientByCatg.Eof do
-    begin
-      ComboBoxNomPrenom.Items.Add(DataParametrage.FDQueryClientByCatg.FieldValues
-        ['Client']);
-      DataParametrage.FDQueryClientByCatg.Next;
-    end;
+
+//    DataParametrage.FDQueryClientByCatg.Params.ParamValues['x'] :=DataModuleVente.operation.typevente;
+//    DataParametrage.FDQueryClientByCatg.Active := false;
+//    DataParametrage.FDQueryClientByCatg.Active := true;
+
 
     // if Image2.Picture.Graphic = NIL then
     case DataModuleVente.operation.typevente of
@@ -347,11 +328,24 @@ begin
     end;
     Edit1.SetFocus;
     UpdateGrid();
+
+    DataParametrage.selectClient('**');
+end;
+//------------------------------------------------------------------------------
+procedure TFormVenteComptoir.UpdateGrid();
+var i:integer;
+    begin
+      for I := 0 to cxGrid1DBTableView1.DataController.RecordCount-1 do
+      begin
+          cxGrid1DBTableView1.DataController.Values[i,0]:=i+1;
+          cxGrid1DBTableView1.DataController.Values[i,6]:=cxGrid1DBTableView1.DataController.Values[i,5]*
+          cxGrid1DBTableView1.DataController.Values[i,4];
+      end;
 end;
 //------------------------------------------------------------------------------
 procedure TFormVenteComptoir.ToggleSwitchPaimentClick(Sender: TObject);
 begin
-    if Length(ComboBoxNomPrenom.Text) = 0 then
+    if Length(cxDBLookupComboxClient.Text) = 0 then
     begin
       ToggleSwitchPaiment.State := tssoff;
       DataModuleVente.ModifierTypePaiment(1);
@@ -362,10 +356,16 @@ begin
     else
     begin
       DataModuleVente.ModifierTypePaiment(2);
-      DataModuleVente.ModifierNomClient(ComboBoxNomPrenom.Text);
+
     end;
 end;
 //------------------------------------------------------------------------------
+procedure TFormVenteComptoir.cxDBLookupComboxClientPropertiesChange(
+  Sender: TObject);
+begin
+DataModuleVente.ModifierNomClient(cxDBLookupComboxClient.Text);
+end;
+
 procedure TFormVenteComptoir.cxGrid1DBTableView1CellDblClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);

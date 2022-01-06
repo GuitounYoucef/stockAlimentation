@@ -1500,7 +1500,7 @@ object FormClients: TFormClients
     end
   end
   object DataSource1: TDataSource
-    DataSet = DataParametrage.FDQueryClientByName
+    DataSet = DataParametrage.FDQueryClientByNameLike
     Left = 245
     Top = 8
   end
