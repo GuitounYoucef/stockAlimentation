@@ -154,8 +154,9 @@ begin
               1:ButtonImpTicketClick(FormVenteComptoir);
               2:ButtonImpBonRecpClick(FormVenteComptoir);
             end;
-          //DataModuleVente.ValiderOpr(DataModuleVente.operation);
-          DataModuleVente.NouvelleOpr(DataModuleVente.operation.typevente);
+         DataModuleVente.NouvelleOpr(DataModuleVente.operation.typevente);
+         DataModuleVente.ValiderOpr(DataModuleVente.operation);
+
           ToggleSwitchPaiment.State := tssoff;
 
           dxGaugeControl1DigitalScale1.Value := FloatTostrF(0, ffFixed, 12, 2);
@@ -363,7 +364,8 @@ end;
 procedure TFormVenteComptoir.cxDBLookupComboxClientPropertiesChange(
   Sender: TObject);
 begin
-DataModuleVente.ModifierNomClient(cxDBLookupComboxClient.Text);
+if length(cxDBLookupComboxClient.Text)>1 then
+ DataModuleVente.ModifierNomClient(cxDBLookupComboxClient.Text);
 end;
 
 procedure TFormVenteComptoir.cxGrid1DBTableView1CellDblClick(

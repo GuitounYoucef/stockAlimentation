@@ -119,24 +119,24 @@ begin
     FDQueryNumVente.Params.ParamValues['y']:=typvente;
     FDQueryNumVente.Active:=false;
     FDQueryNumVente.Active:=true;
-    // Nombre d'operations de vente
+    operation.Num:=FDQueryNumVente.RecordCount+1;  // Nombre d'operations de vente
+
     operation.Annee:=inttostr(myYear);
-    operation.Num:=DataModuleVente.FDQueryNumVente.RecordCount+1;
     operation.typevente:=typvente;
     operation.TypePaim:=1;
     operation.NumClient:=0;
     operation.NumStock:=DataModuleVente.FDTableParametrage.FieldValues['stocknum'];
     operation.numUser:=DataParametrage.FDQueryLoginUser.FieldValues['Numuser'];
     //----------
+
     FDQueryListOprsSortie.Params.ParamValues['a']:=inttostr(myYear);
     FDQueryListOprsSortie.Params.ParamValues['t']:=typvente;
-    FDQueryListOprsSortie.Active:=false;
-    FDQueryListOprsSortie.Active:=true;
-    FDQueryListOprsSortie.Last;
-    if (operation.Num=1) then
+    FDQueryListOprsSortie.Close;
+    FDQueryListOprsSortie.Open();
+   FDQueryListOprsSortie.Last;
+
+    if (operation.Num=1) then  // si la premiere operation je cree un nouveau enregitrement sinon je reste dans l'ancien operation(derniere)
         ValiderOpr(operation);
-
-
 end;
 //----------------------------------------------------
 procedure TDataModuleVente.ValiderOpr(Opr:Operation);
@@ -339,7 +339,9 @@ procedure TDataModuleVente.ModifierNomClient(Client:string);
 begin
  //   if FDQueryListOprsSortie.RecordCount>0 then
     begin
+      FDQueryListOprsSortie.Edit;
       FDQueryListOprsSortie.FieldValues['NumClient']:=DataParametrage.TrouverNumClientParNom(Client);
+      FDQueryListOprsSortie.Post;
     end;
 end;
 //------------------------------------------------------------------------------

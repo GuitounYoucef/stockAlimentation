@@ -354,6 +354,12 @@ if DataParametrage.FDTableParametrage.FieldValues['Acitivite']=1 then
 else vente('  عملية تسليم   ',2)
 end;
 
+procedure TFormDashBoard.dxTileControlVenteDetailClick(Sender: TdxTileControlItem);
+
+begin
+vente('   بيع بالتجزئة     ',1);
+end;
+
 procedure TFormDashBoard.vente(ch:string;typvente:integer);
 
 begin
@@ -620,11 +626,7 @@ end;
 
 
 
-procedure TFormDashBoard.dxTileControlVenteDetailClick(Sender: TdxTileControlItem);
 
-begin
-vente('   بيع بالتجزئة     ',1);
-end;
 
 procedure TFormDashBoard.dxTileControl1Item8Click(Sender: TdxTileControlItem);
 begin
